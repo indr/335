@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+  ~ Copyright (c) 2016 Reto Inderbitzin (mail@indr.ch)
+  ~
+  ~ For the full copyright and license information, please view
+  ~ the LICENSE file that was distributed with this source code.
+  -->
+
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:baselineAligned="false"
+    android:orientation="vertical"
+    tools:context=".ui.activities.ListGuideActivity">
+
+    <RelativeLayout
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimary"
+        android:elevation="4dp"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:paddingBottom="12dp"
+            android:paddingTop="12dp">
+
+            <ImageButton
+                android:id="@+id/toolbarButtonUp"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="left"
+                android:layout_marginLeft="?android:attr/listPreferredItemPaddingLeft"
+                android:layout_marginStart="?android:attr/listPreferredItemPaddingStart"
+                android:background="@null"
+                android:contentDescription="@string/abc_action_bar_up_description"
+                android:paddingBottom="6dp"
+                android:paddingTop="6dp"
+                android:scaleType="centerInside"
+                android:src="@drawable/ic_arrow_back_white_48dp"
+                />
+
+            <HorizontalScrollView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:scrollbars="none">
+
+                <TextView
+                    android:id="@+id/toolbarTitle"
+                    style="@style/TextAppearance.AppCompat.Widget.ActionBar.Title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:lines="1"
+                    android:paddingEnd="?android:attr/listPreferredItemPaddingEnd"
+                    android:paddingLeft="?android:attr/listPreferredItemPaddingLeft"
+                    android:paddingRight="?android:attr/listPreferredItemPaddingRight"
+                    android:paddingStart="?android:attr/listPreferredItemPaddingStart"
+                    android:text="@string/app_name"/>
+            </HorizontalScrollView>
+        </LinearLayout>
+    </RelativeLayout>
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/fragmentPlayback"
+        android:layout_below="@+id/toolbar">
+
+        <ListView
+            android:id="@+id/list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:drawSelectorOnTop="true"/>
+
+        <FrameLayout
+            android:id="@+id/progressBarHolder"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:animateLayoutChanges="true"
+            android:visibility="gone">
+
+            <ProgressBar
+                style="?android:attr/progressBarStyleLarge"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:indeterminate="true"/>
+        </FrameLayout>
+
+
+        <fragment
+            android:id="@+id/fragmentToast"
+            android:name="ch.indr.threethreefive.ui.fragments.ToastFragment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            tools:layout="@layout/fragment_toast"/>
+
+    </RelativeLayout>
+
+
+    <fragment
+        android:id="@+id/fragmentPlayback"
+        android:name="ch.indr.threethreefive.ui.fragments.ListPlaybackFragment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        tools:layout="@layout/fragment_list_playback"/>
+
+    <LinearLayout
+        android:id="@+id/layoutChangeFontSize"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/toolbar"
+        android:layout_margin="8dp"
+        android:orientation="vertical">
+
+        <ImageButton
+            android:id="@+id/buttonIncFontSize"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="Increase font size"
+            android:scaleType="centerInside"
+            android:src="@drawable/ic_add_black_48dp"
+            android:theme="@style/ButtonPrimary"/>
+
+        <ImageButton
+            android:id="@+id/buttonDecFontSize"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="Decrease font size"
+            android:scaleType="centerInside"
+            android:src="@drawable/ic_remove_black_48dp"
+            android:theme="@style/ButtonPrimary"/>
+    </LinearLayout>
+</RelativeLayout>

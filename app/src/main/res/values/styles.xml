@@ -1,0 +1,81 @@
+<resources>
+
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="windowNoTitle">false</item>
+        <item name="windowActionBar">true</item>
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:seekBarStyle">@style/SeekBarAppTheme</item>
+    </style>
+
+    <style name="AppTheme.NoTitleBar" parent="AppTheme">
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="AppTheme.NoActionBar" parent="AppTheme">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="SplashScreenTheme" parent="@android:style/Theme.DeviceDefault.Light.NoActionBar">
+        <item name="android:windowBackground">@drawable/splash_background</item>
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+    <style name="SeekBarAppTheme" parent="android:Widget.SeekBar">
+        <item name="android:progressDrawable">
+            @drawable/apptheme_scrubber_progress_horizontal_holo_light
+        </item>
+        <item name="android:indeterminateDrawable">
+            @drawable/apptheme_scrubber_progress_horizontal_holo_light
+        </item>
+        <item name="android:minHeight">13dip</item>
+        <item name="android:maxHeight">13dip</item>
+        <item name="android:thumb">@drawable/apptheme_scrubber_control_selector_holo_light</item>
+        <item name="android:thumbOffset">16dip</item>
+        <item name="android:paddingLeft">16dip</item>
+        <item name="android:paddingRight">16dip</item>
+    </style>
+
+    <style name="ButtonPrimary" parent="Widget.AppCompat.Button">
+        <item name="colorButtonNormal">@color/buttonPrimary</item>
+        <item name="color">@color/white</item>
+    </style>
+
+    <style name="ButtonPrimaryLight" parent="Widget.AppCompat.Button">
+        <item name="colorButtonNormal">@color/buttonPrimaryLight</item>
+        <item name="color">@color/white</item>
+    </style>
+
+    <style name="ButtonPrimaryDark" parent="Widget.AppCompat.Button">
+        <item name="colorButtonNormal">@color/buttonPrimaryDark</item>
+        <item name="color">@color/white</item>
+    </style>
+
+    <style name="ButtonSecondary1" parent="Widget.AppCompat.Button">
+        <item name="colorButtonNormal">@color/buttonSecondary1</item>
+    </style>
+
+    <style name="ButtonSecondary1Light" parent="Widget.AppCompat.Button">
+        <item name="colorButtonNormal">@color/buttonSecondary1Light</item>
+    </style>
+
+    <style name="ButtonSecondary1Dark" parent="Widget.AppCompat.Button">
+        <item name="colorButtonNormal">@color/buttonSecondary1Dark</item>
+    </style>
+
+    <style name="ButtonSecondary2" parent="Widget.AppCompat.Button">
+        <item name="colorButtonNormal">@color/buttonSecondary2</item>
+    </style>
+
+    <style name="ButtonSecondary2Light" parent="Widget.AppCompat.Button">
+        <item name="colorButtonNormal">@color/buttonSecondary2Light</item>
+    </style>
+
+    <style name="ButtonSecondary2Dark" parent="Widget.AppCompat.Button">
+        <item name="colorButtonNormal">@color/buttonSecondary2Dark</item>
+    </style>
+</resources>

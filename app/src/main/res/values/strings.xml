@@ -1,0 +1,33 @@
+<resources>
+    <string name="app_name">335</string>
+
+    <string name="button_home_description">Home: Brings you back to the start</string>
+    <string name="button_home_text">Home</string>
+    <string name="button_back_description">Back: Go back to previous location</string>
+    <string name="button_back_text">Back</string>
+    <string name="button_enter_description">Enter: Open a folder or play a media item</string>
+    <string name="button_enter_text">Enter</string>
+    <string name="button_location_description">Location: Tells you the current location</string>
+    <string name="button_location_text">Location</string>
+    <string name="button_step_left_description">Previous: Go to previous action or item</string>
+    <string name="button_step_left_text">Previous</string>
+    <string name="button_step_right_description">Next: Go to next action or item</string>
+    <string name="button_step_right_text">Next</string>
+
+    <string name="button_skipToPrevious_description">Skip to previous track</string>
+    <string name="button_rewind_description">Seek 10 seconds back</string>
+    <string name="button_playPause_description">Play or pause current track</string>
+    <string name="button_fastForward_description">Seek 10 seconds forward</string>
+    <string name="button_skipToNext_description">Skip to next track</string>
+
+    <string name="music_on_your_device">Music on your Device</string>
+
+    <!-- uamp.xml -->
+    <string name="favorite">Favorite</string>
+    <string name="error_no_metadata">Unable to retrieve metadata.</string>
+    <string name="label_pause">Pause</string>
+    <string name="label_play">Play</string>
+    <string name="label_previous">Previous</string>
+    <string name="label_next">Next</string>
+
+</resources>

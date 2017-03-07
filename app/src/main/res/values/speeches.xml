@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2017 Reto Inderbitzin (mail@indr.ch)
+  ~
+  ~ For the full copyright and license information, please view
+  ~ the LICENSE file that was distributed with this source code.
+  -->
+
+<resources>
+
+    <string name="speech_welcome_short">Welcome to three three five.</string>
+    <string name="speech_welcome_long">Welcome to three three five. Easy navigation to 1000s of online radio stations, as well as media on your device.</string>
+
+    <string name="speech_interface_instructions"><![CDATA[
+Welcome to the three three five button interface navigation screen.\n\
+\n\
+You can long press anywhere ON THIS SCREEN to hear the button description.\n\
+PLEASE LISTEN FOR BUTTON DESCRIPTIONs.\n\
+This screen has 3 rows of buttons.\n\
+\n\
+The top  TWO rowS HAVE 3 navigation buttons.\n\
+the 3rd row has 5.\n\
+THREE THREE  FIVE \n\
+\n\
+Starting from left to right.\n\
+ROW NUMBER 1.\n\
+FIRST.\n\
+Top Left IS HOME button.\n\
+Pressing HOME all ways brings you back to the top of your chosen category.\n\
+Second:\n\
+Top Center is Back button.\n\
+Pressing BACK  takes you one step back.\n\
+Third:\n\
+Top right is location button.\n\
+Pressing LOCATION will tell you where you are in the file and folder structure.\n\
+ROW NUMBER 2\n\
+First BUTTON IS\n\
+PREVIOUS.\n\
+PREVIOUS BUTTON Takes you to the last location.\n\
+Second BUTTON IS\n\
+ENTER.\n\
+THIS CENTER button on your screen is like an ENTER button.\n\
+This button Enters you into your folder selection or if it\'s a media file or stream, it will load TO PLAY.\n\
+Third IS THE NEXT button.\n\
+takes you to next folder or next file within CURRENT folder.\n\
+\n\
+The third bottom row has 5 media player controls for use with media on your device.\n\
+First IS Skip.\n\
+SKIPS to previous track or file.\n\
+Second BUTTON IS seek.\n\
+SEEKS 10 seconds back.\n\
+Third BUTTON IS: Play AND Pause.\n\
+Fourth BUTTON  seekS 10 seconds forward.\n\
+Fifth AND FINAL BUTTON  IS SKIP.\n\
+SkipS. forward to next track.\n\
+\n\
+All media files are organized in hierarchical folder structure.\n\
+Please feel free to click around to familiarize yourself with three three five navigation,\n\
+remember,\n\
+you can always click on top right to hear your present location.\n\
+\n\
+YOU CAN HEAR THESE INSTRUCTIONS AGAIN ANYTIME IN THE PREFERENCES SECTION.\n\
+\n\
+]]></string>
+
+    <string name="speech_interface_instructions_end_with_home_screen"><![CDATA[
+You are now on the home screen on "Music on Your Device".\n\
+\n\
+Thank you and enjoy three three five.
+]]></string>
+
+    <string name="speech_interface_instructions_end_with_preference_screen"><![CDATA[
+You are now on the preference screen on "Replay Interface Instructions".\n\
+\n\
+Thank you and enjoy three three five.
+]]></string>
+
+</resources>

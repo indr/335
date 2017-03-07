@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2017 Reto Inderbitzin (mail@indr.ch)
+  ~
+  ~ For the full copyright and license information, please view
+  ~ the LICENSE file that was distributed with this source code.
+  -->
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:id="@+id/playbackControls"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@color/black"
+              android:orientation="vertical">
+
+    <RelativeLayout
+        android:id="@+id/layoutSeekControl"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/textViewSeekStart"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:gravity="center_vertical"
+            android:maxLines="1"
+            android:paddingEnd="0dp"
+            android:paddingLeft="5dp"
+            android:paddingRight="0dp"
+            android:paddingStart="5dp"
+            android:textColor="@color/white"/>
+
+        <SeekBar
+            android:id="@+id/seekBar"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_gravity="center"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_toEndOf="@+id/textViewSeekStart"
+            android:layout_toLeftOf="@+id/textViewSeekEnd"
+            android:layout_toRightOf="@+id/textViewSeekStart"
+            android:layout_toStartOf="@+id/textViewSeekEnd"
+            android:background="@android:color/white"/>
+
+        <TextView
+            android:id="@+id/textViewSeekEnd"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignWithParentIfMissing="true"
+            android:layout_centerVertical="true"
+            android:gravity="center_vertical"
+            android:maxLines="1"
+            android:paddingEnd="5dp"
+            android:paddingLeft="0dp"
+            android:paddingRight="5dp"
+            android:paddingStart="0dp"
+            android:textColor="@color/white"/>
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <HorizontalScrollView
+            android:id="@+id/scrollViewTitle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:scrollbars="none">
+
+            <TextView
+                android:id="@+id/textViewTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingEnd="?android:attr/listPreferredItemPaddingEnd"
+                android:paddingLeft="?android:attr/listPreferredItemPaddingLeft"
+                android:paddingRight="?android:attr/listPreferredItemPaddingRight"
+                android:paddingStart="?android:attr/listPreferredItemPaddingStart"
+                android:textColor="@color/white"/>
+        </HorizontalScrollView>
+
+        <!-- Hacked: This TextView is used to adjust the ImageButton height -->
+        <TextView
+            android:id="@+id/textViewPlaceholder"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0"
+            android:paddingEnd="?android:attr/listPreferredItemPaddingEnd"
+            android:paddingLeft="?android:attr/listPreferredItemPaddingLeft"
+            android:paddingRight="?android:attr/listPreferredItemPaddingRight"
+            android:paddingStart="?android:attr/listPreferredItemPaddingStart"
+            android:visibility="invisible"/>
+
+        <ImageButton
+            android:id="@+id/buttonSkipToPrevious"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:contentDescription="@string/button_skipToPrevious_description"
+            android:paddingEnd="0dp"
+            android:paddingLeft="0dp"
+            android:paddingRight="0dp"
+            android:paddingStart="0dp"
+            android:scaleType="centerInside"
+            android:src="@drawable/ic_skip_previous_black_48dp"
+            android:theme="@style/ButtonPrimary"/>
+
+        <ImageButton
+            android:id="@+id/buttonPlayPause"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:contentDescription="@string/button_playPause_description"
+            android:paddingEnd="0dp"
+            android:paddingLeft="0dp"
+            android:paddingRight="0dp"
+            android:paddingStart="0dp"
+            android:scaleType="centerInside"
+            android:src="@drawable/ic_play_arrow_black_48dp"
+            android:theme="@style/ButtonPrimary"/>
+
+        <ImageButton
+            android:id="@+id/buttonSkipToNext"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:contentDescription="@string/button_skipToNext_description"
+            android:paddingEnd="0dp"
+            android:paddingLeft="0dp"
+            android:paddingRight="0dp"
+            android:paddingStart="0dp"
+            android:scaleType="centerInside"
+            android:src="@drawable/ic_skip_next_black_48dp"
+            android:theme="@style/ButtonPrimary"/>
+
+    </LinearLayout>
+</LinearLayout>

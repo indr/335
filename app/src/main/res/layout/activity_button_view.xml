@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.GridLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background_material_dark"
+    android:paddingBottom="4dp"
+    android:paddingLeft="4dp"
+    android:paddingRight="4dp"
+    android:paddingTop="4dp"
+    app:columnCount="3"
+    app:rowCount="3"
+    tools:context=".ui.activities.ButtonGuideActivity">
+
+    <Button
+        android:id="@+id/buttonHome"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:contentDescription="@string/button_home_description"
+        android:text="@string/button_home_text"
+        android:theme="@style/ButtonSecondary2"
+        app:layout_column="0"
+        app:layout_columnWeight="1"
+        app:layout_gravity="fill"
+        app:layout_row="0"
+        app:layout_rowWeight="1"/>
+
+    <Button
+        android:id="@+id/buttonBack"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:contentDescription="@string/button_back_description"
+        android:text="@string/button_back_text"
+        android:textColor="@color/white"
+        android:theme="@style/ButtonSecondary1"
+        app:layout_column="1"
+        app:layout_columnWeight="1"
+        app:layout_gravity="fill"
+        app:layout_row="0"
+        app:layout_rowWeight="1"/>
+
+    <Button
+        android:id="@+id/buttonLocation"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:contentDescription="@string/button_location_description"
+        android:text="@string/button_location_text"
+        android:theme="@style/ButtonSecondary2"
+        app:layout_column="2"
+        app:layout_columnWeight="1"
+        app:layout_gravity="fill"
+        app:layout_row="0"
+        app:layout_rowWeight="1"/>
+
+    <Button
+        android:id="@+id/buttonStepLeft"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:contentDescription="@string/button_step_left_description"
+        android:text="@string/button_step_left_text"
+        android:textColor="@color/white"
+        android:theme="@style/ButtonSecondary1"
+        app:layout_column="0"
+        app:layout_columnWeight="1"
+        app:layout_gravity="fill"
+        app:layout_row="1"
+        app:layout_rowWeight="1"/>
+
+    <Button
+        android:id="@+id/buttonEnter"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:contentDescription="@string/button_enter_description"
+        android:text="@string/button_enter_text"
+        android:textStyle="normal"
+        android:theme="@style/ButtonPrimary"
+        app:layout_column="1"
+        app:layout_columnWeight="1"
+        app:layout_gravity="fill"
+        app:layout_row="1"
+        app:layout_rowWeight="1"/>
+
+    <Button
+        android:id="@+id/buttonStepRight"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:contentDescription="@string/button_step_right_description"
+        android:text="@string/button_step_right_text"
+        android:textColor="@color/white"
+        android:textStyle="normal"
+        android:theme="@style/ButtonSecondary1"
+        app:layout_column="2"
+        app:layout_columnWeight="1"
+        app:layout_gravity="fill"
+        app:layout_row="1"
+        app:layout_rowWeight="1"/>
+
+    <FrameLayout
+        android:id="@+id/progressBarHolder"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:animateLayoutChanges="true"
+        android:visibility="gone"
+        app:layout_column="1"
+        app:layout_columnWeight="1"
+        app:layout_gravity="fill"
+        app:layout_row="1"
+        app:layout_rowWeight="1">
+
+        <ProgressBar
+            style="?android:attr/progressBarStyleLarge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:indeterminate="true"/>
+    </FrameLayout>
+
+    <fragment
+        android:id="@+id/fragmentPlayback"
+        android:name="ch.indr.threethreefive.ui.fragments.ButtonPlaybackFragment"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@color/background_material_dark"
+        app:layout_column="0"
+        app:layout_columnSpan="3"
+        app:layout_columnWeight="1"
+        app:layout_row="2"
+        app:layout_rowWeight="1"
+        tools:layout="@layout/fragment_button_playback"/>
+
+</android.support.v7.widget.GridLayout>

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2017 Reto Inderbitzin (mail@indr.ch)
+  ~
+  ~ For the full copyright and license information, please view
+  ~ the LICENSE file that was distributed with this source code.
+  -->
+
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/frameLayoutToast"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/background_toast"
+    android:paddingEnd="12dp"
+    android:paddingLeft="12dp"
+    android:paddingRight="12dp"
+    android:paddingStart="12dp">
+
+    <HorizontalScrollView
+        android:id="@+id/scrollViewTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="6dp"
+        android:scrollbars="none">
+
+        <TextView
+            android:id="@+id/textViewTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingEnd="6dp"
+            android:paddingLeft="6dp"
+            android:paddingRight="6dp"
+            android:paddingStart="6dp"
+            android:text="I am a scrolling and dismissable toast!"
+            android:textColor="@color/black"
+            android:textSize="80sp"/>
+
+    </HorizontalScrollView>
+</FrameLayout>
