@@ -17,8 +17,8 @@ import javax.inject.Inject;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import ch.indr.threethreefive.ThreeThreeFiveApp;
 import ch.indr.threethreefive.R;
+import ch.indr.threethreefive.ThreeThreeFiveApp;
 import ch.indr.threethreefive.services.SpeakerType;
 import ch.indr.threethreefive.services.UiModeManagerType;
 
@@ -46,7 +46,7 @@ public class UiSelectionActivity extends AppCompatActivity implements View.OnLon
   @Override protected void onStart() {
     super.onStart();
 
-    speaker.sayUrgent("Press on the left half to launch the list interface. Press on the right half to launch the button interface.");
+    speaker.sayUrgent(R.string.speech_ui_selection);
   }
 
   @OnClick(R.id.buttonButtonView)

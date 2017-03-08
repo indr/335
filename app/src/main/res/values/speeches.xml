@@ -11,6 +11,8 @@
     <string name="speech_welcome_short">Welcome to three three five.</string>
     <string name="speech_welcome_long">Welcome to three three five. Easy navigation to 1000s of online radio stations, as well as media on your device.</string>
 
+    <string name="speech_ui_selection">Select interface: Press on the right half to launch the button interface, left half to launch the list interface.</string>
+
     <string name="speech_interface_instructions"><![CDATA[
 Welcome to the three three five button interface navigation screen.\n\
 \n\
