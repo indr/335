@@ -67,7 +67,9 @@ public class GenresPage extends SpiceBasePage implements RequestListener<Tag[]> 
     Collections.sort(tags, new NameComparator());
 
     for (Tag each : tags) {
-      builder.addLink("/radio/genres/" + each.getValue(), String.format(Locale.US, "%s (%d)", each.getName(), each.getStationCount()));
+      builder.addLink("/radio/genres/" + each.getValue(),
+          each.getName(),
+          String.format(Locale.US, "%d radio stations", each.getStationCount()));
     }
 
     setPageItems(builder);

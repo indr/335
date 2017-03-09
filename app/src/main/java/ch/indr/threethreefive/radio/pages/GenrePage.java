@@ -17,11 +17,9 @@ import com.octo.android.robospice.request.listener.RequestListener;
 
 import ch.indr.threethreefive.libs.Environment;
 import ch.indr.threethreefive.libs.PageItemsBuilder;
-import ch.indr.threethreefive.libs.PageLink;
 import ch.indr.threethreefive.navigation.SpiceBasePage;
 import ch.indr.threethreefive.radio.radioBrowserInfo.api.StationsRequest;
 import ch.indr.threethreefive.radio.radioBrowserInfo.api.json.Station;
-import ch.indr.threethreefive.radio.radioBrowserInfo.api.json.Tag;
 
 public class GenrePage extends SpiceBasePage implements RequestListener<Station[]> {
 
@@ -53,7 +51,7 @@ public class GenrePage extends SpiceBasePage implements RequestListener<Station[
     builder.addToggleFavorite(getCurrentPageLink());
 
     for (Station station : response) {
-      builder.addItem(new PageLink("/radio/stations/" + station.getId(), station.getName()));
+      builder.addLink("/radio/stations/" + station.getId(), station.getName());
     }
 
     setPageItems(builder);

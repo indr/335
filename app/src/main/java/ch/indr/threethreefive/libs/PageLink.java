@@ -15,24 +15,30 @@ import rx.subjects.BehaviorSubject;
 
 public class PageLink extends PageItem {
 
-  public static final PageLink HomePage = new PageLink("/", "Home");
-  public static final PageLink NowPlaying = new PageLink("/now-playing", "Now Playing");
+  public static final PageLink HomePage = new PageLink(Uri.parse("/"), "Home");
+  public static final PageLink NowPlaying = new PageLink(Uri.parse("/now-playing"), "Now Playing");
 
   protected BehaviorSubject<Uri> uri = BehaviorSubject.create();
 
   private final String title;
+  private final String subtitle;
 
   public PageLink(@NonNull Uri uri, @Nullable String name) {
-    this.uri.onNext(uri);
-    this.title = name != null ? name : uri.toString();
+    this(uri, name, null);
   }
 
-  public PageLink(@NonNull String uri, @Nullable String name) {
-    this(Uri.parse(uri), name);
+  public PageLink(@NonNull Uri uri, @Nullable String title, @Nullable String subtitle) {
+    this.uri.onNext(uri);
+    this.title = title != null ? title : uri.toString();
+    this.subtitle = subtitle;
   }
 
   public @NonNull String getName() {
     return title;
+  }
+
+  public @Nullable String getSubtitle() {
+    return subtitle;
   }
 
   @Override public @Nullable String getDescription() {

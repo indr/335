@@ -26,20 +26,26 @@ import ch.indr.threethreefive.libs.PageItem;
 import ch.indr.threethreefive.libs.PreferencesType;
 import ch.indr.threethreefive.ui.utils.OnTouchClickListener;
 
+import static android.view.View.GONE;
+
 /**
  * https://github.com/codepath/android_guides/wiki/Using-an-ArrayAdapter-with-ListView#defining-the-adapter
  */
 public class PageItemsAdapter extends ArrayAdapter<PageItem> implements SharedPreferences.OnSharedPreferenceChangeListener {
 
   private final PreferencesType preferences;
-  private float textSize;
-  private HashSet<TextView> textViews = new HashSet<>();
+  private float textSizeTitle;
+  private float textSizeSubtitle;
+  private HashSet<TextView> titles = new HashSet<>();
+  private HashSet<TextView> subtitles = new HashSet<>();
 
   public PageItemsAdapter(Context context, List<PageItem> pageItems, @NonNull PreferencesType preferences) {
     super(context, 0, pageItems);
 
     this.preferences = preferences;
-    this.textSize = preferences.textSize().get();
+
+    this.textSizeTitle = preferences.textSize().get();
+    this.textSizeSubtitle = this.textSizeTitle / 2;
   }
 
   @Override @NonNull public View getView(int position, View convertView, @NonNull ViewGroup parent) {
@@ -52,27 +58,35 @@ public class PageItemsAdapter extends ArrayAdapter<PageItem> implements SharedPr
     }
 
     // Lookup views for data population and touch listening
-    TextView textView = (TextView) convertView.findViewById(R.id.text1);
+    TextView textViewTitle = (TextView) convertView.findViewById(R.id.textViewTitle);
+    TextView textViewSubtitle = (TextView) convertView.findViewById(R.id.textViewSubtitle);
     HorizontalScrollView scrollView = (HorizontalScrollView) convertView.findViewById(R.id.scrollView1);
     scrollView.scrollTo(0, 0);
 
-    // Put TextView in HashSet so we can update the appearance later
-    textViews.add(textView);
+    // Put TextViews in HashSet so we can update the appearance later
+    titles.add(textViewTitle);
+    subtitles.add(textViewSubtitle);
 
     // Set initial appearance
-    textView.setTextSize(textSize);
+    textViewTitle.setTextSize(textSizeTitle);
+    textViewSubtitle.setTextSize(textSizeSubtitle);
 
     if (pageItem != null) {
       // This may be dangerous:
       // This subscription will hold a reference to the TextView and the PageItem.
       // PageItems are released when a Page is destroyed, so we should be fine.
-      pageItem.description().subscribe(textView::setContentDescription);
-      pageItem.name().subscribe(textView::setText);
+      pageItem.name().subscribe(textViewTitle::setText);
+      pageItem.subtitle().subscribe(text -> {
+        textViewSubtitle.setVisibility(text == null ? GONE : View.VISIBLE);
+        textViewSubtitle.setText(text);
+      });
+      pageItem.description().subscribe(textViewTitle::setContentDescription);
     }
 
     // Attach touch listeners to perform a list item click
     // If you want to puke, see: https://code.google.com/p/android/issues/detail?id=3414
-    textView.setOnTouchListener(new TouchListener(parent, position));
+    textViewTitle.setOnTouchListener(new TouchListener(parent, position));
+    textViewSubtitle.setOnTouchListener(new TouchListener(parent, position));
     scrollView.setOnTouchListener(new TouchListener(parent, position));
 
     // Return the completed view to render on screen
@@ -80,9 +94,13 @@ public class PageItemsAdapter extends ArrayAdapter<PageItem> implements SharedPr
   }
 
   @Override public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
-    this.textSize = preferences.textSize().get();
-    for (TextView textView : textViews) {
-      textView.setTextSize(textSize);
+    this.textSizeTitle = preferences.textSize().get();
+    this.textSizeSubtitle = this.textSizeTitle / 2;
+    for (TextView textView : titles) {
+      textView.setTextSize(textSizeTitle);
+    }
+    for (TextView textView : subtitles) {
+      textView.setTextSize(textSizeSubtitle);
     }
   }
 

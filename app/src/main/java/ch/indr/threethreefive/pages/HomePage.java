@@ -97,7 +97,7 @@ public class HomePage extends Page {
   public class NowPlayingItem extends PageLink {
 
     public NowPlayingItem(@NonNull PlaybackClientType playbackClient) {
-      super("/now-playing", "Now Playing");
+      super(Uri.parse("/now-playing"), "Now Playing");
 
       playbackClient.playbackState()
           .distinctUntilChanged()

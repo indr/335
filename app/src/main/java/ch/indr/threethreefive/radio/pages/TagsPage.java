@@ -50,7 +50,9 @@ public class TagsPage extends SpiceBasePage implements RequestListener<Tag[]> {
 
     for (Tag each : tags) {
       if (each.getStationCount() > 1) {
-        builder.addLink("/radio/tags/" + each.getValue(), String.format(Locale.US, "%s (%d)", each.getName(), each.getStationCount()));
+        builder.addLink("/radio/tags/" + each.getValue(),
+            each.getName(),
+            String.format(Locale.US, "%d radio stations", each.getStationCount()));
       }
     }
 

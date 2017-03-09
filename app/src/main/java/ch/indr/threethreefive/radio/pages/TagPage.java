@@ -17,7 +17,6 @@ import com.octo.android.robospice.request.listener.RequestListener;
 
 import ch.indr.threethreefive.libs.Environment;
 import ch.indr.threethreefive.libs.PageItemsBuilder;
-import ch.indr.threethreefive.libs.PageLink;
 import ch.indr.threethreefive.navigation.SpiceBasePage;
 import ch.indr.threethreefive.radio.radioBrowserInfo.api.StationsRequest;
 import ch.indr.threethreefive.radio.radioBrowserInfo.api.json.Station;
@@ -52,7 +51,7 @@ public class TagPage extends SpiceBasePage implements RequestListener<Station[]>
     builder.addToggleFavorite(getCurrentPageLink());
 
     for (Station station : stations) {
-      builder.addItem(new PageLink("/radio/stations/" + station.getId(), station.getName()));
+      builder.addLink("/radio/stations/" + station.getId(), station.getName());
     }
 
     setPageItems(builder);

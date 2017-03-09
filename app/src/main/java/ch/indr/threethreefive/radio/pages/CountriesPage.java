@@ -69,7 +69,9 @@ public class CountriesPage extends SpiceBasePage implements RequestListener<Coun
     final PageItemsBuilder builder = pageItemsBuilder();
 
     for (Country each : response) {
-      builder.addLink("/radio/countries/" + each.getValue(), String.format(Locale.US, "%s (%d)", each.getName(), each.getStationCount()));
+      builder.addLink("/radio/countries/" + each.getValue(),
+          each.getName(),
+          String.format(Locale.US, "%d radio stations", each.getStationCount()));
     }
 
     setPageItems(builder);

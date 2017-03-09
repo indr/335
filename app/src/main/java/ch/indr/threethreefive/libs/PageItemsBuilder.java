@@ -8,6 +8,7 @@
 package ch.indr.threethreefive.libs;
 
 import android.content.res.Resources;
+import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
@@ -40,13 +41,17 @@ public class PageItemsBuilder {
     return addItem(new ActionCommand(title, action1));
   }
 
-  public PageItemsBuilder addLink(final @NonNull String uri, final @NonNull String name) {
-    items.add(new PageLink(uri, name));
-    return this;
+  public PageItemsBuilder addLink(final @NonNull String uri, final int resourceId) {
+    return addLink(uri, resources.getString(resourceId), null);
   }
 
-  public PageItemsBuilder addLink(final @NonNull String uri, final int resourceId) {
-    return this.addLink(uri, resources.getString(resourceId));
+  public PageItemsBuilder addLink(final @NonNull String uri, final @NonNull String name) {
+    return addLink(uri, name, null);
+  }
+
+  public PageItemsBuilder addLink(String uri, String title, String subtitle) {
+    items.add(new PageLink(Uri.parse(uri), title, subtitle));
+    return this;
   }
 
   public PageItemsBuilder addText(final @NonNull String name) {
@@ -66,4 +71,5 @@ public class PageItemsBuilder {
     items.add(new ToggleFavorite(this.favoritesStores, pageLink));
     return this;
   }
+
 }

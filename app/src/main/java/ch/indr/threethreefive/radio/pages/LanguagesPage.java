@@ -49,7 +49,9 @@ public class LanguagesPage extends SpiceBasePage implements RequestListener<Lang
     final PageItemsBuilder builder = pageItemsBuilder();
 
     for (Language each : languages) {
-      builder.addLink("/radio/languages/" + each.getValue(), String.format(Locale.US, "%s (%d)", each.getName(), each.getStationCount()));
+      builder.addLink("/radio/languages/" + each.getValue(),
+          each.getName(),
+          String.format(Locale.US, "%d radio stations", each.getStationCount()));
     }
 
     setPageItems(builder);

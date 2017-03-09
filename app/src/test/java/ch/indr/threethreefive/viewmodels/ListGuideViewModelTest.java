@@ -8,6 +8,7 @@
 package ch.indr.threethreefive.viewmodels;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
@@ -39,7 +40,7 @@ public class ListGuideViewModelTest extends ThreeThreeFiveRobolectricTestCase {
     final TestSubscriber<PageLink> showPage = new TestSubscriber<>();
 
     vm.outputs.showPage().subscribe(showPage);
-    vm.pageItemClick(new PageLink("/page/link", null));
+    vm.pageItemClick(new PageLink(Uri.parse("/page/link"), null));
 
     showPage.assertValueCount(1);
   }
