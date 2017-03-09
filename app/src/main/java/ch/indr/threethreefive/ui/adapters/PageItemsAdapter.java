@@ -45,7 +45,7 @@ public class PageItemsAdapter extends ArrayAdapter<PageItem> implements SharedPr
     this.preferences = preferences;
 
     this.textSizeTitle = preferences.textSize().get();
-    this.textSizeSubtitle = this.textSizeTitle / 2;
+    this.textSizeSubtitle = this.textSizeTitle / 3 * 2;
   }
 
   @Override @NonNull public View getView(int position, View convertView, @NonNull ViewGroup parent) {
@@ -95,7 +95,7 @@ public class PageItemsAdapter extends ArrayAdapter<PageItem> implements SharedPr
 
   @Override public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
     this.textSizeTitle = preferences.textSize().get();
-    this.textSizeSubtitle = this.textSizeTitle / 2;
+    this.textSizeSubtitle = this.textSizeTitle / 3 * 2;
     for (TextView textView : titles) {
       textView.setTextSize(textSizeTitle);
     }

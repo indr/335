@@ -17,10 +17,10 @@ import com.octo.android.robospice.request.listener.RequestListener;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 
 import ch.indr.threethreefive.libs.Environment;
 import ch.indr.threethreefive.libs.PageItemsBuilder;
+import ch.indr.threethreefive.libs.utils.StringUtils;
 import ch.indr.threethreefive.navigation.SpiceBasePage;
 import ch.indr.threethreefive.radio.radioBrowserInfo.api.StationsRequest;
 import ch.indr.threethreefive.radio.radioBrowserInfo.api.json.Station;
@@ -82,10 +82,24 @@ public class GenrePage extends SpiceBasePage implements RequestListener<Station[
   private void addStationLink(PageItemsBuilder builder, List<Station> stations) {
     for (Station station : stations) {
       builder.addLink("/radio/stations/" + station.getId(),
-          station.getName(),
-          String.format(Locale.US, "%s, %s",
-              station.getCountry(), station.getLanguage()));
+          station.getName(), makeSubtitle(station));
     }
+  }
+
+  private String makeSubtitle(Station station) {
+    final String country = station.getCountry();
+    final String language = station.getLanguage();
+
+    if (StringUtils.isNotEmpty(country) && StringUtils.isNotEmpty(language)) {
+      return String.format("Country: %s, Language: %s", country, language);
+    }
+    if (StringUtils.isNotEmpty(country)) {
+      return "Country: " + country;
+    }
+    if (StringUtils.isNotEmpty(language)) {
+      return "Language: " + language;
+    }
+    return null;
   }
 
   private void populateLists(Station[] response) {
