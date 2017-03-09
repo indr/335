@@ -73,23 +73,31 @@ public class StationPage extends SpiceBasePage implements RequestListener<Statio
     builder.addItem(new AddToPlaylist(mediaItem));
     builder.addToggleFavorite(getCurrentPageLink());
 
+    // Country
     if (station.getCountry() != null) {
       builder.addLink("/radio/countries/" + station.getCountry(), "Country: " + station.getCountry());
     }
+
+    // Language
     if (station.getLanguage() != null) {
       builder.addLink("/radio/languages/" + station.getLanguage(), "Language: " + station.getLanguage());
     }
+
+    // Genres
     if (station.getTags() != null) {
-      builder.addLink(String.format("/radio/stations/%s/tags", station.getId()), "Tags: " + StringUtils.join(station.getTags(), ", "));
+      builder.addLink(String.format("/radio/stations/%s/genres", station.getId()), "Genres: " + StringUtils.join(station.getTags(), ", "));
     }
 
+    // Votes
     builder.addText("Votes: " + station.getSummedVotes());
-    if (station.getLastChangeTime() != null) {
 
+    // Updated
+    if (station.getLastChangeTime() != null) {
       DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.MEDIUM, DateFormat.SHORT);
       builder.addText("Updated: " + dateFormat.format(station.getLastChangeTime()));
     }
 
+    // Link to Website
     if (station.getHomepage() != null) {
       builder.addItem(new OpenWebsite(getContext(), station.getHomepage()));
     }

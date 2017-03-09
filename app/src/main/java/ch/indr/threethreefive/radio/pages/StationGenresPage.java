@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016 Reto Inderbitzin (mail@indr.ch)
+ * Copyright (c) 2017 Reto Inderbitzin (mail@indr.ch)
  *
  * For the full copyright and license information, please view
  * the LICENSE file that was distributed with this source code.
@@ -15,45 +15,48 @@ import android.support.annotation.NonNull;
 import com.octo.android.robospice.persistence.exception.SpiceException;
 import com.octo.android.robospice.request.listener.RequestListener;
 
-import java.util.Locale;
-
 import ch.indr.threethreefive.libs.Environment;
 import ch.indr.threethreefive.libs.PageItemsBuilder;
 import ch.indr.threethreefive.navigation.SpiceBasePage;
-import ch.indr.threethreefive.radio.radioBrowserInfo.api.TagsRequest;
-import ch.indr.threethreefive.radio.radioBrowserInfo.api.json.Tag;
+import ch.indr.threethreefive.radio.radioBrowserInfo.api.StationRequest;
+import ch.indr.threethreefive.radio.radioBrowserInfo.api.json.Station;
 
-public class TagsPage extends SpiceBasePage implements RequestListener<Tag[]> {
+public class StationGenresPage extends SpiceBasePage implements RequestListener<Station[]> {
 
-  public TagsPage(Environment environment) {
+  private String stationId;
+
+  public StationGenresPage(Environment environment) {
     super(environment);
+
+    setTitle("Genres");
   }
 
   @Override public void onCreate(@NonNull Context context, Uri uri, Bundle bundle) {
     super.onCreate(context, uri, bundle);
 
-    setTitle("Tags");
+    this.stationId = bundle.getString("id");
   }
 
   @Override public void onStart() {
     super.onStart();
 
-    executeRequest(new TagsRequest("hidebroken=true&order=value"), this);
+    executeRequest(new StationRequest(stationId), this);
   }
 
   @Override public void onRequestFailure(SpiceException spiceException) {
     handle(spiceException);
   }
 
-  @Override public void onRequestSuccess(Tag[] tags) {
+  @Override public void onRequestSuccess(Station[] stations) {
+    if (stations.length != 1) {
+      handle(String.format("Could not find radion station %s.", this.stationId));
+    }
+    Station station = stations[0];
+
     final PageItemsBuilder builder = pageItemsBuilder();
 
-    for (Tag each : tags) {
-      if (each.getStationCount() > 1) {
-        builder.addLink("/radio/tags/" + each.getValue(),
-            each.getName(),
-            String.format(Locale.US, "%d radio stations", each.getStationCount()));
-      }
+    for (String tag : station.getTags()) {
+      builder.addLink("/radio/genres/" + tag, tag);
     }
 
     setPageItems(builder);

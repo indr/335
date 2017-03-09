@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2017 Reto Inderbitzin (mail@indr.ch)
+  ~
+  ~ For the full copyright and license information, please view
+  ~ the LICENSE file that was distributed with this source code.
+  -->
+
+<resources>
+    <string-array name="excluded_from_top_genres">
+        <item>adult contemporary</item>
+        <item>christian</item>
+        <item>college radio</item>
+        <item>commercial</item>
+        <item>community radio</item>
+        <item>hot adult contemporary</item>
+        <item>information</item>
+        <item>local music</item>
+        <item>local news</item>
+        <item>npr</item>
+        <item>public radio</item>
+        <item>top 40</item>
+    </string-array>
+
+    <string-array name="excluded_from_more_genres">
+        <item>320kbps</item>
+        <item>apm</item>
+        <item>m3u8</item>
+        <item>outre-mer</item>
+        <item>pri</item>
+        <item>top 40</item>
+        <item>variety</item>
+    </string-array>
+</resources>

@@ -33,7 +33,6 @@ public class IndexPage extends Page {
     builder.addLink("/radio/genres", "Genres");
     builder.addLink("/radio/countries", "Countries");
     builder.addLink("/radio/languages", "Languages");
-    builder.addLink("/radio/tags", "Tags");
 
     setPageItems(builder);
   }
