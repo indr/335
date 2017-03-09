@@ -17,7 +17,7 @@ package com.example.android.uamp.utils;
 
 import android.util.Log;
 
-import com.example.android.uamp.BuildConfig;
+import ch.indr.threethreefive.BuildConfig;
 
 public class LogHelper {
 
