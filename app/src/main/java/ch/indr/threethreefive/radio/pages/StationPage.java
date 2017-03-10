@@ -19,6 +19,8 @@ import org.apache.commons.lang3.StringUtils;
 
 import java.text.DateFormat;
 
+import javax.inject.Inject;
+
 import ch.indr.threethreefive.commands.AddToPlaylist;
 import ch.indr.threethreefive.commands.OpenWebsite;
 import ch.indr.threethreefive.commands.PlayMedia;
@@ -29,10 +31,13 @@ import ch.indr.threethreefive.navigation.SpiceBasePage;
 import ch.indr.threethreefive.radio.RadioMediaItemFactory;
 import ch.indr.threethreefive.radio.radioBrowserInfo.api.StationRequest;
 import ch.indr.threethreefive.radio.radioBrowserInfo.api.json.Station;
+import ch.indr.threethreefive.services.UiModeManagerType;
 
 public class StationPage extends SpiceBasePage implements RequestListener<Station[]> {
 
   private String stationId;
+
+  protected @Inject UiModeManagerType uiModeManager;
 
   public StationPage(Environment environment) {
     super(environment);
@@ -42,6 +47,8 @@ public class StationPage extends SpiceBasePage implements RequestListener<Statio
 
   @Override public void onCreate(@NonNull Context context, Uri uri, Bundle bundle) {
     super.onCreate(context, uri, bundle);
+
+    component().inject(this);
 
     this.stationId = bundle.getString("id");
   }
@@ -98,10 +105,14 @@ public class StationPage extends SpiceBasePage implements RequestListener<Statio
     }
 
     // Link to Website
-    if (station.getHomepage() != null) {
+    if (!isButtonView() && station.getHomepage() != null) {
       builder.addItem(new OpenWebsite(getContext(), station.getHomepage()));
     }
 
     setPageItems(builder);
+  }
+
+  private boolean isButtonView() {
+    return uiModeManager.getCurrentUiMode() == UiModeManagerType.UI_MODE_BUTTONS;
   }
 }
