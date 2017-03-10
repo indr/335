@@ -47,9 +47,17 @@ public class SongsPage extends Page {
     builder.addToggleFavorite(getCurrentPageLink());
 
     for (MusicStore.Song song : songs) {
-      builder.addLink(makeSongUri(song.getId()), song.getName());
+      builder.addLink(makeSongUri(song.getId()), song.getName(), makeSubtitle(song), makeDescription(song));
     }
 
     setPageItems(builder);
+  }
+
+  private String makeDescription(MusicStore.Song song) {
+    return song.getName() + " by " + song.getArtist();
+  }
+
+  private String makeSubtitle(MusicStore.Song song) {
+    return song.getArtist();
   }
 }

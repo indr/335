@@ -39,13 +39,20 @@ public class MusicStore {
   public ArrayList<Artist> queryArtists(String selection) {
     ArrayList<Artist> result = new ArrayList<>();
     Uri uri = MediaStore.Audio.Artists.EXTERNAL_CONTENT_URI;
-    Cursor cursor = getContentResolver().query(uri, new String[]{"_id", "artist"},
+    Cursor cursor = getContentResolver().query(uri,
+        new String[]{"_id", "artist",
+            MediaStore.Audio.ArtistColumns.NUMBER_OF_ALBUMS,
+            MediaStore.Audio.ArtistColumns.NUMBER_OF_TRACKS
+        },
         selection, null, "artist");
     if (cursor != null && cursor.moveToFirst()) {
       do {
         result.add(new Artist(
             cursor.getString(0),
-            cursor.getString(1)));
+            cursor.getString(1),
+            cursor.getInt(2),
+            cursor.getInt(3)
+        ));
       }
       while (cursor.moveToNext());
       cursor.close();
@@ -69,7 +76,8 @@ public class MusicStore {
 
     Uri uri = MediaStore.Audio.Albums.EXTERNAL_CONTENT_URI;
     Cursor cursor = getContentResolver().query(uri,
-        new String[]{"_id", "album", "artist", "artist_id"},
+        new String[]{"_id", "album", "artist", "artist_id",
+            MediaStore.Audio.AlbumColumns.NUMBER_OF_SONGS},
         selection, null, "album");
 
     if (cursor != null && cursor.moveToFirst()) {
@@ -78,7 +86,9 @@ public class MusicStore {
             cursor.getString(0),
             cursor.getString(1),
             cursor.getString(2),
-            cursor.getString(3)));
+            cursor.getString(3),
+            cursor.getInt(4)
+        ));
       }
       while (cursor.moveToNext());
       cursor.close();
@@ -186,10 +196,14 @@ public class MusicStore {
   public class Artist {
     private final String id;
     private final String name;
+    private final int numberOfAlbums;
+    private final int numberOfTracks;
 
-    public Artist(String id, String name) {
+    public Artist(String id, String name, int numberOfAlbums, int numberOfTracks) {
       this.id = id;
       this.name = name;
+      this.numberOfAlbums = numberOfAlbums;
+      this.numberOfTracks = numberOfTracks;
     }
 
     public String getId() {
@@ -199,6 +213,14 @@ public class MusicStore {
     public String getName() {
       return name;
     }
+
+    public int getNumberOfAlbums() {
+      return numberOfAlbums;
+    }
+
+    public int getNumberOfTracks() {
+      return numberOfTracks;
+    }
   }
 
   public class Album {
@@ -206,12 +228,14 @@ public class MusicStore {
     private final String name;
     private final String artist;
     private final String artistId;
+    private final int numberOfTracks;
 
-    public Album(String id, String name, String artist, String artistId) {
+    public Album(String id, String name, String artist, String artistId, int numberOfTracks) {
       this.id = id;
       this.name = name;
       this.artist = artist;
       this.artistId = artistId;
+      this.numberOfTracks = numberOfTracks;
     }
 
     public String getId() {
@@ -228,6 +252,10 @@ public class MusicStore {
 
     public String getArtistId() {
       return artistId;
+    }
+
+    public int getNumberOfTracks() {
+      return numberOfTracks;
     }
   }
 

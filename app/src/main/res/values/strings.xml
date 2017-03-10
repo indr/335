@@ -22,6 +22,16 @@
 
     <string name="music_on_your_device">Music on your Device</string>
 
+    <plurals name="music_albums">
+        <item quantity="one">%d album</item>
+        <item quantity="other">%d albums</item>
+    </plurals>
+
+    <plurals name="music_tracks">
+        <item quantity="one">%d song</item>
+        <item quantity="other">%d songs</item>
+    </plurals>
+
     <!-- uamp.xml -->
     <string name="favorite">Favorite</string>
     <string name="error_no_metadata">Unable to retrieve metadata.</string>

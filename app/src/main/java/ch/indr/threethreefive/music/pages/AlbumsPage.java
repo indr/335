@@ -14,6 +14,7 @@ import android.support.annotation.NonNull;
 
 import java.util.List;
 
+import ch.indr.threethreefive.R;
 import ch.indr.threethreefive.libs.Environment;
 import ch.indr.threethreefive.libs.PageItemsBuilder;
 import ch.indr.threethreefive.music.MusicStore;
@@ -38,9 +39,21 @@ public class AlbumsPage extends Page {
 
     final List<MusicStore.Album> albums = musicStore.queryAlbums(null);
     for (MusicStore.Album album : albums) {
-      builder.addLink(makeAlbumUri(album.getId()), album.getName());
+      builder.addLink(makeAlbumUri(album.getId()), album.getName(), makeSubtitle(album), makeDescription(album));
     }
 
     setPageItems(builder);
+  }
+
+  private String makeDescription(MusicStore.Album album) {
+    final int numberOfTracks = album.getNumberOfTracks();
+    return album.getName() + " by " + album.getArtist() + ", "
+        + getResources().getQuantityString(R.plurals.music_tracks, numberOfTracks, numberOfTracks);
+  }
+
+  private String makeSubtitle(MusicStore.Album album) {
+    final int numberOfTracks = album.getNumberOfTracks();
+    return album.getArtist() + ", "
+        + getResources().getQuantityString(R.plurals.music_tracks, numberOfTracks, numberOfTracks);
   }
 }

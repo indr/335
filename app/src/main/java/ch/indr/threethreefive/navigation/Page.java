@@ -1,6 +1,7 @@
 package ch.indr.threethreefive.navigation;
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.CallSuper;
@@ -9,8 +10,8 @@ import android.support.annotation.Nullable;
 
 import java.util.List;
 
-import ch.indr.threethreefive.ThreeThreeFiveApp;
 import ch.indr.threethreefive.AppComponent;
+import ch.indr.threethreefive.ThreeThreeFiveApp;
 import ch.indr.threethreefive.favorites.FavoritesStore;
 import ch.indr.threethreefive.libs.Environment;
 import ch.indr.threethreefive.libs.PageCommand;
@@ -208,6 +209,10 @@ public abstract class Page implements PageType {
 
   protected Context getContext() {
     return context;
+  }
+
+  protected Resources getResources() {
+    return context.getResources();
   }
 
   protected @NonNull ThreeThreeFiveApp application() {
