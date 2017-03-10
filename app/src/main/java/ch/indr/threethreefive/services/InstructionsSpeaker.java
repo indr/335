@@ -48,6 +48,7 @@ public class InstructionsSpeaker implements InstructionsSpeakerType {
     for (int i = 1; i < parts.length; i++) {
       String part = parts[i];
       speaker.sayQueued(" — ");
+      speaker.sayQueued(" — ");
       speaker.sayQueued(part);
     }
   }
