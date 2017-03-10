@@ -7,25 +7,17 @@ import com.example.android.uamp.playback.QueueManagerType;
 
 import java.util.List;
 
-import ch.indr.threethreefive.libs.MediaItem;
 import ch.indr.threethreefive.libs.Environment;
+import ch.indr.threethreefive.libs.MediaItem;
 import ch.indr.threethreefive.libs.PageCommand;
 
 public class PlayMedias extends PageCommand {
-  private String name;
+
   private List<MediaItem> mediaItems;
 
-  public PlayMedias(String name, List<MediaItem> mediaItems) {
-    this.name = name;
+  public PlayMedias(final @NonNull String title, final @NonNull List<MediaItem> mediaItems) {
+    super(title);
     this.mediaItems = mediaItems;
-  }
-
-  @NonNull @Override public String getName() {
-    return name;
-  }
-
-  @Override public String getDescription() {
-    return name;
   }
 
   @Override public void execute(@NonNull Environment environment) {

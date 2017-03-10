@@ -15,45 +15,55 @@ import rx.subjects.BehaviorSubject;
 
 public abstract class PageItem {
 
-  protected BehaviorSubject<String> name = BehaviorSubject.create();
+  protected BehaviorSubject<String> title = BehaviorSubject.create();
   protected BehaviorSubject<String> subtitle = BehaviorSubject.create();
   protected BehaviorSubject<String> description = BehaviorSubject.create();
 
-  // TODO: Rename to getTitle()
-  public @NonNull String getName() {
-    return name.getValue();
+  protected PageItem(final @NonNull String title) {
+    this.title.onNext(title);
+    this.subtitle.onNext((String) null);
+    this.description.onNext(title);
   }
 
-  // TODO: Rename to title()
-  public @NonNull Observable<String> name() {
-    if (!name.hasValue()) {
-      // TODO: Trigger onNext in setter
-      name.onNext(getName());
-    }
-    return name;
+  protected PageItem(final @NonNull String title, final @Nullable String subtitle, final @NonNull String description) {
+    this.title.onNext(title);
+    this.subtitle.onNext(subtitle);
+    this.description.onNext(description);
   }
 
-  public @Nullable String getSubtitle() {
+  public final @NonNull String getTitle() {
+    return title.getValue();
+  }
+
+  protected void setTitle(final @NonNull String title) {
+    this.title.onNext(title);
+  }
+
+  public final @NonNull Observable<String> title() {
+    return title;
+  }
+
+  public final @Nullable String getSubtitle() {
     return subtitle.getValue();
   }
 
-  public @NonNull Observable<String> subtitle() {
-    if (!subtitle.hasValue()) {
-      // TODO: Trigger onNext in setter
-      subtitle.onNext(getSubtitle());
-    }
+  protected void setSubtitle(final @Nullable String subtitle) {
+    this.subtitle.onNext(subtitle);
+  }
+
+  public final @NonNull Observable<String> subtitle() {
     return subtitle;
   }
 
-  public @Nullable String getDescription() {
-    return getName();
+  public final @Nullable String getDescription() {
+    return getTitle();
   }
 
-  public @NonNull Observable<String> description() {
-    if (!description.hasValue()) {
-      // TODO: Trigger onNext in setter
-      description.onNext(getDescription());
-    }
+  protected void setDescription(final @Nullable String description) {
+    this.description.onNext(description);
+  }
+
+  public final @NonNull Observable<String> description() {
     return description;
   }
 }

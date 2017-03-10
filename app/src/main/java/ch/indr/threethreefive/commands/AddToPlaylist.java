@@ -15,13 +15,13 @@ public class AddToPlaylist extends PageCommand {
   private List<MediaItem> mediaItems;
 
   public AddToPlaylist(MediaItem mediaItem) {
-    this.name.onNext("Add to Playlist");
+    super("Add to Playlist");
     this.mediaItems = new ArrayList<>();
     this.mediaItems.add(mediaItem);
   }
 
   public AddToPlaylist(@NonNull String name, @NonNull List<MediaItem> mediaItems) {
-    this.name.onNext("Add to Playlist");
+    super("Add to Playlist");
     this.mediaItems = new ArrayList<>(mediaItems);
   }
 

@@ -12,11 +12,12 @@ import ch.indr.threethreefive.libs.MediaItem;
 import ch.indr.threethreefive.libs.PageCommand;
 
 public class PlayMedia extends PageCommand {
+
   private MediaItem mediaItem;
 
-  public PlayMedia(MediaItem mediaItem) {
+  public PlayMedia(final @NonNull MediaItem mediaItem) {
+    super("Press to Play");
     this.mediaItem = mediaItem;
-    this.name.onNext("Press to Play");
   }
 
   @Override public void execute(@NonNull Environment environment) {

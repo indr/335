@@ -75,7 +75,7 @@ public class PageItemsAdapter extends ArrayAdapter<PageItem> implements SharedPr
       // This may be dangerous:
       // This subscription will hold a reference to the TextView and the PageItem.
       // PageItems are released when a Page is destroyed, so we should be fine.
-      pageItem.name().subscribe(textViewTitle::setText);
+      pageItem.title().subscribe(textViewTitle::setText);
       pageItem.subtitle().subscribe(text -> {
         textViewSubtitle.setVisibility(text == null ? GONE : View.VISIBLE);
         textViewSubtitle.setText(text);

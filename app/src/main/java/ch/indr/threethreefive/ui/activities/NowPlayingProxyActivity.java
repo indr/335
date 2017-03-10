@@ -45,7 +45,7 @@ public class NowPlayingProxyActivity extends AppCompatActivity {
       newIntent.putExtra(IntentKey.PAGE_URI, "/playlist/" + queueItem.getQueueId());
     } else {
       PageLink pageLink = PageLink.NowPlaying;
-      newIntent.putExtra(IntentKey.PAGE_TITLE, pageLink.getName());
+      newIntent.putExtra(IntentKey.PAGE_TITLE, pageLink.getTitle());
       newIntent.putExtra(IntentKey.PAGE_URI, pageLink.getUri().toString());
     }
 

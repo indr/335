@@ -86,8 +86,7 @@ public class PreferencesPage extends Page {
   private class ResetAppLaunchCounter extends PageCommand {
 
     ResetAppLaunchCounter() {
-      super();
-      name.onNext("Reset App Launch Counter");
+      super("Reset App Launch Counter");
     }
 
     @Override public void execute(@NonNull Environment environment) {
@@ -100,8 +99,7 @@ public class PreferencesPage extends Page {
   private class ResetButtonUiLaunchCounter extends PageCommand {
 
     ResetButtonUiLaunchCounter() {
-      super();
-      name.onNext("Reset Button UI Launch Counter");
+      super("Reset Button UI Launch Counter");
     }
 
     @Override public void execute(@NonNull Environment environment) {

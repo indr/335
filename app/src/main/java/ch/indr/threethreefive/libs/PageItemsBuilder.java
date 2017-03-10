@@ -37,39 +37,41 @@ public class PageItemsBuilder {
     return this;
   }
 
-  public PageItemsBuilder addItem(String title, Action1<Environment> action1) {
-    return addItem(new ActionCommand(title, action1));
+  public PageItemsBuilder addItem(final @NonNull String title, Action1<Environment> action) {
+    return addItem(new ActionCommand(title, action));
   }
 
-  public PageItemsBuilder addLink(final @NonNull String uri, final int resourceId) {
-    return addLink(uri, resources.getString(resourceId), null);
+  public PageItemsBuilder addLink(final @NonNull String uri, final int title) {
+    return addLink(uri, resources.getString(title));
   }
 
-  public PageItemsBuilder addLink(final @NonNull String uri, final @NonNull String name) {
-    return addLink(uri, name, null);
-  }
-
-  public PageItemsBuilder addLink(String uri, String title, String subtitle) {
-    items.add(new PageLink(Uri.parse(uri), title, subtitle));
+  public PageItemsBuilder addLink(final @NonNull String uri, final @NonNull String title) {
+    items.add(new PageLink(Uri.parse(uri), title));
     return this;
   }
 
-  public PageItemsBuilder addText(final @NonNull String name) {
-    return addText(name, null);
-  }
-
-  public PageItemsBuilder addText(final @NonNull String name, final @Nullable String description) {
-    items.add(new TextItem(name, description));
+  public PageItemsBuilder addLink(final @NonNull String uri, final @NonNull String title, final @Nullable String subtitle, final @NonNull String description) {
+    items.add(new PageLink(Uri.parse(uri), title, subtitle, description));
     return this;
   }
 
-  public List<PageItem> build() {
-    return items;
+  public PageItemsBuilder addText(final @NonNull String title) {
+    items.add(new TextItem(title));
+    return this;
+  }
+
+  public PageItemsBuilder addText(final @NonNull String title, final @Nullable String subtitle, final @NonNull String description) {
+    items.add(new TextItem(title, subtitle, description));
+    return this;
   }
 
   public PageItemsBuilder addToggleFavorite(PageLink pageLink) {
     items.add(new ToggleFavorite(this.favoritesStores, pageLink));
     return this;
+  }
+
+  public List<PageItem> build() {
+    return items;
   }
 
 }

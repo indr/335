@@ -97,7 +97,8 @@ public class GenresPage extends SpiceBasePage implements RequestListener<Tag[]> 
     for (Tag each : genres) {
       builder.addLink("/radio/genres/" + each.getValue(),
           each.getName(),
-          String.format(Locale.US, "%d radio stations", each.getStationCount()));
+          String.format(Locale.US, "%d radio stations", each.getStationCount()),
+          each.getName());
     }
   }
 

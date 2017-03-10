@@ -11,7 +11,6 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.v4.media.MediaDescriptionCompat;
 import android.support.v4.media.session.MediaControllerCompat;
 import android.support.v4.media.session.MediaSessionCompat.QueueItem;
@@ -80,6 +79,7 @@ public class QueuePage extends Page {
     private final long firstQueueItemId;
 
     PlayQueue(long firstQueueItemId) {
+      super("Play Playlist");
       this.firstQueueItemId = firstQueueItemId;
     }
 
@@ -90,31 +90,19 @@ public class QueuePage extends Page {
       controls.skipToQueueItem(firstQueueItemId);
       controls.play();
     }
-
-    @NonNull @Override public String getName() {
-      return "Play Playlist";
-    }
-
-    @Nullable @Override public String getDescription() {
-      return null;
-    }
   }
 
   private class ClearQueue extends PageCommand {
+
+    ClearQueue() {
+      super("Clear Playlist");
+    }
 
     @Override public void execute(@NonNull Environment environment) {
       environment.queueManager().clearQueue();
       environment.toastManager().toast("Playlist cleared");
       environment.speaker().command().playlistCleared();
       QueuePage.this.reloadItems();
-    }
-
-    @NonNull @Override public String getName() {
-      return "Clear Playlist";
-    }
-
-    @Nullable @Override public String getDescription() {
-      return null;
     }
   }
 }

@@ -113,7 +113,7 @@ public class HomePage extends Page {
 
       final MediaSessionCompat.QueueItem queueItem = stateAndQueueItem.second;
       String prefix = PlaybackStateUtils.toString(stateAndQueueItem.first);
-      name.onNext(prefix + ": " + MediaDescriptionUtils.fullTitle(queueItem.getDescription()));
+      setTitle(prefix + ": " + MediaDescriptionUtils.fullTitle(queueItem.getDescription()));
       uri.onNext(Uri.parse("/playlist/" + queueItem.getQueueId()));
     }
   }

@@ -54,7 +54,9 @@ public class RecentsPage extends SpiceBasePage implements RequestListener<Statio
 
     for (Station station : stations) {
       builder.addLink("/radio/stations/" + station.getId(),
-          station.getName(), makeSubtitle(station));
+          station.getName(),
+          makeSubtitle(station),
+          station.getName());
     }
 
     setPageItems(builder);

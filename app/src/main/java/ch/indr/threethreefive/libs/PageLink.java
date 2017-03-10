@@ -11,6 +11,7 @@ import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
+import rx.Observable;
 import rx.subjects.BehaviorSubject;
 
 public class PageLink extends PageItem {
@@ -20,36 +21,29 @@ public class PageLink extends PageItem {
 
   protected BehaviorSubject<Uri> uri = BehaviorSubject.create();
 
-  private final String title;
-  private final String subtitle;
-
-  public PageLink(@NonNull Uri uri, @Nullable String name) {
-    this(uri, name, null);
+  public PageLink(@NonNull Uri uri, final @NonNull String title) {
+    super(title);
+    setUri(uri);
   }
 
-  public PageLink(@NonNull Uri uri, @Nullable String title, @Nullable String subtitle) {
-    this.uri.onNext(uri);
-    this.title = title != null ? title : uri.toString();
-    this.subtitle = subtitle;
-  }
-
-  public @NonNull String getName() {
-    return title;
-  }
-
-  public @Nullable String getSubtitle() {
-    return subtitle;
-  }
-
-  @Override public @Nullable String getDescription() {
-    return null;
+  public PageLink(final @NonNull Uri uri, final @NonNull String title, final @Nullable String subtitle, final @NonNull String description) {
+    super(title, subtitle, description);
+    setUri(uri);
   }
 
   public @NonNull Uri getUri() {
     return uri.getValue();
   }
 
+  protected void setUri(final @NonNull Uri uri) {
+    this.uri.onNext(uri);
+  }
+
+  public @NonNull Observable<Uri> uri() {
+    return this.uri;
+  }
+
   @Override public @NonNull String toString() {
-    return "PageLink [name=" + title + ", uri=" + uri + "]";
+    return "PageLink [title=" + title.getValue() + ", uri=" + uri.getValue() + "]";
   }
 }

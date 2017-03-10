@@ -16,22 +16,15 @@ public class ToggleFavorite extends PageCommand {
   private Favorite favorite;
 
   public ToggleFavorite(@NonNull FavoritesStore favoritesStore, @NonNull PageLink pageLink) {
+    super("Add to Favorites");
 
-    this.favorite = new Favorite(0, pageLink.getName(), pageLink.getUri().toString(), null);
+    this.favorite = new Favorite(0, pageLink.getTitle(), pageLink.getUri().toString(), null);
 
     this.isFavorite.onNext(favoritesStore.isFavorite(pageLink));
 
     this.isFavorite
         .map(v -> v ? "Remove from Favorites" : "Add to Favorites")
-        .subscribe(this.name);
-  }
-
-  @Override public @NonNull String getName() {
-    return this.isFavorite.getValue() ? "Remove from Favorites" : "Add to Favorites";
-  }
-
-  @Override public String getDescription() {
-    return getName();
+        .subscribe(this.title);
   }
 
   @Override public void execute(@NonNull Environment environment) {

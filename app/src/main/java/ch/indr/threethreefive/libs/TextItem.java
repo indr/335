@@ -12,19 +12,11 @@ import android.support.annotation.Nullable;
 
 public class TextItem extends PageItem {
 
-  private final String title;
-  private final String description;
-
-  public TextItem(@NonNull String title, @Nullable String description) {
-    this.title = title;
-    this.description = description;
+  public TextItem(final @NonNull String title) {
+    super(title);
   }
 
-  @NonNull @Override public String getName() {
-    return title;
-  }
-
-  @Nullable @Override public String getDescription() {
-    return description;
+  public TextItem(final @NonNull String title, final @Nullable String subtitle, final @NonNull String description) {
+    super(title, subtitle, description);
   }
 }

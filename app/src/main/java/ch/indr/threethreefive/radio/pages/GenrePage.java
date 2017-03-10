@@ -82,7 +82,7 @@ public class GenrePage extends SpiceBasePage implements RequestListener<Station[
   private void addStationLink(PageItemsBuilder builder, List<Station> stations) {
     for (Station station : stations) {
       builder.addLink("/radio/stations/" + station.getId(),
-          station.getName(), makeSubtitle(station));
+          station.getName(), makeSubtitle(station), station.getName());
     }
   }
 

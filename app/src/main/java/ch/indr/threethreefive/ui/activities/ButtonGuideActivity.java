@@ -175,7 +175,7 @@ public class ButtonGuideActivity extends BaseActivity<ButtonGuideViewModel> {
    */
   private void showPage(@NonNull PageLink pageLink) {
     Intent intent = new Intent(this, this.getClass());
-    intent.putExtra(IntentKey.PAGE_TITLE, pageLink.getName());
+    intent.putExtra(IntentKey.PAGE_TITLE, pageLink.getTitle());
     intent.putExtra(IntentKey.PAGE_URI, pageLink.getUri().toString());
 
     // Send intent to ViewModel, instead of starting a new activity

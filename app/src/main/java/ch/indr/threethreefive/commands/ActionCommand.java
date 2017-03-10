@@ -8,30 +8,21 @@
 package ch.indr.threethreefive.commands;
 
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 
 import ch.indr.threethreefive.libs.Environment;
 import ch.indr.threethreefive.libs.PageCommand;
 import rx.functions.Action1;
 
 public class ActionCommand extends PageCommand {
-  private final String title;
-  private final Action1<Environment> action1;
 
-  public ActionCommand(String title, Action1<Environment> action1) {
-    this.title = title;
-    this.action1 = action1;
+  private final Action1<Environment> action;
+
+  public ActionCommand(final @NonNull String title, final @NonNull Action1<Environment> action) {
+    super(title);
+    this.action = action;
   }
 
   @Override public void execute(@NonNull Environment environment) {
-    action1.call(environment);
-  }
-
-  @NonNull @Override public String getName() {
-    return title;
-  }
-
-  @Nullable @Override public String getDescription() {
-    return null;
+    action.call(environment);
   }
 }

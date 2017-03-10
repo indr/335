@@ -334,7 +334,7 @@ public class ListPlaybackFragment extends BaseFragment<ListPlaybackFragmentViewM
       intent.putExtra(IntentKey.PAGE_URI, "/playlist/" + queueItem.getQueueId());
     } else {
       PageLink pageLink = PageLink.NowPlaying;
-      intent.putExtra(IntentKey.PAGE_TITLE, pageLink.getName());
+      intent.putExtra(IntentKey.PAGE_TITLE, pageLink.getTitle());
       intent.putExtra(IntentKey.PAGE_URI, pageLink.getUri().toString());
     }
 

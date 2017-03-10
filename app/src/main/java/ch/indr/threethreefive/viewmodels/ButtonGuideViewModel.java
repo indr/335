@@ -100,7 +100,7 @@ public class ButtonGuideViewModel extends PageActivityViewModel<ButtonGuideActiv
 
     // Acitivity title, when page items name emits first value
     pageItem.filter(ObjectUtils::isNotNull)
-        .switchMap((pageItem1) -> pageItem1.name().first())
+        .switchMap((pageItem1) -> pageItem1.title().first())
         .compose(bindToLifecycle())
         .map(title -> {
           Timber.d("Activity title changed (page item change) title %s, %s", title, this.toString());
@@ -112,7 +112,7 @@ public class ButtonGuideViewModel extends PageActivityViewModel<ButtonGuideActiv
     // Activity title, when page items name observable changed
     final Observable<String> activityTitleSoft =
         Observable.combineLatest(pageTitle, pageItem
-            .filter(ObjectUtils::isNotNull).switchMap((pageItem1) -> pageItem1.name().skip(1)), Pair::create)
+            .filter(ObjectUtils::isNotNull).switchMap((pageItem1) -> pageItem1.title().skip(1)), Pair::create)
             .map(this::makeActivityTitle)
             .distinctUntilChanged();
 
@@ -171,7 +171,7 @@ public class ButtonGuideViewModel extends PageActivityViewModel<ButtonGuideActiv
 
     PageItem pageItem = this.pageItem.getValue();
     if (pageItem != null) {
-      sb.append(pageItem.getName());
+      sb.append(pageItem.getTitle());
     }
 
     speaker.sayUrgent(sb.toString());
