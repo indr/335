@@ -10,6 +10,7 @@ package ch.indr.threethreefive.libs;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
+import ch.indr.threethreefive.libs.utils.StringUtils;
 import rx.Observable;
 import rx.subjects.BehaviorSubject;
 
@@ -21,13 +22,13 @@ public abstract class PageItem {
 
   protected PageItem(final @NonNull String title) {
     this.title.onNext(title);
-    this.subtitle.onNext((String) null);
+    this.subtitle.onNext(null);
     this.description.onNext(title);
   }
 
   protected PageItem(final @NonNull String title, final @Nullable String subtitle, final @NonNull String description) {
     this.title.onNext(title);
-    this.subtitle.onNext(subtitle);
+    this.subtitle.onNext(StringUtils.isEmpty(subtitle) ? null : subtitle);
     this.description.onNext(description);
   }
 
@@ -48,7 +49,7 @@ public abstract class PageItem {
   }
 
   protected void setSubtitle(final @Nullable String subtitle) {
-    this.subtitle.onNext(subtitle);
+    this.subtitle.onNext(StringUtils.isEmpty(subtitle) ? null : subtitle);
   }
 
   public final @NonNull Observable<String> subtitle() {

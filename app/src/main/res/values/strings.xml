@@ -20,6 +20,26 @@
     <string name="button_fastForward_description">Seek 10 seconds forward</string>
     <string name="button_skipToNext_description">Skip to next track</string>
 
+    <string name="mainmenu_music_title">Music</string>
+    <string name="mainmenu_music_subtitle"></string>
+    <string name="mainmenu_music_description">Music on your device</string>
+
+    <string name="mainmenu_radio_title">Radio</string>
+    <string name="mainmenu_radio_subtitle"></string>
+    <string name="mainmenu_radio_description">Radio</string>
+
+    <string name="mainmenu_playlist_title">Playlist</string>
+    <string name="mainmenu_playlist_subtitle"></string>
+    <string name="mainmenu_playlist_description">Playlist</string>
+
+    <string name="mainmenu_favorites_title">Favorites</string>
+    <string name="mainmenu_favorites_subtitle"></string>
+    <string name="mainmenu_favorites_description">Favorites</string>
+
+    <string name="mainmenu_preferences_title">Preferences</string>
+    <string name="mainmenu_preferences_subtitle"></string>
+    <string name="mainmenu_preferences_description">Preferences</string>
+
     <string name="music_on_your_device">Music on your Device</string>
 
     <plurals name="music_albums">

@@ -81,47 +81,37 @@ public class ButtonGuideViewModel extends PageActivityViewModel<ButtonGuideActiv
         .compose(bindToLifecycle())
         .subscribe(showPage);
 
-    // Speak activity title if already on home page
-    activityTitle.compose(takeWhen(pageUriFromIntent.compose(takeWhen(goHome))
-        .filter(uri -> UriUtils.isEmpty(uri) || PageLink.HomePage.getUri().equals(uri))))
+
+    // Activity title
+    pageTitle
+        .compose(takeWhen(pageItem.filter(ObjectUtils::isNull)))
+        .map(t -> "Loading " + t)
+        .compose(bindToLifecycle())
+        .doOnNext(this::speakTitle)
+        .mergeWith(pageItem.filter(ObjectUtils::isNotNull).switchMap(PageItem::title))
+        .compose(bindToLifecycle())
+        .subscribe(activityTitle);
+
+    // Speak page item description
+    pageItem
+        .filter(ObjectUtils::isNotNull)
+        .switchMap(pageItem -> pageItem.description().first())
         .compose(bindToLifecycle())
         .subscribe(this::speakTitle);
 
-    // Activity title, when page item is null ("Loading...")
-    pageTitle.compose(takeWhen(pageItem.filter(ObjectUtils::isNull)))
-        .map(title -> "Loading " + title)
-        .compose(bindToLifecycle())
-        .map(title -> {
-          Timber.d("Activity title changed (page item is null) title %s, %s", title, this.toString());
-          speakTitle(title);
-          return title;
-        })
-        .subscribe(activityTitle);
 
-    // Acitivity title, when page items name emits first value
-    pageItem.filter(ObjectUtils::isNotNull)
-        .switchMap((pageItem1) -> pageItem1.title().first())
+    // Speak page item description title if already on home page
+    pageItem
+        .filter(ObjectUtils::isNotNull)
+        .switchMap(pageItem -> pageItem.description())
+        .compose(takeWhen(pageUriFromIntent.compose(takeWhen(goHome))
+            .filter(uri -> UriUtils.isEmpty(uri) || PageLink.HomePage.getUri().equals(uri))))
         .compose(bindToLifecycle())
-        .map(title -> {
-          Timber.d("Activity title changed (page item change) title %s, %s", title, this.toString());
-          speakTitle(title);
-          return title;
-        })
-        .subscribe(activityTitle);
-
-    // Activity title, when page items name observable changed
-    final Observable<String> activityTitleSoft =
-        Observable.combineLatest(pageTitle, pageItem
-            .filter(ObjectUtils::isNotNull).switchMap((pageItem1) -> pageItem1.title().skip(1)), Pair::create)
-            .map(this::makeActivityTitle)
-            .distinctUntilChanged();
-
-    activityTitleSoft
-        .compose(bindToLifecycle())
-        .subscribe(activityTitle);
+        .subscribe(this::speakTitle);
   }
 
   private void speakTitle(String title) {
+    Timber.d("speakTitle %s, %s", title, this.toString());
     if (ignoreNextTitle) {
       Timber.d("Ignoring title utterance");
       ignoreNextTitle = false;

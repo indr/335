@@ -71,13 +71,17 @@ public class HomePage extends Page {
 
     // Static main menu items
     builder
-        .addLink("/music", R.string.music_on_your_device)
-        .addLink("/radio", "Radio")
-        .addLink("/playlist", "Playlist")
-        .addLink("/favorites", "Favorites")
-        .addLink("/preferences", "Preferences");
+        .addLink("/music", getResStr(R.string.mainmenu_music_title), getResStr(R.string.mainmenu_music_subtitle), getResStr(R.string.mainmenu_music_description))
+        .addLink("/radio", getResStr(R.string.mainmenu_radio_title), getResStr(R.string.mainmenu_radio_subtitle), getResStr(R.string.mainmenu_radio_description))
+        .addLink("/playlist", getResStr(R.string.mainmenu_playlist_title), getResStr(R.string.mainmenu_playlist_subtitle), getResStr(R.string.mainmenu_playlist_description))
+        .addLink("/favorites", getResStr(R.string.mainmenu_favorites_title), getResStr(R.string.mainmenu_favorites_subtitle), getResStr(R.string.mainmenu_favorites_description))
+        .addLink("/preferences", getResStr(R.string.mainmenu_preferences_title), getResStr(R.string.mainmenu_preferences_subtitle), getResStr(R.string.mainmenu_preferences_description));
 
     setPageItems(builder);
+  }
+
+  private String getResStr(int id) {
+    return getResources().getString(id);
   }
 
   private boolean isButtonView() {
