@@ -21,7 +21,7 @@
     <string name="button_skipToNext_description">Skip to next track</string>
 
     <string name="mainmenu_music_title">Music</string>
-    <string name="mainmenu_music_subtitle"></string>
+    <string name="mainmenu_music_subtitle">On your device</string>
     <string name="mainmenu_music_description">Music on your device</string>
 
     <string name="mainmenu_radio_title">Radio</string>
