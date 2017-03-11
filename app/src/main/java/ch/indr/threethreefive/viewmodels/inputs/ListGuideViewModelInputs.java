@@ -7,12 +7,17 @@
 
 package ch.indr.threethreefive.viewmodels.inputs;
 
+import android.util.Pair;
+
 import ch.indr.threethreefive.libs.PageItem;
 
 public interface ListGuideViewModelInputs {
+
   void back();
 
   void pageItemClick(PageItem pageItem);
 
   void up();
+
+  void setFirstVisibleItem(Pair<Integer, Integer> positionAndY);
 }

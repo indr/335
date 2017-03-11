@@ -11,6 +11,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.util.Pair;
 
 import java.util.List;
 
@@ -68,6 +69,14 @@ public class ListGuideViewModel extends PageActivityViewModel<ListGuideActivity>
     pageItemClick.onNext(pageItem);
   }
 
+  @Override public void setFirstVisibleItem(Pair<Integer, Integer> value) {
+    final Page page = this.page.getValue();
+    if (page == null) {
+      return;
+    }
+    page.setFirstVisibleItem(value);
+  }
+
   // OUTPUTS
   @Override public Observable<Boolean> canGoUp() {
     // TODO: Refactor to isHomePage?
@@ -88,5 +97,13 @@ public class ListGuideViewModel extends PageActivityViewModel<ListGuideActivity>
 
   @Override public Observable<PageLink> showPage() {
     return showPage;
+  }
+
+  @Override public Pair<Integer, Integer> getFirstVisibleItem() {
+    final Page page = this.page.getValue();
+    if (page == null) {
+      return null;
+    }
+    return page.getFirstVisibleItem();
   }
 }

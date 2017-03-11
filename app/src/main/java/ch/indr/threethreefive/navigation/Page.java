@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.annotation.CallSuper;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.util.Pair;
 
 import java.util.List;
 
@@ -52,6 +53,7 @@ public abstract class Page implements PageType {
   private final PublishSubject<Object> selectPreviousPageItem = PublishSubject.create();
 
   private final PublishSubject<PageCommand> pageCommand = PublishSubject.create();
+  private Pair<Integer, Integer> firstVisibleItem;
 
   public Page(Environment environment) {
     this.environment = environment;
@@ -267,6 +269,14 @@ public abstract class Page implements PageType {
 
   public State getState() {
     return state;
+  }
+
+  public @Nullable Pair<Integer, Integer> getFirstVisibleItem() {
+    return this.firstVisibleItem;
+  }
+
+  public void setFirstVisibleItem(final @Nullable Pair<Integer, Integer> firstVisibleItem) {
+    this.firstVisibleItem = firstVisibleItem;
   }
 
   public enum State {

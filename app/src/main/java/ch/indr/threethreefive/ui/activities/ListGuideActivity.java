@@ -16,6 +16,7 @@ import android.util.Pair;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AlphaAnimation;
+import android.widget.AbsListView;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
@@ -49,7 +50,7 @@ import timber.log.Timber;
 import static ch.indr.threethreefive.libs.rx.transformers.Transfomers.observeForUI;
 
 @RequiresActivityViewModel(ListGuideViewModel.class)
-public class ListGuideActivity extends BaseListActivity<ListGuideViewModel> {
+public class ListGuideActivity extends BaseListActivity<ListGuideViewModel> implements AbsListView.OnScrollListener {
 
   protected @Inject PlaybackAnnouncerType playbackAnnouncer;
   protected @Inject PreferencesType preferences;
@@ -60,6 +61,7 @@ public class ListGuideActivity extends BaseListActivity<ListGuideViewModel> {
   protected @Bind(R.id.buttonIncFontSize) ImageButton buttonIncFontSize;
   protected @Bind(R.id.buttonDecFontSize) ImageButton buttonDecFontSize;
   protected @Bind(R.id.layoutChangeFontSize) LinearLayout layoutChangeFontSize;
+  protected @Bind(R.id.list) ListView listView;
   protected @Bind(R.id.progressBarHolder) FrameLayout progressBarHolder;
   protected @Bind(R.id.toolbarButtonUp) ImageButton toolbarButtonUp;
   protected @Bind(R.id.toolbarTitle) TextView toolbarTitle;
@@ -74,6 +76,8 @@ public class ListGuideActivity extends BaseListActivity<ListGuideViewModel> {
     ButterKnife.bind(this);
 
     setTextSize(preferences.textSize().get());
+
+    listView.setOnScrollListener(this);
 
     viewModel.outputs.canGoUp()
         .compose(bindToLifecycle())
@@ -166,7 +170,6 @@ public class ListGuideActivity extends BaseListActivity<ListGuideViewModel> {
 
     setProgressBar(pageItems == null);
 
-    // TODO: Should we not the an empty page item list in order to keep track of scrolling position?
     if (pageItems == null) pageItems = new ArrayList<>();
 
     if (this.pageItemsAdapter != null) {
@@ -175,6 +178,12 @@ public class ListGuideActivity extends BaseListActivity<ListGuideViewModel> {
     this.pageItemsAdapter = new PageItemsAdapter(this, pageItems, environment().preferences());
     environment().preferences().registerOnSharedPreferenceChangeListener(this.pageItemsAdapter);
     setListAdapter(this.pageItemsAdapter);
+
+
+    final Pair<Integer, Integer> firstVisibleItem = viewModel.getFirstVisibleItem();
+    if (firstVisibleItem != null) {
+      listView.setSelectionFromTop(firstVisibleItem.first, firstVisibleItem.second);
+    }
   }
 
   private void setProgressBar(boolean isVisible) {
@@ -278,5 +287,18 @@ public class ListGuideActivity extends BaseListActivity<ListGuideViewModel> {
       layoutParams.width = layoutParams.height;
       buttonDecFontSize.setLayoutParams(layoutParams);
     }
+  }
+
+  @Override public void onScrollStateChanged(AbsListView absListView, int scrollState) {
+    // Timber.d("onScrollStateChanged scrollState %d, %s", scrollState, this.toString());
+  }
+
+  @Override public void onScroll(AbsListView absListView, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+    // Timber.d("onScroll firstVisibleItem %d, visibleItemCount %d, totalItemCount %d, %s", firstVisibleItem, visibleItemCount, totalItemCount, this.toString());
+
+    final View itemView = absListView.getChildAt(0);
+    int top = itemView == null ? 0 : itemView.getTop() - absListView.getPaddingTop();
+
+    viewModel.setFirstVisibleItem(Pair.create(firstVisibleItem, top));
   }
 }
