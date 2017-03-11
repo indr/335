@@ -11,7 +11,6 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.util.Pair;
 import android.view.View;
 
 import ch.indr.threethreefive.libs.Environment;
@@ -46,7 +45,7 @@ public class ButtonGuideViewModel extends PageActivityViewModel<ButtonGuideActiv
   private final BehaviorSubject<PageItem> pageItem = BehaviorSubject.create();
   private final BehaviorSubject<String> activityTitle = BehaviorSubject.create();
 
-  public ButtonGuideViewModel(@NonNull Environment environment) {
+  ButtonGuideViewModel(@NonNull Environment environment) {
     super(environment);
 
     this.speaker = environment.speaker();
@@ -73,14 +72,22 @@ public class ButtonGuideViewModel extends PageActivityViewModel<ButtonGuideActiv
         .compose(bindToLifecycle())
         .subscribe(this::executePageItem);
 
-    // Go home if not already on home page
-    pageUriFromIntent.compose(takeWhen(goHome))
-        .filter(UriUtils::isNotEmpty)
+    // Show home page if not already on home page
+    page.map(Page::getPageUri)
+        .compose(takeWhen(goHome))
         .filter(uri -> !PageLink.HomePage.getUri().equals(uri))
         .map(uri -> PageLink.HomePage)
         .compose(bindToLifecycle())
         .subscribe(showPage);
 
+    // Speak page item description title if already on home page
+    pageItem
+        .filter(ObjectUtils::isNotNull)
+        .switchMap(PageItem::description)
+        .compose(takeWhen(page.map(Page::getPageUri).compose(takeWhen(goHome))
+            .filter(uri -> UriUtils.isEmpty(uri) || PageLink.HomePage.getUri().equals(uri))))
+        .compose(bindToLifecycle())
+        .subscribe(this::speakTitle);
 
     // Activity title
     pageTitle
@@ -98,16 +105,6 @@ public class ButtonGuideViewModel extends PageActivityViewModel<ButtonGuideActiv
         .switchMap(pageItem -> pageItem.description().first())
         .compose(bindToLifecycle())
         .subscribe(this::speakTitle);
-
-
-    // Speak page item description title if already on home page
-    pageItem
-        .filter(ObjectUtils::isNotNull)
-        .switchMap(pageItem -> pageItem.description())
-        .compose(takeWhen(pageUriFromIntent.compose(takeWhen(goHome))
-            .filter(uri -> UriUtils.isEmpty(uri) || PageLink.HomePage.getUri().equals(uri))))
-        .compose(bindToLifecycle())
-        .subscribe(this::speakTitle);
   }
 
   private void speakTitle(String title) {
@@ -118,18 +115,6 @@ public class ButtonGuideViewModel extends PageActivityViewModel<ButtonGuideActiv
       return;
     }
     speaker.sayUrgent(title);
-  }
-
-  private String makeActivityTitle(@NonNull Pair<String, String> pageAndItemTitle) {
-    return makeActivityTitle(pageAndItemTitle.first, pageAndItemTitle.second);
-  }
-
-  private String makeActivityTitle(@Nullable String pageName, @Nullable String itemName) {
-    if (itemName != null) {
-      return itemName;
-    } else {
-      return pageName != null ? "Loading " + pageName : null;
-    }
   }
 
   public final ButtonGuideViewModelInputs inputs = this;

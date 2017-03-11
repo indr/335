@@ -42,7 +42,7 @@ public class StationPage extends SpiceBasePage implements RequestListener<Statio
   public StationPage(Environment environment) {
     super(environment);
 
-    setTitle("Radiostation");
+    // setTitle("Radiostation");
   }
 
   @Override public void onCreate(@NonNull Context context, Uri uri, Bundle bundle) {
@@ -71,7 +71,7 @@ public class StationPage extends SpiceBasePage implements RequestListener<Statio
 
     Station station = stations[0];
 
-    setTitle(station.getName());
+    // setTitle(station.getName());
 
     final PageItemsBuilder builder = pageItemsBuilder();
 

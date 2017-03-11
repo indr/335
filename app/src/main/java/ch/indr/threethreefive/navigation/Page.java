@@ -112,7 +112,7 @@ public abstract class Page implements PageType {
     parentPageLink.onNext(link);
   }
 
-  protected void setTitle(final @Nullable CharSequence title) {
+  public void setTitle(final @Nullable CharSequence title) {
     if (title != null) {
       setTitle(title.toString());
     } else {
