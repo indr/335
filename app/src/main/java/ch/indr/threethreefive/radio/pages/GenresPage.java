@@ -26,8 +26,6 @@ import ch.indr.threethreefive.libs.Environment;
 import ch.indr.threethreefive.libs.PageItemsBuilder;
 import ch.indr.threethreefive.navigation.SpiceBasePage;
 import ch.indr.threethreefive.radio.radioBrowserInfo.api.TagsRequest;
-import ch.indr.threethreefive.radio.radioBrowserInfo.api.json.NameComparator;
-import ch.indr.threethreefive.radio.radioBrowserInfo.api.json.StationCountComparator;
 import ch.indr.threethreefive.radio.radioBrowserInfo.api.json.Tag;
 import timber.log.Timber;
 
@@ -124,7 +122,7 @@ public class GenresPage extends SpiceBasePage implements RequestListener<Tag[]> 
     }
 
     // Sort top genres by station count to get the top slice of it
-    Collections.sort(topGenres, new StationCountComparator());
+    Collections.sort(topGenres, new Tag.StationCountComparator());
     if (topGenres.size() > 0) {
       topGenres = topGenres.subList(0, Math.min(MAX_NUMBER_OF_TOP_GENRES, topGenres.size()));
     }
@@ -133,7 +131,7 @@ public class GenresPage extends SpiceBasePage implements RequestListener<Tag[]> 
         topGenres.size(), moreGenres.size(), allGenres.size(), excluded);
 
     // Sort all lists by name
-    final NameComparator c = new NameComparator();
+    final Tag.NameComparator c = new Tag.NameComparator();
     Collections.sort(topGenres, c);
     Collections.sort(moreGenres, c);
     Collections.sort(allGenres, c);
@@ -144,7 +142,7 @@ public class GenresPage extends SpiceBasePage implements RequestListener<Tag[]> 
   }
 
   private boolean isMoreGenre(Tag tag) {
-    return tag.getStationCount() >- MIN_STATION_COUNT_FOR_MORE_GENRES && !isExcludedFromMoreGenres(tag);
+    return tag.getStationCount() >= MIN_STATION_COUNT_FOR_MORE_GENRES && !isExcludedFromMoreGenres(tag);
   }
 
   private boolean isExcludedFromTopGenres(Tag tag) {

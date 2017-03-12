@@ -7,43 +7,30 @@
 
 package ch.indr.threethreefive.radio.pages;
 
-import android.content.Context;
-import android.net.Uri;
-import android.os.Bundle;
-import android.support.annotation.NonNull;
-
 import com.octo.android.robospice.persistence.exception.SpiceException;
 import com.octo.android.robospice.request.listener.RequestListener;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 
 import ch.indr.threethreefive.libs.Environment;
-import ch.indr.threethreefive.libs.PageItem;
 import ch.indr.threethreefive.libs.PageItemsBuilder;
 import ch.indr.threethreefive.navigation.SpiceBasePage;
 import ch.indr.threethreefive.radio.radioBrowserInfo.api.CountriesRequest;
 import ch.indr.threethreefive.radio.radioBrowserInfo.api.json.Country;
+import timber.log.Timber;
 
 public class CountriesPage extends SpiceBasePage implements RequestListener<Country[]> {
 
-  private List<Country> featuredCountries = new ArrayList<>();
-  private List<PageItem> collapsedItems;
-  private List<PageItem> expandedItems;
+  private List<String> featuredCountries = Arrays.asList("Australia", "Canada", "New Zealand", "United Kingdom", "United States of America");
+
+  private List<Country> allCountries;
+  private List<Country> topCountries;
 
   public CountriesPage(Environment environment) {
     super(environment);
-
-    featuredCountries.add(new Country("Australia"));
-    featuredCountries.add(new Country("Canada"));
-    featuredCountries.add(new Country("New Zealand"));
-    featuredCountries.add(new Country("United Kingdom"));
-    featuredCountries.add(new Country("United States of America"));
-  }
-
-  @Override public void onCreate(@NonNull Context context, Uri uri, Bundle bundle) {
-    super.onCreate(context, uri, bundle);
 
     setTitle("Countries");
   }
@@ -51,14 +38,7 @@ public class CountriesPage extends SpiceBasePage implements RequestListener<Coun
   @Override public void onStart() {
     super.onStart();
 
-    final PageItemsBuilder builder = pageItemsBuilder();
-
-    for (Country country : featuredCountries) {
-      builder.addLink("/radio/countries/" + country.getValue(), country.getName());
-    }
-    builder.addItem("Show all Countries", this::expandList);
-
-    setPageItems(builder);
+    executeRequest(new CountriesRequest(), this);
   }
 
   @Override public void onRequestFailure(SpiceException spiceException) {
@@ -66,20 +46,52 @@ public class CountriesPage extends SpiceBasePage implements RequestListener<Coun
   }
 
   @Override public void onRequestSuccess(Country[] response) {
+    populateLists(response);
+    showTopCountries();
+  }
+
+  private void showTopCountries() {
+    resetFirstVisibleItem();
     final PageItemsBuilder builder = pageItemsBuilder();
-
-    for (Country each : response) {
-      builder.addLink("/radio/countries/" + each.getValue(),
-          each.getName(),
-          String.format(Locale.US, "%d radio stations", each.getStationCount()),
-          each.getName());
-    }
-
+    addCountryLinks(builder, topCountries);
+    builder.addItem("Show all Countries", this::showAllCountries);
     setPageItems(builder);
   }
 
-  private void expandList(Environment environment) {
-    setLoading();
-    executeRequest(new CountriesRequest(), this);
+  private void showAllCountries(Environment environment) {
+    resetFirstVisibleItem();
+    final PageItemsBuilder builder = pageItemsBuilder();
+    addCountryLinks(builder, allCountries);
+    setPageItems(builder);
+  }
+
+  private void addCountryLinks(PageItemsBuilder builder, List<Country> countries) {
+    for (Country country : countries) {
+      builder.addLink("/radio/countries/" + country.getValue(),
+          country.getName(),
+          makeSubtitle(country),
+          makeDescription(country));
+    }
+  }
+
+  private String makeDescription(Country country) {
+    return country.getName() + ", " + makeSubtitle(country);
+  }
+
+  private String makeSubtitle(Country country) {
+    return String.format(Locale.US, "%d radio stations", country.getStationCount());
+  }
+
+  private void populateLists(Country[] response) {
+    Timber.d("populateLists countries %d, %s", response.length, this.toString());
+
+    this.allCountries = Arrays.asList(response);
+    this.topCountries = new ArrayList<>();
+
+    for (Country country : allCountries) {
+      if (featuredCountries.contains(country.getValue())) {
+        topCountries.add(country);
+      }
+    }
   }
 }

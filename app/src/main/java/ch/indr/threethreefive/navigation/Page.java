@@ -279,6 +279,10 @@ public abstract class Page implements PageType {
     this.firstVisibleItem = firstVisibleItem;
   }
 
+  public void resetFirstVisibleItem() {
+    this.firstVisibleItem = null;
+  }
+
   public enum State {
     New,
     Created,

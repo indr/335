@@ -18,6 +18,7 @@ import com.octo.android.robospice.request.listener.RequestListener;
 import org.apache.commons.lang3.StringUtils;
 
 import java.text.DateFormat;
+import java.util.Locale;
 
 import javax.inject.Inject;
 
@@ -96,7 +97,8 @@ public class StationPage extends SpiceBasePage implements RequestListener<Statio
     }
 
     // Votes
-    builder.addText("Votes: " + station.getSummedVotes());
+    builder.addText(String.format(Locale.US, "Votes: %d (+%d/-%d)",
+        station.getSummedVotes(), station.getPositiveVotes(), station.getNegativeVotes()));
 
     // Updated
     if (station.getLastChangeTime() != null) {

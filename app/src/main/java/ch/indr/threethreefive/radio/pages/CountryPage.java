@@ -15,26 +15,40 @@ import android.support.annotation.NonNull;
 import com.octo.android.robospice.persistence.exception.SpiceException;
 import com.octo.android.robospice.request.listener.RequestListener;
 
+import org.apache.commons.lang3.StringUtils;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+import java.util.Locale;
+
 import ch.indr.threethreefive.libs.Environment;
 import ch.indr.threethreefive.libs.PageItemsBuilder;
 import ch.indr.threethreefive.libs.PageUris;
+import ch.indr.threethreefive.libs.utils.CollectionUtils;
 import ch.indr.threethreefive.navigation.SpiceBasePage;
 import ch.indr.threethreefive.radio.radioBrowserInfo.api.StationsRequest;
 import ch.indr.threethreefive.radio.radioBrowserInfo.api.json.Station;
+import timber.log.Timber;
 
 public class CountryPage extends SpiceBasePage implements RequestListener<Station[]> {
 
   private String country;
+  private List<Station> allStations;
+  private List<Station> moreStations;
+  private List<Station> topStations;
 
   public CountryPage(Environment environment) {
     super(environment);
+
+    setTitle("Country");
   }
 
   @Override public void onCreate(@NonNull Context context, Uri uri, Bundle bundle) {
     super.onCreate(context, uri, bundle);
 
-    country = bundle.getString("id");
-    setTitle(country != null ? country : "Country");
+    this.country = bundle.getString("id");
   }
 
   @Override public void onStart() {
@@ -48,13 +62,76 @@ public class CountryPage extends SpiceBasePage implements RequestListener<Statio
   }
 
   @Override public void onRequestSuccess(Station[] response) {
+    populateLists(response);
+    showTopStations();
+  }
+
+  private void showTopStations() {
+    resetFirstVisibleItem();
     final PageItemsBuilder builder = pageItemsBuilder();
     builder.addToggleFavorite(getCurrentPageLink());
-
-    for (Station station : response) {
-      builder.addLink(PageUris.makeStationUri(station.getId()), station.getName());
-    }
-
+    addStationLinks(builder, topStations);
+    builder.addItem("Show more Stations", this::showMoreStations);
     setPageItems(builder);
+  }
+
+  private void showMoreStations(Environment environment) {
+    resetFirstVisibleItem();
+    final PageItemsBuilder builder = pageItemsBuilder();
+    builder.addToggleFavorite(getCurrentPageLink());
+    addStationLinks(builder, moreStations);
+    builder.addItem("Show all Stations", this::showAllStations);
+    setPageItems(builder);
+  }
+
+  private void showAllStations(Environment environment) {
+    resetFirstVisibleItem();
+    final PageItemsBuilder builder = pageItemsBuilder();
+    builder.addToggleFavorite(getCurrentPageLink());
+    addStationLinks(builder, allStations);
+    setPageItems(builder);
+  }
+
+  private void addStationLinks(PageItemsBuilder builder, List<Station> stations) {
+    for (Station station : stations) {
+      builder.addLink(PageUris.makeStationUri(station.getId()),
+          station.getName(),
+          makeSubtitle(station),
+          makeDescription(station)
+      );
+    }
+  }
+
+  private String makeDescription(Station station) {
+    return station.getName() + ", " + makeSubtitle(station);
+  }
+
+  private String makeSubtitle(Station station) {
+    final String language = station.getLanguage();
+
+    if (StringUtils.isNotEmpty(language)) {
+      return String.format(Locale.US, "%s, %s",
+          station.getLanguage(), StringUtils.join(station.getTags(), ", "));
+    } else {
+      return StringUtils.join(station.getTags(), ", ");
+    }
+  }
+
+  private void populateLists(Station[] response) {
+    Timber.d("populateLists stations %d, %s", response.length, this.toString());
+
+    this.allStations = Arrays.asList(response);
+    Collections.sort(allStations, new Station.SummedVoteComparator());
+    this.topStations = CollectionUtils.slice(allStations, 0, 14);
+
+    Collections.sort(allStations, new Station.NameComparator());
+    Collections.sort(topStations, new Station.NameComparator());
+
+    this.moreStations = new ArrayList<>();
+    for (Station station : allStations) {
+      if (station.getSummedVotes() > 0) {
+        moreStations.add(station);
+      }
+    }
   }
 }

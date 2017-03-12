@@ -9,6 +9,8 @@ package ch.indr.threethreefive.radio.radioBrowserInfo.api.json;
 
 import com.google.api.client.util.Key;
 
+import java.util.Comparator;
+
 public class Tag {
 
   @Key private String name;
@@ -28,4 +30,17 @@ public class Tag {
   public int getStationCount() {
     return stationcount == null ? 0 : Integer.parseInt(stationcount);
   }
+
+  public static class NameComparator implements Comparator<Tag> {
+    @Override public int compare(Tag tag1, Tag tag2) {
+      return tag1.getName().compareTo(tag2.getName());
+    }
+  }
+
+  public static class StationCountComparator implements Comparator<Tag> {
+    @Override public int compare(Tag tag1, Tag tag2) {
+      return tag2.getStationCount() - tag1.getStationCount();
+    }
+  }
+
 }

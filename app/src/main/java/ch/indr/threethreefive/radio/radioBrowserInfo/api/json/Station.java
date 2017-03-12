@@ -9,6 +9,7 @@ package ch.indr.threethreefive.radio.radioBrowserInfo.api.json;
 
 import com.google.api.client.util.Key;
 
+import java.util.Comparator;
 import java.util.Date;
 
 import ch.indr.threethreefive.radio.radioBrowserInfo.RadioBrowserInfoUtils;
@@ -79,7 +80,7 @@ public class Station {
     return language;
   }
 
-  public int getVotes() {
+  public int getPositiveVotes() {
     return votes == null ? 0 : Integer.parseInt(votes);
   }
 
@@ -88,7 +89,7 @@ public class Station {
   }
 
   public int getSummedVotes() {
-    return getVotes() - getNegativeVotes();
+    return getPositiveVotes() - getNegativeVotes();
   }
 
   public String getCodec() {
@@ -101,5 +102,18 @@ public class Station {
 
   public Date getLastChangeTime() {
     return RadioBrowserInfoUtils.convertDateTimeString(lastchangetime);
+  }
+
+  public static class NameComparator implements Comparator<Station> {
+    @Override public int compare(Station station1, Station station2) {
+      return station1.getName().compareTo(station2.getName());
+    }
+  }
+
+  public static class SummedVoteComparator implements Comparator<Station> {
+    @Override public int compare(Station station1, Station station2) {
+      int result = station2.getSummedVotes() - station1.getSummedVotes();
+      return result != 0 ? result : station2.getPositiveVotes() - station1.getPositiveVotes();
+    }
   }
 }
