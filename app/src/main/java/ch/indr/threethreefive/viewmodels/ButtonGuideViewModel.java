@@ -45,7 +45,7 @@ public class ButtonGuideViewModel extends PageActivityViewModel<ButtonGuideActiv
   private final BehaviorSubject<PageItem> pageItem = BehaviorSubject.create();
   private final BehaviorSubject<String> activityTitle = BehaviorSubject.create();
 
-  ButtonGuideViewModel(@NonNull Environment environment) {
+  public ButtonGuideViewModel(@NonNull Environment environment) {
     super(environment);
 
     this.speaker = environment.speaker();
