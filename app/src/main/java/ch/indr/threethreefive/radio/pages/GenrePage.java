@@ -15,11 +15,13 @@ import android.support.annotation.NonNull;
 import com.octo.android.robospice.persistence.exception.SpiceException;
 import com.octo.android.robospice.request.listener.RequestListener;
 
-import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import ch.indr.threethreefive.libs.Environment;
 import ch.indr.threethreefive.libs.PageItemsBuilder;
+import ch.indr.threethreefive.libs.utils.CollectionUtils;
 import ch.indr.threethreefive.navigation.SpiceBasePage;
 import ch.indr.threethreefive.radio.radioBrowserInfo.StationUtils;
 import ch.indr.threethreefive.radio.radioBrowserInfo.api.StationsRequest;
@@ -28,11 +30,10 @@ import timber.log.Timber;
 
 public class GenrePage extends SpiceBasePage implements RequestListener<Station[]> {
 
-  private static final int MIN_SUMMED_VOTES_FOR_TOP_STATIONS = 10;
-
   private String tag;
-  private ArrayList<Station> allStations;
-  private ArrayList<Station> topStations;
+  private List<Station> allStations;
+  private List<Station> moreStations;
+  private List<Station> topStations;
 
   public GenrePage(Environment environment) {
     super(environment);
@@ -59,31 +60,46 @@ public class GenrePage extends SpiceBasePage implements RequestListener<Station[
 
   @Override public void onRequestSuccess(Station[] response) {
     populateLists(response);
-    if (topStations.size() >= 10) {
-      showTopStations();
-    } else {
-      showAllStations(null);
-    }
+    showTopStations();
   }
 
   private void showTopStations() {
-    resetFirstVisibleItem();
+    if (topStations.size() == moreStations.size()) {
+      showMoreStations(null);
+      return;
+    }
+
     final PageItemsBuilder builder = pageItemsBuilder();
     builder.addToggleFavorite(getCurrentPageLink());
-    addStationLink(builder, topStations);
+    addStationLinks(builder, topStations);
     builder.addItem("Show all Stations", this::showAllStations);
     setPageItems(builder);
   }
+
+  private void showMoreStations(Environment environment) {
+    if (moreStations.size() == allStations.size()) {
+      showAllStations(null);
+      return;
+    }
+
+    resetFirstVisibleItem();
+    final PageItemsBuilder builder = pageItemsBuilder();
+    builder.addToggleFavorite(getCurrentPageLink());
+    addStationLinks(builder, moreStations);
+    builder.addItem("Show all Stations", this::showAllStations);
+    setPageItems(builder);
+  }
+
 
   private void showAllStations(Environment environment) {
     resetFirstVisibleItem();
     final PageItemsBuilder builder = pageItemsBuilder();
     builder.addToggleFavorite(getCurrentPageLink());
-    addStationLink(builder, allStations);
+    addStationLinks(builder, allStations);
     setPageItems(builder);
   }
 
-  private void addStationLink(PageItemsBuilder builder, List<Station> stations) {
+  private void addStationLinks(PageItemsBuilder builder, List<Station> stations) {
     for (Station station : stations) {
       builder.addLink("/radio/stations/" + station.getId(),
           station.getName(),
@@ -94,16 +110,14 @@ public class GenrePage extends SpiceBasePage implements RequestListener<Station[
 
   private void populateLists(Station[] response) {
     Timber.d("populateLists stations %d, %s", response.length, this.toString());
-    allStations = new ArrayList<>();
-    topStations = new ArrayList<>();
 
-    for (Station station : response) {
-      if (station.getSummedVotes() >= MIN_SUMMED_VOTES_FOR_TOP_STATIONS) {
-        topStations.add(station);
-      }
-      allStations.add(station);
-    }
+    this.allStations = Arrays.asList(response);
+    Collections.sort(allStations, new Station.SummedVoteComparator());
+    this.topStations = CollectionUtils.slice(allStations, 0, 14);
 
-    Timber.d("Stations: top %d, all %d", topStations.size(), allStations.size());
+    Collections.sort(allStations, new Station.NameComparator());
+    Collections.sort(topStations, new Station.NameComparator());
+
+    this.moreStations = CollectionUtils.filter(allStations, (station) -> station.getSummedVotes() > 0);
   }
 }

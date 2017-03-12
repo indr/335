@@ -72,6 +72,11 @@ public class GenresPage extends SpiceBasePage implements RequestListener<Tag[]> 
   }
 
   private void showTopGenres() {
+    if (topGenres.size() == moreGenres.size()) {
+      showMoreGenres(null);
+      return;
+    }
+
     final PageItemsBuilder builder = pageItemsBuilder();
     buildPageItems(builder, topGenres);
     builder.addItem("Show more Genres", this::showMoreGenres);
@@ -79,6 +84,11 @@ public class GenresPage extends SpiceBasePage implements RequestListener<Tag[]> 
   }
 
   private void showMoreGenres(Environment environment) {
+    if (moreGenres.size() == allGenres.size()) {
+      showAllGenres(null);
+      return;
+    }
+
     resetFirstVisibleItem();
     final PageItemsBuilder builder = pageItemsBuilder();
     buildPageItems(builder, moreGenres);
@@ -103,6 +113,7 @@ public class GenresPage extends SpiceBasePage implements RequestListener<Tag[]> 
 
   private void populateLists(@NonNull Tag[] response) {
     Timber.d("populateLists tags %d, %s", response.length, this.toString());
+
     allGenres = new ArrayList<>();
     moreGenres = new ArrayList<>();
     topGenres = new ArrayList<>();

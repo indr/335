@@ -15,16 +15,25 @@ import android.support.annotation.NonNull;
 import com.octo.android.robospice.persistence.exception.SpiceException;
 import com.octo.android.robospice.request.listener.RequestListener;
 
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+
 import ch.indr.threethreefive.libs.Environment;
 import ch.indr.threethreefive.libs.PageItemsBuilder;
+import ch.indr.threethreefive.libs.utils.CollectionUtils;
 import ch.indr.threethreefive.navigation.SpiceBasePage;
 import ch.indr.threethreefive.radio.radioBrowserInfo.StationUtils;
 import ch.indr.threethreefive.radio.radioBrowserInfo.api.StationsRequest;
 import ch.indr.threethreefive.radio.radioBrowserInfo.api.json.Station;
+import timber.log.Timber;
 
 public class LanguagePage extends SpiceBasePage implements RequestListener<Station[]> {
 
   private String language;
+  private List<Station> allStations;
+  private List<Station> moreStations;
+  private List<Station> topStations;
 
   public LanguagePage(Environment environment) {
     super(environment);
@@ -49,16 +58,65 @@ public class LanguagePage extends SpiceBasePage implements RequestListener<Stati
     this.handle(spiceException);
   }
 
-  @Override public void onRequestSuccess(Station[] stations) {
+  @Override public void onRequestSuccess(Station[] response) {
+    populateLists(response);
+    showTopStations();
+  }
+
+  private void showTopStations() {
+    if (topStations.size() == moreStations.size()) {
+      showMoreStations(null);
+      return;
+    }
+
     final PageItemsBuilder builder = pageItemsBuilder();
     builder.addToggleFavorite(getCurrentPageLink());
+    addStationLinks(builder, topStations);
+    builder.addItem("Show more Stations", this::showMoreStations);
+    setPageItems(builder);
+  }
 
+  private void showMoreStations(Environment environment) {
+    if (moreStations.size() == allStations.size()) {
+      showAllStations(null);
+      return;
+    }
+
+    resetFirstVisibleItem();
+    final PageItemsBuilder builder = pageItemsBuilder();
+    builder.addToggleFavorite(getCurrentPageLink());
+    addStationLinks(builder, moreStations);
+    builder.addItem("Show all Stations", this::showAllStations);
+    setPageItems(builder);
+  }
+
+  private void showAllStations(Environment environment) {
+    resetFirstVisibleItem();
+    final PageItemsBuilder builder = pageItemsBuilder();
+    builder.addToggleFavorite(getCurrentPageLink());
+    addStationLinks(builder, allStations);
+    setPageItems(builder);
+  }
+
+  private void addStationLinks(PageItemsBuilder builder, List<Station> stations) {
     for (Station station : stations) {
-      builder.addLink("/radio/stations/" + station.getId(), station.getName(),
+      builder.addLink("/radio/stations/" + station.getId(),
+          station.getName(),
           StationUtils.makeSubtitle(station, "CT"),
           StationUtils.makeDescription(station, "CT"));
     }
+  }
 
-    setPageItems(builder);
+  private void populateLists(Station[] response) {
+    Timber.d("populateLists stations %d, %s", response.length, this.toString());
+
+    this.allStations = Arrays.asList(response);
+    Collections.sort(allStations, new Station.SummedVoteComparator());
+    this.topStations = CollectionUtils.slice(allStations, 0, 14);
+
+    Collections.sort(allStations, new Station.NameComparator());
+    Collections.sort(topStations, new Station.NameComparator());
+
+    this.moreStations = CollectionUtils.filter(allStations, (station) -> station.getSummedVotes() > 0);
   }
 }

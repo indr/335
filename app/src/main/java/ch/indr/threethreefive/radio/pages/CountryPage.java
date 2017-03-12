@@ -15,13 +15,9 @@ import android.support.annotation.NonNull;
 import com.octo.android.robospice.persistence.exception.SpiceException;
 import com.octo.android.robospice.request.listener.RequestListener;
 
-import org.apache.commons.lang3.StringUtils;
-
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-import java.util.Locale;
 
 import ch.indr.threethreefive.libs.Environment;
 import ch.indr.threethreefive.libs.PageItemsBuilder;
@@ -50,6 +46,7 @@ public class CountryPage extends SpiceBasePage implements RequestListener<Statio
     super.onCreate(context, uri, bundle);
 
     this.country = bundle.getString("id");
+    setTitle(country);
   }
 
   @Override public void onStart() {
@@ -68,7 +65,11 @@ public class CountryPage extends SpiceBasePage implements RequestListener<Statio
   }
 
   private void showTopStations() {
-    resetFirstVisibleItem();
+    if (topStations.size() == moreStations.size()) {
+      showMoreStations(null);
+      return;
+    }
+
     final PageItemsBuilder builder = pageItemsBuilder();
     builder.addToggleFavorite(getCurrentPageLink());
     addStationLinks(builder, topStations);
@@ -77,6 +78,11 @@ public class CountryPage extends SpiceBasePage implements RequestListener<Statio
   }
 
   private void showMoreStations(Environment environment) {
+    if (moreStations.size() == allStations.size()) {
+      showAllStations(null);
+      return;
+    }
+
     resetFirstVisibleItem();
     final PageItemsBuilder builder = pageItemsBuilder();
     builder.addToggleFavorite(getCurrentPageLink());
@@ -113,11 +119,6 @@ public class CountryPage extends SpiceBasePage implements RequestListener<Statio
     Collections.sort(allStations, new Station.NameComparator());
     Collections.sort(topStations, new Station.NameComparator());
 
-    this.moreStations = new ArrayList<>();
-    for (Station station : allStations) {
-      if (station.getSummedVotes() > 0) {
-        moreStations.add(station);
-      }
-    }
+    this.moreStations = CollectionUtils.filter(allStations, (station) -> station.getSummedVotes() > 0);
   }
 }
