@@ -16,7 +16,7 @@ Subtitle: Stations country, languages and genres
 
 ## Genres
 
-Lists genres starting with top 15 genres sorted alphabetically based on number of radio stations. `Show more Genres` lists the top 50 genres alphabetically. `Show all Genres` lists all genres alphabetically which have more than 2 radio stations.
+Lists genres starting with top 15 genres sorted alphabetically based on number of radio stations. `Show more Genres` lists the top 50 genres alphabetically. `Show all Genres` lists all genres alphabetically which have a minimum of 9 radio stations.
 
 Specific genres are filtered from each list. See [res/values/content.xml](../app/src/main/res/values/content.xml).
 
