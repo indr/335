@@ -9,15 +9,16 @@
 <resources>
 
     <string name="speech_welcome_short">Welcome to three three five.</string>
-    <string name="speech_welcome_long">Welcome to three three five. Easy navigation to thousands of online radio stations, as well as media on your device.</string>
+    <string name="speech_welcome_long">Welcome to three three five. Easy and ad free navigation to thousands of online radio stations, as well as media on your device.</string>
 
     <string name="speech_ui_selection">Select interface: Press on the right half to launch the button interface, left half to launch the list interface.</string>
 
     <string name="speech_interface_instructions"><![CDATA[
-Welcome to the three three five button interface navigation screen.\n\
+Welcome\n\
+to the three three five button interface navigation screen.\n\
 \n\
-You can long press anywhere ON THIS SCREEN to hear the button description.\n\
 PLEASE LISTEN FOR BUTTON DESCRIPTIONs.\n\
+\n\
 This screen has 3 rows of buttons.\n\
 \n\
 The top  TWO rowS HAVE 3 navigation buttons.\n\
@@ -26,41 +27,66 @@ THREE THREE  FIVE \n\
 \n\
 \n\
 Starting from left to right.\n\
+\n\
 ROW NUMBER 1.\n\
 FIRST.\n\
 Top Left IS HOME button.\n\
 Pressing HOME all ways brings you back to the top of your chosen category.\n\
 Second:\n\
+\n\
 Top Center is Back button.\n\
 Pressing BACK  takes you one step back.\n\
+\n\
 Third:\n\
 Top right is location button.\n\
+\n\
 Pressing LOCATION will tell you where you are in the file and folder structure.\n\
+\n\
+\n\
 ROW NUMBER 2\n\
+\n\
 First BUTTON IS\n\
 PREVIOUS.\n\
 PREVIOUS BUTTON Takes you to the last location.\n\
+\n\
 Second BUTTON IS\n\
 ENTER.\n\
-THIS CENTER button on your screen is like an ENTER button.\n\
+\n\
+THIS  button like an ENTER button.\n\
 This button Enters you into your folder selection or if it\'s a media file or stream, it will load TO PLAY.\n\
+\n\
 Third IS THE NEXT button.\n\
+\n\
 takes you to next folder or next file within CURRENT folder.\n\
 \n\
-The third bottom row has 5 media player controls for use with media on your device.\n\
+\n\
+The third bottom row has 5 media player controls .\n\
+\n\
 First IS Skip.\n\
 SKIPS to previous track or file.\n\
+\n\
 Second BUTTON IS seek.\n\
 SEEKS 10 seconds back.\n\
+\n\
 Third BUTTON IS: Play AND Pause.\n\
+\n\
 Fourth BUTTON  seekS 10 seconds forward.\n\
-Fifth AND FINAL BUTTON  IS SKIP.\n\
+\n\
+And the Fifth AND FINAL BUTTON  IS SKIP.\n\
 SkipS. forward to next track.\n\
 \n\
+\n\
 All media files are organized in hierarchical folder structure.\n\
+\n\
+\n\
 Please feel free to click around to familiarize yourself with three three five navigation,\n\
+\n\
 remember,\n\
 you can always click on top right to hear your present location.\n\
+in the folder and file structure
+\n\
+You can also long press anywhere ON THIS SCREEN to hear the button description.\n\
+\n\
 \n\
 YOU CAN HEAR THESE INSTRUCTIONS AGAIN ANYTIME IN THE PREFERENCES SECTION.\n\
 \n\
@@ -75,7 +101,8 @@ Thank you and enjoy three three five.
     <string name="speech_interface_instructions_end_with_preference_screen"><![CDATA[
 You are now on the preference screen on "Replay Interface Instructions".\n\
 \n\
-Thank you and enjoy three three five.
+Thank you\n\
+we hope you enjoy three three five.
 ]]></string>
 
 </resources>
