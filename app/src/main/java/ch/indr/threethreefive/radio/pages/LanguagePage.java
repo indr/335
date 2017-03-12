@@ -18,6 +18,7 @@ import com.octo.android.robospice.request.listener.RequestListener;
 import ch.indr.threethreefive.libs.Environment;
 import ch.indr.threethreefive.libs.PageItemsBuilder;
 import ch.indr.threethreefive.navigation.SpiceBasePage;
+import ch.indr.threethreefive.radio.radioBrowserInfo.StationUtils;
 import ch.indr.threethreefive.radio.radioBrowserInfo.api.StationsRequest;
 import ch.indr.threethreefive.radio.radioBrowserInfo.api.json.Station;
 
@@ -27,6 +28,8 @@ public class LanguagePage extends SpiceBasePage implements RequestListener<Stati
 
   public LanguagePage(Environment environment) {
     super(environment);
+
+    setTitle("Language");
   }
 
   @Override public void onCreate(@NonNull Context context, Uri uri, Bundle bundle) {
@@ -51,7 +54,9 @@ public class LanguagePage extends SpiceBasePage implements RequestListener<Stati
     builder.addToggleFavorite(getCurrentPageLink());
 
     for (Station station : stations) {
-      builder.addLink("/radio/stations/" + station.getId(), station.getName());
+      builder.addLink("/radio/stations/" + station.getId(), station.getName(),
+          StationUtils.makeSubtitle(station, "CT"),
+          StationUtils.makeDescription(station, "CT"));
     }
 
     setPageItems(builder);

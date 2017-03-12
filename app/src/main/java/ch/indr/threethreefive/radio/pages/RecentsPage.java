@@ -15,18 +15,14 @@ import android.support.annotation.NonNull;
 import com.octo.android.robospice.persistence.exception.SpiceException;
 import com.octo.android.robospice.request.listener.RequestListener;
 
-import java.text.DateFormat;
-
 import ch.indr.threethreefive.libs.Environment;
 import ch.indr.threethreefive.libs.PageItemsBuilder;
-import ch.indr.threethreefive.libs.utils.StringUtils;
 import ch.indr.threethreefive.navigation.SpiceBasePage;
+import ch.indr.threethreefive.radio.radioBrowserInfo.StationUtils;
 import ch.indr.threethreefive.radio.radioBrowserInfo.api.StationsRequest;
 import ch.indr.threethreefive.radio.radioBrowserInfo.api.json.Station;
 
 public class RecentsPage extends SpiceBasePage implements RequestListener<Station[]> {
-
-  private DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.MEDIUM, DateFormat.SHORT);
 
   public RecentsPage(Environment environment) {
     super(environment);
@@ -50,32 +46,15 @@ public class RecentsPage extends SpiceBasePage implements RequestListener<Statio
 
   @Override public void onRequestSuccess(Station[] stations) {
     final PageItemsBuilder builder = pageItemsBuilder();
-    builder.addToggleFavorite(getCurrentPageLink());
 
+    builder.addToggleFavorite(getCurrentPageLink());
     for (Station station : stations) {
       builder.addLink("/radio/stations/" + station.getId(),
           station.getName(),
-          makeSubtitle(station),
-          station.getName());
+          StationUtils.makeSubtitle(station, "CLT"),
+          StationUtils.makeDescription(station, "CLT"));
     }
 
     setPageItems(builder);
-  }
-
-  private String makeSubtitle(Station station) {
-
-    final String updated = "Updated: " + dateFormat.format(station.getLastChangeTime());
-    final String country = station.getCountry();
-    final String language = station.getLanguage();
-    if (StringUtils.isNotEmpty(country) && StringUtils.isNotEmpty(language)) {
-      return updated + String.format(", Country: %s, Language: %s", country, language);
-    }
-    if (StringUtils.isNotEmpty(country)) {
-      return updated + ", Country: " + country;
-    }
-    if (StringUtils.isNotEmpty(language)) {
-      return updated + ", Language: " + language;
-    }
-    return updated;
   }
 }

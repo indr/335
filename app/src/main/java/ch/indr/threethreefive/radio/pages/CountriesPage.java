@@ -51,7 +51,6 @@ public class CountriesPage extends SpiceBasePage implements RequestListener<Coun
   }
 
   private void showTopCountries() {
-    resetFirstVisibleItem();
     final PageItemsBuilder builder = pageItemsBuilder();
     addCountryLinks(builder, topCountries);
     builder.addItem("Show all Countries", this::showAllCountries);
@@ -67,19 +66,10 @@ public class CountriesPage extends SpiceBasePage implements RequestListener<Coun
 
   private void addCountryLinks(PageItemsBuilder builder, List<Country> countries) {
     for (Country country : countries) {
+      final String subtitle = String.format(Locale.US, "%d radio stations", country.getStationCount());
       builder.addLink("/radio/countries/" + country.getValue(),
-          country.getName(),
-          makeSubtitle(country),
-          makeDescription(country));
+          country.getName(), subtitle, country.getName() + ", " + subtitle);
     }
-  }
-
-  private String makeDescription(Country country) {
-    return country.getName() + ", " + makeSubtitle(country);
-  }
-
-  private String makeSubtitle(Country country) {
-    return String.format(Locale.US, "%d radio stations", country.getStationCount());
   }
 
   private void populateLists(Country[] response) {

@@ -9,7 +9,7 @@ The radio menu consists of these main menu items:
 
 ## New Stations
 
-Lists inserted or updated radio stations sorted by date descending. Starts with 20 stations and shows option to `Show more Stations` which adds the next 20 stations to the list.
+Lists inserted or updated radio stations sorted by date descending. Starts with ~~20~~ 50 stations and shows option to ~~`Show more Stations` which adds the next 20 stations to the list.~~
 
 Title: Stations name  
 Subtitle: Stations country, languages and genres

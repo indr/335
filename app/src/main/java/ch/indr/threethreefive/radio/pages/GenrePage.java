@@ -20,8 +20,8 @@ import java.util.List;
 
 import ch.indr.threethreefive.libs.Environment;
 import ch.indr.threethreefive.libs.PageItemsBuilder;
-import ch.indr.threethreefive.libs.utils.StringUtils;
 import ch.indr.threethreefive.navigation.SpiceBasePage;
+import ch.indr.threethreefive.radio.radioBrowserInfo.StationUtils;
 import ch.indr.threethreefive.radio.radioBrowserInfo.api.StationsRequest;
 import ch.indr.threethreefive.radio.radioBrowserInfo.api.json.Station;
 import timber.log.Timber;
@@ -36,6 +36,8 @@ public class GenrePage extends SpiceBasePage implements RequestListener<Station[
 
   public GenrePage(Environment environment) {
     super(environment);
+
+    setTitle("Genre");
   }
 
   @Override public void onCreate(@NonNull Context context, Uri uri, Bundle bundle) {
@@ -65,6 +67,7 @@ public class GenrePage extends SpiceBasePage implements RequestListener<Station[
   }
 
   private void showTopStations() {
+    resetFirstVisibleItem();
     final PageItemsBuilder builder = pageItemsBuilder();
     builder.addToggleFavorite(getCurrentPageLink());
     addStationLink(builder, topStations);
@@ -73,6 +76,7 @@ public class GenrePage extends SpiceBasePage implements RequestListener<Station[
   }
 
   private void showAllStations(Environment environment) {
+    resetFirstVisibleItem();
     final PageItemsBuilder builder = pageItemsBuilder();
     builder.addToggleFavorite(getCurrentPageLink());
     addStationLink(builder, allStations);
@@ -82,24 +86,10 @@ public class GenrePage extends SpiceBasePage implements RequestListener<Station[
   private void addStationLink(PageItemsBuilder builder, List<Station> stations) {
     for (Station station : stations) {
       builder.addLink("/radio/stations/" + station.getId(),
-          station.getName(), makeSubtitle(station), station.getName());
+          station.getName(),
+          StationUtils.makeSubtitle(station, "CLG"),
+          StationUtils.makeDescription(station, "CLG"));
     }
-  }
-
-  private String makeSubtitle(Station station) {
-    final String country = station.getCountry();
-    final String language = station.getLanguage();
-
-    if (StringUtils.isNotEmpty(country) && StringUtils.isNotEmpty(language)) {
-      return String.format("Country: %s, Language: %s", country, language);
-    }
-    if (StringUtils.isNotEmpty(country)) {
-      return "Country: " + country;
-    }
-    if (StringUtils.isNotEmpty(language)) {
-      return "Language: " + language;
-    }
-    return null;
   }
 
   private void populateLists(Station[] response) {

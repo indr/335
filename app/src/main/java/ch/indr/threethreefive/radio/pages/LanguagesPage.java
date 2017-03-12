@@ -7,11 +7,6 @@
 
 package ch.indr.threethreefive.radio.pages;
 
-import android.content.Context;
-import android.net.Uri;
-import android.os.Bundle;
-import android.support.annotation.NonNull;
-
 import com.octo.android.robospice.persistence.exception.SpiceException;
 import com.octo.android.robospice.request.listener.RequestListener;
 
@@ -27,10 +22,6 @@ public class LanguagesPage extends SpiceBasePage implements RequestListener<Lang
 
   public LanguagesPage(Environment environment) {
     super(environment);
-  }
-
-  @Override public void onCreate(@NonNull Context context, Uri uri, Bundle bundle) {
-    super.onCreate(context, uri, bundle);
 
     setTitle("Languages");
   }
@@ -48,11 +39,10 @@ public class LanguagesPage extends SpiceBasePage implements RequestListener<Lang
   @Override public void onRequestSuccess(Language[] languages) {
     final PageItemsBuilder builder = pageItemsBuilder();
 
-    for (Language each : languages) {
-      builder.addLink("/radio/languages/" + each.getValue(),
-          each.getName(),
-          String.format(Locale.US, "%d radio stations", each.getStationCount()),
-          each.getName());
+    for (Language language : languages) {
+      final String subtitle = String.format(Locale.US, "%d radio stations", language.getStationCount());
+      builder.addLink("/radio/languages/" + language.getValue(),
+          language.getName(), subtitle, language.getName() + ", " + subtitle);
     }
 
     setPageItems(builder);

@@ -28,6 +28,7 @@ import ch.indr.threethreefive.libs.PageItemsBuilder;
 import ch.indr.threethreefive.libs.PageUris;
 import ch.indr.threethreefive.libs.utils.CollectionUtils;
 import ch.indr.threethreefive.navigation.SpiceBasePage;
+import ch.indr.threethreefive.radio.radioBrowserInfo.StationUtils;
 import ch.indr.threethreefive.radio.radioBrowserInfo.api.StationsRequest;
 import ch.indr.threethreefive.radio.radioBrowserInfo.api.json.Station;
 import timber.log.Timber;
@@ -96,24 +97,9 @@ public class CountryPage extends SpiceBasePage implements RequestListener<Statio
     for (Station station : stations) {
       builder.addLink(PageUris.makeStationUri(station.getId()),
           station.getName(),
-          makeSubtitle(station),
-          makeDescription(station)
+          StationUtils.makeSubtitle(station, "LT"),
+          StationUtils.makeDescription(station, "LT")
       );
-    }
-  }
-
-  private String makeDescription(Station station) {
-    return station.getName() + ", " + makeSubtitle(station);
-  }
-
-  private String makeSubtitle(Station station) {
-    final String language = station.getLanguage();
-
-    if (StringUtils.isNotEmpty(language)) {
-      return String.format(Locale.US, "%s, %s",
-          station.getLanguage(), StringUtils.join(station.getTags(), ", "));
-    } else {
-      return StringUtils.join(station.getTags(), ", ");
     }
   }
 

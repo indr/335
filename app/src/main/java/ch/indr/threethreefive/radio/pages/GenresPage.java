@@ -79,6 +79,7 @@ public class GenresPage extends SpiceBasePage implements RequestListener<Tag[]> 
   }
 
   private void showMoreGenres(Environment environment) {
+    resetFirstVisibleItem();
     final PageItemsBuilder builder = pageItemsBuilder();
     buildPageItems(builder, moreGenres);
     builder.addItem("Show all Genres", this::showAllGenres);
@@ -86,6 +87,7 @@ public class GenresPage extends SpiceBasePage implements RequestListener<Tag[]> 
   }
 
   private void showAllGenres(Environment environment) {
+    resetFirstVisibleItem();
     final PageItemsBuilder builder = pageItemsBuilder();
     buildPageItems(builder, allGenres);
     setPageItems(builder);
@@ -93,10 +95,9 @@ public class GenresPage extends SpiceBasePage implements RequestListener<Tag[]> 
 
   private void buildPageItems(PageItemsBuilder builder, List<Tag> genres) {
     for (Tag each : genres) {
+      final String subtitle = String.format(Locale.US, "%d radio stations", each.getStationCount());
       builder.addLink("/radio/genres/" + each.getValue(),
-          each.getName(),
-          String.format(Locale.US, "%d radio stations", each.getStationCount()),
-          each.getName());
+          each.getName(), subtitle, each.getName() + ", " + subtitle);
     }
   }
 
