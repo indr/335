@@ -24,6 +24,7 @@ import java.util.Locale;
 import ch.indr.threethreefive.R;
 import ch.indr.threethreefive.libs.Environment;
 import ch.indr.threethreefive.libs.PageItemsBuilder;
+import ch.indr.threethreefive.libs.utils.CollectionUtils;
 import ch.indr.threethreefive.navigation.SpiceBasePage;
 import ch.indr.threethreefive.radio.radioBrowserInfo.api.TagsRequest;
 import ch.indr.threethreefive.radio.radioBrowserInfo.api.json.Tag;
@@ -31,10 +32,9 @@ import timber.log.Timber;
 
 public class GenresPage extends SpiceBasePage implements RequestListener<Tag[]> {
 
-  private static final int MIN_STATION_COUNT_FOR_TOP_GENRES = 90;
-  private static final int MIN_STATION_COUNT_FOR_MORE_GENRES = 50;
-  private static final int MIN_STATION_COUNT_FOR_ALL_GENRES = 3;
   private static final int MAX_NUMBER_OF_TOP_GENRES = 15;
+  private static final int MAX_NUMBER_OF_MORE_GENRES = 50;
+  private static final int MIN_STATION_COUNT_FOR_ALL_GENRES = 9;
 
   private List<String> excludedFromTopGenres;
   private List<String> excludedFromMoreGenres;
@@ -114,47 +114,47 @@ public class GenresPage extends SpiceBasePage implements RequestListener<Tag[]> 
   private void populateLists(@NonNull Tag[] response) {
     Timber.d("populateLists tags %d, %s", response.length, this.toString());
 
-    allGenres = new ArrayList<>();
-    moreGenres = new ArrayList<>();
-    topGenres = new ArrayList<>();
-    int excluded = 0;
-
+    Timber.d("Filtering min station count and building all genres list, %s", this.toString());
+    this.topGenres = new ArrayList<>();
+    this.moreGenres = new ArrayList<>();
+    this.allGenres = new ArrayList<>();
     for (Tag tag : response) {
-      if (isTopGenre(tag)) {
+      final int stationCount = tag.getStationCount();
+      if (stationCount < MIN_STATION_COUNT_FOR_ALL_GENRES) {
+        continue;
+      }
+      allGenres.add(tag);
+
+      // Performance approximation: Instead of sorting all genres by station count, we put
+      // candidates for top and more genres lists
+      if (stationCount > 100) {
         topGenres.add(tag);
       }
-      if (isMoreGenre(tag)) {
+      if (stationCount > 40) {
         moreGenres.add(tag);
       }
-      if (tag.getStationCount() >= MIN_STATION_COUNT_FOR_ALL_GENRES) {
-        allGenres.add(tag);
-      } else {
-        excluded++;
-      }
     }
 
-    // Sort top genres by station count to get the top slice of it
+    int numberOfExcludes = excludedFromMoreGenres.size() + excludedFromTopGenres.size();
+
+    Timber.d("Building top genres list, %s", this.toString());
     Collections.sort(topGenres, new Tag.StationCountComparator());
-    if (topGenres.size() > 0) {
-      topGenres = topGenres.subList(0, Math.min(MAX_NUMBER_OF_TOP_GENRES, topGenres.size()));
-    }
+    this.topGenres = topGenres.subList(0, Math.min(topGenres.size(), MAX_NUMBER_OF_TOP_GENRES + numberOfExcludes));
+    this.topGenres = CollectionUtils.reject(topGenres, this::isExcludedFromTopGenres);
+    this.topGenres = topGenres.subList(0, Math.min(topGenres.size(), MAX_NUMBER_OF_TOP_GENRES));
 
-    Timber.d("Genres: top %d, more %d, all %d, excluded %d",
-        topGenres.size(), moreGenres.size(), allGenres.size(), excluded);
+    Timber.d("Building more genres list, %s", this.toString());
+    Collections.sort(moreGenres, new Tag.StationCountComparator());
+    this.moreGenres = moreGenres.subList(0, Math.min(moreGenres.size(), MAX_NUMBER_OF_MORE_GENRES + numberOfExcludes));
+    this.moreGenres = CollectionUtils.reject(allGenres, this::isExcludedFromMoreGenres);
+    this.moreGenres = moreGenres.subList(0, Math.min(moreGenres.size(), MAX_NUMBER_OF_MORE_GENRES));
 
-    // Sort all lists by name
-    final Tag.NameComparator c = new Tag.NameComparator();
-    Collections.sort(topGenres, c);
-    Collections.sort(moreGenres, c);
-    Collections.sort(allGenres, c);
-  }
+    Timber.d("Sorting lists by name");
+    Collections.sort(topGenres, new Tag.NameComparator());
+    Collections.sort(moreGenres, new Tag.NameComparator());
+    Collections.sort(allGenres, new Tag.NameComparator());
 
-  private boolean isTopGenre(Tag tag) {
-    return tag.getStationCount() >= MIN_STATION_COUNT_FOR_TOP_GENRES && !isExcludedFromTopGenres(tag);
-  }
-
-  private boolean isMoreGenre(Tag tag) {
-    return tag.getStationCount() >= MIN_STATION_COUNT_FOR_MORE_GENRES && !isExcludedFromMoreGenres(tag);
+    Timber.d("top %d, more %d, all %d, %s", topGenres.size(), moreGenres.size(), allGenres.size(), this.toString());
   }
 
   private boolean isExcludedFromTopGenres(Tag tag) {

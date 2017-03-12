@@ -19,6 +19,16 @@ public final class CollectionUtils {
     return new ArrayList<T>(list);
   }
 
+  public static <T> List<T> filter(T[] list, Func1<T, Boolean> action) {
+    final List<T> result = new ArrayList<>();
+    for (T each : list) {
+      if (action.call(each)) {
+        result.add(each);
+      }
+    }
+    return result;
+  }
+
   public static <T> List<T> filter(List<T> list, Func1<T, Boolean> action) {
     final List<T> result = new ArrayList<>();
     for (T each : list) {
@@ -27,5 +37,13 @@ public final class CollectionUtils {
       }
     }
     return result;
+  }
+
+  public static <T> List<T> reject(T[] list, Func1<T, Boolean> action) {
+    return filter(list, t -> !action.call(t));
+  }
+
+  public static <T> List<T> reject(List<T> list, Func1<T, Boolean> action) {
+    return filter(list, t -> !action.call(t));
   }
 }
