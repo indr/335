@@ -193,6 +193,16 @@ public class MusicStore {
     return new ArrayList<>();
   }
 
+  private String sanitize(String value) {
+    if (value == null) return null;
+    if (value.equals("<unknown>")) return "Unknown";
+    if (value.contains("_") && !value.contains(" ")) {
+      value = value.replaceAll("_", " ");
+    }
+
+    return value;
+  }
+
   public class Artist {
     private final String id;
     private final String name;
@@ -201,7 +211,7 @@ public class MusicStore {
 
     public Artist(String id, String name, int numberOfAlbums, int numberOfTracks) {
       this.id = id;
-      this.name = name;
+      this.name = sanitize(name);
       this.numberOfAlbums = numberOfAlbums;
       this.numberOfTracks = numberOfTracks;
     }
@@ -232,8 +242,8 @@ public class MusicStore {
 
     public Album(String id, String name, String artist, String artistId, int numberOfTracks) {
       this.id = id;
-      this.name = name;
-      this.artist = artist;
+      this.name = sanitize(name);
+      this.artist = sanitize(artist);
       this.artistId = artistId;
       this.numberOfTracks = numberOfTracks;
     }
@@ -272,10 +282,10 @@ public class MusicStore {
 
     public Song(String id, String name, String artist, String artistId, String album, String albumId, String data, long duration, String albumArt) {
       this.id = id;
-      this.name = name;
-      this.artist = artist;
+      this.name = sanitize(name);
+      this.artist = sanitize(artist);
       this.artistId = artistId;
-      this.album = album;
+      this.album = sanitize(album);
       this.albumId = albumId;
       this.data = data;
       this.duration = duration;
@@ -323,7 +333,7 @@ public class MusicStore {
     private final String name;
 
     public Genre(String name) {
-      this.name = name;
+      this.name = sanitize(name);
     }
 
     public String getName() {
