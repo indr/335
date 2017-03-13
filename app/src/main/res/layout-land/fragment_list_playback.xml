@@ -35,6 +35,7 @@
 
         <SeekBar
             android:id="@+id/seekBar"
+            style="@style/SeekBarAppTheme"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
@@ -44,8 +45,7 @@
             android:layout_toEndOf="@+id/textViewSeekStart"
             android:layout_toLeftOf="@+id/textViewSeekEnd"
             android:layout_toRightOf="@+id/textViewSeekStart"
-            android:layout_toStartOf="@+id/textViewSeekEnd"
-            android:background="@android:color/white"/>
+            android:layout_toStartOf="@+id/textViewSeekEnd"/>
 
         <TextView
             android:id="@+id/textViewSeekEnd"
