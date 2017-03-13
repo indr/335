@@ -33,7 +33,6 @@
             android:launchMode="singleTask"
             android:theme="@style/AppTheme.NoTitleBar"/>
         <activity android:name=".ui.activities.NowPlayingProxyActivity"/>
-        <activity android:name=".ui.activities.DebugActivity"/>
         <activity
             android:name=".ui.activities.UiSelectionActivity"
             android:theme="@style/AppTheme">
