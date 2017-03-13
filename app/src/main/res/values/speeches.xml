@@ -9,9 +9,23 @@
 <resources>
 
     <string name="speech_welcome_short">Welcome to three three five.</string>
-    <string name="speech_welcome_long">Welcome to three three five. Easy and ad free navigation to thousands of online radio stations, as well as media on your device.</string>
+    <string name="speech_welcome_long"><![CDATA[
+Welcome to three three five. Easy\n\
+free\n\
+navigation\n\
+to thousands of online radio stations,\n\
+as well as media on your device.\n\
+]]></string>
 
-    <string name="speech_ui_selection">Select interface: Press on the right half to launch the button interface, left half to launch the list interface.</string>
+    <string name="speech_ui_selection"><![CDATA[
+Please select an interface:\n\
+Press on the right side\n\
+to launch the button interface,\n\
+\n\
+Press on the left side\n\
+to launch large\n\
+text interface.\n\
+]]></string>
 
     <string name="speech_interface_instructions"><![CDATA[
 Welcome\n\
