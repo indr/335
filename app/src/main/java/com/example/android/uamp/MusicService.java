@@ -8,7 +8,6 @@
 package com.example.android.uamp;
 
 import android.app.PendingIntent;
-import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -34,8 +33,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import ch.indr.threethreefive.AppComponent;
-import ch.indr.threethreefive.ThreeThreeFiveApp;
 import ch.indr.threethreefive.R;
+import ch.indr.threethreefive.ThreeThreeFiveApp;
 import ch.indr.threethreefive.ui.activities.StartActivity;
 import timber.log.Timber;
 
@@ -117,14 +116,8 @@ public class MusicService extends MediaBrowserServiceCompat implements
 
   private MediaSessionCompat mSession;
   private MediaNotificationManager mMediaNotificationManager;
-  private Bundle mSessionExtras;
   private final DelayedStopHandler mDelayedStopHandler = new DelayedStopHandler(this);
-  private PackageValidator mPackageValidator;
   private QueueManagerType mQueueManager;
-
-  private boolean mIsConnectedToCar;
-  private BroadcastReceiver mCarConnectionReceiver;
-
 
   /*
    * (non-Javadoc)
@@ -134,8 +127,6 @@ public class MusicService extends MediaBrowserServiceCompat implements
   public void onCreate() {
     super.onCreate();
     LogHelper.d(TAG, "onCreate");
-
-    mPackageValidator = new PackageValidator(this);
 
     final AppComponent application = ((ThreeThreeFiveApp) getApplicationContext()).component();
     mQueueManager = application.environment().queueManager();
