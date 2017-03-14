@@ -130,11 +130,19 @@ public class ButtonGuideViewModel extends PageActivityViewModel<ButtonGuideActiv
     goHome.onNext(null);
   }
 
+  @Override public void up() {
+    // Up button should not close app, instead act like a press on home
+    if (pageStack.size() == 1) {
+      home();
+    } else {
+      super.up();
+    }
+  }
+
   @Override public void location() {
-
     StringBuilder sb = new StringBuilder();
-    for (Page page : pageStack) {
 
+    for (Page page : pageStack) {
       // Skip home page
       if (page.getIsRootPage()) {
         continue;

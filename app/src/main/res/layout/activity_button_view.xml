@@ -28,10 +28,10 @@
         app:layout_rowWeight="1"/>
 
     <Button
-        android:id="@+id/buttonBack"
+        android:id="@+id/buttonUp"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:contentDescription="@string/button_back_description"
+        android:contentDescription="@string/button_up_description"
         android:text="@string/button_back_text"
         android:textColor="@color/white"
         android:theme="@style/ButtonSecondary1"

@@ -117,7 +117,7 @@ public class ButtonGuideActivity extends BaseActivity<ButtonGuideViewModel> {
 
   private void initButtons() {
     int[] buttonIds = new int[]{
-        R.id.buttonHome, R.id.buttonBack, R.id.buttonLocation,
+        R.id.buttonHome, R.id.buttonUp, R.id.buttonLocation,
         R.id.buttonStepLeft, R.id.buttonEnter, R.id.buttonStepRight,
 
         // In fragment, but it seems to work?
@@ -205,7 +205,7 @@ public class ButtonGuideActivity extends BaseActivity<ButtonGuideViewModel> {
     viewModel.inputs.home();
   }
 
-  @OnClick(R.id.buttonBack)
+  @OnClick(R.id.buttonUp)
   public void buttonUpOnClick() {
     viewModel.inputs.up();
   }

@@ -3,7 +3,7 @@
 
     <string name="button_home_description">Home: Brings you back to the start</string>
     <string name="button_home_text">Home</string>
-    <string name="button_back_description">Back: Go back to previous location</string>
+    <string name="button_up_description">Back: Go back to previous location</string>
     <string name="button_back_text">Back</string>
     <string name="button_enter_description">Enter: Open a folder or play a media item</string>
     <string name="button_enter_text">Enter</string>
