@@ -8,52 +8,60 @@
 package ch.indr.threethreefive.services;
 
 import android.support.annotation.NonNull;
-import android.support.v4.media.MediaDescriptionCompat;
-import android.support.v4.media.MediaMetadataCompat;
 import android.support.v4.media.session.PlaybackStateCompat;
 
 import java.util.concurrent.TimeUnit;
 
+import ch.indr.threethreefive.R;
 import rx.Observable;
+import timber.log.Timber;
 
-import static ch.indr.threethreefive.libs.rx.transformers.Transfomers.takePairWhen;
+import static android.support.v4.media.session.PlaybackStateCompat.STATE_BUFFERING;
+import static android.support.v4.media.session.PlaybackStateCompat.STATE_CONNECTING;
+import static android.support.v4.media.session.PlaybackStateCompat.STATE_FAST_FORWARDING;
+import static android.support.v4.media.session.PlaybackStateCompat.STATE_PAUSED;
+import static android.support.v4.media.session.PlaybackStateCompat.STATE_PLAYING;
+import static android.support.v4.media.session.PlaybackStateCompat.STATE_REWINDING;
 
 public class PlaybackAnnouncer implements PlaybackAnnouncerType {
 
-  private static final int DEBOUNCE_TIMEOUT = 300;
+  private static final int DEBOUNCE_TIMEOUT = 500;
 
-  private final PlaybackClientType playbackClient;
   private final SpeakerType speaker;
-  private final Observable<Integer> playbackState;
 
   private boolean started = false;
-  private Observable<MediaMetadataCompat> mediaMetadata;
 
   public PlaybackAnnouncer(final @NonNull PlaybackClientType playbackClient, final @NonNull SpeakerType speaker) {
-    this.playbackClient = playbackClient;
     this.speaker = speaker;
 
-    // Debounce playback state so that only the last relevant playback state
-    // is announced. This is usefull in cases of skipping, or loading a media item
-    // from local/external storage.
-    this.playbackState = this.playbackClient.playbackState()
-        .filter(state -> state != PlaybackStateCompat.STATE_BUFFERING)
+    Observable<StateTransition> playbackStateTransition = playbackClient.playbackState()
+        .scan(StateTransition.create(0, 0), (previous, to) -> StateTransition.create(previous.to, to))
+        .doOnNext(st -> Timber.d("playback state transition %s, %s", st.toString(), this.toString()))
+        .throttleWithTimeout(DEBOUNCE_TIMEOUT, TimeUnit.MILLISECONDS)
         .distinctUntilChanged()
-        .throttleWithTimeout(DEBOUNCE_TIMEOUT, TimeUnit.MILLISECONDS);
-
-    this.mediaMetadata = this.playbackClient.mediaMetadata();
-
-    mediaDescriptionWhen(PlaybackStateCompat.STATE_PLAYING)
         .compose(bindToStatus())
-        .subscribe(mediaDescription -> speaker.sayQueued("Playing " + mediaDescription.getTitle()));
+        .share();
 
-    mediaDescriptionWhen(PlaybackStateCompat.STATE_CONNECTING)
-        .compose(bindToStatus())
-        .subscribe(__ -> this.speaker.sayQueued("Loading stream, please wait."));
+    playbackStateTransition
+        .filter(p -> p.to == STATE_BUFFERING)
+        .subscribe(__ -> speaker.sayQueued(R.string.speech_playback_state_buffering));
 
-    mediaDescriptionWhen(PlaybackStateCompat.STATE_STOPPED)
-        .compose(bindToStatus())
-        .subscribe(__ -> this.speaker.sayQueued("Playback stopped"));
+    playbackStateTransition
+        .filter(p -> p.to == STATE_CONNECTING)
+        .subscribe(__ -> this.speaker.sayQueued(R.string.speech_playback_state_connecting));
+
+    playbackStateTransition
+        .filter(p -> p.to == STATE_PAUSED)
+        .subscribe(__ -> this.speaker.sayQueued(R.string.speech_playback_state_paused));
+
+    playbackStateTransition
+        .filter(p -> p.to == STATE_PLAYING && p.from != STATE_PLAYING)
+        .filter(p -> p.from != STATE_REWINDING && p.from != STATE_FAST_FORWARDING)
+        .subscribe(__ -> this.speaker.sayQueued(R.string.speech_playback_state_playing));
+
+    playbackStateTransition
+        .filter(p -> p.to == PlaybackStateCompat.STATE_STOPPED)
+        .subscribe(__ -> speaker.sayQueued(R.string.speech_playback_state_stopped));
 
     playbackClient.customEvent()
         .map(ce -> ce.second)
@@ -81,20 +89,26 @@ public class PlaybackAnnouncer implements PlaybackAnnouncerType {
     started = false;
   }
 
-  private Observable<MediaDescriptionCompat> mediaDescriptionWhen(int state) {
-    return mediaMetadataWhen(state)
-        .map(MediaMetadataCompat::getDescription);
-  }
-
-  private Observable<MediaMetadataCompat> mediaMetadataWhen(int state) {
-    return mediaMetadata
-        .compose(bindToStatus())
-        .compose(takePairWhen(playbackState))
-        .filter(pair -> pair.second == state)
-        .map(pair -> pair.first);
-  }
-
   private @NonNull <T> Observable.Transformer<T, T> bindToStatus() {
     return source -> source.filter(__ -> started);
+  }
+
+  private static class StateTransition {
+
+    StateTransition(int from, int to) {
+      this.from = from;
+      this.to = to;
+    }
+
+    public static StateTransition create(int from, int to) {
+      return new StateTransition(from, to);
+    }
+
+    public int from;
+    public int to;
+
+    @Override public String toString() {
+      return "StateTransition [from=" + from + ", to=" + to + "]";
+    }
   }
 }

@@ -14,6 +14,12 @@
     <string name="speech_can_not_skip_to_next">Can not skip to next</string>
     <string name="speech_can_not_skip_to_previous">Can not skip to previous</string>
 
+    <string name="speech_playback_state_buffering">Buffering</string>
+    <string name="speech_playback_state_connecting">Loading stream, please wait.</string>
+    <string name="speech_playback_state_playing">Playing media</string>
+    <string name="speech_playback_state_paused">Playback paused</string>
+    <string name="speech_playback_state_stopped">Playback stopped</string>
+
     <string name="speech_welcome_short">Welcome to three three five.</string>
     <string name="speech_welcome_long"><![CDATA[
 Welcome to three three five. Easy\n\

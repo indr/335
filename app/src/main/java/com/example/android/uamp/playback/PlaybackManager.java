@@ -281,7 +281,7 @@ public class PlaybackManager implements PlaybackType.Callback {
 
     @Override public void onRewind() {
       Timber.d("onRewind %s", this.toString());
-      mPlayback.seekTo(mPlayback.getCurrentStreamPosition() - 5000);
+      mPlayback.seekTo(mPlayback.getCurrentStreamPosition() - 5000, PlaybackStateCompat.STATE_REWINDING);
 
       if (!mPlayback.canSeek()) {
         notifyOptionNotAvailable(R.string.speech_can_not_seek_rewind);
@@ -290,7 +290,7 @@ public class PlaybackManager implements PlaybackType.Callback {
 
     @Override public void onFastForward() {
       Timber.d("onFastForward %s", this.toString());
-      mPlayback.seekTo(mPlayback.getCurrentStreamPosition() + 5000);
+      mPlayback.seekTo(mPlayback.getCurrentStreamPosition() + 5000, PlaybackStateCompat.STATE_FAST_FORWARDING);
 
       if (!mPlayback.canSeek()) {
         notifyOptionNotAvailable(R.string.speech_can_not_seek_fast_forward);

@@ -235,6 +235,11 @@ public class LocalPlayback implements PlaybackType, AudioManager.OnAudioFocusCha
 
   @Override
   public void seekTo(int position) {
+    seekTo(position, PlaybackStateCompat.STATE_BUFFERING);
+  }
+
+  @Override
+  public void seekTo(int position, int state) {
     LogHelper.d(TAG, "seekTo called with ", position);
 
     if (mMediaPlayer == null) {
@@ -242,7 +247,7 @@ public class LocalPlayback implements PlaybackType, AudioManager.OnAudioFocusCha
       mCurrentPosition = position;
     } else {
       if (mMediaPlayer.isPlaying()) {
-        mState = PlaybackStateCompat.STATE_BUFFERING;
+        mState = state;
       }
       registerAudioNoisyReceiver();
       mMediaPlayer.seekTo(position);

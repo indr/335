@@ -7,11 +7,13 @@
 
 package ch.indr.threethreefive.mocks;
 
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.media.MediaMetadataCompat;
 import android.support.v4.media.session.MediaControllerCompat;
 import android.support.v4.media.session.PlaybackStateCompat;
+import android.util.Pair;
 
 import ch.indr.threethreefive.services.PlaybackClientType;
 import rx.Observable;
@@ -30,6 +32,10 @@ public class MockPlaybackClient implements PlaybackClientType {
   }
 
   @Nullable @Override public MediaControllerCompat.TransportControls transportControls() {
+    return null;
+  }
+
+  @NonNull @Override public Observable<Pair<String, Bundle>> customEvent() {
     return null;
   }
 
