@@ -13,6 +13,7 @@ import java.util.List;
 
 import ch.indr.threethreefive.AppComponent;
 import ch.indr.threethreefive.ThreeThreeFiveApp;
+import ch.indr.threethreefive.commands.ToggleFavorite;
 import ch.indr.threethreefive.favorites.FavoritesStore;
 import ch.indr.threethreefive.libs.Environment;
 import ch.indr.threethreefive.libs.PageCommand;
@@ -43,6 +44,7 @@ public abstract class Page implements PageType {
   // Set default value to `null`, which indicates the page is loading items
   private final BehaviorSubject<List<PageItem>> pageItems = BehaviorSubject.create((List<PageItem>) null);
 
+  private final BehaviorSubject<Integer> pageItemIdx = BehaviorSubject.create(0);
   private final BehaviorSubject<PageItem> pageItem = BehaviorSubject.create();
 
   // Set default parent page link to HomePage
@@ -144,8 +146,6 @@ public abstract class Page implements PageType {
     this.context = context;
     this.pageUri = uri;
 
-    final BehaviorSubject<Integer> pageItemIdx = BehaviorSubject.create(0);
-
     // Current/focused page item
     Observable.combineLatest(pageItems, pageItemIdx, (items, idx) -> {
       if (items == null || idx < 0 || idx >= items.size()) return null;
@@ -243,7 +243,21 @@ public abstract class Page implements PageType {
   }
 
   protected void setPageItems(final @NonNull List<PageItem> items) {
+    boolean setPageItemIdx = pageItem.getValue() == null;
     pageItems.onNext(items);
+
+    if (setPageItemIdx) {
+      // Set page item index (selected page item) to first non "Add to Favorite" item
+      int newItemIdx = 0;
+      for (int i = 0; i < items.size(); i++) {
+        PageItem pageItem = items.get(i);
+        if (!ToggleFavorite.class.isAssignableFrom(pageItem.getClass())) {
+          newItemIdx = i;
+          break;
+        }
+      }
+      pageItemIdx.onNext(newItemIdx);
+    }
   }
 
   protected void setLoading() {

@@ -1,0 +1,88 @@
+# Menu Structure
+
+- Music
+  - Artists
+    - `0-n` Artist
+      - Play all Albums
+      - Add to Playlist
+      - Add to Favorites
+      - `0-n` Albums
+        - Play all Songs
+        - Add to Playlist
+        - Add to Favorites
+        - `0-n` Tracks
+          - Press to Play
+          - Add to Playlist
+          - Add to Favorites
+    - Albums
+      - `0-n` Albums
+        - Play all Songs
+        - Add to Playlist
+        - Add to Favorites
+        - `0-n` Tracks
+          - Press to Play
+          - Add to Playlist
+          - Add to Favorites
+    - Songs
+      - Play all Songs
+      - Add to Playlist
+      - Add to Favorites
+      - `0-n` Songs
+        - Press to Play
+        - Add to Playlist
+        - Add to Favorites
+- Radio
+  - New Stations
+    - Add to Favorites
+    - `0-50` Stations
+      - See Station
+  - Genres
+    - `0-n` Genres
+      - Add to Favorites
+      - `0-n` Stations
+        - See Station
+    - `?` Show more Genres
+    - `?` Show all Genres
+  - Countries
+    - `0-n` Countries
+      - Add to Favorites
+      - `0-n` Stations
+        - See Station
+    - Show all Countries
+  - Languages
+    - `0-n` Languages
+      - Add to Favorites
+      - `0-n` Stations
+        - See Station
+- Playlist
+  - `n=0` Empty Playlist
+  - `n>0` Play Playlist
+  - `n>0` Clear Playlist
+  - `0-n` Playlist Items
+    - Press to Play
+    - Remove from Playlist
+    - `?` Link to Artist
+    - `?` Link to Album
+    - `?` Link to Song
+    - `?` Link to Radio
+- Favorites
+  - `n=0` No favorites
+  - `0-n` Favorite (as link to respective menu)
+- Preferences
+  - `BUTTONS` Replay Interface Instructions
+  - Switch to Button/List Interface
+  - `DEBUG` Reset App Launch Counter
+  - `DEBUG` Reset Button UI Launch Counter
+
+## Station
+
+- Press to Play
+- Add to Playlist
+- Add to Favorites
+- Country (link to)
+- Language (link to)
+- Genres
+  `1-N` Link to Genre
+- Votes
+- Updated
+- LIST: Open Website
