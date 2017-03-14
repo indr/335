@@ -9,8 +9,10 @@ package ch.indr.threethreefive.ui.adapters;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
@@ -32,6 +34,9 @@ import static android.view.View.GONE;
  * https://github.com/codepath/android_guides/wiki/Using-an-ArrayAdapter-with-ListView#defining-the-adapter
  */
 public class PageItemsAdapter extends ArrayAdapter<PageItem> implements SharedPreferences.OnSharedPreferenceChangeListener {
+
+  // ripple_material_light
+  private static final int highlightColor = Color.argb(0x1f, 0, 0, 0);
 
   private final PreferencesType preferences;
   private float textSizeTitle;
@@ -83,11 +88,12 @@ public class PageItemsAdapter extends ArrayAdapter<PageItem> implements SharedPr
       pageItem.description().subscribe(textViewTitle::setContentDescription);
     }
 
-    // Attach touch listeners to perform a list item click
+    // Attach touch listeners to perform a list item click and visual indicator on focus, tap
     // If you want to puke, see: https://code.google.com/p/android/issues/detail?id=3414
-    textViewTitle.setOnTouchListener(new TouchListener(parent, position));
-    textViewSubtitle.setOnTouchListener(new TouchListener(parent, position));
-    scrollView.setOnTouchListener(new TouchListener(parent, position));
+    final TouchListener touchListener = new TouchListener(parent, position, scrollView);
+    textViewTitle.setOnTouchListener(touchListener);
+    textViewSubtitle.setOnTouchListener(touchListener);
+    scrollView.setOnTouchListener(touchListener);
 
     // Return the completed view to render on screen
     return convertView;
@@ -108,11 +114,27 @@ public class PageItemsAdapter extends ArrayAdapter<PageItem> implements SharedPr
 
     private final ViewGroup parent;
     private final int position;
+    private View itemView;
 
-    TouchListener(ViewGroup parent, int position) {
+    TouchListener(ViewGroup parent, int position, View itemView) {
       this.parent = parent;
       this.position = position;
+      this.itemView = itemView;
     }
+
+    @Override public boolean onTouch(View view, MotionEvent motionEvent) {
+      final int action = motionEvent.getActionMasked();
+      if (action == MotionEvent.ACTION_DOWN) {
+        itemView.setBackgroundColor(highlightColor);
+      } else if (action == MotionEvent.ACTION_UP) {
+        itemView.setBackgroundResource(0);
+      } else if (action == MotionEvent.ACTION_CANCEL) {
+        itemView.setBackgroundResource(0);
+      }
+
+      return super.onTouch(view, motionEvent);
+    }
+
 
     @Override public boolean onClick(View view) {
       if (!parent.getClass().equals(ListView.class)) {
