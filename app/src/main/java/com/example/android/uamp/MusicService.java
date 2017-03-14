@@ -15,6 +15,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.os.RemoteException;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.media.MediaBrowserCompat.MediaItem;
 import android.support.v4.media.MediaBrowserServiceCompat;
 import android.support.v4.media.MediaMetadataCompat;
@@ -259,6 +260,10 @@ public class MusicService extends MediaBrowserServiceCompat implements
   @Override
   public void onPlaybackStateUpdated(PlaybackStateCompat newState) {
     mSession.setPlaybackState(newState);
+  }
+
+  @Override public void onCustomEvent(@NonNull String event, @Nullable Bundle extras) {
+    mSession.sendSessionEvent(event, extras);
   }
 
   private QueueManager.MetadataUpdateListener queueListener = new QueueManager.MetadataUpdateListener() {

@@ -11,7 +11,6 @@ import android.support.annotation.NonNull;
 import android.support.v4.media.MediaDescriptionCompat;
 import android.support.v4.media.MediaMetadataCompat;
 import android.support.v4.media.session.PlaybackStateCompat;
-import android.util.Pair;
 
 import java.util.concurrent.TimeUnit;
 
@@ -55,6 +54,13 @@ public class PlaybackAnnouncer implements PlaybackAnnouncerType {
     mediaDescriptionWhen(PlaybackStateCompat.STATE_STOPPED)
         .compose(bindToStatus())
         .subscribe(__ -> this.speaker.sayQueued("Playback stopped"));
+
+    playbackClient.customEvent()
+        .map(ce -> ce.second)
+        .filter(bundle -> bundle.containsKey("resourceId"))
+        .map(bundle -> bundle.getInt("resourceId"))
+        .compose(bindToStatus())
+        .subscribe(speaker::sayUrgent);
   }
 
   @Override public boolean isStarted() {

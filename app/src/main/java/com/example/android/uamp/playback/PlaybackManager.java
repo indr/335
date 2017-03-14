@@ -10,6 +10,8 @@ package com.example.android.uamp.playback;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.os.SystemClock;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.media.session.MediaSessionCompat;
 import android.support.v4.media.session.PlaybackStateCompat;
 
@@ -218,6 +220,7 @@ public class PlaybackManager implements PlaybackType.Callback {
     public void onPlay() {
       LogHelper.d(TAG, "play");
       if (mQueueManager.getCurrentQueueItem() == null) {
+        notifyOptionNotAvailable(R.string.speech_can_not_play_empty_queue);
         return;
       }
       handlePlayRequest();
@@ -256,6 +259,7 @@ public class PlaybackManager implements PlaybackType.Callback {
         handlePlayRequest();
       } else {
         handleStopRequest("Cannot skip");
+        notifyOptionNotAvailable(R.string.speech_can_not_skip_to_next);
       }
       mQueueManager.updateMetadata();
     }
@@ -270,6 +274,7 @@ public class PlaybackManager implements PlaybackType.Callback {
         handlePlayRequest();
       } else {
         handleStopRequest("Cannot skip");
+        notifyOptionNotAvailable(R.string.speech_can_not_skip_to_previous);
       }
       mQueueManager.updateMetadata();
     }
@@ -277,12 +282,26 @@ public class PlaybackManager implements PlaybackType.Callback {
     @Override public void onRewind() {
       Timber.d("onRewind %s", this.toString());
       mPlayback.seekTo(mPlayback.getCurrentStreamPosition() - 5000);
+
+      if (!mPlayback.canSeek()) {
+        notifyOptionNotAvailable(R.string.speech_can_not_seek_rewind);
+      }
     }
 
     @Override public void onFastForward() {
       Timber.d("onFastForward %s", this.toString());
       mPlayback.seekTo(mPlayback.getCurrentStreamPosition() + 5000);
+
+      if (!mPlayback.canSeek()) {
+        notifyOptionNotAvailable(R.string.speech_can_not_seek_fast_forward);
+      }
     }
+  }
+
+  private void notifyOptionNotAvailable(int resourceId) {
+    final Bundle bundle = new Bundle();
+    bundle.putInt("resourceId", resourceId);
+    mServiceCallback.onCustomEvent("option_not_available", bundle);
   }
 
 
@@ -296,5 +315,7 @@ public class PlaybackManager implements PlaybackType.Callback {
     void onPlaybackStop();
 
     void onPlaybackStateUpdated(PlaybackStateCompat newState);
+
+    void onCustomEvent(@NonNull String event, @Nullable Bundle extras);
   }
 }

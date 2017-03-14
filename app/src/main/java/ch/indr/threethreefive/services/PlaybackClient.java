@@ -9,6 +9,7 @@ package ch.indr.threethreefive.services;
 
 import android.content.ComponentName;
 import android.content.Context;
+import android.os.Bundle;
 import android.os.RemoteException;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -16,11 +17,13 @@ import android.support.v4.media.MediaBrowserCompat;
 import android.support.v4.media.MediaMetadataCompat;
 import android.support.v4.media.session.MediaControllerCompat;
 import android.support.v4.media.session.PlaybackStateCompat;
+import android.util.Pair;
 
 import com.example.android.uamp.MusicService;
 
 import rx.Observable;
 import rx.subjects.BehaviorSubject;
+import rx.subjects.PublishSubject;
 import timber.log.Timber;
 
 public class PlaybackClient implements PlaybackClientType {
@@ -32,6 +35,7 @@ public class PlaybackClient implements PlaybackClientType {
   private final BehaviorSubject<Integer> playbackState = BehaviorSubject.create(PlaybackStateCompat.STATE_NONE);
   private final BehaviorSubject<PlaybackStateCompat> playbackStateCompat = BehaviorSubject.create((PlaybackStateCompat) null);
   private final BehaviorSubject<MediaMetadataCompat> mediaMetadata = BehaviorSubject.create((MediaMetadataCompat) null);
+  private final PublishSubject<Pair<String, Bundle>> customEvent = PublishSubject.create();
 
   public PlaybackClient(final @NonNull Context context) {
     this.context = context;
@@ -61,6 +65,10 @@ public class PlaybackClient implements PlaybackClientType {
 
   @NonNull public BehaviorSubject<PlaybackStateCompat> playbackStateCompat() {
     return playbackStateCompat;
+  }
+
+  @NonNull @Override public Observable<Pair<String, Bundle>> customEvent() {
+    return customEvent;
   }
 
   @Override public void playPause() {
@@ -158,6 +166,12 @@ public class PlaybackClient implements PlaybackClientType {
       Timber.d("onMetadataChanged %s", metadata != null ? metadata.toString() : "null");
 
       mediaMetadata.onNext(metadata);
+    }
+
+    @Override public void onSessionEvent(String event, Bundle extras) {
+      Timber.d("onSessionEvent %s, %s", event, this.toString());
+      super.onSessionEvent(event, extras);
+      customEvent.onNext(Pair.create(event, extras));
     }
   };
 

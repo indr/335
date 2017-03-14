@@ -8,6 +8,12 @@
 
 <resources>
 
+    <string name="speech_can_not_play_empty_queue">Can not play media, playlist is empty</string>
+    <string name="speech_can_not_seek_fast_forward">Can not seek forward</string>
+    <string name="speech_can_not_seek_rewind">Can not seek back</string>
+    <string name="speech_can_not_skip_to_next">Can not skip to next</string>
+    <string name="speech_can_not_skip_to_previous">Can not skip to previous</string>
+
     <string name="speech_welcome_short">Welcome to three three five.</string>
     <string name="speech_welcome_long"><![CDATA[
 Welcome to three three five. Easy\n\
