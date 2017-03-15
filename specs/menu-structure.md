@@ -10,27 +10,28 @@
         - Play all Songs
         - Add to Playlist
         - Add to Favorites
-        - `0-n` Tracks
-          - Press to Play
-          - Add to Playlist
-          - Add to Favorites
+        - `0-n` Songs
+          - See Song
     - Albums
       - `0-n` Albums
         - Play all Songs
         - Add to Playlist
         - Add to Favorites
-        - `0-n` Tracks
-          - Press to Play
-          - Add to Playlist
-          - Add to Favorites
+        - `0-n` Songs
+          - See Song
+    - Genres
+      - `0-n` Genres
+        - Play all Songs
+        - Add to Playlist
+        - Add to Favorites
+        - `0-n` Songs
+          - See Song
     - Songs
       - Play all Songs
       - Add to Playlist
       - Add to Favorites
       - `0-n` Songs
-        - Press to Play
-        - Add to Playlist
-        - Add to Favorites
+        - See Song
 - Radio
   - New Stations
     - Add to Favorites
@@ -74,15 +75,23 @@
   - `DEBUG` Reset App Launch Counter
   - `DEBUG` Reset Button UI Launch Counter
 
+## Song
+
+- Press to Play
+- Add to Playlist
+- Add to Favorites
+- Link to Artist
+- Link to Album
+          
 ## Station
 
 - Press to Play
 - Add to Playlist
 - Add to Favorites
-- Country (link to)
-- Language (link to)
+- Link to Country
+- Link to Language
 - Genres
-  `1-N` Link to Genre
+  - `1-N` Link to Genre
 - Votes
 - Updated
-- LIST: Open Website
+- `LISTS` Open Website

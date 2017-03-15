@@ -32,12 +32,12 @@ public class GenresPage extends Page {
 
     setTitle("Genres");
 
-    final MusicStore musicStore = new MusicStore(getContext());
     final PageItemsBuilder builder = pageItemsBuilder();
+    final MusicStore musicStore = new MusicStore(getContext());
 
     final List<MusicStore.Genre> genres = musicStore.queryGenres();
     for (MusicStore.Genre genre : genres) {
-      builder.addLink(makeGenreUri(genre.getName()), genre.getName());
+      builder.addLink(makeGenreUri(genre.getId()), genre.getName());
     }
 
     setPageItems(builder);

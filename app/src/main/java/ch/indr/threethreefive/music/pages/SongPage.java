@@ -20,6 +20,8 @@ import ch.indr.threethreefive.libs.PageItemsBuilder;
 import ch.indr.threethreefive.music.MusicStore;
 import ch.indr.threethreefive.navigation.Page;
 
+import static ch.indr.threethreefive.libs.PageUris.makeAlbumUri;
+import static ch.indr.threethreefive.libs.PageUris.makeArtistUri;
 import static ch.indr.threethreefive.music.MusicMediaItemFactory.make;
 
 public class SongPage extends Page {
@@ -49,6 +51,9 @@ public class SongPage extends Page {
     builder.addItem(new PlayMedia(mediaItem));
     builder.addItem(new AddToPlaylist(mediaItem));
     builder.addToggleFavorite(getCurrentPageLink());
+
+    builder.addLink(makeArtistUri(song.getArtistId()), "Arist: " + song.getArtist());
+    builder.addLink(makeAlbumUri(song.getAlbumId()), "Album: " + song.getArtist());
 
     setPageItems(builder);
   }

@@ -34,22 +34,31 @@ public class GenrePage extends Page {
   @Override public void onCreate(@NonNull Context context, Uri uri, Bundle bundle) {
     super.onCreate(context, uri, bundle);
 
-    final String genre = uri.getLastPathSegment();
-    setTitle(genre);
-
+    final long genreId = Long.parseLong(uri.getLastPathSegment());
     final MusicStore musicStore = new MusicStore(getContext());
+
     final PageItemsBuilder builder = pageItemsBuilder();
 
-    final List<MusicStore.Song> songs = musicStore.getSongsByGenreName(genre);
+    final List<MusicStore.Song> songs = musicStore.getSongsByGenreId(genreId);
     final List<MediaItem> mediaItems = make(songs);
+
     builder.addItem(new PlayMedias("Play all Songs", mediaItems));
     builder.addItem(new AddToPlaylist("Add all Songs to Playlist", mediaItems));
     builder.addToggleFavorite(getCurrentPageLink());
 
     for (MusicStore.Song song : songs) {
-      builder.addLink(makeSongUri(song.getId()), song.getName());
+      builder.addLink(makeSongUri(song.getId()),
+          song.getName(), makeSubtitle(song), makeDescription(song));
     }
 
     setPageItems(builder);
+  }
+
+  private String makeDescription(MusicStore.Song song) {
+    return song.getName() + " by " + song.getArtist();
+  }
+
+  private String makeSubtitle(MusicStore.Song song) {
+    return song.getArtist();
   }
 }

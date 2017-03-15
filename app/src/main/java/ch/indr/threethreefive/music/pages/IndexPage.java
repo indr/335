@@ -32,7 +32,7 @@ public class IndexPage extends Page {
 
     builder.addLink("/music/artists", "Artists");
     builder.addLink("/music/albums", "Albums");
-    //builder.addLink("/music/genres", "Genres");
+    builder.addLink("/music/genres", "Genres");
     builder.addLink("/music/songs", "Songs");
 
     setPageItems(builder);
