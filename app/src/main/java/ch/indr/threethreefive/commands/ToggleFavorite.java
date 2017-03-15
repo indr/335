@@ -2,7 +2,7 @@ package ch.indr.threethreefive.commands;
 
 import android.support.annotation.NonNull;
 
-import ch.indr.threethreefive.favorites.FavoritesStore;
+import ch.indr.threethreefive.favorites.FavoritesStoreType;
 import ch.indr.threethreefive.favorites.model.Favorite;
 import ch.indr.threethreefive.libs.Environment;
 import ch.indr.threethreefive.libs.PageCommand;
@@ -15,7 +15,7 @@ public class ToggleFavorite extends PageCommand {
 
   private Favorite favorite;
 
-  public ToggleFavorite(@NonNull FavoritesStore favoritesStore, @NonNull PageLink pageLink) {
+  public ToggleFavorite(@NonNull FavoritesStoreType favoritesStore, @NonNull PageLink pageLink) {
     super("Add to Favorites");
 
     this.favorite = new Favorite(0, pageLink.getTitle(), pageLink.getUri().toString(), null);
@@ -28,7 +28,7 @@ public class ToggleFavorite extends PageCommand {
   }
 
   @Override public void execute(@NonNull Environment environment) {
-    FavoritesStore favoritesStore = environment.favoritesStore();
+    FavoritesStoreType favoritesStore = environment.favoritesStore();
 
     if (!favoritesStore.isFavorite(favorite.getPageUri())) {
       addFavorite(environment, favoritesStore);
@@ -37,14 +37,14 @@ public class ToggleFavorite extends PageCommand {
     }
   }
 
-  private void addFavorite(@NonNull Environment environment, FavoritesStore favoritesStore) {
+  private void addFavorite(@NonNull Environment environment, FavoritesStoreType favoritesStore) {
     favoritesStore.add(this.favorite);
     isFavorite.onNext(true);
     environment.toastManager().toast("Favorite added: " + favorite.getTitle());
     environment.speaker().command().favoriteAdded();
   }
 
-  private void removeFavorite(@NonNull Environment environment, FavoritesStore favoritesStore) {
+  private void removeFavorite(@NonNull Environment environment, FavoritesStoreType favoritesStore) {
     favoritesStore.remove(favorite.getPageUri());
     isFavorite.onNext(false);
     environment.toastManager().toast("Favorite removed: " + favorite.getTitle());

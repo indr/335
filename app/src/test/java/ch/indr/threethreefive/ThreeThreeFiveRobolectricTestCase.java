@@ -37,7 +37,6 @@ public class ThreeThreeFiveRobolectricTestCase extends TestCase {
     AppComponent component = application().component();
     Environment env = component.environment();
     environment = env.toBuilder()
-        .pageResolver(new PageResolver())
         .build();
   }
 

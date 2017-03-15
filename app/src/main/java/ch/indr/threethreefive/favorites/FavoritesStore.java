@@ -19,14 +19,15 @@ import java.util.List;
 import ch.indr.threethreefive.favorites.model.Favorite;
 import ch.indr.threethreefive.libs.PageLink;
 
-public class FavoritesStore {
+public class FavoritesStore implements FavoritesStoreType {
+
   private final Context context;
 
-  public FavoritesStore(Context context) {
+  public FavoritesStore(@NonNull Context context) {
     this.context = context;
   }
 
-  public long add(Favorite favorite) {
+  public long add(@NonNull Favorite favorite) {
     SQLiteDatabase db = getWritableDatabase();
 
     // Create a new map of values, where column names are the keys
@@ -38,11 +39,11 @@ public class FavoritesStore {
     return db.insert(FavoritesContract.FavoritesEntry.TABLE_NAME, null, values);
   }
 
-  public List<Favorite> findAll() {
+  @NonNull public List<Favorite> findAll() {
     return read(null, null);
   }
 
-  public List<Favorite> findByPageUri(String pageUri) {
+  private List<Favorite> findByPageUri(String pageUri) {
     String selection = FavoritesContract.FavoritesEntry.COLUMN_NAME_PAGE_URI + " = ?";
     String[] selectionArgs = {pageUri};
 
@@ -53,11 +54,11 @@ public class FavoritesStore {
     return isFavorite(pageLink.getUri().toString());
   }
 
-  public boolean isFavorite(String pageUri) {
+  public boolean isFavorite(@NonNull String pageUri) {
     return findByPageUri(pageUri).size() > 0;
   }
 
-  public void remove(String pageUri) {
+  public void remove(@NonNull String pageUri) {
     // Define 'where' part of query.
     String selection = FavoritesContract.FavoritesEntry.COLUMN_NAME_PAGE_URI + " = ?";
     // Specify arguments in placeholder order.

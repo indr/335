@@ -16,9 +16,7 @@ import android.support.v4.media.session.MediaControllerCompat.TransportControls;
 import com.example.android.uamp.playback.QueueManagerType;
 
 import auto.parcel.AutoParcel;
-import ch.indr.threethreefive.favorites.FavoritesStore;
-import ch.indr.threethreefive.navigation.PageResolver;
-import ch.indr.threethreefive.playlist.PlaylistManager;
+import ch.indr.threethreefive.favorites.FavoritesStoreType;
 import ch.indr.threethreefive.services.PlaybackClientType;
 import ch.indr.threethreefive.services.SpeakerType;
 import ch.indr.threethreefive.services.ToastManagerType;
@@ -30,9 +28,7 @@ public abstract class Environment implements Parcelable {
     return new AutoParcel_Environment.Builder();
   }
 
-  public abstract FavoritesStore favoritesStore();
-
-  public abstract PageResolver pageResolver();
+  public abstract FavoritesStoreType favoritesStore();
 
   public abstract PlaybackClientType playbackClient();
 
@@ -42,9 +38,6 @@ public abstract class Environment implements Parcelable {
 
     return playbackClient.transportControls();
   }
-
-  @Deprecated
-  public abstract PlaylistManager playlistManager();
 
   @NonNull public abstract PreferencesType preferences();
 
@@ -60,13 +53,9 @@ public abstract class Environment implements Parcelable {
 
   @AutoParcel.Builder
   public abstract static class Builder {
-    public abstract Builder favoritesStore(FavoritesStore __);
-
-    public abstract Builder pageResolver(PageResolver __);
+    public abstract Builder favoritesStore(FavoritesStoreType __);
 
     public abstract Builder playbackClient(PlaybackClientType __);
-
-    public abstract Builder playlistManager(PlaylistManager __);
 
     public abstract Builder preferences(PreferencesType __);
 

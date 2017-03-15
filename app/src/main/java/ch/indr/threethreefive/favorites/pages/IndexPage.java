@@ -14,7 +14,7 @@ import android.support.annotation.NonNull;
 
 import java.util.List;
 
-import ch.indr.threethreefive.favorites.FavoritesStore;
+import ch.indr.threethreefive.favorites.FavoritesStoreType;
 import ch.indr.threethreefive.favorites.model.Favorite;
 import ch.indr.threethreefive.libs.Environment;
 import ch.indr.threethreefive.libs.PageItemsBuilder;
@@ -22,7 +22,7 @@ import ch.indr.threethreefive.navigation.Page;
 
 public class IndexPage extends Page {
 
-  private final FavoritesStore favoritesStore;
+  private final FavoritesStoreType favoritesStore;
 
   public IndexPage(Environment environment) {
     super(environment);

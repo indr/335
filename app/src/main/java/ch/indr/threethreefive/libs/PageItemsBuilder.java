@@ -17,17 +17,17 @@ import java.util.List;
 
 import ch.indr.threethreefive.commands.ActionCommand;
 import ch.indr.threethreefive.commands.ToggleFavorite;
-import ch.indr.threethreefive.favorites.FavoritesStore;
+import ch.indr.threethreefive.favorites.FavoritesStoreType;
 import rx.functions.Action1;
 
 public class PageItemsBuilder {
 
   private final Resources resources;
-  private final FavoritesStore favoritesStores;
+  private final FavoritesStoreType favoritesStores;
 
   private final List<PageItem> items = new ArrayList<>();
 
-  public PageItemsBuilder(@NonNull Resources resources, @NonNull FavoritesStore favoritesStore) {
+  public PageItemsBuilder(@NonNull Resources resources, @NonNull FavoritesStoreType favoritesStore) {
     this.resources = resources;
     this.favoritesStores = favoritesStore;
   }
