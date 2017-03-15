@@ -19,7 +19,7 @@ public class PageLink extends PageItem {
   public static final PageLink HomePage = new PageLink(Uri.parse("/"), "Home");
   public static final PageLink NowPlaying = new PageLink(Uri.parse("/now-playing"), "Now Playing");
 
-  protected BehaviorSubject<Uri> uri = BehaviorSubject.create();
+  private BehaviorSubject<Uri> uri = BehaviorSubject.create();
 
   public PageLink(@NonNull Uri uri, final @NonNull String title) {
     super(title);

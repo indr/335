@@ -42,8 +42,6 @@ public class StationPage extends SpiceBasePage implements RequestListener<Statio
 
   public StationPage(Environment environment) {
     super(environment);
-
-    // setTitle("Radiostation");
   }
 
   @Override public void onCreate(@NonNull Context context, Uri uri, Bundle bundle) {

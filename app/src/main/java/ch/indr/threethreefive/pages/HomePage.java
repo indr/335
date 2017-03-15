@@ -17,6 +17,8 @@ import android.util.Pair;
 
 import com.example.android.uamp.playback.QueueManagerType;
 
+import javax.inject.Inject;
+
 import ch.indr.threethreefive.R;
 import ch.indr.threethreefive.libs.Environment;
 import ch.indr.threethreefive.libs.PageItemsBuilder;
@@ -32,18 +34,18 @@ import static ch.indr.threethreefive.libs.rx.transformers.Transfomers.observeFor
 
 public class HomePage extends Page {
 
-  private final PlaybackClientType playbackClient;
-  private final QueueManagerType queueManager;
+  protected @Inject PlaybackClientType playbackClient;
+  protected @Inject QueueManagerType queueManager;
+  protected @Inject UiModeManagerType uiModeManager;
 
   public HomePage(Environment environment) {
     super(environment);
-
-    this.playbackClient = environment.playbackClient();
-    this.queueManager = environment.queueManager();
   }
 
   @Override public void onCreate(@NonNull Context context, Uri uri, Bundle bundle) {
     super.onCreate(context, uri, bundle);
+
+    component().inject(this);
 
     setTitle(getContext().getString(R.string.app_name));
     setParentPageLink(null);
@@ -71,21 +73,17 @@ public class HomePage extends Page {
 
     // Static main menu items
     builder
-        .addLink("/music", getResStr(R.string.mainmenu_music_title), getResStr(R.string.mainmenu_music_subtitle), getResStr(R.string.mainmenu_music_description))
-        .addLink("/radio", getResStr(R.string.mainmenu_radio_title), getResStr(R.string.mainmenu_radio_subtitle), getResStr(R.string.mainmenu_radio_description))
-        .addLink("/playlist", getResStr(R.string.mainmenu_playlist_title), getResStr(R.string.mainmenu_playlist_subtitle), getResStr(R.string.mainmenu_playlist_description))
-        .addLink("/favorites", getResStr(R.string.mainmenu_favorites_title), getResStr(R.string.mainmenu_favorites_subtitle), getResStr(R.string.mainmenu_favorites_description))
-        .addLink("/preferences", getResStr(R.string.mainmenu_preferences_title), getResStr(R.string.mainmenu_preferences_subtitle), getResStr(R.string.mainmenu_preferences_description));
+        .addLink("/music", getString(R.string.mainmenu_music_title), getString(R.string.mainmenu_music_subtitle), getString(R.string.mainmenu_music_description))
+        .addLink("/radio", getString(R.string.mainmenu_radio_title), getString(R.string.mainmenu_radio_subtitle), getString(R.string.mainmenu_radio_description))
+        .addLink("/playlist", getString(R.string.mainmenu_playlist_title), getString(R.string.mainmenu_playlist_subtitle), getString(R.string.mainmenu_playlist_description))
+        .addLink("/favorites", getString(R.string.mainmenu_favorites_title), getString(R.string.mainmenu_favorites_subtitle), getString(R.string.mainmenu_favorites_description))
+        .addLink("/preferences", getString(R.string.mainmenu_preferences_title), getString(R.string.mainmenu_preferences_subtitle), getString(R.string.mainmenu_preferences_description));
 
     setPageItems(builder);
   }
 
-  private String getResStr(int id) {
-    return getResources().getString(id);
-  }
-
   private boolean isButtonView() {
-    return environment().preferences().uiMode().get() == UiModeManagerType.UI_MODE_BUTTONS;
+    return uiModeManager.getCurrentUiMode() == UiModeManagerType.UI_MODE_BUTTONS;
   }
 
   private boolean isPausedOrPlaying() {
@@ -116,9 +114,18 @@ public class HomePage extends Page {
       }
 
       final MediaSessionCompat.QueueItem queueItem = stateAndQueueItem.second;
-      String prefix = PlaybackStateUtils.toString(stateAndQueueItem.first);
-      setTitle(prefix + ": " + MediaDescriptionUtils.fullTitle(queueItem.getDescription()));
-      uri.onNext(Uri.parse("/playlist/" + queueItem.getQueueId()));
+      final String playbackState = PlaybackStateUtils.toString(stateAndQueueItem.first);
+
+      String title = "Playback state: " + playbackState;
+      Uri uri = PageLink.HomePage.getUri();
+      if (queueItem != null) {
+        title = playbackState + ": " + MediaDescriptionUtils.fullTitle(queueItem.getDescription());
+        uri = Uri.parse("/playlist/" + queueItem.getQueueId());
+      }
+
+      setTitle(title);
+      setDescription(title);
+      setUri(uri);
     }
   }
 }

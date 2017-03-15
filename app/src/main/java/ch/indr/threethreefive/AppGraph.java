@@ -8,6 +8,7 @@
 package ch.indr.threethreefive;
 
 import ch.indr.threethreefive.libs.Environment;
+import ch.indr.threethreefive.pages.HomePage;
 import ch.indr.threethreefive.pages.PreferencesPage;
 import ch.indr.threethreefive.radio.pages.StationPage;
 import ch.indr.threethreefive.ui.activities.ButtonGuideActivity;
@@ -27,6 +28,8 @@ public interface AppGraph {
 
   void inject(ButtonPlaybackFragment __);
 
+  void inject(HomePage __);
+
   void inject(ListGuideActivity __);
 
   void inject(NowPlayingProxyActivity __);
@@ -38,4 +41,5 @@ public interface AppGraph {
   void inject(StationPage __);
 
   void inject(UiSelectionActivity __);
+
 }

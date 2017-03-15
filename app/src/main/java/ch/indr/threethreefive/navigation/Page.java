@@ -217,6 +217,10 @@ public abstract class Page implements PageType {
     return context.getResources();
   }
 
+  protected String getString(int resId) {
+    return context.getString(resId);
+  }
+
   protected @NonNull ThreeThreeFiveApp application() {
     return (ThreeThreeFiveApp) context.getApplicationContext();
   }
