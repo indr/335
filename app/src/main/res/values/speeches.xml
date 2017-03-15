@@ -16,6 +16,7 @@
 
     <string name="speech_playback_state_buffering">Buffering</string>
     <string name="speech_playback_state_connecting">Loading stream, please wait.</string>
+    <string name="speech_playback_state_error">Playback failed</string>
     <string name="speech_playback_state_playing">Playing media</string>
     <string name="speech_playback_state_paused">Playback paused</string>
     <string name="speech_playback_state_stopped">Playback stopped</string>

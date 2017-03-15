@@ -18,6 +18,7 @@ import timber.log.Timber;
 
 import static android.support.v4.media.session.PlaybackStateCompat.STATE_BUFFERING;
 import static android.support.v4.media.session.PlaybackStateCompat.STATE_CONNECTING;
+import static android.support.v4.media.session.PlaybackStateCompat.STATE_ERROR;
 import static android.support.v4.media.session.PlaybackStateCompat.STATE_FAST_FORWARDING;
 import static android.support.v4.media.session.PlaybackStateCompat.STATE_PAUSED;
 import static android.support.v4.media.session.PlaybackStateCompat.STATE_PLAYING;
@@ -34,7 +35,7 @@ public class PlaybackAnnouncer implements PlaybackAnnouncerType {
   public PlaybackAnnouncer(final @NonNull PlaybackClientType playbackClient, final @NonNull SpeakerType speaker) {
     this.speaker = speaker;
 
-    Observable<StateTransition> playbackStateTransition = playbackClient.playbackState()
+    Observable<StateTransition> transition = playbackClient.playbackState()
         .scan(StateTransition.create(0, 0), (previous, to) -> StateTransition.create(previous.to, to))
         .doOnNext(st -> Timber.d("playback state transition %s, %s", st.toString(), this.toString()))
         .throttleWithTimeout(DEBOUNCE_TIMEOUT, TimeUnit.MILLISECONDS)
@@ -42,26 +43,31 @@ public class PlaybackAnnouncer implements PlaybackAnnouncerType {
         .compose(bindToStatus())
         .share();
 
-    playbackStateTransition
+    transition
         .filter(p -> p.to == STATE_BUFFERING)
         .subscribe(__ -> speaker.sayQueued(R.string.speech_playback_state_buffering));
 
-    playbackStateTransition
+    transition
         .filter(p -> p.to == STATE_CONNECTING)
         .subscribe(__ -> this.speaker.sayQueued(R.string.speech_playback_state_connecting));
 
-    playbackStateTransition
+    transition
+        .filter(p -> p.to == STATE_ERROR)
+        .subscribe(__ -> this.speaker.sayQueued(R.string.speech_playback_state_error));
+
+    transition
         .filter(p -> p.to == STATE_PAUSED)
         .subscribe(__ -> this.speaker.sayQueued(R.string.speech_playback_state_paused));
 
-    playbackStateTransition
+    transition
         .filter(p -> p.to == STATE_PLAYING && p.from != STATE_PLAYING)
         .filter(p -> p.from != STATE_REWINDING && p.from != STATE_FAST_FORWARDING)
         .subscribe(__ -> this.speaker.sayQueued(R.string.speech_playback_state_playing));
 
-    playbackStateTransition
+    transition
         .filter(p -> p.to == PlaybackStateCompat.STATE_STOPPED)
         .subscribe(__ -> speaker.sayQueued(R.string.speech_playback_state_stopped));
+
 
     playbackClient.customEvent()
         .map(ce -> ce.second)
