@@ -51,8 +51,8 @@ public class PageManager {
       }
       final Constructor constructor = pageMeta.getClazz().getConstructor(Environment.class);
       page = (ch.indr.threethreefive.navigation.Page) constructor.newInstance(environment);
-      page.onCreate(context, pageMeta.getUri(), pageMeta.getBundle());
       page.setTitle(pageTitle);
+      page.onCreate(context, pageMeta.getUri(), pageMeta.getBundle());
       page.onStart();
 
     } catch (IllegalAccessException exception) {

@@ -40,8 +40,6 @@
     <string name="mainmenu_preferences_subtitle"></string>
     <string name="mainmenu_preferences_description">Preferences</string>
 
-    <string name="music_on_your_device">Music on your Device</string>
-
     <plurals name="music_albums">
         <item quantity="one">%d album</item>
         <item quantity="other">%d albums</item>

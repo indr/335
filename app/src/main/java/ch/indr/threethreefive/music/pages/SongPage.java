@@ -52,7 +52,7 @@ public class SongPage extends Page {
     builder.addItem(new AddToPlaylist(mediaItem));
     builder.addToggleFavorite(getCurrentPageLink());
 
-    builder.addLink(makeArtistUri(song.getArtistId()), "Arist: " + song.getArtist());
+    builder.addLink(makeArtistUri(song.getArtistId()), "Artist: " + song.getArtist());
     builder.addLink(makeAlbumUri(song.getAlbumId()), "Album: " + song.getArtist());
 
     setPageItems(builder);

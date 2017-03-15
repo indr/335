@@ -26,7 +26,7 @@ public class IndexPage extends Page {
   @Override public void onCreate(@NonNull Context context, Uri uri, Bundle bundle) {
     super.onCreate(context, uri, bundle);
 
-    setTitle(context.getResources().getString(R.string.music_on_your_device));
+    setTitle(context.getResources().getString(R.string.mainmenu_music_title));
 
     final PageItemsBuilder builder = pageItemsBuilder();
 

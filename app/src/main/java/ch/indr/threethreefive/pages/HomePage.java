@@ -45,7 +45,7 @@ public class HomePage extends Page {
   @Override public void onCreate(@NonNull Context context, Uri uri, Bundle bundle) {
     super.onCreate(context, uri, bundle);
 
-    setTitle("335");
+    setTitle(getContext().getString(R.string.app_name));
     setParentPageLink(null);
 
     if (!isButtonView()) {
