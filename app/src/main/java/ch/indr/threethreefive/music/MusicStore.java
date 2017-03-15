@@ -11,6 +11,7 @@ import android.content.ContentResolver;
 import android.content.Context;
 import android.database.Cursor;
 import android.net.Uri;
+import android.provider.MediaStore;
 import android.provider.MediaStore.Audio;
 import android.provider.MediaStore.Audio.Media;
 
@@ -150,10 +151,11 @@ public class MusicStore {
 
     if (cursor != null && cursor.moveToFirst()) {
       do {
-        genres.add(new Genre(
-            cursor.getLong(0),
-            cursor.getString(1)
-        ));
+        final String name = cursor.getString(1);
+        if (name == null || MediaStore.UNKNOWN_STRING.equals(name)) {
+          continue;
+        }
+        genres.add(new Genre(cursor.getLong(0), name));
       }
       while (cursor.moveToNext());
       cursor.close();
@@ -176,7 +178,7 @@ public class MusicStore {
             Media.DATA,
             Media.DURATION
         },
-        null, null, null);
+        null, null, Media.TITLE);
 
     if (cursor != null && cursor.moveToFirst()) {
       do {
