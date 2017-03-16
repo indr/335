@@ -45,28 +45,28 @@ public class PlaybackAnnouncer implements PlaybackAnnouncerType {
 
     transition
         .filter(p -> p.to == STATE_BUFFERING)
-        .subscribe(__ -> speaker.sayQueued(R.string.speech_playback_state_buffering));
+        .subscribe(__ -> speak(R.string.speech_playback_state_buffering));
 
     transition
         .filter(p -> p.to == STATE_CONNECTING)
-        .subscribe(__ -> this.speaker.sayQueued(R.string.speech_playback_state_connecting));
+        .subscribe(__ -> speak(R.string.speech_playback_state_connecting));
 
     transition
         .filter(p -> p.to == STATE_ERROR)
-        .subscribe(__ -> this.speaker.sayQueued(R.string.speech_playback_state_error));
+        .subscribe(__ -> speak(R.string.speech_playback_state_error));
 
     transition
         .filter(p -> p.to == STATE_PAUSED)
-        .subscribe(__ -> this.speaker.sayQueued(R.string.speech_playback_state_paused));
+        .subscribe(__ -> speak(R.string.speech_playback_state_paused));
 
     transition
         .filter(p -> p.to == STATE_PLAYING && p.from != STATE_PLAYING)
         .filter(p -> p.from != STATE_REWINDING && p.from != STATE_FAST_FORWARDING)
-        .subscribe(__ -> this.speaker.sayQueued(R.string.speech_playback_state_playing));
+        .subscribe(__ -> speak(R.string.speech_playback_state_playing));
 
     transition
         .filter(p -> p.to == PlaybackStateCompat.STATE_STOPPED)
-        .subscribe(__ -> speaker.sayQueued(R.string.speech_playback_state_stopped));
+        .subscribe(__ -> speak(R.string.speech_playback_state_stopped));
 
 
     playbackClient.customEvent()
@@ -75,6 +75,11 @@ public class PlaybackAnnouncer implements PlaybackAnnouncerType {
         .map(bundle -> bundle.getInt("resourceId"))
         .compose(bindToStatus())
         .subscribe(speaker::sayUrgent);
+  }
+
+  private void speak(int resourceId) {
+    Timber.d("speak resourceId %d, %s", resourceId, this.toString());
+    speaker.sayQueued(resourceId);
   }
 
   @Override public boolean isStarted() {
