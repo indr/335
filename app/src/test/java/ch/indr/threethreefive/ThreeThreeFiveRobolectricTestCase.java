@@ -12,6 +12,7 @@ import android.support.annotation.NonNull;
 
 import junit.framework.TestCase;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.runner.RunWith;
 import org.robolectric.RuntimeEnvironment;
@@ -19,7 +20,10 @@ import org.robolectric.annotation.Config;
 import org.robolectric.shadows.multidex.ShadowMultiDex;
 
 import ch.indr.threethreefive.libs.Environment;
-import ch.indr.threethreefive.navigation.PageResolver;
+import rx.Scheduler;
+import rx.android.plugins.RxAndroidPlugins;
+import rx.android.plugins.RxAndroidSchedulersHook;
+import rx.schedulers.Schedulers;
 
 @RunWith(ThreeThreeFiveRobolectricGradleTestRunner.class)
 @Config(constants = BuildConfig.class, shadows = ShadowMultiDex.class, sdk = ThreeThreeFiveRobolectricGradleTestRunner.DEFAULT_SDK)
@@ -28,16 +32,25 @@ public class ThreeThreeFiveRobolectricTestCase extends TestCase {
   private Environment environment;
 
 
-  @Override
   @Before
-  public void setUp() throws Exception {
+  @Override public void setUp() throws Exception {
     super.setUp();
-
 
     AppComponent component = application().component();
     Environment env = component.environment();
     environment = env.toBuilder()
         .build();
+
+    RxAndroidPlugins.getInstance().registerSchedulersHook(new RxAndroidSchedulersHook() {
+      @Override public Scheduler getMainThreadScheduler() {
+        return Schedulers.immediate();
+      }
+    });
+  }
+
+  @After
+  @Override public void tearDown() {
+    RxAndroidPlugins.getInstance().reset();
   }
 
   protected @NonNull TestThreeThreeFiveApplication application() {

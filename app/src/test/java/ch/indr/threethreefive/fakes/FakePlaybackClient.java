@@ -5,7 +5,7 @@
  * the LICENSE file that was distributed with this source code.
  */
 
-package ch.indr.threethreefive.mocks;
+package ch.indr.threethreefive.fakes;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -19,9 +19,10 @@ import ch.indr.threethreefive.services.PlaybackClientType;
 import rx.Observable;
 import rx.subjects.BehaviorSubject;
 
-public class MockPlaybackClient implements PlaybackClientType {
+public class FakePlaybackClient implements PlaybackClientType {
   public BehaviorSubject<MediaMetadataCompat> mediaMetadata = BehaviorSubject.create();
   public BehaviorSubject<Integer> playbackState = BehaviorSubject.create();
+  private Observable<Pair<String,Bundle>> customEvent = BehaviorSubject.create();
 
   @Nullable @Override public MediaControllerCompat mediaController() {
     return null;
@@ -36,7 +37,7 @@ public class MockPlaybackClient implements PlaybackClientType {
   }
 
   @NonNull @Override public Observable<Pair<String, Bundle>> customEvent() {
-    return null;
+    return customEvent;
   }
 
   @NonNull @Override public BehaviorSubject<Integer> playbackState() {

@@ -7,38 +7,70 @@
 
 package ch.indr.threethreefive.services;
 
-import android.support.v4.media.session.PlaybackStateCompat;
-
 import org.junit.Before;
 import org.junit.Test;
 
+import ch.indr.threethreefive.R;
 import ch.indr.threethreefive.ThreeThreeFiveRobolectricTestCase;
-import ch.indr.threethreefive.mocks.MockPlaybackClient;
-import ch.indr.threethreefive.mocks.MockSpeaker;
+import ch.indr.threethreefive.fakes.FakePlaybackClient;
+
+import static android.support.v4.media.session.PlaybackStateCompat.STATE_CONNECTING;
+import static android.support.v4.media.session.PlaybackStateCompat.STATE_PLAYING;
+import static android.support.v4.media.session.PlaybackStateCompat.STATE_STOPPED;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
 
 public class PlaybackAnnouncerTests extends ThreeThreeFiveRobolectricTestCase {
 
-  private MockPlaybackClient playbackClient;
-  private MockSpeaker speaker;
+  private FakePlaybackClient playbackClient;
+  private SpeakerType speaker;
+  private PlaybackAnnouncer sut;
 
   @Before
   @Override public void setUp() throws Exception {
     super.setUp();
 
-    this.playbackClient = new MockPlaybackClient();
-    this.speaker = new MockSpeaker();
+    this.playbackClient = new FakePlaybackClient();
+    this.speaker = mock(SpeakerType.class);
+    this.sut = new PlaybackAnnouncer(playbackClient, speaker);
+  }
+
+  private void onNextPlaybackState(int stateConnecting) {
+    playbackClient.playbackState.onNext(stateConnecting);
+  }
+
+  private void waitForDebounceTimeout() {
+    try {
+      Thread.sleep(PlaybackAnnouncer.DEBOUNCE_TIMEOUT + 100);
+    } catch (InterruptedException e) {
+      throw new RuntimeException(e);
+    }
   }
 
   @Test
-  public void testSpeakLoadingStream() {
-    PlaybackAnnouncerType playbackAnnouncer = new PlaybackAnnouncer(playbackClient, speaker);
+  public void playback_state_connecting_should_speak_state_connecting() {
+    // Arrange
+    sut.start();
 
-    playbackAnnouncer.stop();
-    playbackClient.playbackState.onNext(PlaybackStateCompat.STATE_CONNECTING);
-    assertEquals(speaker.lastSpeech, null);
+    // Act
+    onNextPlaybackState(STATE_CONNECTING);
 
-    playbackAnnouncer.start();
-    playbackClient.playbackState.onNext(PlaybackStateCompat.STATE_CONNECTING);
-    assertEquals(speaker.lastSpeech, "Loeading...");
+    // Assert
+    waitForDebounceTimeout();
+    verify(speaker).sayQueued(R.string.speech_playback_state_connecting);
+  }
+
+  @Test
+  public void playback_state_playing_to_stopped_should_speak_state_stopped() {
+    // Arrange
+    sut.start();
+
+    // Act
+    onNextPlaybackState(STATE_PLAYING);
+    onNextPlaybackState(STATE_STOPPED);
+
+    // Assert
+    waitForDebounceTimeout();
+    verify(speaker).sayQueued(R.string.speech_playback_state_stopped);
   }
 }

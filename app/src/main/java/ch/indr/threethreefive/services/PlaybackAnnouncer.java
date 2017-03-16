@@ -26,7 +26,7 @@ import static android.support.v4.media.session.PlaybackStateCompat.STATE_REWINDI
 
 public class PlaybackAnnouncer implements PlaybackAnnouncerType {
 
-  private static final int DEBOUNCE_TIMEOUT = 500;
+  public static final int DEBOUNCE_TIMEOUT = 500;
 
   private final SpeakerType speaker;
 
