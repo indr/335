@@ -66,7 +66,7 @@ public class LocalPlayback implements PlaybackType, AudioManager.OnAudioFocusCha
   private final WifiManager.WifiLock mWifiLock;
   private int mState;
   private boolean mPlayOnFocusGain;
-  private Callback mCallback;
+  private PlaybackType.Callback playbackCallback;
   private volatile boolean mAudioNoisyReceiverRegistered;
   private volatile int mCurrentPosition;
   private volatile String mCurrentMediaId;
@@ -110,8 +110,8 @@ public class LocalPlayback implements PlaybackType, AudioManager.OnAudioFocusCha
   @Override
   public void stop(boolean notifyListeners) {
     mState = PlaybackStateCompat.STATE_STOPPED;
-    if (notifyListeners && mCallback != null) {
-      mCallback.onPlaybackStatusChanged(mState);
+    if (notifyListeners && playbackCallback != null) {
+      playbackCallback.onPlaybackStatusChanged(mState);
     }
     mCurrentPosition = getCurrentStreamPosition();
     // Give up Audio focus
@@ -197,14 +197,14 @@ public class LocalPlayback implements PlaybackType, AudioManager.OnAudioFocusCha
         // sleep while the song is playing.
         mWifiLock.acquire();
 
-        if (mCallback != null) {
-          mCallback.onPlaybackStatusChanged(mState);
+        if (playbackCallback != null) {
+          playbackCallback.onPlaybackStatusChanged(mState);
         }
 
       } catch (IOException ex) {
         LogHelper.e(TAG, ex, "Exception playing song");
-        if (mCallback != null) {
-          mCallback.onError(ex.getMessage());
+        if (playbackCallback != null) {
+          playbackCallback.onError(ex.getMessage());
         }
       }
     }
@@ -222,8 +222,8 @@ public class LocalPlayback implements PlaybackType, AudioManager.OnAudioFocusCha
       relaxResources(false);
     }
     mState = PlaybackStateCompat.STATE_PAUSED;
-    if (mCallback != null) {
-      mCallback.onPlaybackStatusChanged(mState);
+    if (playbackCallback != null) {
+      playbackCallback.onPlaybackStatusChanged(mState);
     }
     unregisterAudioNoisyReceiver();
   }
@@ -251,15 +251,15 @@ public class LocalPlayback implements PlaybackType, AudioManager.OnAudioFocusCha
       }
       registerAudioNoisyReceiver();
       mMediaPlayer.seekTo(position);
-      if (mCallback != null) {
-        mCallback.onPlaybackStatusChanged(mState);
+      if (playbackCallback != null) {
+        playbackCallback.onPlaybackStatusChanged(mState);
       }
     }
   }
 
   @Override
   public void setCallback(Callback callback) {
-    this.mCallback = callback;
+    this.playbackCallback = callback;
   }
 
   @Override
@@ -343,8 +343,8 @@ public class LocalPlayback implements PlaybackType, AudioManager.OnAudioFocusCha
         mPlayOnFocusGain = false;
       }
     }
-    if (mCallback != null) {
-      mCallback.onPlaybackStatusChanged(mState);
+    if (playbackCallback != null) {
+      playbackCallback.onPlaybackStatusChanged(mState);
     }
   }
 
@@ -394,8 +394,8 @@ public class LocalPlayback implements PlaybackType, AudioManager.OnAudioFocusCha
       mMediaPlayer.start();
       mState = PlaybackStateCompat.STATE_PLAYING;
     }
-    if (mCallback != null) {
-      mCallback.onPlaybackStatusChanged(mState);
+    if (playbackCallback != null) {
+      playbackCallback.onPlaybackStatusChanged(mState);
     }
   }
 
@@ -407,10 +407,13 @@ public class LocalPlayback implements PlaybackType, AudioManager.OnAudioFocusCha
   @Override
   public void onCompletion(MediaPlayer player) {
     LogHelper.d(TAG, "onCompletion from MediaPlayer");
+
+    mCurrentPosition = 0;
+
     // The media player finished playing the current song, so we go ahead
     // and start the next.
-    if (mCallback != null) {
-      mCallback.onCompletion();
+    if (playbackCallback != null) {
+      playbackCallback.onCompletion();
     }
   }
 
@@ -437,8 +440,8 @@ public class LocalPlayback implements PlaybackType, AudioManager.OnAudioFocusCha
   @Override
   public boolean onError(MediaPlayer mp, int what, int extra) {
     LogHelper.e(TAG, "Media player error: what=" + what + ", extra=" + extra);
-    if (mCallback != null) {
-      mCallback.onError("MediaPlayer error " + what + " (" + extra + ")");
+    if (playbackCallback != null) {
+      playbackCallback.onError("MediaPlayer error " + what + " (" + extra + ")");
     }
     return true; // true indicates we handled the error
   }
