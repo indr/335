@@ -15,12 +15,14 @@ import rx.plugins.RxJavaSchedulersHook;
 import rx.plugins.RxJavaTestPlugins;
 import rx.schedulers.Schedulers;
 
-public class ThreeThreeFiveRobolectricGradleTestRunner extends RobolectricTestRunner {
+public class TtfRobolectricGradleTestRunner extends RobolectricTestRunner {
+
   public static final int DEFAULT_SDK = 21;
 
-  public ThreeThreeFiveRobolectricGradleTestRunner(Class<?> testClass) throws InitializationError {
+  public TtfRobolectricGradleTestRunner(Class<?> testClass) throws InitializationError {
     super(testClass);
 
+    RxJavaTestPlugins.resetPlugins();
     RxJavaTestPlugins.getInstance().registerSchedulersHook(new RxJavaSchedulersHook() {
       @Override public Scheduler getIOScheduler() {
         return Schedulers.immediate();

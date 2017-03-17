@@ -9,21 +9,25 @@ package ch.indr.threethreefive.music;
 
 import android.net.Uri;
 
+import org.junit.Test;
+
+import ch.indr.threethreefive.TtfRobolectricTestCase;
 import ch.indr.threethreefive.music.pages.IndexPage;
 import ch.indr.threethreefive.navigation.PageMeta;
 
-import static org.junit.Assert.assertEquals;
+public class PageResolverTest extends TtfRobolectricTestCase {
 
-public class PageResolverTest {
+  @Test
+  public void resolving_slash_music_should_return_index_page() {
+    // Arrange
+    MusicResolver sut = new MusicResolver();
 
-//    @Test
-    public void resolvePage() {
-        testResolve("/music", IndexPage.class);
-    }
+    // Act
+    PageMeta pageMeta = sut.resolve(Uri.parse("/music"));
 
-    private void testResolve(String uri, Class pageClass) {
-        MusicResolver sut = new MusicResolver();
-        PageMeta pageMeta = sut.resolve(Uri.parse(uri));
-        assertEquals(pageMeta.getClazz(), pageClass);
-    }
+    // Assert
+    assertEquals(IndexPage.class, pageMeta.getClazz());
+    assertEquals(Uri.parse("//ch.indr.threethreefive/music"), pageMeta.getUri());
+    assertTrue(pageMeta.getBundle().isEmpty());
+  }
 }

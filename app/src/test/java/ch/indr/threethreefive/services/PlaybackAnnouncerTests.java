@@ -11,7 +11,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import ch.indr.threethreefive.R;
-import ch.indr.threethreefive.ThreeThreeFiveRobolectricTestCase;
+import ch.indr.threethreefive.TtfRobolectricTestCase;
 import ch.indr.threethreefive.fakes.FakePlaybackClient;
 
 import static android.support.v4.media.session.PlaybackStateCompat.STATE_CONNECTING;
@@ -20,7 +20,7 @@ import static android.support.v4.media.session.PlaybackStateCompat.STATE_STOPPED
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 
-public class PlaybackAnnouncerTests extends ThreeThreeFiveRobolectricTestCase {
+public class PlaybackAnnouncerTests extends TtfRobolectricTestCase {
 
   private FakePlaybackClient playbackClient;
   private SpeakerType speaker;

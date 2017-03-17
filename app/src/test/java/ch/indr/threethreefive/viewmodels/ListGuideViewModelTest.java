@@ -16,50 +16,48 @@ import org.junit.Test;
 
 import java.util.List;
 
-import ch.indr.threethreefive.ThreeThreeFiveRobolectricTestCase;
+import ch.indr.threethreefive.R;
+import ch.indr.threethreefive.TtfRobolectricTestCase;
 import ch.indr.threethreefive.libs.PageItem;
 import ch.indr.threethreefive.libs.PageLink;
 import ch.indr.threethreefive.ui.IntentKey;
 import rx.observers.TestSubscriber;
 
-public class ListGuideViewModelTest extends ThreeThreeFiveRobolectricTestCase {
+public class ListGuideViewModelTest extends TtfRobolectricTestCase {
 
   @Test
-  public void testCanGoUp() throws Exception {
+  public void canGoUp_afterCreation_isFalse() throws Exception {
     final ListGuideViewModel vm = createVm(makeIntent());
     final TestSubscriber<Boolean> canGoUp = new TestSubscriber<>();
-
-    vm.outputs.canGoUp().subscribe(canGoUp);
+    vm.canGoUp().subscribe(canGoUp);
 
     canGoUp.assertValue(false);
   }
 
   @Test
-  public void testPageItemClick() throws Exception {
+  public void showPage_whenPageItemClick_returnsNextValue() throws Exception {
     final ListGuideViewModel vm = createVm(makeIntent());
     final TestSubscriber<PageLink> showPage = new TestSubscriber<>();
+    vm.showPage().subscribe(showPage);
 
-    vm.outputs.showPage().subscribe(showPage);
-    vm.pageItemClick(new PageLink(Uri.parse("/page/link"), null));
+    vm.pageItemClick(new PageLink(Uri.parse("/page/link"), "Page Link"));
 
     showPage.assertValueCount(1);
   }
 
   @Test
-  public void testPageTitle() throws Exception {
+  public void pageTitel_equalsMusic() throws Exception {
     final ListGuideViewModel vm = createVm(makeIntent());
     final TestSubscriber<String> pageTitle = new TestSubscriber<>();
-
     vm.outputs.pageTitle().subscribe(pageTitle);
 
-    pageTitle.assertValues("Home");
+    pageTitle.assertValues(context().getString(R.string.app_name));
   }
 
   @Test
-  public void testPageItems() throws Exception {
+  public void pageItems_returnsOneValue() throws Exception {
     final ListGuideViewModel vm = createVm(makeIntent());
     final TestSubscriber<List<PageItem>> pageItems = new TestSubscriber<List<PageItem>>();
-
     vm.outputs.pageItems().subscribe(pageItems);
 
     pageItems.assertValueCount(1);

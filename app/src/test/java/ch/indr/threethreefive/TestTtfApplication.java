@@ -7,9 +7,9 @@
 
 package ch.indr.threethreefive;
 
-public class TestThreeThreeFiveApplication extends ThreeThreeFiveApp {
-  @Override
-  public boolean isInUnitTests() {
+public class TestTtfApplication extends ThreeThreeFiveApp {
+
+  @Override public boolean isInUnitTests() {
     return true;
   }
 }

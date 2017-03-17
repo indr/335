@@ -25,27 +25,29 @@ import rx.android.plugins.RxAndroidPlugins;
 import rx.android.plugins.RxAndroidSchedulersHook;
 import rx.schedulers.Schedulers;
 
-@RunWith(ThreeThreeFiveRobolectricGradleTestRunner.class)
-@Config(constants = BuildConfig.class, shadows = ShadowMultiDex.class, sdk = ThreeThreeFiveRobolectricGradleTestRunner.DEFAULT_SDK)
-public class ThreeThreeFiveRobolectricTestCase extends TestCase {
-  private TestThreeThreeFiveApplication application;
-  private Environment environment;
+@RunWith(TtfRobolectricGradleTestRunner.class)
+@Config(constants = BuildConfig.class,
+    shadows = ShadowMultiDex.class,
+    sdk = TtfRobolectricGradleTestRunner.DEFAULT_SDK)
+public abstract class TtfRobolectricTestCase extends TestCase {
 
+  private TestTtfApplication application;
+  private Environment environment;
 
   @Before
   @Override public void setUp() throws Exception {
     super.setUp();
-
-    AppComponent component = application().component();
-    Environment env = component.environment();
-    environment = env.toBuilder()
-        .build();
 
     RxAndroidPlugins.getInstance().registerSchedulersHook(new RxAndroidSchedulersHook() {
       @Override public Scheduler getMainThreadScheduler() {
         return Schedulers.immediate();
       }
     });
+
+    AppComponent component = application().component();
+    Environment env = component.environment();
+    environment = env.toBuilder()
+        .build();
   }
 
   @After
@@ -53,12 +55,12 @@ public class ThreeThreeFiveRobolectricTestCase extends TestCase {
     RxAndroidPlugins.getInstance().reset();
   }
 
-  protected @NonNull TestThreeThreeFiveApplication application() {
+  protected @NonNull TestTtfApplication application() {
     if (application != null) {
       return application;
     }
 
-    application = (TestThreeThreeFiveApplication) RuntimeEnvironment.application;
+    application = (TestTtfApplication) RuntimeEnvironment.application;
     return application;
   }
 

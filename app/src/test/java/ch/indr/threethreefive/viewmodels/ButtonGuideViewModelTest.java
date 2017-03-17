@@ -13,43 +13,42 @@ import android.support.annotation.Nullable;
 
 import org.junit.Test;
 
-import ch.indr.threethreefive.ThreeThreeFiveRobolectricTestCase;
+import ch.indr.threethreefive.TtfRobolectricTestCase;
 import ch.indr.threethreefive.libs.PageItem;
 import ch.indr.threethreefive.ui.IntentKey;
 import rx.observers.TestSubscriber;
 
-public class ButtonGuideViewModelTest extends ThreeThreeFiveRobolectricTestCase {
+public class ButtonGuideViewModelTest extends TtfRobolectricTestCase {
 
   @Test
-  public void testActivityTitle() throws Exception {
+  public void activityTitle_afterCreation_equalsMusic() throws Exception {
     final ButtonGuideViewModel vm = createVm(makeIntent());
     final TestSubscriber<String> activityTitle = new TestSubscriber<>();
+    vm.outputs.activityTitle().subscribe(activityTitle);
 
-    vm.activityTitle().subscribe(activityTitle);
-
-    activityTitle.assertValues("Home");
+    activityTitle.assertValues("Music");
   }
 
   @Test
-  public void testCanGoUp() throws Exception {
+  public void canGoUp_afterCreation_isFalse() throws Exception {
     final ButtonGuideViewModel vm = createVm(makeIntent());
     final TestSubscriber<Boolean> canGoUp = new TestSubscriber<>();
-
     vm.outputs.canGoUp().subscribe(canGoUp);
 
     canGoUp.assertValue(false);
   }
 
   @Test
-  public void testPageItem() throws Exception {
+  public void pageItem_whenStepRight_returnsNextValue() throws Exception {
     final ButtonGuideViewModel vm = createVm(makeIntent());
     final TestSubscriber<PageItem> pageItem = new TestSubscriber<>();
-
     vm.outputs.pageItem().subscribe(pageItem);
-    vm.stepRight();
+
+    vm.inputs.stepRight();
 
     pageItem.assertValueCount(2);
   }
+
 
   @NonNull private Intent makeIntent() {
     Intent intent = new Intent();
