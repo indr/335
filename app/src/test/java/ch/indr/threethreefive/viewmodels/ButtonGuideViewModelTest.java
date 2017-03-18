@@ -51,14 +51,14 @@ public class ButtonGuideViewModelTest extends TtfRobolectricTestCase {
 
 
   @NonNull private Intent makeIntent() {
-    Intent intent = new Intent();
+    final Intent intent = new Intent();
     intent.putExtra(IntentKey.PAGE_TITLE, "Intent");
     intent.putExtra(IntentKey.PAGE_URI, "/");
     return intent;
   }
 
   @NonNull private ButtonGuideViewModel createVm(final @Nullable Intent intent) {
-    ButtonGuideViewModel vm = new ButtonGuideViewModel(environment());
+    final ButtonGuideViewModel vm = new ButtonGuideViewModel(environment());
     vm.onCreate(context(), null);
     if (intent != null) {
       vm.intent(intent);

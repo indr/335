@@ -19,10 +19,12 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
+import ch.indr.threethreefive.R;
 import ch.indr.threethreefive.libs.Environment;
 import ch.indr.threethreefive.libs.PageItemsBuilder;
 import ch.indr.threethreefive.libs.PageUris;
 import ch.indr.threethreefive.libs.utils.CollectionUtils;
+import ch.indr.threethreefive.libs.utils.StringUtils;
 import ch.indr.threethreefive.navigation.SpiceBasePage;
 import ch.indr.threethreefive.radio.radioBrowserInfo.StationUtils;
 import ch.indr.threethreefive.radio.radioBrowserInfo.api.StationsRequest;
@@ -38,15 +40,17 @@ public class CountryPage extends SpiceBasePage implements RequestListener<Statio
 
   public CountryPage(Environment environment) {
     super(environment);
-
-    setTitle("Country");
   }
 
   @Override public void onCreate(@NonNull Context context, Uri uri, Bundle bundle) {
     super.onCreate(context, uri, bundle);
     component().inject(this);
 
-    this.country = bundle.getString("id");
+    country = bundle.getString("id");
+    if (StringUtils.isEmpty(country)) {
+      setTitle(getString(R.string.country));
+      throw new RuntimeException("Bundle does not contain an id or id is null or empty");
+    }
     setTitle(country);
   }
 
@@ -61,34 +65,40 @@ public class CountryPage extends SpiceBasePage implements RequestListener<Statio
   }
 
   @Override public void onRequestSuccess(Station[] response) {
+    if (response == null) {
+      handle("No stations found");
+      return;
+    }
+
     populateLists(response);
     showTopStations();
   }
 
   private void showTopStations() {
-    if (topStations.size() == moreStations.size()) {
-      showMoreStations(null);
-      return;
-    }
-
     final PageItemsBuilder builder = pageItemsBuilder();
     builder.addToggleFavorite(getCurrentPageLink());
     addStationLinks(builder, topStations);
-    builder.addItem("Show more Stations", this::showMoreStations);
+
+    if (moreStations.size() > topStations.size()) {
+      if (allStations.size() > moreStations.size()) {
+        builder.addItem(getString(R.string.show_more_stations), this::showMoreStations);
+      } else {
+        builder.addItem(getString(R.string.show_all_stations), this::showAllStations);
+      }
+    }
+
     setPageItems(builder);
   }
 
   private void showMoreStations(Environment environment) {
-    if (moreStations.size() == allStations.size()) {
-      showAllStations(null);
-      return;
-    }
-
     resetFirstVisibleItem();
     final PageItemsBuilder builder = pageItemsBuilder();
     builder.addToggleFavorite(getCurrentPageLink());
     addStationLinks(builder, moreStations);
-    builder.addItem("Show all Stations", this::showAllStations);
+
+    if (allStations.size() > moreStations.size()) {
+      builder.addItem(getString(R.string.show_all_stations), this::showAllStations);
+    }
     setPageItems(builder);
   }
 
@@ -101,6 +111,11 @@ public class CountryPage extends SpiceBasePage implements RequestListener<Statio
   }
 
   private void addStationLinks(PageItemsBuilder builder, List<Station> stations) {
+    if (stations.size() == 0) {
+      builder.addText(getString(R.string.no_stations_found));
+      return;
+    }
+
     for (Station station : stations) {
       builder.addLink(PageUris.makeStationUri(station.getId()),
           station.getName(),
@@ -110,16 +125,17 @@ public class CountryPage extends SpiceBasePage implements RequestListener<Statio
     }
   }
 
-  private void populateLists(Station[] response) {
+  private void populateLists(@NonNull Station[] response) {
     Timber.d("populateLists stations %d, %s", response.length, this.toString());
 
     this.allStations = Arrays.asList(response);
+
     Collections.sort(allStations, new Station.SummedVoteComparator());
-    this.topStations = CollectionUtils.slice(allStations, 0, 14);
+    this.topStations = CollectionUtils.slice(allStations, 0, 15);
+    this.moreStations = CollectionUtils.slice(allStations, 0, 50);
 
-    Collections.sort(allStations, new Station.NameComparator());
     Collections.sort(topStations, new Station.NameComparator());
-
-    this.moreStations = CollectionUtils.filter(allStations, (station) -> station.getSummedVotes() > 0);
+    Collections.sort(moreStations, new Station.NameComparator());
+    Collections.sort(allStations, new Station.NameComparator());
   }
 }

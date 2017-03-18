@@ -79,6 +79,10 @@ public abstract class Page implements PageType {
     return value == null ? null : value.getUri();
   }
 
+  @Nullable public List<PageItem> getPageItems() {
+    return pageItems.getValue();
+  }
+
   @Deprecated
   protected Environment environment() {
     return environment;

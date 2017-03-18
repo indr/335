@@ -44,6 +44,14 @@ public class Station {
 
   @Key private String lastchangetime;
 
+  public Station() {
+  }
+
+  public Station(int id) {
+    this.id = String.valueOf(id);
+    this.name = "Station " + id;
+  }
+
   public boolean getOk() {
     return ok;
   }

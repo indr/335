@@ -59,4 +59,11 @@
     <string name="label_previous">Previous</string>
     <string name="label_next">Next</string>
 
+
+    <string name="country">Country</string>
+
+    <string name="no_stations_found">No stations found</string>
+    <string name="show_more_stations">Show more stations</string>
+    <string name="show_all_stations">Show all stations</string>
+
 </resources>

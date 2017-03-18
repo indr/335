@@ -64,14 +64,14 @@ public class ListGuideViewModelTest extends TtfRobolectricTestCase {
   }
 
   @NonNull private Intent makeIntent() {
-    Intent intent = new Intent();
+    final Intent intent = new Intent();
     intent.putExtra(IntentKey.PAGE_TITLE, "Intent");
     intent.putExtra(IntentKey.PAGE_URI, "/");
     return intent;
   }
 
   @NonNull private ListGuideViewModel createVm(final @Nullable Intent intent) {
-    ListGuideViewModel vm = new ListGuideViewModel(environment());
+    final ListGuideViewModel vm = new ListGuideViewModel(environment());
     vm.onCreate(context(), null);
     if (intent != null) {
       vm.intent(intent);
