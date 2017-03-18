@@ -49,6 +49,7 @@ public class GenresPage extends SpiceBasePage implements RequestListener<Tag[]> 
 
   @Override public void onCreate(@NonNull Context context, Uri uri, Bundle bundle) {
     super.onCreate(context, uri, bundle);
+    component().inject(this);
 
     setTitle("Genres");
 

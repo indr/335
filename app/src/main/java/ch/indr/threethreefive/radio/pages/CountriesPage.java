@@ -7,6 +7,11 @@
 
 package ch.indr.threethreefive.radio.pages;
 
+import android.content.Context;
+import android.net.Uri;
+import android.os.Bundle;
+import android.support.annotation.NonNull;
+
 import com.octo.android.robospice.persistence.exception.SpiceException;
 import com.octo.android.robospice.request.listener.RequestListener;
 
@@ -33,6 +38,11 @@ public class CountriesPage extends SpiceBasePage implements RequestListener<Coun
     super(environment);
 
     setTitle("Countries");
+  }
+
+  @Override public void onCreate(@NonNull Context context, Uri uri, Bundle bundle) {
+    super.onCreate(context, uri, bundle);
+    component().inject(this);
   }
 
   @Override public void onStart() {

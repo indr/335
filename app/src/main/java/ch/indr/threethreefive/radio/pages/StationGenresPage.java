@@ -33,6 +33,7 @@ public class StationGenresPage extends SpiceBasePage implements RequestListener<
 
   @Override public void onCreate(@NonNull Context context, Uri uri, Bundle bundle) {
     super.onCreate(context, uri, bundle);
+    component().inject(this);
 
     this.stationId = bundle.getString("id");
   }

@@ -30,6 +30,7 @@ public class RecentsPage extends SpiceBasePage implements RequestListener<Statio
 
   @Override public void onCreate(@NonNull Context context, Uri uri, Bundle bundle) {
     super.onCreate(context, uri, bundle);
+    component().inject(this);
 
     setTitle("New Stations");
   }

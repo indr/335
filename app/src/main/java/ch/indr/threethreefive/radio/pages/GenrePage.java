@@ -43,6 +43,7 @@ public class GenrePage extends SpiceBasePage implements RequestListener<Station[
 
   @Override public void onCreate(@NonNull Context context, Uri uri, Bundle bundle) {
     super.onCreate(context, uri, bundle);
+    component().inject(this);
 
     this.tag = bundle.getString("id");
     setTitle(tag);

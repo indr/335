@@ -44,6 +44,7 @@ public class CountryPage extends SpiceBasePage implements RequestListener<Statio
 
   @Override public void onCreate(@NonNull Context context, Uri uri, Bundle bundle) {
     super.onCreate(context, uri, bundle);
+    component().inject(this);
 
     this.country = bundle.getString("id");
     setTitle(country);

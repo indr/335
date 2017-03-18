@@ -43,6 +43,7 @@ public class LanguagePage extends SpiceBasePage implements RequestListener<Stati
 
   @Override public void onCreate(@NonNull Context context, Uri uri, Bundle bundle) {
     super.onCreate(context, uri, bundle);
+    component().inject(this);
 
     language = bundle.getString("id");
     setTitle(language);

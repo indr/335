@@ -28,6 +28,8 @@ import ch.indr.threethreefive.libs.Build;
 import ch.indr.threethreefive.libs.Environment;
 import ch.indr.threethreefive.libs.Preferences;
 import ch.indr.threethreefive.libs.PreferencesType;
+import ch.indr.threethreefive.libs.net.RobospiceManager;
+import ch.indr.threethreefive.libs.net.RobospiceManagerImpl;
 import ch.indr.threethreefive.libs.preferences.IntPreferenceType;
 import ch.indr.threethreefive.libs.qualifiers.ApplicationContext;
 import ch.indr.threethreefive.libs.qualifiers.AutoRepeatModePreference;
@@ -166,6 +168,11 @@ public final class AppModule {
   @Singleton
   Resources provideResources(final @ApplicationContext @NonNull Context context) {
     return context.getResources();
+  }
+
+  @Provides
+  RobospiceManager provideRobospiceManager() {
+    return new RobospiceManagerImpl();
   }
 
   @Provides

@@ -7,36 +7,38 @@
 
 package ch.indr.threethreefive.navigation;
 
-import com.octo.android.robospice.JacksonGoogleHttpClientSpiceService;
-import com.octo.android.robospice.SpiceManager;
 import com.octo.android.robospice.request.listener.RequestListener;
+
+import javax.inject.Inject;
 
 import ch.indr.threethreefive.libs.Environment;
 import ch.indr.threethreefive.libs.net.NetworkRequest;
+import ch.indr.threethreefive.libs.net.RobospiceManager;
 
 public abstract class SpiceBasePage extends Page {
 
-  private final SpiceManager spiceManager;
+  protected @Inject RobospiceManager robospiceManager;
 
   public SpiceBasePage(Environment environment) {
     super(environment);
-
-    spiceManager = new SpiceManager(JacksonGoogleHttpClientSpiceService.class);
   }
 
   @Override public void onStart() {
     super.onStart();
 
-    spiceManager.start(getContext());
+    if (robospiceManager == null) {
+      throw new RuntimeException("RobospiceManager has not been injected. Did you call component.inject(this) in your subclass of SpiceBasePage?");
+    }
+    robospiceManager.start(getContext());
   }
 
   @Override public void onStop() {
-    spiceManager.shouldStop();
+    robospiceManager.shouldStop();
 
     super.onStop();
   }
 
   protected <TResult> void executeRequest(NetworkRequest<TResult> request, RequestListener<TResult> listener) {
-    spiceManager.getFromCacheAndLoadFromNetworkIfExpired(request, request.getCacheKey(), request.getCacheExpiryDuration(), listener);
+    robospiceManager.getFromCacheAndLoadFromNetworkIfExpired(request, request.getCacheKey(), request.getCacheExpiryDuration(), listener);
   }
 }
