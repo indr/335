@@ -9,6 +9,7 @@ package ch.indr.threethreefive;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 
 import junit.framework.TestCase;
 
@@ -70,5 +71,9 @@ public abstract class TtfRobolectricTestCase extends TestCase {
 
   protected @NonNull Environment environment() {
     return environment;
+  }
+
+  protected @Nullable String getString(final int resourceId) {
+    return context().getString(resourceId);
   }
 }

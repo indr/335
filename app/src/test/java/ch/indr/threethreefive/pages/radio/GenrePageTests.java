@@ -19,11 +19,11 @@ import ch.indr.threethreefive.Fake;
 import ch.indr.threethreefive.R;
 import ch.indr.threethreefive.TtfRobolectricTestCase;
 import ch.indr.threethreefive.libs.PageItem;
-import ch.indr.threethreefive.radio.pages.CountryPage;
+import ch.indr.threethreefive.radio.pages.GenrePage;
 import ch.indr.threethreefive.radio.radioBrowserInfo.api.json.Station;
 import rx.observers.TestSubscriber;
 
-public class CountryPageTests extends TtfRobolectricTestCase {
+public class GenrePageTests extends TtfRobolectricTestCase {
 
   @Test
   public void onCreate_withoutIdInBundle_throwsRuntimeException() {
@@ -39,17 +39,17 @@ public class CountryPageTests extends TtfRobolectricTestCase {
   @Test
   public void onCreate_withIdInBundle_setsPageTitle() {
     final Bundle bundle = new Bundle();
-    bundle.putString("id", "Dreamland");
-    final CountryPage page = createPage(bundle);
+    bundle.putString("id", "Fantasian");
+    final GenrePage page = createPage(bundle);
     final TestSubscriber<String> title = new TestSubscriber<>();
     page.pageTitle().subscribe(title);
 
-    title.assertValue("Dreamland");
+    title.assertValue("Fantasian");
   }
 
   @Test
   public void onRequestSuccess_withNullResponse_noStationsFound() {
-    final CountryPage page = createPage();
+    final GenrePage page = createPage();
 
     page.onRequestSuccess(null);
 
@@ -59,7 +59,7 @@ public class CountryPageTests extends TtfRobolectricTestCase {
 
   @Test
   public void onRequestSuccess_withEmptyResponse_noStationsFound() {
-    final CountryPage page = createPage();
+    final GenrePage page = createPage();
 
     page.onRequestSuccess(new Station[0]);
 
@@ -69,7 +69,7 @@ public class CountryPageTests extends TtfRobolectricTestCase {
 
   @Test
   public void onRequestSuccess_with15Stations_show15Stations() {
-    final CountryPage page = createPage();
+    final GenrePage page = createPage();
 
     page.onRequestSuccess(Fake.stations(15));
 
@@ -79,7 +79,7 @@ public class CountryPageTests extends TtfRobolectricTestCase {
 
   @Test
   public void onRequestSuccess_with50Stations_shows15StationsAndShowAll() {
-    final CountryPage page = createPage();
+    final GenrePage page = createPage();
 
     page.onRequestSuccess(Fake.stations(50));
 
@@ -90,7 +90,7 @@ public class CountryPageTests extends TtfRobolectricTestCase {
 
   @Test
   public void onRequestSuccess_with51Stations_shows15StationsAndShowMore() {
-    final CountryPage page = createPage();
+    final GenrePage page = createPage();
 
     page.onRequestSuccess(Fake.stations(51));
 
@@ -99,15 +99,15 @@ public class CountryPageTests extends TtfRobolectricTestCase {
     assertEquals(getString(R.string.show_more_stations), pageItems.get(pageItems.size() - 1).getTitle());
   }
 
-  @NonNull private CountryPage createPage() {
+  @NonNull private GenrePage createPage() {
     final Bundle bundle = new Bundle();
-    bundle.putString("id", "Dreamland");
+    bundle.putString("id", "Dreaming");
     return createPage(bundle);
   }
 
-  @NonNull private CountryPage createPage(@NonNull final Bundle bundle) {
-    final CountryPage page = new CountryPage(environment());
-    page.onCreate(context(), Uri.parse("/radio/countries/Fantasia"), bundle);
+  @NonNull private GenrePage createPage(@NonNull final Bundle bundle) {
+    final GenrePage page = new GenrePage(environment());
+    page.onCreate(context(), Uri.parse("/radio/language/Fantasian"), bundle);
     return page;
   }
 

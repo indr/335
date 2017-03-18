@@ -66,7 +66,7 @@ public class CountryPage extends SpiceBasePage implements RequestListener<Statio
 
   @Override public void onRequestSuccess(Station[] response) {
     if (response == null) {
-      handle("No stations found");
+      handle(R.string.no_stations_found_error);
       return;
     }
 
@@ -99,6 +99,7 @@ public class CountryPage extends SpiceBasePage implements RequestListener<Statio
     if (allStations.size() > moreStations.size()) {
       builder.addItem(getString(R.string.show_all_stations), this::showAllStations);
     }
+
     setPageItems(builder);
   }
 

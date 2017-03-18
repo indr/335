@@ -242,6 +242,10 @@ public abstract class Page implements PageType {
     setError("Error: " + message);
   }
 
+  protected void handle(int resId) {
+    setError(getString(resId));
+  }
+
   protected PageItemsBuilder pageItemsBuilder() {
     return new PageItemsBuilder(this.context.getResources(), this.favoritesStore);
   }
