@@ -9,6 +9,7 @@
 <resources>
     <string-array name="excluded_from_top_genres">
         <item>adult contemporary</item>
+        <item>bbc</item>
         <item>christian</item>
         <item>college radio</item>
         <item>commercial</item>
@@ -17,12 +18,14 @@
         <item>information</item>
         <item>local music</item>
         <item>local news</item>
+        <item>music</item>
         <item>npr</item>
         <item>public radio</item>
-        <item>top 40</item>
     </string-array>
 
     <string-array name="excluded_from_more_genres">
+        <item>.977</item>
+        <item>192kbps</item>
         <item>320kbps</item>
         <item>apm</item>
         <item>m3u8</item>
