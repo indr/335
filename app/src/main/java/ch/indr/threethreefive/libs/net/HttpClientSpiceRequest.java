@@ -17,9 +17,9 @@ import java.security.NoSuchAlgorithmException;
 
 import timber.log.Timber;
 
-public abstract class NetworkRequest<TResult> extends GoogleHttpClientSpiceRequest<TResult> {
+public abstract class HttpClientSpiceRequest<TResult> extends GoogleHttpClientSpiceRequest<TResult> {
 
-  public NetworkRequest(Class<TResult> clazz) {
+  public HttpClientSpiceRequest(Class<TResult> clazz) {
     super(clazz);
   }
 
@@ -50,6 +50,5 @@ public abstract class NetworkRequest<TResult> extends GoogleHttpClientSpiceReque
 
     Timber.d("Cache key %s, %s", cacheKey, this.toString());
     return cacheKey;
-
   }
 }

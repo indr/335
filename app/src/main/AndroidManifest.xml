@@ -39,7 +39,7 @@
         </activity>
 
         <service
-            android:name="com.octo.android.robospice.JacksonGoogleHttpClientSpiceService"
+            android:name=".libs.net.HttpClientSpiceService"
             android:exported="false"/>
         <service
             android:name="com.example.android.uamp.MusicService"
@@ -59,7 +59,7 @@
         </receiver>
         <meta-data
             android:name="io.fabric.ApiKey"
-            android:value="2b5031a9df14f3011326c9e96c376f0fc4af5ecc" />
+            android:value="2b5031a9df14f3011326c9e96c376f0fc4af5ecc"/>
     </application>
 
 </manifest>

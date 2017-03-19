@@ -12,7 +12,7 @@ import com.octo.android.robospice.request.listener.RequestListener;
 import javax.inject.Inject;
 
 import ch.indr.threethreefive.libs.Environment;
-import ch.indr.threethreefive.libs.net.NetworkRequest;
+import ch.indr.threethreefive.libs.net.HttpClientSpiceRequest;
 import ch.indr.threethreefive.libs.net.RobospiceManager;
 
 public abstract class SpiceBasePage extends Page {
@@ -38,7 +38,7 @@ public abstract class SpiceBasePage extends Page {
     super.onStop();
   }
 
-  protected <TResult> void executeRequest(NetworkRequest<TResult> request, RequestListener<TResult> listener) {
+  protected <TResult> void executeRequest(HttpClientSpiceRequest<TResult> request, RequestListener<TResult> listener) {
     robospiceManager.getFromCacheAndLoadFromNetworkIfExpired(request, request.getCacheKey(), request.getCacheExpiryDuration(), listener);
   }
 }

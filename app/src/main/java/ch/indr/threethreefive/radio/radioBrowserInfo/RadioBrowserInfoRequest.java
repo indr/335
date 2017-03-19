@@ -13,10 +13,10 @@ import com.google.api.client.http.HttpResponse;
 import com.google.api.client.json.jackson.JacksonFactory;
 import com.octo.android.robospice.persistence.DurationInMillis;
 
-import ch.indr.threethreefive.libs.net.NetworkRequest;
+import ch.indr.threethreefive.libs.net.HttpClientSpiceRequest;
 import timber.log.Timber;
 
-public abstract class RadioBrowserInfoRequest<TResult> extends NetworkRequest<TResult> {
+public abstract class RadioBrowserInfoRequest<TResult> extends HttpClientSpiceRequest<TResult> {
 
   private long cacheExpiryDurationInMillis = DurationInMillis.ONE_HOUR;
 
