@@ -18,11 +18,11 @@ import javax.inject.Inject;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import ch.indr.threethreefive.ThreeThreeFiveApp;
 import ch.indr.threethreefive.R;
+import ch.indr.threethreefive.ThreeThreeFiveApp;
 import ch.indr.threethreefive.libs.BaseActivity;
 import ch.indr.threethreefive.libs.qualifiers.RequiresActivityViewModel;
-import ch.indr.threethreefive.services.UiModeManagerType;
+import ch.indr.threethreefive.services.UiModeManager;
 import ch.indr.threethreefive.viewmodels.StartViewModel;
 import timber.log.Timber;
 
@@ -31,7 +31,7 @@ import static ch.indr.threethreefive.libs.rx.transformers.Transfomers.observeFor
 @RequiresActivityViewModel(StartViewModel.class)
 public class StartActivity extends BaseActivity<StartViewModel> {
 
-  protected @Inject UiModeManagerType uiModeManager;
+  protected @Inject UiModeManager uiModeManager;
 
   protected @Bind(R.id.buttonContinue) Button buttonContinue;
   protected @Bind(R.id.textViewStatus) TextView textViewStatus;

@@ -15,7 +15,7 @@ import android.support.v4.media.session.MediaSessionCompat;
 import android.support.v4.media.session.PlaybackStateCompat;
 import android.util.Pair;
 
-import com.example.android.uamp.playback.QueueManagerType;
+import com.example.android.uamp.playback.QueueManager;
 
 import javax.inject.Inject;
 
@@ -26,17 +26,17 @@ import ch.indr.threethreefive.libs.PageLink;
 import ch.indr.threethreefive.libs.utils.MediaDescriptionUtils;
 import ch.indr.threethreefive.libs.utils.PlaybackStateUtils;
 import ch.indr.threethreefive.navigation.Page;
-import ch.indr.threethreefive.services.PlaybackClientType;
-import ch.indr.threethreefive.services.UiModeManagerType;
+import ch.indr.threethreefive.services.PlaybackClient;
+import ch.indr.threethreefive.services.UiModeManager;
 
 import static android.support.v4.media.session.PlaybackStateCompat.STATE_PLAYING;
 import static ch.indr.threethreefive.libs.rx.transformers.Transfomers.observeForUI;
 
 public class HomePage extends Page {
 
-  protected @Inject PlaybackClientType playbackClient;
-  protected @Inject QueueManagerType queueManager;
-  protected @Inject UiModeManagerType uiModeManager;
+  protected @Inject PlaybackClient playbackClient;
+  protected @Inject QueueManager queueManager;
+  protected @Inject UiModeManager uiModeManager;
 
   public HomePage(Environment environment) {
     super(environment);
@@ -83,7 +83,7 @@ public class HomePage extends Page {
   }
 
   private boolean isButtonView() {
-    return uiModeManager.getCurrentUiMode() == UiModeManagerType.UI_MODE_BUTTONS;
+    return uiModeManager.getCurrentUiMode() == UiModeManager.UI_MODE_BUTTONS;
   }
 
   private boolean isPausedOrPlaying() {
@@ -98,7 +98,7 @@ public class HomePage extends Page {
 
   public class NowPlayingItem extends PageLink {
 
-    public NowPlayingItem(@NonNull PlaybackClientType playbackClient) {
+    public NowPlayingItem(@NonNull PlaybackClient playbackClient) {
       super(Uri.parse("/now-playing"), "Now Playing");
 
       playbackClient.playbackState()

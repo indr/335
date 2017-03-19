@@ -26,7 +26,7 @@ import android.support.v4.media.session.PlaybackStateCompat;
 import com.example.android.uamp.playback.LocalPlayback;
 import com.example.android.uamp.playback.PlaybackManager;
 import com.example.android.uamp.playback.QueueManager;
-import com.example.android.uamp.playback.QueueManagerType;
+import com.example.android.uamp.playback.QueueManagerImpl;
 import com.example.android.uamp.utils.LogHelper;
 
 import java.lang.ref.WeakReference;
@@ -118,7 +118,7 @@ public class MusicService extends MediaBrowserServiceCompat implements
   private MediaSessionCompat mSession;
   private MediaNotificationManager mMediaNotificationManager;
   private final DelayedStopHandler mDelayedStopHandler = new DelayedStopHandler(this);
-  private QueueManagerType mQueueManager;
+  private QueueManager mQueueManager;
 
   /*
    * (non-Javadoc)
@@ -266,7 +266,7 @@ public class MusicService extends MediaBrowserServiceCompat implements
     mSession.sendSessionEvent(event, extras);
   }
 
-  private QueueManager.MetadataUpdateListener queueListener = new QueueManager.MetadataUpdateListener() {
+  private QueueManagerImpl.MetadataUpdateListener queueListener = new QueueManagerImpl.MetadataUpdateListener() {
     @Override
     public void onMetadataChanged(MediaMetadataCompat metadata) {
       mSession.setMetadata(metadata);

@@ -7,45 +7,19 @@
 
 package ch.indr.threethreefive.services;
 
-import android.support.annotation.NonNull;
+public interface CommandSpeaker {
 
-public class CommandSpeaker implements CommandSpeakerType {
+  void favoriteAdded();
 
-  private final SpeakerType speaker;
+  void favoriteRemoved();
 
-  public CommandSpeaker(@NonNull SpeakerType speaker) {
-    this.speaker = speaker;
-  }
+  void playlistAdded();
 
-  private void sayUrgent(String text) {
-    speaker.sayUrgent(text);
-  }
+  void playlistCleared();
 
-  @Override public void favoriteAdded() {
-    sayUrgent("Added to favorites");
-  }
+  void playlistItemRemoved();
 
-  @Override public void favoriteRemoved() {
-    sayUrgent("Removed from favorites");
-  }
+  void preferenceAppLaunchCounterReset();
 
-  @Override public void playlistAdded() {
-    sayUrgent("Added to playlist");
-  }
-
-  @Override public void playlistCleared() {
-    sayUrgent("Playlist cleared");
-  }
-
-  @Override public void playlistItemRemoved() {
-    sayUrgent("Playlist item removed");
-  }
-
-  @Override public void preferenceAppLaunchCounterReset() {
-    sayUrgent("App launch counter reset");
-  }
-
-  @Override public void preferenceButtonUiLaunchCounterReset() {
-    sayUrgent("Button UI launch counter reset");
-  }
+  void preferenceButtonUiLaunchCounterReset();
 }

@@ -19,7 +19,7 @@ import ch.indr.threethreefive.R;
 import ch.indr.threethreefive.libs.ActivityViewModel;
 import ch.indr.threethreefive.libs.Environment;
 import ch.indr.threethreefive.libs.preferences.IntPreferenceType;
-import ch.indr.threethreefive.services.SpeakerType;
+import ch.indr.threethreefive.services.Speaker;
 import ch.indr.threethreefive.ui.activities.StartActivity;
 import rx.Observable;
 import rx.subjects.BehaviorSubject;
@@ -34,7 +34,7 @@ public class StartViewModel extends ActivityViewModel<StartActivity> {
   private BehaviorSubject<Object> startUiSelection = BehaviorSubject.create();
   private BehaviorSubject<Object> utteranceWelcomeStart = BehaviorSubject.create();
 
-  protected @Inject SpeakerType speaker;
+  protected @Inject Speaker speaker;
 
   public StartViewModel(@NonNull Environment environment) {
     super(environment);

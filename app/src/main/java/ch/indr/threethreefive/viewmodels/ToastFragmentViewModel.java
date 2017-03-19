@@ -19,19 +19,19 @@ import java.util.concurrent.TimeUnit;
 import ch.indr.threethreefive.libs.Environment;
 import ch.indr.threethreefive.libs.FragmentViewModel;
 import ch.indr.threethreefive.libs.utils.ObjectUtils;
-import ch.indr.threethreefive.services.ToastManagerType;
+import ch.indr.threethreefive.services.ToastManager;
 import ch.indr.threethreefive.ui.fragments.ToastFragment;
 import rx.Observable;
 import rx.subjects.PublishSubject;
 
-import static ch.indr.threethreefive.services.ToastManagerType.Toast;
+import static ch.indr.threethreefive.services.ToastManager.Toast;
 
 public class ToastFragmentViewModel extends FragmentViewModel<ToastFragment> {
 
   private static final int TOAST_LENGTH = 3000;
   private static final int ANIMATION_LENGTH = 500;
 
-  private final ToastManagerType toastManager;
+  private final ToastManager toastManager;
 
   private Toast isShowing = null;
   private boolean autoHideToast = true;
@@ -118,7 +118,7 @@ public class ToastFragmentViewModel extends FragmentViewModel<ToastFragment> {
     // autoHideToast = false;
   }
 
-  private ToastManagerType.ToastListener toastListener = new ToastManagerType.ToastListener() {
+  private ToastManager.ToastListener toastListener = new ToastManager.ToastListener() {
     @Override public void toast(Toast toast) {
       toasts.add(toast);
       pollQueue.onNext(null);

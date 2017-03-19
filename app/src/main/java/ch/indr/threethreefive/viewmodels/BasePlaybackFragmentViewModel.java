@@ -15,7 +15,7 @@ import android.view.View;
 import ch.indr.threethreefive.libs.Environment;
 import ch.indr.threethreefive.libs.FragmentLifecycleType;
 import ch.indr.threethreefive.libs.FragmentViewModel;
-import ch.indr.threethreefive.services.PlaybackClientType;
+import ch.indr.threethreefive.services.PlaybackClient;
 import rx.Observable;
 import rx.subjects.BehaviorSubject;
 import rx.subjects.PublishSubject;
@@ -24,7 +24,7 @@ import static ch.indr.threethreefive.libs.rx.transformers.Transfomers.takeWhen;
 
 public class BasePlaybackFragmentViewModel<ViewType extends FragmentLifecycleType> extends FragmentViewModel<ViewType> {
 
-  protected final PlaybackClientType playbackClient;
+  protected final PlaybackClient playbackClient;
 
   // INPUTS
   protected final PublishSubject<View> playPause = PublishSubject.create();

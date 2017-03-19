@@ -15,11 +15,11 @@ import android.support.v4.media.session.MediaControllerCompat;
 import android.support.v4.media.session.PlaybackStateCompat;
 import android.util.Pair;
 
-import ch.indr.threethreefive.services.PlaybackClientType;
+import ch.indr.threethreefive.services.PlaybackClient;
 import rx.Observable;
 import rx.subjects.BehaviorSubject;
 
-public class FakePlaybackClient implements PlaybackClientType {
+public class FakePlaybackClient implements PlaybackClient {
   public BehaviorSubject<MediaMetadataCompat> mediaMetadata = BehaviorSubject.create();
   public BehaviorSubject<Integer> playbackState = BehaviorSubject.create();
   private Observable<Pair<String,Bundle>> customEvent = BehaviorSubject.create();

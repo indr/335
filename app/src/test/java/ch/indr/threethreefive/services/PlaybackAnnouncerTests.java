@@ -23,16 +23,16 @@ import static org.mockito.Mockito.verify;
 public class PlaybackAnnouncerTests extends TtfRobolectricTestCase {
 
   private FakePlaybackClient playbackClient;
-  private SpeakerType speaker;
-  private PlaybackAnnouncer sut;
+  private Speaker speaker;
+  private PlaybackAnnouncerImpl sut;
 
   @Before
   @Override public void setUp() throws Exception {
     super.setUp();
 
     this.playbackClient = new FakePlaybackClient();
-    this.speaker = mock(SpeakerType.class);
-    this.sut = new PlaybackAnnouncer(playbackClient, speaker);
+    this.speaker = mock(Speaker.class);
+    this.sut = new PlaybackAnnouncerImpl(playbackClient, speaker);
   }
 
   private void onNextPlaybackState(int stateConnecting) {
@@ -41,7 +41,7 @@ public class PlaybackAnnouncerTests extends TtfRobolectricTestCase {
 
   private void waitForDebounceTimeout() {
     try {
-      Thread.sleep(PlaybackAnnouncer.DEBOUNCE_TIMEOUT + 100);
+      Thread.sleep(PlaybackAnnouncerImpl.DEBOUNCE_TIMEOUT + 100);
     } catch (InterruptedException e) {
       throw new RuntimeException(e);
     }

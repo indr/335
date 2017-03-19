@@ -35,13 +35,13 @@ import ch.indr.threethreefive.R;
 import ch.indr.threethreefive.libs.BaseListActivity;
 import ch.indr.threethreefive.libs.PageItem;
 import ch.indr.threethreefive.libs.PageLink;
-import ch.indr.threethreefive.libs.PreferencesType;
+import ch.indr.threethreefive.libs.Preferences;
 import ch.indr.threethreefive.libs.preferences.FloatPreferenceType;
 import ch.indr.threethreefive.libs.qualifiers.RequiresActivityViewModel;
-import ch.indr.threethreefive.services.PlaybackAnnouncerType;
-import ch.indr.threethreefive.services.SpeakerType;
-import ch.indr.threethreefive.services.ToastManagerType;
-import ch.indr.threethreefive.services.UiModeManagerType;
+import ch.indr.threethreefive.services.PlaybackAnnouncer;
+import ch.indr.threethreefive.services.Speaker;
+import ch.indr.threethreefive.services.ToastManager;
+import ch.indr.threethreefive.services.UiModeManager;
 import ch.indr.threethreefive.ui.IntentKey;
 import ch.indr.threethreefive.ui.adapters.PageItemsAdapter;
 import ch.indr.threethreefive.viewmodels.ListGuideViewModel;
@@ -52,11 +52,11 @@ import static ch.indr.threethreefive.libs.rx.transformers.Transfomers.observeFor
 @RequiresActivityViewModel(ListGuideViewModel.class)
 public class ListGuideActivity extends BaseListActivity<ListGuideViewModel> implements AbsListView.OnScrollListener {
 
-  protected @Inject PlaybackAnnouncerType playbackAnnouncer;
-  protected @Inject PreferencesType preferences;
-  protected @Inject SpeakerType speaker;
-  protected @Inject ToastManagerType toastManager;
-  protected @Inject UiModeManagerType uiModeManager;
+  protected @Inject PlaybackAnnouncer playbackAnnouncer;
+  protected @Inject Preferences preferences;
+  protected @Inject Speaker speaker;
+  protected @Inject ToastManager toastManager;
+  protected @Inject UiModeManager uiModeManager;
 
   protected @Bind(R.id.buttonIncFontSize) ImageButton buttonIncFontSize;
   protected @Bind(R.id.buttonDecFontSize) ImageButton buttonDecFontSize;

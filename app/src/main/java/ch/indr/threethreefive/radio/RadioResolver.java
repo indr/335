@@ -13,8 +13,8 @@ import ch.indr.threethreefive.radio.pages.IndexPage;
 import ch.indr.threethreefive.radio.pages.LanguagePage;
 import ch.indr.threethreefive.radio.pages.LanguagesPage;
 import ch.indr.threethreefive.radio.pages.RecentsPage;
-import ch.indr.threethreefive.radio.pages.StationPage;
 import ch.indr.threethreefive.radio.pages.StationGenresPage;
+import ch.indr.threethreefive.radio.pages.StationPage;
 import timber.log.Timber;
 
 public class RadioResolver extends AbstractPageResolver {

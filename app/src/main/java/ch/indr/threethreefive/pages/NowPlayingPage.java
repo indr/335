@@ -19,7 +19,7 @@ import ch.indr.threethreefive.libs.PageItemsBuilder;
 import ch.indr.threethreefive.libs.PageLink;
 import ch.indr.threethreefive.libs.utils.StringUtils;
 import ch.indr.threethreefive.navigation.Page;
-import ch.indr.threethreefive.services.PlaybackClientType;
+import ch.indr.threethreefive.services.PlaybackClient;
 
 import static android.support.v4.media.MediaMetadataCompat.METADATA_KEY_ALBUM;
 import static android.support.v4.media.MediaMetadataCompat.METADATA_KEY_ARTIST;
@@ -35,7 +35,7 @@ import static ch.indr.threethreefive.libs.PageUris.makeStationUri;
 
 public class NowPlayingPage extends Page {
 
-  private final PlaybackClientType playbackClient;
+  private final PlaybackClient playbackClient;
 
   public NowPlayingPage(Environment environment) {
     super(environment);

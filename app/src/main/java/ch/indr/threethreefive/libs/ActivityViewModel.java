@@ -13,7 +13,6 @@ import android.os.Bundle;
 import android.support.annotation.CallSuper;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.util.Log;
 import android.util.Pair;
 
 import com.trello.rxlifecycle.ActivityEvent;
@@ -26,8 +25,6 @@ import rx.Observable;
 import rx.Subscription;
 import rx.subjects.PublishSubject;
 import timber.log.Timber;
-
-import static android.content.ContentValues.TAG;
 
 public class ActivityViewModel<ViewType extends ActivityLifecycleType> {
 

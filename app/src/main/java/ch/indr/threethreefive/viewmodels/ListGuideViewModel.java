@@ -20,7 +20,7 @@ import ch.indr.threethreefive.libs.PageItem;
 import ch.indr.threethreefive.libs.PageLink;
 import ch.indr.threethreefive.libs.utils.ObjectUtils;
 import ch.indr.threethreefive.navigation.Page;
-import ch.indr.threethreefive.services.SpeakerType;
+import ch.indr.threethreefive.services.Speaker;
 import ch.indr.threethreefive.ui.activities.ListGuideActivity;
 import ch.indr.threethreefive.viewmodels.inputs.ListGuideViewModelInputs;
 import ch.indr.threethreefive.viewmodels.outputs.ListGuideViewModelOutputs;
@@ -30,7 +30,7 @@ import rx.subjects.PublishSubject;
 
 public class ListGuideViewModel extends PageActivityViewModel<ListGuideActivity> implements ListGuideViewModelInputs, ListGuideViewModelOutputs {
 
-  private final SpeakerType speaker;
+  private final Speaker speaker;
 
   // INPUTS
   private final PublishSubject<PageItem> pageItemClick = PublishSubject.create();

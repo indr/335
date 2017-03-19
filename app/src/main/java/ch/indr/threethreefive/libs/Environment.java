@@ -13,13 +13,13 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.media.session.MediaControllerCompat.TransportControls;
 
-import com.example.android.uamp.playback.QueueManagerType;
+import com.example.android.uamp.playback.QueueManager;
 
 import auto.parcel.AutoParcel;
-import ch.indr.threethreefive.favorites.FavoritesStoreType;
-import ch.indr.threethreefive.services.PlaybackClientType;
-import ch.indr.threethreefive.services.SpeakerType;
-import ch.indr.threethreefive.services.ToastManagerType;
+import ch.indr.threethreefive.favorites.FavoritesStore;
+import ch.indr.threethreefive.services.PlaybackClient;
+import ch.indr.threethreefive.services.Speaker;
+import ch.indr.threethreefive.services.ToastManager;
 
 @AutoParcel
 public abstract class Environment implements Parcelable {
@@ -28,44 +28,44 @@ public abstract class Environment implements Parcelable {
     return new AutoParcel_Environment.Builder();
   }
 
-  public abstract FavoritesStoreType favoritesStore();
+  public abstract FavoritesStore favoritesStore();
 
-  public abstract PlaybackClientType playbackClient();
+  public abstract PlaybackClient playbackClient();
 
   @Nullable public TransportControls playbackControls() {
-    PlaybackClientType playbackClient = playbackClient();
+    PlaybackClient playbackClient = playbackClient();
     if (playbackClient == null) return null;
 
     return playbackClient.transportControls();
   }
 
-  @NonNull public abstract PreferencesType preferences();
+  @NonNull public abstract Preferences preferences();
 
-  @NonNull public abstract QueueManagerType queueManager();
+  @NonNull public abstract QueueManager queueManager();
 
   public abstract SharedPreferences sharedPreferences();
 
-  public abstract SpeakerType speaker();
+  public abstract Speaker speaker();
 
-  @NonNull public abstract ToastManagerType toastManager();
+  @NonNull public abstract ToastManager toastManager();
 
   public abstract Builder toBuilder();
 
   @AutoParcel.Builder
   public abstract static class Builder {
-    public abstract Builder favoritesStore(FavoritesStoreType __);
+    public abstract Builder favoritesStore(FavoritesStore __);
 
-    public abstract Builder playbackClient(PlaybackClientType __);
+    public abstract Builder playbackClient(PlaybackClient __);
 
-    public abstract Builder preferences(PreferencesType __);
+    public abstract Builder preferences(Preferences __);
 
-    public abstract Builder queueManager(QueueManagerType __);
+    public abstract Builder queueManager(QueueManager __);
 
     public abstract Builder sharedPreferences(SharedPreferences __);
 
-    public abstract Builder speaker(SpeakerType speaker);
+    public abstract Builder speaker(Speaker speaker);
 
-    public abstract Builder toastManager(ToastManagerType toastManager);
+    public abstract Builder toastManager(ToastManager toastManager);
 
     public abstract Environment build();
   }

@@ -19,13 +19,13 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import ch.indr.threethreefive.R;
 import ch.indr.threethreefive.ThreeThreeFiveApp;
-import ch.indr.threethreefive.services.SpeakerType;
-import ch.indr.threethreefive.services.UiModeManagerType;
+import ch.indr.threethreefive.services.Speaker;
+import ch.indr.threethreefive.services.UiModeManager;
 
 public class UiSelectionActivity extends AppCompatActivity implements View.OnLongClickListener {
 
-  protected @Inject SpeakerType speaker;
-  protected @Inject UiModeManagerType uiModeManager;
+  protected @Inject Speaker speaker;
+  protected @Inject UiModeManager uiModeManager;
 
   protected @Bind(R.id.buttonButtonView) Button buttonButtonView;
   protected @Bind(R.id.buttonListView) Button buttonListView;

@@ -24,8 +24,8 @@ import ch.indr.threethreefive.R;
 import ch.indr.threethreefive.libs.BaseFragment;
 import ch.indr.threethreefive.libs.qualifiers.RequiresFragmentViewModel;
 import ch.indr.threethreefive.libs.utils.PlaybackStateUtils;
-import ch.indr.threethreefive.services.PlaybackAnnouncerType;
-import ch.indr.threethreefive.services.SpeakerType;
+import ch.indr.threethreefive.services.PlaybackAnnouncer;
+import ch.indr.threethreefive.services.Speaker;
 import ch.indr.threethreefive.viewmodels.ButtonPlaybackFragmentViewModel;
 
 import static ch.indr.threethreefive.libs.rx.transformers.Transfomers.observeForUI;
@@ -33,8 +33,8 @@ import static ch.indr.threethreefive.libs.rx.transformers.Transfomers.observeFor
 @RequiresFragmentViewModel(ButtonPlaybackFragmentViewModel.class)
 public class ButtonPlaybackFragment extends BaseFragment<ButtonPlaybackFragmentViewModel> {
 
-  protected @Inject PlaybackAnnouncerType playbackAnnouncer;
-  protected @Inject SpeakerType speaker;
+  protected @Inject PlaybackAnnouncer playbackAnnouncer;
+  protected @Inject Speaker speaker;
 
   protected @Bind(R.id.buttonPlayPause) ImageButton buttonPlayPause;
 

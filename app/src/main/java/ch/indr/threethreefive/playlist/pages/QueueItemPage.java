@@ -18,7 +18,7 @@ import android.support.v4.media.session.MediaControllerCompat;
 import android.support.v4.media.session.MediaSessionCompat.QueueItem;
 
 import com.example.android.uamp.playback.Queue;
-import com.example.android.uamp.playback.QueueManagerType;
+import com.example.android.uamp.playback.QueueManager;
 
 import java.util.List;
 
@@ -29,7 +29,7 @@ import ch.indr.threethreefive.libs.MediaItem;
 import ch.indr.threethreefive.libs.PageItemsBuilder;
 import ch.indr.threethreefive.libs.utils.StringUtils;
 import ch.indr.threethreefive.navigation.Page;
-import ch.indr.threethreefive.services.PlaybackClientType;
+import ch.indr.threethreefive.services.PlaybackClient;
 
 import static android.support.v4.media.MediaMetadataCompat.METADATA_KEY_ALBUM;
 import static android.support.v4.media.MediaMetadataCompat.METADATA_KEY_ARTIST;
@@ -45,8 +45,8 @@ import static ch.indr.threethreefive.libs.PageUris.makeStationUri;
 
 public class QueueItemPage extends Page {
 
-  private final QueueManagerType queueManager;
-  private final PlaybackClientType playbackClient;
+  private final QueueManager queueManager;
+  private final PlaybackClient playbackClient;
 
   private long queueItemId;
   private PlayQueueItem playQueueItem;

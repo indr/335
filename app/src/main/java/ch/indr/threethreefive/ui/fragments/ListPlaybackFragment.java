@@ -28,7 +28,7 @@ import android.widget.RelativeLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
-import com.example.android.uamp.playback.QueueManagerType;
+import com.example.android.uamp.playback.QueueManager;
 
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
@@ -41,7 +41,7 @@ import butterknife.OnClick;
 import ch.indr.threethreefive.R;
 import ch.indr.threethreefive.libs.BaseFragment;
 import ch.indr.threethreefive.libs.PageLink;
-import ch.indr.threethreefive.libs.PreferencesType;
+import ch.indr.threethreefive.libs.Preferences;
 import ch.indr.threethreefive.libs.qualifiers.RequiresFragmentViewModel;
 import ch.indr.threethreefive.libs.utils.PlaybackStateUtils.PlayPauseAction;
 import ch.indr.threethreefive.ui.IntentKey;
@@ -71,7 +71,7 @@ public class ListPlaybackFragment extends BaseFragment<ListPlaybackFragmentViewM
   protected @Bind(R.id.textViewSeekStart) TextView textViewSeekStart;
   protected @Bind(R.id.textViewSeekEnd) TextView textViewSeekEnd;
 
-  private PreferencesType preferences;
+  private Preferences preferences;
 
   private final ScheduledExecutorService mExecutorService =
       Executors.newSingleThreadScheduledExecutor();
@@ -86,7 +86,7 @@ public class ListPlaybackFragment extends BaseFragment<ListPlaybackFragmentViewM
   private PublishSubject<Boolean> delayResumeAutoScroll = PublishSubject.create();
   private PlaybackStateCompat lastPlaybackState;
   private int desiredVisibility;
-  private QueueManagerType queueManager;
+  private QueueManager queueManager;
 
   @Override public void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);

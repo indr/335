@@ -19,14 +19,14 @@ import ch.indr.threethreefive.libs.Environment;
 import ch.indr.threethreefive.libs.PageCommand;
 import ch.indr.threethreefive.libs.PageItemsBuilder;
 import ch.indr.threethreefive.navigation.Page;
-import ch.indr.threethreefive.services.SpeakerType;
-import ch.indr.threethreefive.services.UiModeManagerType;
+import ch.indr.threethreefive.services.Speaker;
+import ch.indr.threethreefive.services.UiModeManager;
 
 public class PreferencesPage extends Page {
 
   protected @Inject Build build;
-  protected @Inject SpeakerType speaker;
-  protected @Inject UiModeManagerType uiModeManager;
+  protected @Inject Speaker speaker;
+  protected @Inject UiModeManager uiModeManager;
 
   public PreferencesPage(Environment environment) {
     super(environment);
@@ -53,7 +53,7 @@ public class PreferencesPage extends Page {
   }
 
   private void addReplayInterfaceInstructionsItem(PageItemsBuilder builder) {
-    if (uiModeManager.getCurrentUiMode() == UiModeManagerType.UI_MODE_BUTTONS) {
+    if (uiModeManager.getCurrentUiMode() == UiModeManager.UI_MODE_BUTTONS) {
       builder.addItem("Replay Interface Instructions", this::replayInterfaceInstructions);
     }
   }
@@ -66,10 +66,10 @@ public class PreferencesPage extends Page {
     final int uiMode = uiModeManager.getCurrentUiMode();
 
     switch (uiMode) {
-      case UiModeManagerType.UI_MODE_BUTTONS:
+      case UiModeManager.UI_MODE_BUTTONS:
         builder.addItem("Switch to List Interface", this::startUiModeList);
         break;
-      case UiModeManagerType.UI_MODE_LIST:
+      case UiModeManager.UI_MODE_LIST:
         builder.addItem("Switch to Button Interface", this::startUiModeButtons);
         break;
     }

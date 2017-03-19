@@ -9,34 +9,31 @@ package ch.indr.threethreefive.services;
 
 import android.support.annotation.NonNull;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import rx.Observable;
-import rx.subjects.PublishSubject;
 
-public class ToastManager implements ToastManagerType {
-  private List<ToastListener> toastListeners = new ArrayList<ToastListener>();
-  private PublishSubject<Toast> toast = PublishSubject.create();
+public interface ToastManager {
 
-  @Override public void toast(@NonNull String message) {
-    Toast toast = new Toast(message);
-    this.toast.onNext(toast);
+  void toast(String message);
 
-    for (ToastListener listener : toastListeners) {
-      listener.toast(toast);
+  Observable<Toast> toast();
+
+  void addToastListener(@NonNull ToastListener listener);
+
+  void removeToastListener(@NonNull ToastListener listener);
+
+  interface ToastListener {
+    void toast(Toast toast);
+  }
+
+  public class Toast {
+    private String text;
+
+    public Toast(@NonNull String text) {
+      this.text = text;
     }
-  }
 
-  @Override public Observable<Toast> toast() {
-    return toast;
-  }
-
-  @Override public void addToastListener(@NonNull ToastListener listener) {
-    toastListeners.add(listener);
-  }
-
-  @Override public void removeToastListener(@NonNull ToastListener listener) {
-    toastListeners.remove(listener);
+    public String getText() {
+      return text;
+    }
   }
 }

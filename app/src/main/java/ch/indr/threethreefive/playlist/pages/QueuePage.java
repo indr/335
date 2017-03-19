@@ -16,7 +16,7 @@ import android.support.v4.media.session.MediaControllerCompat;
 import android.support.v4.media.session.MediaSessionCompat.QueueItem;
 
 import com.example.android.uamp.playback.Queue;
-import com.example.android.uamp.playback.QueueManagerType;
+import com.example.android.uamp.playback.QueueManager;
 
 import ch.indr.threethreefive.libs.Environment;
 import ch.indr.threethreefive.libs.PageCommand;
@@ -25,7 +25,7 @@ import ch.indr.threethreefive.navigation.Page;
 
 public class QueuePage extends Page {
 
-  private final QueueManagerType queueManager;
+  private final QueueManager queueManager;
 
   public QueuePage(Environment environment) {
     super(environment);

@@ -14,7 +14,7 @@ import java.util.List;
 import ch.indr.threethreefive.AppComponent;
 import ch.indr.threethreefive.ThreeThreeFiveApp;
 import ch.indr.threethreefive.commands.ToggleFavorite;
-import ch.indr.threethreefive.favorites.FavoritesStoreType;
+import ch.indr.threethreefive.favorites.FavoritesStore;
 import ch.indr.threethreefive.libs.Environment;
 import ch.indr.threethreefive.libs.PageCommand;
 import ch.indr.threethreefive.libs.PageItem;
@@ -32,7 +32,7 @@ public abstract class Page implements PageType {
   private Context context;
 
   private Environment environment;
-  private FavoritesStoreType favoritesStore;
+  private FavoritesStore favoritesStore;
 
   private Uri pageUri;
 

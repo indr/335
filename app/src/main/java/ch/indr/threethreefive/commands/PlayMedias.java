@@ -3,7 +3,7 @@ package ch.indr.threethreefive.commands;
 import android.support.annotation.NonNull;
 import android.support.v4.media.session.MediaControllerCompat;
 
-import com.example.android.uamp.playback.QueueManagerType;
+import com.example.android.uamp.playback.QueueManager;
 
 import java.util.List;
 
@@ -21,7 +21,7 @@ public class PlayMedias extends PageCommand {
   }
 
   @Override public void execute(@NonNull Environment environment) {
-    final QueueManagerType queueManager = environment.queueManager();
+    final QueueManager queueManager = environment.queueManager();
     final MediaControllerCompat.TransportControls controls = environment.playbackControls();
     if (controls == null) return;
 

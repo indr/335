@@ -8,58 +8,17 @@
 package ch.indr.threethreefive.services;
 
 import android.content.Context;
-import android.content.Intent;
-import android.support.annotation.NonNull;
 
-import ch.indr.threethreefive.libs.PreferencesType;
-import ch.indr.threethreefive.ui.activities.ButtonGuideActivity;
-import ch.indr.threethreefive.ui.activities.ListGuideActivity;
+public interface UiModeManager {
+  int UI_MODE_NONE = 0;
 
-import static android.content.Context.UI_MODE_SERVICE;
+  int UI_MODE_BUTTONS = 1;
 
-public class UiModeManager implements UiModeManagerType {
+  int UI_MODE_LIST = 2;
 
-  private final Context context;
-  private final PreferencesType preferences;
+  int getCurrentUiMode();
 
-  public UiModeManager(final @NonNull Context context, final @NonNull PreferencesType preferences) {
-    this.context = context;
-    this.preferences = preferences;
-  }
+  void launchButtonsUi(Context context);
 
-  public int getCurrentUiMode() {
-    return preferences.uiMode().get();
-  }
-
-  @Override public void launchButtonsUi(Context context) {
-    setCurrentUiMode(UI_MODE_BUTTONS);
-    startActivity(context, ButtonGuideActivity.class);
-  }
-
-  @Override public void launchListUi(Context context) {
-    setCurrentUiMode(UI_MODE_LIST);
-    startActivity(context, ListGuideActivity.class);
-  }
-
-  private android.app.UiModeManager getUiModeManager() {
-    return (android.app.UiModeManager) context.getSystemService(UI_MODE_SERVICE);
-  }
-
-  private void setCurrentUiMode(int uiMode) {
-    preferences.uiMode().set(uiMode);
-    switch (uiMode) {
-      case UiModeManagerType.UI_MODE_BUTTONS:
-        preferences.uiModeButtonsLaunchCounter().increment();
-        break;
-      case UiModeManagerType.UI_MODE_LIST:
-        preferences.uiModeListLaunchCounter().increment();
-        break;
-    }
-  }
-
-  private void startActivity(Context packageContext, Class<?> cls) {
-    Intent intent = new Intent(packageContext, cls);
-    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-    context.startActivity(intent);
-  }
+  void launchListUi(Context context);
 }

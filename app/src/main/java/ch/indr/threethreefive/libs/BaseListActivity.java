@@ -7,7 +7,6 @@
 
 package ch.indr.threethreefive.libs;
 
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.HeaderViewListAdapter;

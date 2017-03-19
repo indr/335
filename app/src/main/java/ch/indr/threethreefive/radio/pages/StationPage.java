@@ -32,13 +32,13 @@ import ch.indr.threethreefive.navigation.SpiceBasePage;
 import ch.indr.threethreefive.radio.RadioMediaItemFactory;
 import ch.indr.threethreefive.radio.radioBrowserInfo.api.StationRequest;
 import ch.indr.threethreefive.radio.radioBrowserInfo.api.json.Station;
-import ch.indr.threethreefive.services.UiModeManagerType;
+import ch.indr.threethreefive.services.UiModeManager;
 
 public class StationPage extends SpiceBasePage implements RequestListener<Station[]> {
 
   private String stationId;
 
-  protected @Inject UiModeManagerType uiModeManager;
+  protected @Inject UiModeManager uiModeManager;
 
   public StationPage(Environment environment) {
     super(environment);
@@ -115,6 +115,6 @@ public class StationPage extends SpiceBasePage implements RequestListener<Statio
   }
 
   private boolean isButtonView() {
-    return uiModeManager.getCurrentUiMode() == UiModeManagerType.UI_MODE_BUTTONS;
+    return uiModeManager.getCurrentUiMode() == UiModeManager.UI_MODE_BUTTONS;
   }
 }

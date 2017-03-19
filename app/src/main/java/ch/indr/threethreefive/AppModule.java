@@ -17,17 +17,16 @@ import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 
 import com.example.android.uamp.playback.QueueManager;
-import com.example.android.uamp.playback.QueueManagerType;
+import com.example.android.uamp.playback.QueueManagerImpl;
 
 import javax.inject.Singleton;
 
 import ch.indr.threethreefive.favorites.FavoritesStore;
-import ch.indr.threethreefive.favorites.FavoritesStoreType;
-import ch.indr.threethreefive.libs.ActivityStackType;
+import ch.indr.threethreefive.favorites.FavoritesStoreImpl;
 import ch.indr.threethreefive.libs.Build;
 import ch.indr.threethreefive.libs.Environment;
 import ch.indr.threethreefive.libs.Preferences;
-import ch.indr.threethreefive.libs.PreferencesType;
+import ch.indr.threethreefive.libs.PreferencesImpl;
 import ch.indr.threethreefive.libs.net.RobospiceManager;
 import ch.indr.threethreefive.libs.net.RobospiceManagerImpl;
 import ch.indr.threethreefive.libs.preferences.IntPreferenceType;
@@ -36,38 +35,37 @@ import ch.indr.threethreefive.libs.qualifiers.AutoRepeatModePreference;
 import ch.indr.threethreefive.navigation.PageResolver;
 import ch.indr.threethreefive.playlist.PlaylistManager;
 import ch.indr.threethreefive.services.PlaybackAnnouncer;
-import ch.indr.threethreefive.services.PlaybackAnnouncerType;
+import ch.indr.threethreefive.services.PlaybackAnnouncerImpl;
 import ch.indr.threethreefive.services.PlaybackClient;
-import ch.indr.threethreefive.services.PlaybackClientType;
+import ch.indr.threethreefive.services.PlaybackClientImpl;
 import ch.indr.threethreefive.services.Speaker;
-import ch.indr.threethreefive.services.SpeakerType;
+import ch.indr.threethreefive.services.SpeakerImpl;
 import ch.indr.threethreefive.services.ToastManager;
-import ch.indr.threethreefive.services.ToastManagerType;
+import ch.indr.threethreefive.services.ToastManagerImpl;
 import ch.indr.threethreefive.services.UiModeManager;
-import ch.indr.threethreefive.services.UiModeManagerType;
+import ch.indr.threethreefive.services.UiModeManagerImpl;
 import dagger.Module;
 import dagger.Provides;
 
 @Module
 public final class AppModule {
-  private final Application application;
-  private final ActivityStackType activityStack;
 
-  public AppModule(final @NonNull Application application, final @NonNull ActivityStackType activityStack) {
+  private final Application application;
+
+  public AppModule(final @NonNull Application application) {
     this.application = application;
-    this.activityStack = activityStack;
   }
 
   @Provides
   @Singleton
   Environment provideEnvironment(
-      final @NonNull FavoritesStoreType favoritesStore,
-      final @NonNull PlaybackClientType playbackClient,
-      final @NonNull QueueManagerType queueManager,
+      final @NonNull FavoritesStore favoritesStore,
+      final @NonNull PlaybackClient playbackClient,
+      final @NonNull QueueManager queueManager,
       final @NonNull SharedPreferences sharedPreferences,
-      final @NonNull PreferencesType preferences,
-      final @NonNull SpeakerType speaker,
-      final @NonNull ToastManagerType toastManager) {
+      final @NonNull Preferences preferences,
+      final @NonNull Speaker speaker,
+      final @NonNull ToastManager toastManager) {
     return Environment.builder()
         .favoritesStore(favoritesStore)
         .playbackClient(playbackClient)
@@ -77,12 +75,6 @@ public final class AppModule {
         .speaker(speaker)
         .toastManager(toastManager)
         .build();
-  }
-
-  @Provides
-  @Singleton
-  ActivityStackType provideActivityStackType() {
-    return activityStack;
   }
 
   @Provides
@@ -101,7 +93,7 @@ public final class AppModule {
   @Provides
   @Singleton
   @AutoRepeatModePreference
-  @NonNull IntPreferenceType provideAutoRepeatModePreference(final @NonNull PreferencesType preferences) {
+  @NonNull IntPreferenceType provideAutoRepeatModePreference(final @NonNull Preferences preferences) {
     return preferences.autoRepeatMode();
   }
 
@@ -113,8 +105,8 @@ public final class AppModule {
 
   @Provides
   @Singleton
-  FavoritesStoreType provideFavoritesStoreType() {
-    return new FavoritesStore(application);
+  FavoritesStore provideFavoritesStore() {
+    return new FavoritesStoreImpl(application);
   }
 
   @Provides
@@ -136,14 +128,14 @@ public final class AppModule {
 
   @Provides
   @Singleton
-  PlaybackAnnouncerType providePlaybackAnnouncerType(@NonNull PlaybackClientType playbackClient, @NonNull SpeakerType speaker) {
-    return new PlaybackAnnouncer(playbackClient, speaker);
+  PlaybackAnnouncer providePlaybackAnnouncer(@NonNull PlaybackClient playbackClient, @NonNull Speaker speaker) {
+    return new PlaybackAnnouncerImpl(playbackClient, speaker);
   }
 
   @Provides
   @Singleton
-  PlaybackClientType providePlaybackClientType() {
-    return new PlaybackClient(application);
+  PlaybackClient providePlaybackClient() {
+    return new PlaybackClientImpl(application);
   }
 
   @Provides
@@ -154,14 +146,14 @@ public final class AppModule {
 
   @Provides
   @Singleton
-  PreferencesType providesPreferencesType(final @ApplicationContext @NonNull Context context) {
-    return new Preferences(PreferenceManager.getDefaultSharedPreferences(context));
+  Preferences providesPreferences(final @ApplicationContext @NonNull Context context) {
+    return new PreferencesImpl(PreferenceManager.getDefaultSharedPreferences(context));
   }
 
   @Provides
   @Singleton
-  QueueManagerType provideQueueManagerType() {
-    return new QueueManager();
+  QueueManager provideQueueManager() {
+    return new QueueManagerImpl();
   }
 
   @Provides
@@ -183,19 +175,19 @@ public final class AppModule {
 
   @Provides
   @Singleton
-  SpeakerType provideSpeakerType(final @ApplicationContext @NonNull Context context) {
-    return new Speaker(context);
+  Speaker provideSpeaker(final @ApplicationContext @NonNull Context context) {
+    return new SpeakerImpl(context);
   }
 
   @Provides
   @Singleton
-  ToastManagerType provideToastManagerType() {
-    return new ToastManager();
+  ToastManager provideToastManager() {
+    return new ToastManagerImpl();
   }
 
   @Provides
   @Singleton
-  UiModeManagerType provideUiModeManagerType(final @ApplicationContext @NonNull Context context, final PreferencesType preferences) {
-    return new UiModeManager(context, preferences);
+  UiModeManager provideUiModeManager(final @ApplicationContext @NonNull Context context, final Preferences preferences) {
+    return new UiModeManagerImpl(context, preferences);
   }
 }

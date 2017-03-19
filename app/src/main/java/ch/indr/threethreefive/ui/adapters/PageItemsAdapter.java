@@ -25,7 +25,7 @@ import java.util.List;
 
 import ch.indr.threethreefive.R;
 import ch.indr.threethreefive.libs.PageItem;
-import ch.indr.threethreefive.libs.PreferencesType;
+import ch.indr.threethreefive.libs.Preferences;
 import ch.indr.threethreefive.ui.utils.OnTouchClickListener;
 
 import static android.view.View.GONE;
@@ -38,13 +38,13 @@ public class PageItemsAdapter extends ArrayAdapter<PageItem> implements SharedPr
   // ripple_material_light
   private static final int highlightColor = Color.argb(0x1f, 0, 0, 0);
 
-  private final PreferencesType preferences;
+  private final Preferences preferences;
   private float textSizeTitle;
   private float textSizeSubtitle;
   private HashSet<TextView> titles = new HashSet<>();
   private HashSet<TextView> subtitles = new HashSet<>();
 
-  public PageItemsAdapter(Context context, List<PageItem> pageItems, @NonNull PreferencesType preferences) {
+  public PageItemsAdapter(Context context, List<PageItem> pageItems, @NonNull Preferences preferences) {
     super(context, 0, pageItems);
 
     this.preferences = preferences;

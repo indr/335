@@ -32,7 +32,7 @@ public class PlaybackManager implements PlaybackType.Callback {
 
   private static final boolean AUTO_REPEAT = false;
 
-  private QueueManagerType mQueueManager;
+  private QueueManager mQueueManager;
   private Resources mResources;
   private PlaybackType mPlayback;
   private PlaybackServiceCallback mServiceCallback;
@@ -40,7 +40,7 @@ public class PlaybackManager implements PlaybackType.Callback {
 
   // TODO: Remove PlaybackType from constructor
   public PlaybackManager(PlaybackServiceCallback serviceCallback, Resources resources,
-                         QueueManagerType queueManager, PlaybackType playback) {
+                         QueueManager queueManager, PlaybackType playback) {
     mServiceCallback = serviceCallback;
     mResources = resources;
     mQueueManager = queueManager;

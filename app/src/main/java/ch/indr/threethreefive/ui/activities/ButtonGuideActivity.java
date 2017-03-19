@@ -29,10 +29,10 @@ import ch.indr.threethreefive.R;
 import ch.indr.threethreefive.libs.BaseActivity;
 import ch.indr.threethreefive.libs.PageLink;
 import ch.indr.threethreefive.libs.qualifiers.RequiresActivityViewModel;
-import ch.indr.threethreefive.services.PlaybackAnnouncerType;
-import ch.indr.threethreefive.services.PlaybackClientType;
-import ch.indr.threethreefive.services.SpeakerType;
-import ch.indr.threethreefive.services.ToastManagerType;
+import ch.indr.threethreefive.services.PlaybackAnnouncer;
+import ch.indr.threethreefive.services.PlaybackClient;
+import ch.indr.threethreefive.services.Speaker;
+import ch.indr.threethreefive.services.ToastManager;
 import ch.indr.threethreefive.ui.IntentKey;
 import ch.indr.threethreefive.viewmodels.ButtonGuideViewModel;
 import timber.log.Timber;
@@ -45,10 +45,10 @@ public class ButtonGuideActivity extends BaseActivity<ButtonGuideViewModel> {
 
   public boolean PROGRESSBAR = false;
 
-  protected @Inject PlaybackAnnouncerType playbackAnnouncer;
-  protected @Inject SpeakerType speaker;
-  protected @Inject ToastManagerType toastManager;
-  protected @Inject PlaybackClientType playbackClient;
+  protected @Inject PlaybackAnnouncer playbackAnnouncer;
+  protected @Inject Speaker speaker;
+  protected @Inject ToastManager toastManager;
+  protected @Inject PlaybackClient playbackClient;
 
   protected @Bind(R.id.buttonEnter) Button buttonEnter;
   protected @Bind(R.id.progressBarHolder) FrameLayout progressBarHolder;

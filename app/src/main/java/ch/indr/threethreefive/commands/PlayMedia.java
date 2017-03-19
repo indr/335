@@ -5,7 +5,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.media.session.MediaControllerCompat;
 import android.support.v4.media.session.MediaSessionCompat;
 
-import com.example.android.uamp.playback.QueueManagerType;
+import com.example.android.uamp.playback.QueueManager;
 
 import ch.indr.threethreefive.libs.Environment;
 import ch.indr.threethreefive.libs.MediaItem;
@@ -25,7 +25,7 @@ public class PlayMedia extends PageCommand {
   }
 
   protected @Nullable MediaSessionCompat.QueueItem playMedia(@NonNull Environment environment) {
-    final QueueManagerType queueManager = environment.queueManager();
+    final QueueManager queueManager = environment.queueManager();
     final MediaControllerCompat.TransportControls controls = environment.playbackControls();
     if (controls == null) return null;
 

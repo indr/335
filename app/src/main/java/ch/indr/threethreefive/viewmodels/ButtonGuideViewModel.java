@@ -20,7 +20,7 @@ import ch.indr.threethreefive.libs.preferences.IntPreferenceType;
 import ch.indr.threethreefive.libs.utils.ObjectUtils;
 import ch.indr.threethreefive.libs.utils.UriUtils;
 import ch.indr.threethreefive.navigation.Page;
-import ch.indr.threethreefive.services.SpeakerType;
+import ch.indr.threethreefive.services.Speaker;
 import ch.indr.threethreefive.ui.activities.ButtonGuideActivity;
 import ch.indr.threethreefive.viewmodels.inputs.ButtonGuideViewModelInputs;
 import ch.indr.threethreefive.viewmodels.outputs.ButtonGuideViewModelOutputs;
@@ -33,7 +33,7 @@ import static ch.indr.threethreefive.libs.rx.transformers.Transfomers.takeWhen;
 
 public class ButtonGuideViewModel extends PageActivityViewModel<ButtonGuideActivity> implements ButtonGuideViewModelInputs, ButtonGuideViewModelOutputs {
 
-  private final SpeakerType speaker;
+  private final Speaker speaker;
   private final IntPreferenceType uiModelaunchCounter;
   private boolean ignoreNextTitle = false;
 

@@ -7,8 +7,6 @@
 
 package ch.indr.threethreefive.radio.radioBrowserInfo.api;
 
-import android.support.annotation.NonNull;
-
 import com.google.api.client.http.GenericUrl;
 
 import ch.indr.threethreefive.radio.radioBrowserInfo.RadioBrowserInfoRequest;

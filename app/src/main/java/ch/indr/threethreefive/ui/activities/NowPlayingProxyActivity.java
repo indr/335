@@ -12,19 +12,19 @@ import android.os.Bundle;
 import android.support.v4.media.session.MediaSessionCompat;
 import android.support.v7.app.AppCompatActivity;
 
-import com.example.android.uamp.playback.QueueManagerType;
+import com.example.android.uamp.playback.QueueManager;
 
 import javax.inject.Inject;
 
 import ch.indr.threethreefive.ThreeThreeFiveApp;
 import ch.indr.threethreefive.libs.PageLink;
-import ch.indr.threethreefive.services.UiModeManagerType;
+import ch.indr.threethreefive.services.UiModeManager;
 import ch.indr.threethreefive.ui.IntentKey;
 
 public class NowPlayingProxyActivity extends AppCompatActivity {
 
-  protected @Inject QueueManagerType queueManager;
-  protected @Inject UiModeManagerType uiModeManager;
+  protected @Inject QueueManager queueManager;
+  protected @Inject UiModeManager uiModeManager;
 
   @Override protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
@@ -32,7 +32,7 @@ public class NowPlayingProxyActivity extends AppCompatActivity {
     ((ThreeThreeFiveApp) getApplication()).component().inject(this);
 
     Intent newIntent;
-    if (uiModeManager.getCurrentUiMode() == UiModeManagerType.UI_MODE_BUTTONS) {
+    if (uiModeManager.getCurrentUiMode() == UiModeManager.UI_MODE_BUTTONS) {
       newIntent = new Intent(this, ButtonGuideActivity.class);
     } else {
       newIntent = new Intent(this, ListGuideActivity.class);

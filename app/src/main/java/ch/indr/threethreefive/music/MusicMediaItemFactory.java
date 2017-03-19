@@ -15,10 +15,10 @@ import java.util.List;
 
 import ch.indr.threethreefive.libs.MediaItem;
 
-import static android.support.v4.media.MediaMetadataCompat.*;
 import static android.support.v4.media.MediaMetadataCompat.Builder;
 import static android.support.v4.media.MediaMetadataCompat.METADATA_KEY_ALBUM;
 import static android.support.v4.media.MediaMetadataCompat.METADATA_KEY_ALBUM_ARTIST;
+import static android.support.v4.media.MediaMetadataCompat.METADATA_KEY_ALBUM_ART_URI;
 import static android.support.v4.media.MediaMetadataCompat.METADATA_KEY_ARTIST;
 import static android.support.v4.media.MediaMetadataCompat.METADATA_KEY_DISPLAY_SUBTITLE;
 import static android.support.v4.media.MediaMetadataCompat.METADATA_KEY_DURATION;

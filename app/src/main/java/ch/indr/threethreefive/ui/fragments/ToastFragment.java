@@ -25,14 +25,14 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import ch.indr.threethreefive.R;
 import ch.indr.threethreefive.libs.BaseFragment;
-import ch.indr.threethreefive.libs.PreferencesType;
+import ch.indr.threethreefive.libs.Preferences;
 import ch.indr.threethreefive.libs.qualifiers.RequiresFragmentViewModel;
 import ch.indr.threethreefive.ui.utils.OnTouchClickListener;
 import ch.indr.threethreefive.viewmodels.ToastFragmentViewModel;
 import timber.log.Timber;
 
 import static ch.indr.threethreefive.libs.rx.transformers.Transfomers.observeForUI;
-import static ch.indr.threethreefive.services.ToastManagerType.Toast;
+import static ch.indr.threethreefive.services.ToastManager.Toast;
 
 @RequiresFragmentViewModel(ToastFragmentViewModel.class)
 public class ToastFragment extends BaseFragment<ToastFragmentViewModel> {
@@ -41,7 +41,7 @@ public class ToastFragment extends BaseFragment<ToastFragmentViewModel> {
   protected @Bind(R.id.scrollViewTitle) HorizontalScrollView scrollViewTitle;
   protected @Bind(R.id.textViewTitle) TextView textView;
 
-  private PreferencesType preferences;
+  private Preferences preferences;
 
   @Override public void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
