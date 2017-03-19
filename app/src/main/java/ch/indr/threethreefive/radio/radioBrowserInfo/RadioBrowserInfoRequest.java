@@ -7,6 +7,8 @@
 
 package ch.indr.threethreefive.radio.radioBrowserInfo;
 
+import android.support.annotation.NonNull;
+
 import com.google.api.client.http.GenericUrl;
 import com.google.api.client.http.HttpRequest;
 import com.google.api.client.http.HttpResponse;
@@ -26,8 +28,12 @@ public abstract class RadioBrowserInfoRequest<TResult> extends HttpClientSpiceRe
 
   protected abstract GenericUrl getUrl();
 
-  protected static GenericUrl makeUrl(String path) {
+  protected static GenericUrl makeUrlV1(@NonNull String path) {
     return new GenericUrl("http://www.radio-browser.info/webservice/json" + path);
+  }
+
+  protected static GenericUrl makeUrlV2(@NonNull String path) {
+    return new GenericUrl("http://www.radio-browser.info/webservice/v2/json" + path);
   }
 
   @Override public String getCacheKey() {

@@ -24,6 +24,6 @@ public class LanguagesRequest extends RadioBrowserInfoRequest<Language[]> {
   }
 
   @Override protected GenericUrl getUrl() {
-    return makeUrl("/languages?hidebroken=true&order=value");
+    return makeUrlV1("/languages?hidebroken=true&order=value");
   }
 }

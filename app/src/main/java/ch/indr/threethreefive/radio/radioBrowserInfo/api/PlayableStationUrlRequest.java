@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016 Reto Inderbitzin (mail@indr.ch)
+ * Copyright (c) 2017 Reto Inderbitzin (mail@indr.ch)
  *
  * For the full copyright and license information, please view
  * the LICENSE file that was distributed with this source code.
@@ -12,20 +12,18 @@ import android.support.annotation.NonNull;
 import com.google.api.client.http.GenericUrl;
 
 import ch.indr.threethreefive.radio.radioBrowserInfo.RadioBrowserInfoRequest;
-import ch.indr.threethreefive.radio.radioBrowserInfo.api.json.Station;
 
-public class StationRequest extends RadioBrowserInfoRequest<Station[]> {
+public class PlayableStationUrlRequest extends RadioBrowserInfoRequest<PlayableStationUrlRequest> {
 
   private final String stationId;
 
-  public StationRequest(String stationId) {
-    super(Station[].class);
+  public PlayableStationUrlRequest(@NonNull String stationId) {
+    super(PlayableStationUrlRequest.class);
 
     this.stationId = stationId;
   }
 
   @Override protected GenericUrl getUrl() {
-    return makeUrlV1("/stations/byid/" + stationId);
+    return makeUrlV2("/url/" + stationId);
   }
 }
-

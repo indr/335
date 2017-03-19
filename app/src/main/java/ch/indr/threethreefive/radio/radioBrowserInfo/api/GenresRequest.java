@@ -24,6 +24,6 @@ public class GenresRequest extends RadioBrowserInfoRequest<Tag[]> {
   }
 
   @Override protected GenericUrl getUrl() {
-    return makeUrl("/tags?hidebroken=true");
+    return makeUrlV1("/tags?hidebroken=true");
   }
 }

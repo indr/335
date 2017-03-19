@@ -24,6 +24,6 @@ public class CountriesRequest extends RadioBrowserInfoRequest<Country[]> {
   }
 
   @Override protected GenericUrl getUrl() {
-    return makeUrl("/countries?hidebroken=true&order=value");
+    return makeUrlV1("/countries?hidebroken=true&order=value");
   }
 }
