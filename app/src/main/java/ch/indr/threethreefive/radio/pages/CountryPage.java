@@ -131,7 +131,7 @@ public class CountryPage extends SpiceBasePage implements RequestListener<Statio
 
     this.allStations = Arrays.asList(response);
 
-    Collections.sort(allStations, new Station.SummedVoteComparator());
+    Collections.sort(allStations, Station.getBestStationsComparator());
     this.topStations = CollectionUtils.slice(allStations, 0, 15);
     this.moreStations = CollectionUtils.slice(allStations, 0, 50);
 

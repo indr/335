@@ -132,7 +132,7 @@ public class GenrePage extends SpiceBasePage implements RequestListener<Station[
 
     this.allStations = Arrays.asList(response);
 
-    Collections.sort(allStations, new Station.SummedVoteComparator());
+    Collections.sort(allStations, Station.getBestStationsComparator());
     this.topStations = CollectionUtils.slice(allStations, 0, 15);
     this.moreStations = CollectionUtils.slice(allStations, 0, 50);
 
