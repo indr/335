@@ -44,6 +44,10 @@ public class Station {
 
   @Key private String lastchangetime;
 
+  @Key private String clickcount;
+
+  @Key private String clicktrend;
+
   public Station() {
   }
 
@@ -110,6 +114,14 @@ public class Station {
 
   public Date getLastChangeTime() {
     return RadioBrowserInfoUtils.convertDateTimeString(lastchangetime);
+  }
+
+  public int getClickCount() {
+    return clickcount == null ? 0 : Integer.parseInt(clickcount);
+  }
+
+  public int getClickTrend() {
+    return clicktrend == null ? 0 : Integer.parseInt(clicktrend);
   }
 
   public static class NameComparator implements Comparator<Station> {

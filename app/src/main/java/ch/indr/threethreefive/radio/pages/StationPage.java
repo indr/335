@@ -97,6 +97,9 @@ public class StationPage extends SpiceBasePage implements RequestListener<Statio
     builder.addText(String.format(Locale.US, "Votes: %d (+%d/-%d)",
         station.getSummedVotes(), station.getPositiveVotes(), station.getNegativeVotes()));
 
+    // Click count and trend
+    builder.addText(String.format(Locale.US, "Clicks: %d (%+d)", station.getClickCount(), station.getClickTrend()));
+
     // Updated
     if (station.getLastChangeTime() != null) {
       DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.MEDIUM, DateFormat.SHORT);
