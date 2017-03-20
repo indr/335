@@ -32,4 +32,8 @@ public class PlayableStationUrl {
   public String getUrl() {
     return url;
   }
+
+  @Override public String toString() {
+    return "PlayableStationUrl [id=" + id + ", name=" + name + ", url=" + url + "]";
+  }
 }

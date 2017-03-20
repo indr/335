@@ -26,4 +26,8 @@ public final class StringUtils {
   public static boolean isNotEmpty(CharSequence string) {
     return !isEmpty(string);
   }
+
+  public static String getString(CharSequence value) {
+    return value == null ? null : value.toString();
+  }
 }

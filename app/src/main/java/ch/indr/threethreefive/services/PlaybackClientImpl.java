@@ -21,6 +21,9 @@ import android.util.Pair;
 
 import com.example.android.uamp.MusicService;
 
+import java.util.concurrent.TimeUnit;
+
+import ch.indr.threethreefive.libs.utils.ObjectUtils;
 import rx.Observable;
 import rx.subjects.BehaviorSubject;
 import rx.subjects.PublishSubject;
@@ -30,6 +33,7 @@ public class PlaybackClientImpl implements PlaybackClient {
 
   private final @NonNull Context context;
   private final @NonNull MediaBrowserCompat mediaBrowser;
+  private final PlaybackAnswers playbackAnswers;
   private @Nullable MediaControllerCompat mediaController;
 
   private final BehaviorSubject<Integer> playbackState = BehaviorSubject.create(PlaybackStateCompat.STATE_NONE);
@@ -43,6 +47,17 @@ public class PlaybackClientImpl implements PlaybackClient {
     mediaBrowser = new MediaBrowserCompat(context, new ComponentName(context, MusicService.class),
         mediaBrowserConnectionCallback, null);
     mediaBrowser.connect();
+
+    playbackAnswers = new PlaybackAnswers(context);
+
+    // TODO: Unsubscribe on disconnect?
+    Observable.combineLatest(mediaMetadata(), playbackState(), Pair::create)
+        .filter(p -> p.second == PlaybackStateCompat.STATE_CONNECTING)
+        .throttleWithTimeout(1000, TimeUnit.MILLISECONDS)
+        .distinctUntilChanged()
+        .map(p -> p.first)
+        .filter(ObjectUtils::isNotNull)
+        .subscribe(playbackAnswers::reportConnecting);
   }
 
   @Nullable public MediaControllerCompat mediaController() {

@@ -8,6 +8,7 @@
 package ch.indr.threethreefive.libs.net;
 
 import android.content.Context;
+import android.support.annotation.NonNull;
 
 import com.octo.android.robospice.SpiceManager;
 import com.octo.android.robospice.request.listener.RequestListener;
@@ -30,5 +31,9 @@ public class RobospiceManagerImpl implements RobospiceManager {
 
   @Override public <TResult> void getFromCacheAndLoadFromNetworkIfExpired(HttpClientSpiceRequest<TResult> request, String cacheKey, long cacheExpiryDuration, RequestListener<TResult> listener) {
     this.spiceManager.getFromCacheAndLoadFromNetworkIfExpired(request, cacheKey, cacheExpiryDuration, listener);
+  }
+
+  @Override public <TResult> void execute(@NonNull HttpClientSpiceRequest<TResult> request, RequestListener<TResult> listener) {
+    this.spiceManager.execute(request, listener);
   }
 }

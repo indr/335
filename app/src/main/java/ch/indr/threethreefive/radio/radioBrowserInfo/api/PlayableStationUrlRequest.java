@@ -12,13 +12,14 @@ import android.support.annotation.NonNull;
 import com.google.api.client.http.GenericUrl;
 
 import ch.indr.threethreefive.radio.radioBrowserInfo.RadioBrowserInfoRequest;
+import ch.indr.threethreefive.radio.radioBrowserInfo.api.json.PlayableStationUrl;
 
-public class PlayableStationUrlRequest extends RadioBrowserInfoRequest<PlayableStationUrlRequest> {
+public class PlayableStationUrlRequest extends RadioBrowserInfoRequest<PlayableStationUrl> {
 
   private final String stationId;
 
   public PlayableStationUrlRequest(@NonNull String stationId) {
-    super(PlayableStationUrlRequest.class);
+    super(PlayableStationUrl.class);
 
     this.stationId = stationId;
   }
