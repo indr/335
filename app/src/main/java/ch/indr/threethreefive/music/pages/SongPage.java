@@ -30,7 +30,7 @@ public class SongPage extends Page {
     super(environment);
   }
 
-  @Override public void onCreate(@NonNull Context context, Uri uri, Bundle bundle) {
+  @Override public void onCreate(@NonNull Context context, @NonNull Uri uri, Bundle bundle) {
     super.onCreate(context, uri, bundle);
 
     final String songId = uri.getLastPathSegment();

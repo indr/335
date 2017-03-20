@@ -141,7 +141,7 @@ public abstract class Page implements PageType {
     return pageTitle.getValue();
   }
 
-  public void onCreate(@NonNull Context context, Uri uri, Bundle bundle) {
+  public void onCreate(@NonNull Context context, @NonNull Uri uri, Bundle bundle) {
     if (state != State.New) {
       throw new IllegalStateException("Page is not in state new");
     }

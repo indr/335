@@ -42,7 +42,7 @@ public class CountryPage extends SpiceBasePage implements RequestListener<Statio
     super(environment);
   }
 
-  @Override public void onCreate(@NonNull Context context, Uri uri, Bundle bundle) {
+  @Override public void onCreate(@NonNull Context context, @NonNull Uri uri, Bundle bundle) {
     super.onCreate(context, uri, bundle);
     component().inject(this);
 

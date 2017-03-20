@@ -8,6 +8,7 @@
 package ch.indr.threethreefive.services;
 
 import android.content.Context;
+import android.support.annotation.NonNull;
 
 public interface UiModeManager {
   int UI_MODE_NONE = 0;
@@ -18,7 +19,7 @@ public interface UiModeManager {
 
   int getCurrentUiMode();
 
-  void launchButtonsUi(Context context);
+  void launchButtonsUi(@NonNull Context context);
 
-  void launchListUi(Context context);
+  void launchListUi(@NonNull Context context);
 }

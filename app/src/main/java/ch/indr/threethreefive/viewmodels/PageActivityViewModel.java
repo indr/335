@@ -8,9 +8,13 @@
 package ch.indr.threethreefive.viewmodels;
 
 import android.content.Context;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+
+import com.crashlytics.android.answers.Answers;
+import com.crashlytics.android.answers.ContentViewEvent;
 
 import java.util.List;
 import java.util.Stack;
@@ -55,6 +59,7 @@ public abstract class PageActivityViewModel<ViewType extends ActivityLifecycleTy
         .startWith(PageRequest.HomePage)
         .map(pageRequest -> PageManager.fetch(context, pageRequest))
         .compose(bindToLifecycle())
+        .doOnNext(this::reportPageView)
         .subscribe(this::transitionTo);
 
     page.switchMap(Page::pageItems)
@@ -69,6 +74,21 @@ public abstract class PageActivityViewModel<ViewType extends ActivityLifecycleTy
         .map(ObjectUtils::isNotNull)
         .compose(bindToLifecycle())
         .subscribe(canGoUp);
+  }
+
+  private void reportPageView(Page page) {
+    try {
+      final Uri pageUri = page.getPageUri();
+      final String contentId = pageUri == null ? "" : pageUri.toString().replace("//ch.indr.threethreefive", "");
+      Timber.d("reportPageView content id %s, %s", contentId, this.toString());
+
+      Answers.getInstance().logContentView(new ContentViewEvent()
+          .putContentId(contentId)
+          .putContentName(page.getTitle())
+          .putContentType(page.getClass().getName().replace("ch.indr.threethreefive.", "")));
+    } catch (Exception ex) {
+      Timber.e(ex, "Error logging content view event");
+    }
   }
 
   @Override protected void onPause() {

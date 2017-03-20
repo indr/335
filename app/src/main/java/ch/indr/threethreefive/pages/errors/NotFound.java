@@ -24,7 +24,7 @@ public class NotFound extends Page {
     super(environment);
   }
 
-  @Override public void onCreate(@NonNull Context context, Uri uri, Bundle bundle) {
+  @Override public void onCreate(@NonNull Context context, @NonNull Uri uri, Bundle bundle) {
     super.onCreate(context, uri, bundle);
 
     setTitle("Not Found");

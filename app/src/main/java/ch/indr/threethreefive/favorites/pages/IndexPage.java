@@ -30,7 +30,7 @@ public class IndexPage extends Page {
     this.favoritesStore = environment.favoritesStore();
   }
 
-  @Override public void onCreate(@NonNull Context context, Uri uri, Bundle bundle) {
+  @Override public void onCreate(@NonNull Context context, @NonNull Uri uri, Bundle bundle) {
     super.onCreate(context, uri, bundle);
 
     setTitle("Favorites");

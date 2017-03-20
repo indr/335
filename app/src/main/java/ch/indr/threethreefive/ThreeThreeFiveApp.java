@@ -17,7 +17,8 @@ public class ThreeThreeFiveApp extends MultiDexApplication {
   public void onCreate() {
     super.onCreate();
 
-    if (!BuildConfig.DEBUG && !isInUnitTests()) {
+    // if (!BuildConfig.DEBUG && !isInUnitTests()) {
+    if (!isInUnitTests()) {
       Fabric.with(this, new Crashlytics());
     }
 

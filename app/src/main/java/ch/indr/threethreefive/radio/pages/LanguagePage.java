@@ -41,7 +41,7 @@ public class LanguagePage extends SpiceBasePage implements RequestListener<Stati
     super(environment);
   }
 
-  @Override public void onCreate(@NonNull Context context, Uri uri, Bundle bundle) {
+  @Override public void onCreate(@NonNull Context context, @NonNull Uri uri, Bundle bundle) {
     super.onCreate(context, uri, bundle);
     component().inject(this);
 
