@@ -20,8 +20,10 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 
+import ch.indr.threethreefive.R;
 import ch.indr.threethreefive.libs.Environment;
 import ch.indr.threethreefive.libs.PageItemsBuilder;
+import ch.indr.threethreefive.libs.PageUris;
 import ch.indr.threethreefive.navigation.SpiceBasePage;
 import ch.indr.threethreefive.radio.radioBrowserInfo.api.CountriesRequest;
 import ch.indr.threethreefive.radio.radioBrowserInfo.api.json.Country;
@@ -56,6 +58,11 @@ public class CountriesPage extends SpiceBasePage implements RequestListener<Coun
   }
 
   @Override public void onRequestSuccess(Country[] response) {
+    if (response == null) {
+      handle(R.string.no_countries_found_error);
+      return;
+    }
+
     populateLists(response);
     showTopCountries();
   }
@@ -77,7 +84,7 @@ public class CountriesPage extends SpiceBasePage implements RequestListener<Coun
   private void addCountryLinks(PageItemsBuilder builder, List<Country> countries) {
     for (Country country : countries) {
       final String subtitle = String.format(Locale.US, "%d radio stations", country.getStationCount());
-      builder.addLink("/radio/countries/" + country.getValue(),
+      builder.addLink(PageUris.makeCountryGenres(country.getValue()),
           country.getName(), subtitle, country.getName() + ", " + subtitle);
     }
   }

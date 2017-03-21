@@ -28,4 +28,12 @@ public abstract class PageUris {
   public static String makeStationUri(String id) {
     return "/radio/stations/" + id;
   }
+
+  public static String makeCountryGenres(String country) {
+    return "/radio/countries/" + country + "/genres";
+  }
+
+  public static String makeCountryGenre(String countryId, String genreId) {
+    return "/radio/countries/" + countryId + "/genres/" + genreId;
+  }
 }

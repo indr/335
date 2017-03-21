@@ -35,7 +35,6 @@ public abstract class Page implements PageType {
   private Bundle bundle;
 
   private Environment environment;
-  private FavoritesStore favoritesStore;
 
   // Page lifecycle state
   private State state = State.New;
@@ -60,7 +59,6 @@ public abstract class Page implements PageType {
 
   public Page(Environment environment) {
     this.environment = environment;
-    this.favoritesStore = environment.favoritesStore();
   }
 
   protected PageLink getCurrentPageLink() {
@@ -255,7 +253,7 @@ public abstract class Page implements PageType {
   }
 
   protected PageItemsBuilder pageItemsBuilder() {
-    return new PageItemsBuilder(this.context.getResources(), this.favoritesStore);
+    return new PageItemsBuilder(this.getContext(), this.environment);
   }
 
   protected void setPageItems(final @NonNull PageItemsBuilder builder) {

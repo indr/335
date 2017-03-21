@@ -7,6 +7,7 @@
 
 package ch.indr.threethreefive.libs;
 
+import android.content.Context;
 import android.content.res.Resources;
 import android.net.Uri;
 import android.support.annotation.NonNull;
@@ -17,19 +18,18 @@ import java.util.List;
 
 import ch.indr.threethreefive.commands.ActionCommand;
 import ch.indr.threethreefive.commands.ToggleFavorite;
-import ch.indr.threethreefive.favorites.FavoritesStore;
 import rx.functions.Action1;
 
 public class PageItemsBuilder {
 
   private final Resources resources;
-  private final FavoritesStore favoritesStores;
+  private final Environment environment;
 
   private final List<PageItem> items = new ArrayList<>();
 
-  public PageItemsBuilder(@NonNull Resources resources, @NonNull FavoritesStore favoritesStore) {
-    this.resources = resources;
-    this.favoritesStores = favoritesStore;
+  public PageItemsBuilder(@NonNull Context context, @NonNull Environment environment) {
+    this.resources = context.getResources();
+    this.environment = environment;
   }
 
   public PageItemsBuilder addItem(final @NonNull PageItem item) {
@@ -41,8 +41,8 @@ public class PageItemsBuilder {
     return addItem(new ActionCommand(title, action));
   }
 
-  public PageItemsBuilder addLink(final @NonNull String uri, final int title) {
-    return addLink(uri, resources.getString(title));
+  public PageItemsBuilder addLink(final @NonNull String uri, final int titleResourceId) {
+    return addLink(uri, resources.getString(titleResourceId));
   }
 
   public PageItemsBuilder addLink(final @NonNull String uri, final @NonNull String title) {
@@ -66,12 +66,11 @@ public class PageItemsBuilder {
   }
 
   public PageItemsBuilder addToggleFavorite(PageLink pageLink) {
-    items.add(new ToggleFavorite(this.favoritesStores, pageLink));
+    items.add(new ToggleFavorite(environment.favoritesStore(), pageLink));
     return this;
   }
 
   public List<PageItem> build() {
     return items;
   }
-
 }

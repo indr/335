@@ -61,7 +61,13 @@
 
 
     <string name="country">Country</string>
+    <string name="no_countries_found_error">Error: No countries found</string>
+
+    <string name="genres">Genres</string>
+    <string name="no_genres_found_error">Error: No genres found</string>
+
     <string name="language">Language</string>
+    <string name="no_languages_found_error">Error: No languages found</string>
 
     <string name="no_stations_found">No stations found</string>
     <string name="no_stations_found_error">Error: No stations found</string>
