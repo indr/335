@@ -29,14 +29,14 @@ import ch.indr.threethreefive.radio.radioBrowserInfo.api.StationsRequest;
 import ch.indr.threethreefive.radio.radioBrowserInfo.api.json.Station;
 import timber.log.Timber;
 
-public class CountryPage extends SpiceBasePage implements RequestListener<Station[]> {
+public class CountryStationsPage extends SpiceBasePage implements RequestListener<Station[]> {
 
   private String country;
   private List<Station> allStations;
   private List<Station> moreStations;
   private List<Station> topStations;
 
-  public CountryPage(Environment environment) {
+  public CountryStationsPage(Environment environment) {
     super(environment);
 
   }

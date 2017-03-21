@@ -18,6 +18,8 @@ import com.octo.android.robospice.request.listener.RequestListener;
 import java.util.List;
 
 import ch.indr.threethreefive.libs.Environment;
+import ch.indr.threethreefive.libs.PageItemsBuilder;
+import ch.indr.threethreefive.libs.PageUris;
 import ch.indr.threethreefive.navigation.SpiceBasePage;
 import ch.indr.threethreefive.radio.radioBrowserInfo.api.json.Tag;
 
@@ -47,6 +49,20 @@ public class CountryGenresPage extends SpiceBasePage implements RequestListener<
   }
 
   @Override public void onRequestSuccess(List<Tag> tags) {
+    if (tags == null) {
 
+    }
+    final PageItemsBuilder builder = pageItemsBuilder();
+    builder.addToggleFavorite(getCurrentPageLink());
+
+    for (Tag tag : tags) {
+      builder.addLink(PageUris.makeCountryGenre(countryId, tag.getValue()),
+          tag.getName());
+    }
+
+    builder.addText("Show all Genres");
+    builder.addText("Show all Stations");
+
+    setPageItems(builder);
   }
 }

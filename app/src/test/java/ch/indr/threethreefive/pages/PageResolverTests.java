@@ -19,7 +19,7 @@ import ch.indr.threethreefive.navigation.PageResolver;
 import ch.indr.threethreefive.radio.pages.CountriesPage;
 import ch.indr.threethreefive.radio.pages.CountryGenrePage;
 import ch.indr.threethreefive.radio.pages.CountryGenresPage;
-import ch.indr.threethreefive.radio.pages.CountryPage;
+import ch.indr.threethreefive.radio.pages.CountryStationsPage;
 import ch.indr.threethreefive.radio.pages.GenrePage;
 import ch.indr.threethreefive.radio.pages.GenresPage;
 import ch.indr.threethreefive.radio.pages.LanguagePage;
@@ -53,7 +53,7 @@ public class PageResolverTests extends TtfRobolectricTestCase {
     assertResolve("/radio", ch.indr.threethreefive.radio.pages.IndexPage.class);
 
     assertResolve("/radio/countries", CountriesPage.class);
-    assertResolve("/radio/countries/New%20Zealand", CountryPage.class, b -> b.putString("countryId", "New Zealand"));
+    assertResolve("/radio/countries/New%20Zealand", CountryStationsPage.class, b -> b.putString("countryId", "New Zealand"));
     assertResolve("/radio/countries/New%20Zealand/genres", CountryGenresPage.class, b -> b.putString("countryId", "New Zealand"));
     assertResolve("/radio/countries/New%20Zealand/genres/Top%2040", CountryGenrePage.class, b -> {
       b.putString("countryId", "New Zealand");

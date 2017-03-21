@@ -12,7 +12,7 @@ import ch.indr.threethreefive.navigation.PageMeta;
 import ch.indr.threethreefive.radio.pages.CountriesPage;
 import ch.indr.threethreefive.radio.pages.CountryGenrePage;
 import ch.indr.threethreefive.radio.pages.CountryGenresPage;
-import ch.indr.threethreefive.radio.pages.CountryPage;
+import ch.indr.threethreefive.radio.pages.CountryStationsPage;
 import ch.indr.threethreefive.radio.pages.GenrePage;
 import ch.indr.threethreefive.radio.pages.GenresPage;
 import ch.indr.threethreefive.radio.pages.IndexPage;
@@ -42,9 +42,9 @@ public class RadioResolver extends AbstractPageResolver {
   static {
     uriMatcher.addURI(AUTHORITY, base_path, INDEX);
     addPattern("/countries", CountriesPage.class);
-    addPattern("/countries/([^/]+)", CountryPage.class, new String[]{"countryId"});
     addPattern("/countries/([^/]+)/genres", CountryGenresPage.class, new String[]{"countryId"});
     addPattern("/countries/([^/]+)/genres/([^/]+)", CountryGenrePage.class, new String[]{"countryId", "genreId"});
+    addPattern("/countries/([^/]+)/stations", CountryStationsPage.class, new String[]{"countryId"});
     uriMatcher.addURI(AUTHORITY, base_path + "/languages", LANGUAGES);
     uriMatcher.addURI(AUTHORITY, base_path + "/languages/*", LANGUAGE_NAME);
     uriMatcher.addURI(AUTHORITY, base_path + "/genres", GENRES);
