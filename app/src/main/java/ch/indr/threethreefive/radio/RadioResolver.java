@@ -40,9 +40,9 @@ public class RadioResolver extends AbstractPageResolver {
   static {
     uriMatcher.addURI(AUTHORITY, base_path, INDEX);
     addPattern("/countries", CountriesPage.class);
-    addPattern("/countries/([\\w]+)", CountryPage.class, new String[]{"countryId"});
-    addPattern("/countries/([\\w]+)/genres", GenresPage.class, new String[]{"countryId"});
-    addPattern("/countries/([\\w]+)/genres/([\\w]+)", GenrePage.class, new String[]{"countryId", "genreId"});
+    addPattern("/countries/([^/]+)", CountryPage.class, new String[]{"countryId"});
+    addPattern("/countries/([^/]+)/genres", GenresPage.class, new String[]{"countryId"});
+    addPattern("/countries/([^/]+)/genres/([^/]+)", GenrePage.class, new String[]{"countryId", "genreId"});
     uriMatcher.addURI(AUTHORITY, base_path + "/languages", LANGUAGES);
     uriMatcher.addURI(AUTHORITY, base_path + "/languages/*", LANGUAGE_NAME);
     uriMatcher.addURI(AUTHORITY, base_path + "/genres", GENRES);

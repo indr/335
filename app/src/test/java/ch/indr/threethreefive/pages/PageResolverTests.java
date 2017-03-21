@@ -51,16 +51,16 @@ public class PageResolverTests extends TtfRobolectricTestCase {
     assertResolve("/radio", ch.indr.threethreefive.radio.pages.IndexPage.class);
 
     assertResolve("/radio/countries", CountriesPage.class);
-    assertResolve("/radio/countries/England", CountryPage.class, b -> b.putString("countryId", "England"));
-    assertResolve("/radio/countries/England/genres", GenresPage.class, b -> b.putString("countryId", "England"));
-    assertResolve("/radio/countries/England/genres/Rock", GenrePage.class, b -> {
-      b.putString("countryId", "England");
-      b.putString("genreId", "Rock");
+    assertResolve("/radio/countries/New%20Zealand", CountryPage.class, b -> b.putString("countryId", "New Zealand"));
+    assertResolve("/radio/countries/New%20Zealand/genres", GenresPage.class, b -> b.putString("countryId", "New Zealand"));
+    assertResolve("/radio/countries/New%20Zealand/genres/Top%2040", GenrePage.class, b -> {
+      b.putString("countryId", "New Zealand");
+      b.putString("genreId", "Top 40");
     });
     assertResolve("/radio/languages", LanguagesPage.class);
-    assertResolve("/radio/languages/German", LanguagePage.class, b -> b.putString("id", "German"));
+    assertResolve("/radio/languages/Bahasa%20Melayu", LanguagePage.class, b -> b.putString("id", "Bahasa Melayu"));
     assertResolve("/radio/genres", GenresPage.class);
-    assertResolve("/radio/genres/Blues", GenrePage.class, b -> b.putString("id", "Blues"));
+    assertResolve("/radio/genres/Top%2040", GenrePage.class, b -> b.putString("id", "Top 40"));
     assertResolve("/radio/stations/1234", StationPage.class, b -> b.putString("id", "1234"));
     assertResolve("/radio/stations/1234/genres", StationGenresPage.class, b -> b.putString("id", "1234"));
   }
