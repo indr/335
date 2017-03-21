@@ -7,20 +7,31 @@
 
 package ch.indr.threethreefive.navigation;
 
+import android.content.Context;
+import android.net.Uri;
+import android.os.Bundle;
+import android.support.annotation.NonNull;
+
 import com.octo.android.robospice.request.listener.RequestListener;
 
 import javax.inject.Inject;
 
+import ch.indr.threethreefive.data.network.ApiClient;
 import ch.indr.threethreefive.libs.Environment;
 import ch.indr.threethreefive.libs.net.HttpClientSpiceRequest;
 import ch.indr.threethreefive.libs.net.RobospiceManager;
 
 public abstract class SpiceBasePage extends Page {
 
+  protected @Inject ApiClient apiClient;
   protected @Inject RobospiceManager robospiceManager;
 
   public SpiceBasePage(Environment environment) {
     super(environment);
+  }
+
+  @Override public void onCreate(@NonNull Context context, @NonNull Uri uri, Bundle bundle) {
+    super.onCreate(context, uri, bundle);
   }
 
   @Override public void onStart() {
@@ -29,6 +40,7 @@ public abstract class SpiceBasePage extends Page {
     if (robospiceManager == null) {
       throw new RuntimeException("RobospiceManager has not been injected. Did you call component.inject(this) in your subclass of SpiceBasePage?");
     }
+    apiClient.setRobospiceManager(robospiceManager);
     robospiceManager.start(getContext());
   }
 

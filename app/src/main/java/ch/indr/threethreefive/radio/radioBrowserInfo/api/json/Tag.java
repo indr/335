@@ -7,6 +7,8 @@
 
 package ch.indr.threethreefive.radio.radioBrowserInfo.api.json;
 
+import android.support.annotation.NonNull;
+
 import com.google.api.client.util.Key;
 
 import java.util.Comparator;
@@ -18,6 +20,15 @@ public class Tag {
   @Key private String value;
 
   @Key private String stationcount;
+
+  public Tag() {
+  }
+
+  public Tag(final @NonNull String name, final int stationcount) {
+    this.name = name;
+    this.value = name;
+    this.stationcount = String.valueOf(stationcount);
+  }
 
   public String getName() {
     return name;

@@ -11,15 +11,23 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 
-import org.junit.Ignore;
 import org.junit.Test;
 
 import ch.indr.threethreefive.TtfRobolectricTestCase;
+import ch.indr.threethreefive.data.network.ApiClient;
 import ch.indr.threethreefive.radio.pages.CountryGenresPage;
 
 import static org.mockito.Mockito.verify;
 
 public class CountryGenresPageTests extends TtfRobolectricTestCase {
+
+  private ApiClient apiClient;
+
+  @Override public void setUp() throws Exception {
+    super.setUp();
+
+    this.apiClient = appModule().apiClient();
+  }
 
   @Test(expected = IllegalArgumentException.class)
   public void onCreate_withoutCountryId_throws() {
@@ -33,13 +41,12 @@ public class CountryGenresPageTests extends TtfRobolectricTestCase {
   }
 
   @Test
-  @Ignore
   public void onStart_getsGenresByCountry() {
     final CountryGenresPage page = createPage();
 
     page.onStart();
 
-    // verify(apiClient).getGenresByCountry("England", null);
+    verify(apiClient).getGenresByCountry("England", page);
   }
 
   @NonNull private CountryGenresPage createPage() {

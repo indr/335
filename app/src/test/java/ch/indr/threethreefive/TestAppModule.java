@@ -10,6 +10,7 @@ package ch.indr.threethreefive;
 import android.app.Application;
 import android.support.annotation.NonNull;
 
+import ch.indr.threethreefive.data.network.ApiClient;
 import ch.indr.threethreefive.libs.net.RobospiceManager;
 import dagger.Provides;
 
@@ -17,6 +18,7 @@ import static org.mockito.Mockito.mock;
 
 public class TestAppModule extends AppModule {
 
+  private ApiClient apiClient;
   private RobospiceManager robospiceManager;
 
   public TestAppModule(@NonNull Application application) {
@@ -24,7 +26,13 @@ public class TestAppModule extends AppModule {
   }
 
   @Provides
-  @Override public RobospiceManager provideRobospiceManager() {
+  @NonNull @Override public ApiClient apiClient() {
+    if (apiClient == null) apiClient = mock(ApiClient.class);
+    return apiClient;
+  }
+
+  @Provides
+  @NonNull @Override public RobospiceManager provideRobospiceManager() {
     if (robospiceManager == null) robospiceManager = mock(RobospiceManager.class);
     return robospiceManager;
   }

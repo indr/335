@@ -21,6 +21,7 @@ import com.example.android.uamp.playback.QueueManagerImpl;
 
 import javax.inject.Singleton;
 
+import ch.indr.threethreefive.data.network.ApiClient;
 import ch.indr.threethreefive.favorites.FavoritesStore;
 import ch.indr.threethreefive.favorites.FavoritesStoreImpl;
 import ch.indr.threethreefive.libs.Build;
@@ -75,6 +76,11 @@ public class AppModule {
         .speaker(speaker)
         .toastManager(toastManager)
         .build();
+  }
+
+  @Provides
+  @NonNull ApiClient apiClient() {
+    return new ApiClient();
   }
 
   @Provides
