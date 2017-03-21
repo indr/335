@@ -46,10 +46,10 @@ public class CountryPage extends SpiceBasePage implements RequestListener<Statio
     super.onCreate(context, uri, bundle);
     component().inject(this);
 
-    country = bundle.getString("id");
+    country = bundle.getString("countryId");
     if (StringUtils.isEmpty(country)) {
       setTitle(getString(R.string.country));
-      throw new RuntimeException("Bundle does not contain an id or id is null or empty");
+      throw new RuntimeException("Bundle does not contain countryId or countryId is null or empty");
     }
     setTitle(country);
   }

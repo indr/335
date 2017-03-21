@@ -3,7 +3,11 @@ package ch.indr.threethreefive.radio;
 import android.content.UriMatcher;
 import android.net.Uri;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import ch.indr.threethreefive.navigation.AbstractPageResolver;
+import ch.indr.threethreefive.navigation.Page;
 import ch.indr.threethreefive.navigation.PageMeta;
 import ch.indr.threethreefive.radio.pages.CountriesPage;
 import ch.indr.threethreefive.radio.pages.CountryPage;
@@ -23,9 +27,7 @@ public class RadioResolver extends AbstractPageResolver {
   private static final String base_path = "/radio";
 
   private static final int INDEX = 1;
-  private static final int COUNTRIES = INDEX + 1;
-  private static final int COUNTRY_NAME = COUNTRIES + 1;
-  private static final int LANGUAGES = COUNTRY_NAME + 1;
+  private static final int LANGUAGES = INDEX + 1;
   private static final int LANGUAGE_NAME = LANGUAGES + 1;
   private static final int GENRES = LANGUAGE_NAME + 1;
   private static final int GENRE_ID = GENRES + 1;
@@ -33,10 +35,14 @@ public class RadioResolver extends AbstractPageResolver {
   private static final int STATION_ID = RECENTS_ID + 1;
   private static final int STATION_ID_GENRES = STATION_ID + 1;
 
+  private static final List<UrlPattern> urlPatterns = new ArrayList<>();
+
   static {
     uriMatcher.addURI(AUTHORITY, base_path, INDEX);
-    uriMatcher.addURI(AUTHORITY, base_path + "/countries", COUNTRIES);
-    uriMatcher.addURI(AUTHORITY, base_path + "/countries/*", COUNTRY_NAME);
+    addPattern("/countries", CountriesPage.class);
+    addPattern("/countries/([\\w]+)", CountryPage.class, new String[]{"countryId"});
+    addPattern("/countries/([\\w]+)/genres", GenresPage.class, new String[]{"countryId"});
+    addPattern("/countries/([\\w]+)/genres/([\\w]+)", GenrePage.class, new String[]{"countryId", "genreId"});
     uriMatcher.addURI(AUTHORITY, base_path + "/languages", LANGUAGES);
     uriMatcher.addURI(AUTHORITY, base_path + "/languages/*", LANGUAGE_NAME);
     uriMatcher.addURI(AUTHORITY, base_path + "/genres", GENRES);
@@ -46,6 +52,14 @@ public class RadioResolver extends AbstractPageResolver {
     uriMatcher.addURI(AUTHORITY, base_path + "/stations/*/genres", STATION_ID_GENRES);
   }
 
+  private static void addPattern(String path, Class<? extends Page> pageClass) {
+    addPattern(path, pageClass, null);
+  }
+
+  private static void addPattern(String path, Class<? extends Page> pageClass, String[] keys) {
+    urlPatterns.add(new UrlPattern("^" + base_path + path + "$", pageClass, keys));
+  }
+
   public PageMeta resolve(Uri uri) {
     uri = setDefaultAuthority(uri);
     Timber.d("Resolving %s, %s", uri, this.toString());
@@ -53,10 +67,6 @@ public class RadioResolver extends AbstractPageResolver {
     switch (uriMatcher.match(uri)) {
       case INDEX:
         return makeMeta(IndexPage.class, uri);
-      case COUNTRIES:
-        return makeMeta(CountriesPage.class, uri);
-      case COUNTRY_NAME:
-        return makeMeta(CountryPage.class, uri, uri.getLastPathSegment());
       case LANGUAGES:
         return makeMeta(LanguagesPage.class, uri);
       case LANGUAGE_NAME:
@@ -72,7 +82,7 @@ public class RadioResolver extends AbstractPageResolver {
       case STATION_ID_GENRES:
         return makeMeta(StationGenresPage.class, uri, uri.getPathSegments().get(uri.getPathSegments().size() - 2));
       default:
-        throw new PageNotFoundException(uri);
+        return resolvePatterns(urlPatterns, uri);
     }
   }
 }
