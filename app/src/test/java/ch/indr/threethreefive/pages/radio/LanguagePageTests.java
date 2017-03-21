@@ -25,14 +25,13 @@ import rx.observers.TestSubscriber;
 
 public class LanguagePageTests extends TtfRobolectricTestCase {
 
-  @Test
-  public void onCreate_withoutIdInBundle_throwsRuntimeException() {
+  @Test(expected = IllegalArgumentException.class)
+  public void onCreate_withoutIdInBundle_throws() {
     try {
       createPage(new Bundle());
-
-      assertFalse(true);
-    } catch (RuntimeException ex) {
-      assertEquals("Bundle does not contain an id or id is null or empty", ex.getMessage());
+    } catch (Exception ex) {
+      assertTrue(ex.getMessage().contains("key id"));
+      throw ex;
     }
   }
 

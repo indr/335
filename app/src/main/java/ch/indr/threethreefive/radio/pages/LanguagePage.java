@@ -23,7 +23,6 @@ import ch.indr.threethreefive.R;
 import ch.indr.threethreefive.libs.Environment;
 import ch.indr.threethreefive.libs.PageItemsBuilder;
 import ch.indr.threethreefive.libs.utils.CollectionUtils;
-import ch.indr.threethreefive.libs.utils.StringUtils;
 import ch.indr.threethreefive.navigation.SpiceBasePage;
 import ch.indr.threethreefive.radio.radioBrowserInfo.api.StationsRequest;
 import ch.indr.threethreefive.radio.radioBrowserInfo.api.json.Station;
@@ -44,11 +43,8 @@ public class LanguagePage extends SpiceBasePage implements RequestListener<Stati
     super.onCreate(context, uri, bundle);
     component().inject(this);
 
-    language = bundle.getString("id");
-    if (StringUtils.isEmpty(language)) {
-      setTitle(getString(R.string.language));
-      throw new RuntimeException("Bundle does not contain an id or id is null or empty");
-    }
+    setTitle(getString(R.string.language));
+    this.language = getUriParam("id");
     setTitle(language);
   }
 

@@ -24,7 +24,6 @@ import ch.indr.threethreefive.libs.Environment;
 import ch.indr.threethreefive.libs.PageItemsBuilder;
 import ch.indr.threethreefive.libs.PageUris;
 import ch.indr.threethreefive.libs.utils.CollectionUtils;
-import ch.indr.threethreefive.libs.utils.StringUtils;
 import ch.indr.threethreefive.navigation.SpiceBasePage;
 import ch.indr.threethreefive.radio.radioBrowserInfo.api.StationsRequest;
 import ch.indr.threethreefive.radio.radioBrowserInfo.api.json.Station;
@@ -45,12 +44,8 @@ public class GenrePage extends SpiceBasePage implements RequestListener<Station[
     super.onCreate(context, uri, bundle);
     component().inject(this);
 
-    this.genre = bundle.getString("id");
-    if (StringUtils.isEmpty(genre)) {
-      setTitle(getString(R.string.country));
-      throw new RuntimeException("Bundle does not contain an id or id is null or empty");
-    }
-
+    setTitle(getString(R.string.country));
+    this.genre = getUriParam("id");
     setTitle(genre);
   }
 

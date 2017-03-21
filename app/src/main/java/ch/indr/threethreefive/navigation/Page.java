@@ -31,10 +31,11 @@ public abstract class Page implements PageType {
 
   private Context context;
 
+  private Uri pageUri;
+  private Bundle bundle;
+
   private Environment environment;
   private FavoritesStore favoritesStore;
-
-  private Uri pageUri;
 
   // Page lifecycle state
   private State state = State.New;
@@ -149,6 +150,7 @@ public abstract class Page implements PageType {
 
     this.context = context;
     this.pageUri = uri;
+    this.bundle = bundle;
 
     // Current/focused page item
     Observable.combineLatest(pageItems, pageItemIdx, (items, idx) -> {
@@ -244,6 +246,12 @@ public abstract class Page implements PageType {
 
   protected void handle(int resId) {
     setError(getString(resId));
+  }
+
+  protected String getUriParam(@NonNull String key) {
+    if (!bundle.containsKey(key))
+      throw new IllegalArgumentException("Bundle does not contain key " + key);
+    return bundle.getString(key);
   }
 
   protected PageItemsBuilder pageItemsBuilder() {

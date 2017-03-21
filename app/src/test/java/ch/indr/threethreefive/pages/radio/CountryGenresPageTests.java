@@ -1,0 +1,56 @@
+/*
+ * Copyright (c) 2017 Reto Inderbitzin (mail@indr.ch)
+ *
+ * For the full copyright and license information, please view
+ * the LICENSE file that was distributed with this source code.
+ */
+
+package ch.indr.threethreefive.pages.radio;
+
+import android.net.Uri;
+import android.os.Bundle;
+import android.support.annotation.NonNull;
+
+import org.junit.Ignore;
+import org.junit.Test;
+
+import ch.indr.threethreefive.TtfRobolectricTestCase;
+import ch.indr.threethreefive.radio.pages.CountryGenresPage;
+
+import static org.mockito.Mockito.verify;
+
+public class CountryGenresPageTests extends TtfRobolectricTestCase {
+
+  @Test(expected = IllegalArgumentException.class)
+  public void onCreate_withoutCountryId_throws() {
+    final Bundle bundle = new Bundle();
+    try {
+      createPage(bundle);
+    } catch (Exception ex) {
+      assertTrue(ex.getMessage().contains("key countryId"));
+      throw ex;
+    }
+  }
+
+  @Test
+  @Ignore
+  public void onStart_getsGenresByCountry() {
+    final CountryGenresPage page = createPage();
+
+    page.onStart();
+
+    // verify(apiClient).getGenresByCountry("England", null);
+  }
+
+  @NonNull private CountryGenresPage createPage() {
+    final Bundle bundle = new Bundle();
+    bundle.putString("countryId", "England");
+    return createPage(bundle);
+  }
+
+  @NonNull private CountryGenresPage createPage(Bundle bundle) {
+    final CountryGenresPage page = new CountryGenresPage(environment());
+    page.onCreate(context(), Uri.parse("/radio/countries/Country/genres"), bundle);
+    return page;
+  }
+}

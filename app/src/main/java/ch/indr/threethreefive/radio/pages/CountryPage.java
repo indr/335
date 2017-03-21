@@ -24,7 +24,6 @@ import ch.indr.threethreefive.libs.Environment;
 import ch.indr.threethreefive.libs.PageItemsBuilder;
 import ch.indr.threethreefive.libs.PageUris;
 import ch.indr.threethreefive.libs.utils.CollectionUtils;
-import ch.indr.threethreefive.libs.utils.StringUtils;
 import ch.indr.threethreefive.navigation.SpiceBasePage;
 import ch.indr.threethreefive.radio.radioBrowserInfo.api.StationsRequest;
 import ch.indr.threethreefive.radio.radioBrowserInfo.api.json.Station;
@@ -39,17 +38,15 @@ public class CountryPage extends SpiceBasePage implements RequestListener<Statio
 
   public CountryPage(Environment environment) {
     super(environment);
+
   }
 
   @Override public void onCreate(@NonNull Context context, @NonNull Uri uri, Bundle bundle) {
     super.onCreate(context, uri, bundle);
     component().inject(this);
 
-    country = bundle.getString("countryId");
-    if (StringUtils.isEmpty(country)) {
-      setTitle(getString(R.string.country));
-      throw new RuntimeException("Bundle does not contain countryId or countryId is null or empty");
-    }
+    setTitle(getString(R.string.country));
+    this.country = getUriParam("countryId");
     setTitle(country);
   }
 

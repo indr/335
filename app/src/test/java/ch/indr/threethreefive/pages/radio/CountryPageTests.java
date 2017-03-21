@@ -25,21 +25,20 @@ import rx.observers.TestSubscriber;
 
 public class CountryPageTests extends TtfRobolectricTestCase {
 
-  @Test
-  public void onCreate_withoutIdInBundle_throwsRuntimeException() {
+  @Test(expected = IllegalArgumentException.class)
+  public void onCreate_withoutCountryIdInBundle_throws() {
     try {
       createPage(new Bundle());
-
-      assertFalse(true);
-    } catch (RuntimeException ex) {
-      assertEquals("Bundle does not contain an id or id is null or empty", ex.getMessage());
+    } catch (Exception ex) {
+      assertTrue(ex.getMessage().contains("key countryId"));
+      throw ex;
     }
   }
 
   @Test
-  public void onCreate_withIdInBundle_setsPageTitle() {
+  public void onCreate_withCountryIdInBundle_setsPageTitle() {
     final Bundle bundle = new Bundle();
-    bundle.putString("id", "Dreamland");
+    bundle.putString("countryId", "Dreamland");
     final CountryPage page = createPage(bundle);
     final TestSubscriber<String> title = new TestSubscriber<>();
     page.pageTitle().subscribe(title);
@@ -101,7 +100,7 @@ public class CountryPageTests extends TtfRobolectricTestCase {
 
   @NonNull private CountryPage createPage() {
     final Bundle bundle = new Bundle();
-    bundle.putString("id", "Dreamland");
+    bundle.putString("countryId", "Dreamland");
     return createPage(bundle);
   }
 
