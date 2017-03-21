@@ -18,7 +18,6 @@ import com.octo.android.robospice.request.listener.RequestListener;
 import ch.indr.threethreefive.libs.Environment;
 import ch.indr.threethreefive.libs.PageItemsBuilder;
 import ch.indr.threethreefive.navigation.SpiceBasePage;
-import ch.indr.threethreefive.radio.radioBrowserInfo.StationUtils;
 import ch.indr.threethreefive.radio.radioBrowserInfo.api.StationsRequest;
 import ch.indr.threethreefive.radio.radioBrowserInfo.api.json.Station;
 
@@ -52,8 +51,8 @@ public class RecentsPage extends SpiceBasePage implements RequestListener<Statio
     for (Station station : stations) {
       builder.addLink("/radio/stations/" + station.getId(),
           station.getName(),
-          StationUtils.makeSubtitle(station, "CLT"),
-          StationUtils.makeDescription(station, "CLT"));
+          station.makeSubtitle("CLT"),
+          station.makeDescription("CLT"));
     }
 
     setPageItems(builder);

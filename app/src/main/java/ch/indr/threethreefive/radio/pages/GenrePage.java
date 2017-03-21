@@ -26,7 +26,6 @@ import ch.indr.threethreefive.libs.PageUris;
 import ch.indr.threethreefive.libs.utils.CollectionUtils;
 import ch.indr.threethreefive.libs.utils.StringUtils;
 import ch.indr.threethreefive.navigation.SpiceBasePage;
-import ch.indr.threethreefive.radio.radioBrowserInfo.StationUtils;
 import ch.indr.threethreefive.radio.radioBrowserInfo.api.StationsRequest;
 import ch.indr.threethreefive.radio.radioBrowserInfo.api.json.Station;
 import timber.log.Timber;
@@ -121,8 +120,8 @@ public class GenrePage extends SpiceBasePage implements RequestListener<Station[
     for (Station station : stations) {
       builder.addLink(PageUris.makeStationUri(station.getId()),
           station.getName(),
-          StationUtils.makeSubtitle(station, "LT"),
-          StationUtils.makeDescription(station, "LT")
+          station.makeSubtitle("LT"),
+          station.makeDescription("LT")
       );
     }
   }

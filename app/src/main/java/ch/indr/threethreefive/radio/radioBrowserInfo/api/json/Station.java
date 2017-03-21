@@ -9,12 +9,19 @@ package ch.indr.threethreefive.radio.radioBrowserInfo.api.json;
 
 import com.google.api.client.util.Key;
 
+import org.apache.commons.lang3.StringUtils;
+
+import java.text.DateFormat;
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Date;
+import java.util.List;
 
 import ch.indr.threethreefive.radio.radioBrowserInfo.RadioBrowserInfoUtils;
 
 public class Station {
+
+  private static DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.MEDIUM, DateFormat.SHORT);
 
   @Key private boolean ok;
 
@@ -122,6 +129,39 @@ public class Station {
 
   public int getClickTrend() {
     return clicktrend == null ? 0 : Integer.parseInt(clicktrend);
+  }
+
+  public String makeSubtitle(String props) {
+    List<String> result = new ArrayList<>();
+
+    for (char prop : props.toCharArray()) {
+      String value = null;
+      switch (prop) {
+        case 'C': // Country
+          value = this.getCountry();
+          break;
+        case 'G': // Genre
+        case 'T': // Tag
+          value = StringUtils.join(this.getTags(), ", ");
+          break;
+        case 'L': // Languages
+          value = this.getLanguage();
+          break;
+        case 'U': // Updated
+          value = dateFormat.format(this.getLastChangeTime());
+          break;
+      }
+
+      if (StringUtils.isNotEmpty(value)) {
+        result.add(value);
+      }
+    }
+
+    return StringUtils.join(result, ", ");
+  }
+
+  public String makeDescription(String props) {
+    return this.getName() + ", " + makeSubtitle(props);
   }
 
   public static class NameComparator implements Comparator<Station> {

@@ -25,7 +25,6 @@ import ch.indr.threethreefive.libs.PageItemsBuilder;
 import ch.indr.threethreefive.libs.utils.CollectionUtils;
 import ch.indr.threethreefive.libs.utils.StringUtils;
 import ch.indr.threethreefive.navigation.SpiceBasePage;
-import ch.indr.threethreefive.radio.radioBrowserInfo.StationUtils;
 import ch.indr.threethreefive.radio.radioBrowserInfo.api.StationsRequest;
 import ch.indr.threethreefive.radio.radioBrowserInfo.api.json.Station;
 import timber.log.Timber;
@@ -119,8 +118,8 @@ public class LanguagePage extends SpiceBasePage implements RequestListener<Stati
     for (Station station : stations) {
       builder.addLink("/radio/stations/" + station.getId(),
           station.getName(),
-          StationUtils.makeSubtitle(station, "CT"),
-          StationUtils.makeDescription(station, "CT"));
+          station.makeSubtitle("CT"),
+          station.makeDescription("CT"));
     }
   }
 
