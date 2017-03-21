@@ -46,8 +46,7 @@ public abstract class TtfRobolectricTestCase extends TestCase {
     });
 
     AppComponent component = application().component();
-    Environment env = component.environment();
-    environment = env.toBuilder()
+    environment = component.environment().toBuilder()
         .build();
   }
 
@@ -63,6 +62,10 @@ public abstract class TtfRobolectricTestCase extends TestCase {
 
     application = (TestTtfApplication) RuntimeEnvironment.application;
     return application;
+  }
+
+  protected @NonNull TestAppModule appModule() {
+    return application().appModule();
   }
 
   protected @NonNull Context context() {

@@ -1,6 +1,7 @@
 package ch.indr.threethreefive;
 
 import android.support.annotation.CallSuper;
+import android.support.annotation.NonNull;
 import android.support.multidex.MultiDex;
 import android.support.multidex.MultiDexApplication;
 
@@ -10,11 +11,11 @@ import io.fabric.sdk.android.Fabric;
 import timber.log.Timber;
 
 public class ThreeThreeFiveApp extends MultiDexApplication {
+
   private AppComponent component;
 
-  @Override
   @CallSuper
-  public void onCreate() {
+  @Override public void onCreate() {
     super.onCreate();
 
     // if (!BuildConfig.DEBUG && !isInUnitTests()) {
@@ -29,9 +30,13 @@ public class ThreeThreeFiveApp extends MultiDexApplication {
     }
 
     component = DaggerAppComponent.builder()
-        .appModule(new AppModule(this))
+        .appModule(getAppModule())
         .build();
     component().inject(this);
+  }
+
+  @NonNull protected AppModule getAppModule() {
+    return new AppModule(this);
   }
 
   public AppComponent component() {

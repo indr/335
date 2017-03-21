@@ -32,4 +32,8 @@ public class TagsRequest extends RadioBrowserInfoRequest<Tag[]> {
   @Override protected GenericUrl getUrl() {
     return makeUrlV1("/tags" + (query != null ? "?" + query : ""));
   }
+
+  public String getQuery() {
+    return query;
+  }
 }
