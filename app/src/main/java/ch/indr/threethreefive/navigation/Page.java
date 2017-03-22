@@ -14,7 +14,6 @@ import java.util.List;
 import ch.indr.threethreefive.AppComponent;
 import ch.indr.threethreefive.ThreeThreeFiveApp;
 import ch.indr.threethreefive.commands.ToggleFavorite;
-import ch.indr.threethreefive.favorites.FavoritesStore;
 import ch.indr.threethreefive.libs.Environment;
 import ch.indr.threethreefive.libs.PageCommand;
 import ch.indr.threethreefive.libs.PageItem;
@@ -223,6 +222,10 @@ public abstract class Page implements PageType {
 
   protected String getString(int resId) {
     return context.getString(resId);
+  }
+
+  protected String getString(int resId, Object... formatArgs) {
+    return context.getString(resId, formatArgs);
   }
 
   protected @NonNull ThreeThreeFiveApp application() {

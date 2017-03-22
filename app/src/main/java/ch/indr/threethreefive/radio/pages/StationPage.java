@@ -22,6 +22,7 @@ import java.util.Locale;
 
 import javax.inject.Inject;
 
+import ch.indr.threethreefive.R;
 import ch.indr.threethreefive.commands.AddToPlaylist;
 import ch.indr.threethreefive.commands.OpenWebsite;
 import ch.indr.threethreefive.commands.PlayMedia;
@@ -62,8 +63,8 @@ public class StationPage extends SpiceBasePage implements RequestListener<Statio
   }
 
   @Override public void onRequestSuccess(Station[] stations) {
-    if (stations.length != 1) {
-      handle(String.format("Could not find radion station %s.", this.stationId));
+    if (stations == null || stations.length != 1) {
+      getString(R.string.station_not_found_error, this.stationId);
       return;
     }
 

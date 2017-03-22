@@ -19,13 +19,13 @@ import static android.support.v4.media.MediaMetadataCompat.METADATA_KEY_MEDIA_ID
 import static android.support.v4.media.MediaMetadataCompat.METADATA_KEY_MEDIA_URI;
 import static android.support.v4.media.MediaMetadataCompat.METADATA_KEY_TITLE;
 import static ch.indr.threethreefive.libs.MetadataKeys.METADATA_KEY_RADIO_ID;
-import static ch.indr.threethreefive.libs.PageUris.makeStationUri;
+import static ch.indr.threethreefive.libs.PageUris.radioStation;
 
 public class RadioMediaItemFactory {
 
   public static MediaItem make(final @NonNull Station station) {
 
-    final String pageUri = makeStationUri(station.getId());
+    final String pageUri = radioStation(station.getId());
     final String mediaUri = station.getUrl();
 
     final MediaMetadataCompat metadata = new Builder()

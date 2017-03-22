@@ -19,7 +19,7 @@ import ch.indr.threethreefive.libs.PageItemsBuilder;
 import ch.indr.threethreefive.music.MusicStore;
 import ch.indr.threethreefive.navigation.Page;
 
-import static ch.indr.threethreefive.libs.PageUris.makeGenreUri;
+import static ch.indr.threethreefive.libs.PageUris.musicGenre;
 
 public class GenresPage extends Page {
 
@@ -37,7 +37,7 @@ public class GenresPage extends Page {
 
     final List<MusicStore.Genre> genres = musicStore.queryGenres();
     for (MusicStore.Genre genre : genres) {
-      builder.addLink(makeGenreUri(genre.getId()), genre.getName());
+      builder.addLink(musicGenre(genre.getId()), genre.getName());
     }
 
     setPageItems(builder);

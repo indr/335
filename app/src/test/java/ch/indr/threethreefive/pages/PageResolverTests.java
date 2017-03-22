@@ -53,7 +53,7 @@ public class PageResolverTests extends TtfRobolectricTestCase {
     assertResolve("/radio", ch.indr.threethreefive.radio.pages.IndexPage.class);
 
     assertResolve("/radio/countries", CountriesPage.class);
-    assertResolve("/radio/countries/New%20Zealand", CountryStationsPage.class, b -> b.putString("countryId", "New Zealand"));
+    assertResolve("/radio/countries/New%20Zealand/stations", CountryStationsPage.class, b -> b.putString("countryId", "New Zealand"));
     assertResolve("/radio/countries/New%20Zealand/genres", CountryGenresPage.class, b -> b.putString("countryId", "New Zealand"));
     assertResolve("/radio/countries/New%20Zealand/genres/Top%2040", CountryGenrePage.class, b -> {
       b.putString("countryId", "New Zealand");

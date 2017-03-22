@@ -16,9 +16,12 @@ import com.octo.android.robospice.persistence.exception.SpiceException;
 import com.octo.android.robospice.request.listener.RequestListener;
 
 import java.util.List;
+import java.util.Locale;
 
+import ch.indr.threethreefive.R;
 import ch.indr.threethreefive.libs.Environment;
 import ch.indr.threethreefive.libs.PageItemsBuilder;
+import ch.indr.threethreefive.libs.PageItemsExpander;
 import ch.indr.threethreefive.libs.PageUris;
 import ch.indr.threethreefive.navigation.SpiceBasePage;
 import ch.indr.threethreefive.radio.radioBrowserInfo.api.json.Tag;
@@ -26,6 +29,8 @@ import ch.indr.threethreefive.radio.radioBrowserInfo.api.json.Tag;
 public class CountryGenresPage extends SpiceBasePage implements RequestListener<List<Tag>> {
 
   private String countryId;
+
+  private PageItemsExpander<Tag> expander = new PageItemsExpander<>();
 
   public CountryGenresPage(Environment environment) {
     super(environment);
@@ -36,6 +41,7 @@ public class CountryGenresPage extends SpiceBasePage implements RequestListener<
     component().inject(this);
 
     this.countryId = getUriParam("countryId");
+    setTitle(countryId);
   }
 
   @Override public void onStart() {
@@ -48,21 +54,40 @@ public class CountryGenresPage extends SpiceBasePage implements RequestListener<
     handle(spiceException);
   }
 
-  @Override public void onRequestSuccess(List<Tag> tags) {
-    if (tags == null) {
-
+  @Override public void onRequestSuccess(List<Tag> response) {
+    if (response == null) {
+      handle(getString(R.string.no_genres_found_error));
+      return;
     }
+
+    populateLists(response);
+    showNextItems(null);
+  }
+
+  private void showNextItems(Environment environment) {
     final PageItemsBuilder builder = pageItemsBuilder();
     builder.addToggleFavorite(getCurrentPageLink());
+    expander.buildNext(builder, this::addGenreLinks, this::showNextItems);
+    builder.addLink(PageUris.radioCountryStations(countryId), getString(R.string.show_all_stations));
 
-    for (Tag tag : tags) {
-      builder.addLink(PageUris.makeCountryGenre(countryId, tag.getValue()),
-          tag.getName());
+    resetFirstVisibleItem();
+    setPageItems(builder);
+  }
+
+  private void addGenreLinks(PageItemsBuilder builder, List<Tag> tags) {
+    if (tags.size() == 0) {
+      builder.addText(getString(R.string.no_genres_found));
+      return;
     }
 
-    builder.addText("Show all Genres");
-    builder.addText("Show all Stations");
+    for (Tag each : tags) {
+      final String subtitle = String.format(Locale.US, "%d radio stations", each.getStationCount());
+      builder.addLink(PageUris.radioCountryGenre(countryId, each.getValue()),
+          each.getName(), subtitle, each.getName() + ", " + subtitle);
+    }
+  }
 
-    setPageItems(builder);
+  private void populateLists(List<Tag> tags) {
+    expander.add(tags, getString(R.string.show_top_genres));
   }
 }

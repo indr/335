@@ -28,7 +28,7 @@ import static android.support.v4.media.MediaMetadataCompat.METADATA_KEY_TITLE;
 import static ch.indr.threethreefive.libs.MetadataKeys.METADATA_KEY_ALBUM_ID;
 import static ch.indr.threethreefive.libs.MetadataKeys.METADATA_KEY_ARTIST_ID;
 import static ch.indr.threethreefive.libs.MetadataKeys.METADATA_KEY_SONG_ID;
-import static ch.indr.threethreefive.libs.PageUris.makeSongUri;
+import static ch.indr.threethreefive.libs.PageUris.musicSong;
 
 public class MusicMediaItemFactory {
 
@@ -42,7 +42,7 @@ public class MusicMediaItemFactory {
 
   public static MediaItem make(final @NonNull MusicStore.Song song) {
 
-    final String pageUri = makeSongUri(song.getId());
+    final String pageUri = musicSong(song.getId());
     final String mediaUri = song.getData();
 
     final MediaMetadataCompat metadata = new Builder()

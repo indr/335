@@ -20,7 +20,7 @@ import ch.indr.threethreefive.libs.PageItemsBuilder;
 import ch.indr.threethreefive.music.MusicStore;
 import ch.indr.threethreefive.navigation.Page;
 
-import static ch.indr.threethreefive.libs.PageUris.makeAlbumUri;
+import static ch.indr.threethreefive.libs.PageUris.musicAlbum;
 
 public class AlbumsPage extends Page {
 
@@ -38,7 +38,7 @@ public class AlbumsPage extends Page {
 
     final List<MusicStore.Album> albums = musicStore.queryAlbums(null);
     for (MusicStore.Album album : albums) {
-      builder.addLink(makeAlbumUri(album.getId()), album.getName(), makeSubtitle(album), makeDescription(album));
+      builder.addLink(musicAlbum(album.getId()), album.getName(), makeSubtitle(album), makeDescription(album));
     }
 
     setPageItems(builder);

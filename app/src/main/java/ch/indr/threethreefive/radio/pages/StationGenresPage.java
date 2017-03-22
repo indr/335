@@ -15,8 +15,10 @@ import android.support.annotation.NonNull;
 import com.octo.android.robospice.persistence.exception.SpiceException;
 import com.octo.android.robospice.request.listener.RequestListener;
 
+import ch.indr.threethreefive.R;
 import ch.indr.threethreefive.libs.Environment;
 import ch.indr.threethreefive.libs.PageItemsBuilder;
+import ch.indr.threethreefive.libs.PageUris;
 import ch.indr.threethreefive.navigation.SpiceBasePage;
 import ch.indr.threethreefive.radio.radioBrowserInfo.api.StationRequest;
 import ch.indr.threethreefive.radio.radioBrowserInfo.api.json.Station;
@@ -27,14 +29,13 @@ public class StationGenresPage extends SpiceBasePage implements RequestListener<
 
   public StationGenresPage(Environment environment) {
     super(environment);
-
-    setTitle("Genres");
   }
 
   @Override public void onCreate(@NonNull Context context, @NonNull Uri uri, Bundle bundle) {
     super.onCreate(context, uri, bundle);
     component().inject(this);
 
+    setTitle(getString(R.string.genres));
     this.stationId = bundle.getString("id");
   }
 
@@ -49,17 +50,25 @@ public class StationGenresPage extends SpiceBasePage implements RequestListener<
   }
 
   @Override public void onRequestSuccess(Station[] stations) {
-    if (stations.length != 1) {
-      handle(String.format("Could not find radion station %s.", this.stationId));
+    if (stations == null || stations.length != 1) {
+      handle(getString(R.string.station_not_found_error, this.stationId));
+      return;
     }
-    Station station = stations[0];
 
+    final String[] tags = stations[0].getTags();
     final PageItemsBuilder builder = pageItemsBuilder();
+    addGenreLinks(builder, tags);
+    setPageItems(builder);
+  }
 
-    for (String tag : station.getTags()) {
-      builder.addLink("/radio/genres/" + tag, tag);
+  private void addGenreLinks(PageItemsBuilder builder, String[] tags) {
+    if (tags.length == 0) {
+      builder.addText(getString(R.string.no_genres_found));
+      return;
     }
 
-    setPageItems(builder);
+    for (String tag : tags) {
+      builder.addLink(PageUris.radioGenre(tag), tag);
+    }
   }
 }

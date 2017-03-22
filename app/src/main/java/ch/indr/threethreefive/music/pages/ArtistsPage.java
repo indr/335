@@ -37,7 +37,7 @@ public class ArtistsPage extends Page {
 
     final List<MusicStore.Artist> artists = musicStore.queryArtists(null);
     for (MusicStore.Artist artist : artists) {
-      builder.addLink(PageUris.makeArtistUri(artist.getId()), artist.getName(), makeSubtitle(artist), makeDescription(artist));
+      builder.addLink(PageUris.musicArtist(artist.getId()), artist.getName(), makeSubtitle(artist), makeDescription(artist));
     }
 
     setPageItems(builder);

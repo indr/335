@@ -24,6 +24,8 @@ import java.util.Locale;
 import ch.indr.threethreefive.R;
 import ch.indr.threethreefive.libs.Environment;
 import ch.indr.threethreefive.libs.PageItemsBuilder;
+import ch.indr.threethreefive.libs.PageItemsExpander;
+import ch.indr.threethreefive.libs.PageUris;
 import ch.indr.threethreefive.libs.utils.CollectionUtils;
 import ch.indr.threethreefive.navigation.SpiceBasePage;
 import ch.indr.threethreefive.radio.radioBrowserInfo.api.TagsRequest;
@@ -39,9 +41,7 @@ public class GenresPage extends SpiceBasePage implements RequestListener<Tag[]> 
   private List<String> excludedFromTopGenres;
   private List<String> excludedFromMoreGenres;
 
-  private List<Tag> allGenres;
-  private List<Tag> moreGenres;
-  private List<Tag> topGenres;
+  private PageItemsExpander<Tag> expander = new PageItemsExpander<>();
 
   public GenresPage(Environment environment) {
     super(environment);
@@ -68,46 +68,32 @@ public class GenresPage extends SpiceBasePage implements RequestListener<Tag[]> 
   }
 
   @Override public void onRequestSuccess(Tag[] response) {
+    if (response == null) {
+      handle(getString(R.string.no_genres_found_error));
+      return;
+    }
+
     populateLists(response);
-    showTopGenres();
+    showNextItems(null);
   }
 
-  private void showTopGenres() {
-    if (topGenres.size() == moreGenres.size()) {
-      showMoreGenres(null);
+  private void showNextItems(Environment environment) {
+    final PageItemsBuilder builder = pageItemsBuilder();
+    expander.buildNext(builder, this::addGenreLinks, this::showNextItems);
+
+    resetFirstVisibleItem();
+    setPageItems(builder);
+  }
+
+  private void addGenreLinks(PageItemsBuilder builder, List<Tag> genres) {
+    if (genres.size() == 0) {
+      builder.addText(getString(R.string.no_genres_found));
       return;
     }
 
-    final PageItemsBuilder builder = pageItemsBuilder();
-    buildPageItems(builder, topGenres);
-    builder.addItem("Show more Genres", this::showMoreGenres);
-    setPageItems(builder);
-  }
-
-  private void showMoreGenres(Environment environment) {
-    if (moreGenres.size() == allGenres.size()) {
-      showAllGenres(null);
-      return;
-    }
-
-    resetFirstVisibleItem();
-    final PageItemsBuilder builder = pageItemsBuilder();
-    buildPageItems(builder, moreGenres);
-    builder.addItem("Show all Genres", this::showAllGenres);
-    setPageItems(builder);
-  }
-
-  private void showAllGenres(Environment environment) {
-    resetFirstVisibleItem();
-    final PageItemsBuilder builder = pageItemsBuilder();
-    buildPageItems(builder, allGenres);
-    setPageItems(builder);
-  }
-
-  private void buildPageItems(PageItemsBuilder builder, List<Tag> genres) {
     for (Tag each : genres) {
       final String subtitle = String.format(Locale.US, "%d radio stations", each.getStationCount());
-      builder.addLink("/radio/genres/" + each.getValue(),
+      builder.addLink(PageUris.radioGenre(each.getValue()),
           each.getName(), subtitle, each.getName() + ", " + subtitle);
     }
   }
@@ -116,9 +102,10 @@ public class GenresPage extends SpiceBasePage implements RequestListener<Tag[]> 
     Timber.d("populateLists tags %d, %s", response.length, this.toString());
 
     Timber.d("Filtering min station count and building all genres list, %s", this.toString());
-    this.topGenres = new ArrayList<>();
-    this.moreGenres = new ArrayList<>();
-    this.allGenres = new ArrayList<>();
+    List<Tag> topGenres = new ArrayList<>();
+    List<Tag> moreGenres = new ArrayList<>();
+    List<Tag> allGenres = new ArrayList<>();
+
     for (Tag tag : response) {
       final int stationCount = tag.getStationCount();
       if (stationCount < MIN_STATION_COUNT_FOR_ALL_GENRES) {
@@ -140,15 +127,15 @@ public class GenresPage extends SpiceBasePage implements RequestListener<Tag[]> 
 
     Timber.d("Building top genres list, %s", this.toString());
     Collections.sort(topGenres, new Tag.StationCountComparator());
-    this.topGenres = topGenres.subList(0, Math.min(topGenres.size(), MAX_NUMBER_OF_TOP_GENRES + numberOfExcludes));
-    this.topGenres = CollectionUtils.reject(topGenres, this::isExcludedFromTopGenres);
-    this.topGenres = topGenres.subList(0, Math.min(topGenres.size(), MAX_NUMBER_OF_TOP_GENRES));
+    topGenres = topGenres.subList(0, Math.min(topGenres.size(), MAX_NUMBER_OF_TOP_GENRES + numberOfExcludes));
+    topGenres = CollectionUtils.reject(topGenres, this::isExcludedFromTopGenres);
+    topGenres = topGenres.subList(0, Math.min(topGenres.size(), MAX_NUMBER_OF_TOP_GENRES));
 
     Timber.d("Building more genres list, %s", this.toString());
     Collections.sort(moreGenres, new Tag.StationCountComparator());
-    this.moreGenres = moreGenres.subList(0, Math.min(moreGenres.size(), MAX_NUMBER_OF_MORE_GENRES + numberOfExcludes));
-    this.moreGenres = CollectionUtils.reject(allGenres, this::isExcludedFromMoreGenres);
-    this.moreGenres = moreGenres.subList(0, Math.min(moreGenres.size(), MAX_NUMBER_OF_MORE_GENRES));
+    moreGenres = moreGenres.subList(0, Math.min(moreGenres.size(), MAX_NUMBER_OF_MORE_GENRES + numberOfExcludes));
+    moreGenres = CollectionUtils.reject(moreGenres, this::isExcludedFromMoreGenres);
+    moreGenres = moreGenres.subList(0, Math.min(moreGenres.size(), MAX_NUMBER_OF_MORE_GENRES));
 
     Timber.d("Sorting lists by name");
     Collections.sort(topGenres, new Tag.NameComparator());
@@ -156,6 +143,10 @@ public class GenresPage extends SpiceBasePage implements RequestListener<Tag[]> 
     Collections.sort(allGenres, new Tag.NameComparator());
 
     Timber.d("top %d, more %d, all %d, %s", topGenres.size(), moreGenres.size(), allGenres.size(), this.toString());
+
+    expander.add(topGenres, getString(R.string.show_top_genres));
+    expander.add(moreGenres, getString(R.string.show_more_genres));
+    expander.add(allGenres, getString(R.string.show_all_genres));
   }
 
   private boolean isExcludedFromTopGenres(Tag tag) {

@@ -38,10 +38,10 @@ import static ch.indr.threethreefive.libs.MetadataKeys.METADATA_KEY_ALBUM_ID;
 import static ch.indr.threethreefive.libs.MetadataKeys.METADATA_KEY_ARTIST_ID;
 import static ch.indr.threethreefive.libs.MetadataKeys.METADATA_KEY_RADIO_ID;
 import static ch.indr.threethreefive.libs.MetadataKeys.METADATA_KEY_SONG_ID;
-import static ch.indr.threethreefive.libs.PageUris.makeAlbumUri;
-import static ch.indr.threethreefive.libs.PageUris.makeArtistUri;
-import static ch.indr.threethreefive.libs.PageUris.makeSongUri;
-import static ch.indr.threethreefive.libs.PageUris.makeStationUri;
+import static ch.indr.threethreefive.libs.PageUris.musicAlbum;
+import static ch.indr.threethreefive.libs.PageUris.musicArtist;
+import static ch.indr.threethreefive.libs.PageUris.musicSong;
+import static ch.indr.threethreefive.libs.PageUris.radioStation;
 
 public class QueueItemPage extends Page {
 
@@ -112,17 +112,17 @@ public class QueueItemPage extends Page {
 
       final String artistId = metadata.getString(METADATA_KEY_ARTIST_ID);
       if (StringUtils.isNotEmpty(artistId)) {
-        builder.addLink(makeArtistUri(artistId), "Artist: " + metadata.getString(METADATA_KEY_ARTIST));
+        builder.addLink(musicArtist(artistId), "Artist: " + metadata.getString(METADATA_KEY_ARTIST));
       }
 
       final String albumId = metadata.getString(METADATA_KEY_ALBUM_ID);
       if (StringUtils.isNotEmpty(albumId)) {
-        builder.addLink(makeAlbumUri(albumId), "Album: " + metadata.getString(METADATA_KEY_ALBUM));
+        builder.addLink(musicAlbum(albumId), "Album: " + metadata.getString(METADATA_KEY_ALBUM));
       }
 
       final String songId = metadata.getString(METADATA_KEY_SONG_ID);
       if (StringUtils.isNotEmpty(songId)) {
-        builder.addLink(makeSongUri(songId), "Song: " + metadata.getString(METADATA_KEY_TITLE));
+        builder.addLink(musicSong(songId), "Song: " + metadata.getString(METADATA_KEY_TITLE));
       }
 
     } else if (isRadio(metadata)) {
@@ -130,7 +130,7 @@ public class QueueItemPage extends Page {
 
       final String radioId = metadata.getString(METADATA_KEY_RADIO_ID);
       if (StringUtils.isNotEmpty(radioId)) {
-        builder.addLink(makeStationUri(radioId), "Radio: " + metadata.getString(METADATA_KEY_TITLE));
+        builder.addLink(radioStation(radioId), "Radio: " + metadata.getString(METADATA_KEY_TITLE));
       }
 
     } else if (description != null) {

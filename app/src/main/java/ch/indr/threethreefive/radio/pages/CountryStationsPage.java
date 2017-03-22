@@ -22,6 +22,7 @@ import java.util.List;
 import ch.indr.threethreefive.R;
 import ch.indr.threethreefive.libs.Environment;
 import ch.indr.threethreefive.libs.PageItemsBuilder;
+import ch.indr.threethreefive.libs.PageItemsExpander;
 import ch.indr.threethreefive.libs.PageUris;
 import ch.indr.threethreefive.libs.utils.CollectionUtils;
 import ch.indr.threethreefive.navigation.SpiceBasePage;
@@ -32,9 +33,8 @@ import timber.log.Timber;
 public class CountryStationsPage extends SpiceBasePage implements RequestListener<Station[]> {
 
   private String country;
-  private List<Station> allStations;
-  private List<Station> moreStations;
-  private List<Station> topStations;
+
+  private PageItemsExpander<Station> expander = new PageItemsExpander<>();
 
   public CountryStationsPage(Environment environment) {
     super(environment);
@@ -44,7 +44,6 @@ public class CountryStationsPage extends SpiceBasePage implements RequestListene
     super.onCreate(context, uri, bundle);
     component().inject(this);
 
-    setTitle(getString(R.string.country));
     this.country = getUriParam("countryId");
     setTitle(country);
   }
@@ -66,43 +65,15 @@ public class CountryStationsPage extends SpiceBasePage implements RequestListene
     }
 
     populateLists(response);
-    showTopStations();
+    showNextItems(null);
   }
 
-  private void showTopStations() {
+  private void showNextItems(Environment environment) {
     final PageItemsBuilder builder = pageItemsBuilder();
     builder.addToggleFavorite(getCurrentPageLink());
-    addStationLinks(builder, topStations);
+    expander.buildNext(builder, this::addStationLinks, this::showNextItems);
 
-    if (moreStations.size() > topStations.size()) {
-      if (allStations.size() > moreStations.size()) {
-        builder.addItem(getString(R.string.show_more_stations), this::showMoreStations);
-      } else {
-        builder.addItem(getString(R.string.show_all_stations), this::showAllStations);
-      }
-    }
-
-    setPageItems(builder);
-  }
-
-  private void showMoreStations(Environment environment) {
     resetFirstVisibleItem();
-    final PageItemsBuilder builder = pageItemsBuilder();
-    builder.addToggleFavorite(getCurrentPageLink());
-    addStationLinks(builder, moreStations);
-
-    if (allStations.size() > moreStations.size()) {
-      builder.addItem(getString(R.string.show_all_stations), this::showAllStations);
-    }
-
-    setPageItems(builder);
-  }
-
-  private void showAllStations(Environment environment) {
-    resetFirstVisibleItem();
-    final PageItemsBuilder builder = pageItemsBuilder();
-    builder.addToggleFavorite(getCurrentPageLink());
-    addStationLinks(builder, allStations);
     setPageItems(builder);
   }
 
@@ -113,7 +84,7 @@ public class CountryStationsPage extends SpiceBasePage implements RequestListene
     }
 
     for (Station station : stations) {
-      builder.addLink(PageUris.makeStationUri(station.getId()),
+      builder.addLink(PageUris.radioStation(station.getId()),
           station.getName(),
           station.makeSubtitle("LT"),
           station.makeDescription("LT")
@@ -124,14 +95,18 @@ public class CountryStationsPage extends SpiceBasePage implements RequestListene
   private void populateLists(@NonNull Station[] response) {
     Timber.d("populateLists stations %d, %s", response.length, this.toString());
 
-    this.allStations = Arrays.asList(response);
+    List<Station> allStations = Arrays.asList(response);
 
     Collections.sort(allStations, Station.getBestStationsComparator());
-    this.topStations = CollectionUtils.slice(allStations, 0, 15);
-    this.moreStations = CollectionUtils.slice(allStations, 0, 50);
+    List<Station> topStations = CollectionUtils.slice(allStations, 0, 15);
+    List<Station> moreStations = CollectionUtils.slice(allStations, 0, 50);
 
     Collections.sort(topStations, new Station.NameComparator());
     Collections.sort(moreStations, new Station.NameComparator());
     Collections.sort(allStations, new Station.NameComparator());
+
+    expander.add(topStations, getString(R.string.show_top_stations));
+    expander.add(moreStations, getString(R.string.show_more_stations));
+    expander.add(allStations, getString(R.string.show_all_stations));
   }
 }

@@ -61,17 +61,34 @@
 
 
     <string name="country">Country</string>
+    <string name="countries">Countries</string>
+    <string name="no_countries_found">No countries found</string>
     <string name="no_countries_found_error">Error: No countries found</string>
+    <string name="show_top_countries">Show top countries</string>
+    <string name="show_all_countries">Show all countries</string>
 
+    <string name="genre">Genre</string>
     <string name="genres">Genres</string>
+    <string name="no_genres_found">No genres found</string>
     <string name="no_genres_found_error">Error: No genres found</string>
+    <string name="show_top_genres">Show top genres</string>
+    <string name="show_more_genres">Show more genres</string>
+    <string name="show_all_genres">Show all genres</string>
 
     <string name="language">Language</string>
+    <string name="languages">Languages</string>
+    <string name="no_langauges_found">No languages found</string>
     <string name="no_languages_found_error">Error: No languages found</string>
+    <string name="show_more_languages">Show more languages</string>
+    <string name="show_all_langauges">Show all languages</string>
 
+    <string name="new_stations">New Stations</string>
     <string name="no_stations_found">No stations found</string>
     <string name="no_stations_found_error">Error: No stations found</string>
+    <string name="show_top_stations">Show top Stations</string>
     <string name="show_more_stations">Show more stations</string>
     <string name="show_all_stations">Show all stations</string>
+
+    <string name="station_not_found_error">Could not find radio station %s</string>
 
 </resources>

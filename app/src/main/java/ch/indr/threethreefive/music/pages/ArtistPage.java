@@ -56,7 +56,7 @@ public class ArtistPage extends Page {
 
     final List<MusicStore.Album> albums = musicStore.findAlbumsByArtistId(artistId);
     for (MusicStore.Album album : albums) {
-      builder.addLink(PageUris.makeAlbumUri(album.getId()), album.getName());
+      builder.addLink(PageUris.musicAlbum(album.getId()), album.getName());
     }
 
     setPageItems(builder);

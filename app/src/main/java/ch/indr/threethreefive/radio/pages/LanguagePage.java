@@ -43,7 +43,6 @@ public class LanguagePage extends SpiceBasePage implements RequestListener<Stati
     super.onCreate(context, uri, bundle);
     component().inject(this);
 
-    setTitle(getString(R.string.language));
     this.language = getUriParam("id");
     setTitle(language);
   }
@@ -104,7 +103,7 @@ public class LanguagePage extends SpiceBasePage implements RequestListener<Stati
     Collections.sort(moreStations, new Station.NameComparator());
     Collections.sort(allStations, new Station.NameComparator());
 
-    expander.add(topStations, "Show top Stations");
+    expander.add(topStations, getString(R.string.show_top_stations));
     expander.add(moreStations, getString(R.string.show_more_stations));
     expander.add(allStations, getString(R.string.show_all_stations));
   }

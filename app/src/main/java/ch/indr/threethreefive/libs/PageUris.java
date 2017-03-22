@@ -9,31 +9,44 @@ package ch.indr.threethreefive.libs;
 
 public abstract class PageUris {
 
-  public static String makeArtistUri(String id) {
-    return "/music/artists/" + id;
-  }
-
-  public static String makeAlbumUri(String id) {
+  public static String musicAlbum(String id) {
     return "/music/albums/" + id;
   }
 
-  public static String makeSongUri(String id) {
-    return "/music/songs/" + id;
+  public static String musicArtist(String id) {
+    return "/music/artists/" + id;
   }
 
-  public static String makeGenreUri(String id) {
+  public static String musicGenre(String id) {
     return "/music/genres/" + id;
   }
 
-  public static String makeStationUri(String id) {
-    return "/radio/stations/" + id;
+  public static String musicSong(String id) {
+    return "/music/songs/" + id;
   }
 
-  public static String makeCountryGenres(String country) {
+  public static String radioCountryGenres(String country) {
     return "/radio/countries/" + country + "/genres";
   }
 
-  public static String makeCountryGenre(String countryId, String genreId) {
-    return "/radio/countries/" + countryId + "/genres/" + genreId;
+  public static String radioCountryGenre(String country, String genre) {
+    return "/radio/countries/" + country + "/genres/" + genre;
   }
+
+  public static String radioCountryStations(String country) {
+    return "/radio/countries/" + country + "/stations";
+  }
+
+  public static String radioGenre(String genre) {
+    return "/radio/genres/" + genre;
+  }
+
+  public static String radioLanguage(String language) {
+    return "/radio/languages/" + language;
+  }
+
+  public static String radioStation(String id) {
+    return "/radio/stations/" + id;
+  }
+
 }

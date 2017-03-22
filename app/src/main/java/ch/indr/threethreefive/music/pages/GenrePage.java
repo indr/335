@@ -22,7 +22,7 @@ import ch.indr.threethreefive.libs.PageItemsBuilder;
 import ch.indr.threethreefive.music.MusicStore;
 import ch.indr.threethreefive.navigation.Page;
 
-import static ch.indr.threethreefive.libs.PageUris.makeSongUri;
+import static ch.indr.threethreefive.libs.PageUris.musicSong;
 import static ch.indr.threethreefive.music.MusicMediaItemFactory.make;
 
 public class GenrePage extends Page {
@@ -47,7 +47,7 @@ public class GenrePage extends Page {
     builder.addToggleFavorite(getCurrentPageLink());
 
     for (MusicStore.Song song : songs) {
-      builder.addLink(makeSongUri(song.getId()),
+      builder.addLink(musicSong(song.getId()),
           song.getName(), makeSubtitle(song), makeDescription(song));
     }
 

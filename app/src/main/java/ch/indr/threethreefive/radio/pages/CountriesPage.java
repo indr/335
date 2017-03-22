@@ -23,6 +23,7 @@ import java.util.Locale;
 import ch.indr.threethreefive.R;
 import ch.indr.threethreefive.libs.Environment;
 import ch.indr.threethreefive.libs.PageItemsBuilder;
+import ch.indr.threethreefive.libs.PageItemsExpander;
 import ch.indr.threethreefive.libs.PageUris;
 import ch.indr.threethreefive.navigation.SpiceBasePage;
 import ch.indr.threethreefive.radio.radioBrowserInfo.api.CountriesRequest;
@@ -33,18 +34,17 @@ public class CountriesPage extends SpiceBasePage implements RequestListener<Coun
 
   private List<String> featuredCountries = Arrays.asList("Australia", "Canada", "New Zealand", "United Kingdom", "United States of America");
 
-  private List<Country> allCountries;
-  private List<Country> topCountries;
+  private PageItemsExpander<Country> expander = new PageItemsExpander<>();
 
   public CountriesPage(Environment environment) {
     super(environment);
-
-    setTitle("Countries");
   }
 
   @Override public void onCreate(@NonNull Context context, @NonNull Uri uri, Bundle bundle) {
     super.onCreate(context, uri, bundle);
     component().inject(this);
+
+    setTitle(getString(R.string.countries));
   }
 
   @Override public void onStart() {
@@ -64,41 +64,45 @@ public class CountriesPage extends SpiceBasePage implements RequestListener<Coun
     }
 
     populateLists(response);
-    showTopCountries();
+    showNextItems(null);
   }
 
-  private void showTopCountries() {
+  private void showNextItems(Environment environment) {
     final PageItemsBuilder builder = pageItemsBuilder();
-    addCountryLinks(builder, topCountries);
-    builder.addItem("Show all Countries", this::showAllCountries);
-    setPageItems(builder);
-  }
+    expander.buildNext(builder, this::addCountryLinks, this::showNextItems);
 
-  private void showAllCountries(Environment environment) {
     resetFirstVisibleItem();
-    final PageItemsBuilder builder = pageItemsBuilder();
-    addCountryLinks(builder, allCountries);
     setPageItems(builder);
   }
 
   private void addCountryLinks(PageItemsBuilder builder, List<Country> countries) {
+    if (countries.size() == 0) {
+      builder.addText(getString(R.string.no_countries_found));
+      return;
+    }
+
     for (Country country : countries) {
       final String subtitle = String.format(Locale.US, "%d radio stations", country.getStationCount());
-      builder.addLink(PageUris.makeCountryGenres(country.getValue()),
-          country.getName(), subtitle, country.getName() + ", " + subtitle);
+      builder.addLink(PageUris.radioCountryGenres(country.getValue()),
+          country.getName(),
+          subtitle,
+          country.getName() + ", " + subtitle);
     }
   }
 
   private void populateLists(Country[] response) {
     Timber.d("populateLists countries %d, %s", response.length, this.toString());
 
-    this.allCountries = Arrays.asList(response);
-    this.topCountries = new ArrayList<>();
+    List<Country> allCountries = Arrays.asList(response);
+    List<Country> topCountries = new ArrayList<>();
 
     for (Country country : allCountries) {
       if (featuredCountries.contains(country.getValue())) {
         topCountries.add(country);
       }
     }
+
+    expander.add(topCountries, getString(R.string.show_top_countries));
+    expander.add(allCountries, getString(R.string.show_all_countries));
   }
 }
