@@ -18,6 +18,7 @@ import java.util.List;
 
 import ch.indr.threethreefive.commands.ActionCommand;
 import ch.indr.threethreefive.commands.ToggleFavorite;
+import rx.functions.Action0;
 import rx.functions.Action1;
 
 public class PageItemsBuilder {
@@ -32,26 +33,42 @@ public class PageItemsBuilder {
     this.environment = environment;
   }
 
-  public PageItemsBuilder addItem(final @NonNull PageItem item) {
+  public PageItemsBuilder add(final @NonNull PageItem item) {
     items.add(item);
     return this;
   }
 
-  public PageItemsBuilder addItem(final @NonNull String title, Action1<Environment> action) {
-    return addItem(new ActionCommand(title, action));
+  public PageItemsBuilder addAction(final @NonNull String title, Action0 action) {
+    return add(new ActionCommand(title, action));
+  }
+
+  public PageItemsBuilder addAction(final @NonNull String title, Action1<Environment> action) {
+    return add(new ActionCommand(title, action));
   }
 
   public PageItemsBuilder addLink(final @NonNull String uri, final int titleResourceId) {
+    return addLink(Uri.parse(uri), titleResourceId);
+  }
+
+  public PageItemsBuilder addLink(final @NonNull Uri uri, final int titleResourceId) {
     return addLink(uri, resources.getString(titleResourceId));
   }
 
   public PageItemsBuilder addLink(final @NonNull String uri, final @NonNull String title) {
-    items.add(new PageLink(Uri.parse(uri), title));
+    return addLink(Uri.parse(uri), title);
+  }
+
+  public PageItemsBuilder addLink(final @NonNull Uri uri, final @NonNull String title) {
+    items.add(new PageLink(uri, title));
     return this;
   }
 
   public PageItemsBuilder addLink(final @NonNull String uri, final @NonNull String title, final @Nullable String subtitle, final @NonNull String description) {
-    items.add(new PageLink(Uri.parse(uri), title, subtitle, description));
+    return addLink(Uri.parse(uri), title, subtitle, description);
+  }
+
+  public PageItemsBuilder addLink(final @NonNull Uri uri, final @NonNull String title, final @Nullable String subtitle, final @NonNull String description) {
+    items.add(new PageLink(uri, title, subtitle, description));
     return this;
   }
 

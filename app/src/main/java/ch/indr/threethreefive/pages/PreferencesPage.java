@@ -45,8 +45,8 @@ public class PreferencesPage extends Page {
     addSwitchUiItem(builder);
 
     if (build.isDebug()) {
-      builder.addItem(new ResetAppLaunchCounter());
-      builder.addItem(new ResetButtonUiLaunchCounter());
+      builder.add(new ResetAppLaunchCounter());
+      builder.add(new ResetButtonUiLaunchCounter());
     }
 
     setPageItems(builder);
@@ -54,7 +54,7 @@ public class PreferencesPage extends Page {
 
   private void addReplayInterfaceInstructionsItem(PageItemsBuilder builder) {
     if (uiModeManager.getCurrentUiMode() == UiModeManager.UI_MODE_BUTTONS) {
-      builder.addItem("Replay Interface Instructions", this::replayInterfaceInstructions);
+      builder.addAction("Replay Interface Instructions", this::replayInterfaceInstructions);
     }
   }
 
@@ -67,10 +67,10 @@ public class PreferencesPage extends Page {
 
     switch (uiMode) {
       case UiModeManager.UI_MODE_BUTTONS:
-        builder.addItem("Switch to List Interface", this::startUiModeList);
+        builder.addAction("Switch to List Interface", this::startUiModeList);
         break;
       case UiModeManager.UI_MODE_LIST:
-        builder.addItem("Switch to Button Interface", this::startUiModeButtons);
+        builder.addAction("Switch to Button Interface", this::startUiModeButtons);
         break;
     }
   }

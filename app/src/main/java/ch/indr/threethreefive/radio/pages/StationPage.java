@@ -75,8 +75,8 @@ public class StationPage extends SpiceBasePage implements RequestListener<Statio
     final PageItemsBuilder builder = pageItemsBuilder();
 
     MediaItem mediaItem = RadioMediaItemFactory.make(station);
-    builder.addItem(new PlayMedia(mediaItem));
-    builder.addItem(new AddToPlaylist(mediaItem));
+    builder.add(new PlayMedia(mediaItem));
+    builder.add(new AddToPlaylist(mediaItem));
     builder.addToggleFavorite(getCurrentPageLink());
 
     // Country
@@ -109,7 +109,7 @@ public class StationPage extends SpiceBasePage implements RequestListener<Statio
 
     // Link to Website
     if (!isButtonView() && station.getHomepage() != null) {
-      builder.addItem(new OpenWebsite(getContext(), station.getHomepage()));
+      builder.add(new OpenWebsite(getContext(), station.getHomepage()));
     }
 
     setPageItems(builder);

@@ -68,7 +68,7 @@ public class HomePage extends Page {
 
     // Now playing only in button ui mode, and only if playback is paused or playing
     if (isButtonView() && isPausedOrPlaying()) {
-      builder.addItem(new NowPlayingItem(playbackClient));
+      builder.add(new NowPlayingItem(playbackClient));
     }
 
     // Static main menu items

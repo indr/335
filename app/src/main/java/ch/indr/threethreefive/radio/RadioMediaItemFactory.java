@@ -25,7 +25,7 @@ public class RadioMediaItemFactory {
 
   public static MediaItem make(final @NonNull Station station) {
 
-    final String pageUri = radioStation(station.getId());
+    final String pageUri = radioStation(station.getId()).toString();
     final String mediaUri = station.getUrl();
 
     final MediaMetadataCompat metadata = new Builder()

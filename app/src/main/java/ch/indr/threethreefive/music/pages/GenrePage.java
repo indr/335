@@ -42,8 +42,8 @@ public class GenrePage extends Page {
     final List<MusicStore.Song> songs = musicStore.getSongsByGenreId(genreId);
     final List<MediaItem> mediaItems = make(songs);
 
-    builder.addItem(new PlayMedias("Play all Songs", mediaItems));
-    builder.addItem(new AddToPlaylist("Add all Songs to Playlist", mediaItems));
+    builder.add(new PlayMedias("Play all Songs", mediaItems));
+    builder.add(new AddToPlaylist("Add all Songs to Playlist", mediaItems));
     builder.addToggleFavorite(getCurrentPageLink());
 
     for (MusicStore.Song song : songs) {

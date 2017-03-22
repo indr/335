@@ -64,10 +64,10 @@ public class LanguagePage extends SpiceBasePage implements RequestListener<Stati
     }
 
     populateLists(response);
-    showNextItems(null);
+    showNextItems();
   }
 
-  private void showNextItems(Environment environment) {
+  private void showNextItems() {
     final PageItemsBuilder builder = pageItemsBuilder();
     builder.addToggleFavorite(getCurrentPageLink());
     expander.buildNext(builder, this::addStationLinks, this::showNextItems);

@@ -64,10 +64,10 @@ public class CountriesPage extends SpiceBasePage implements RequestListener<Coun
     }
 
     populateLists(response);
-    showNextItems(null);
+    showNextItems();
   }
 
-  private void showNextItems(Environment environment) {
+  private void showNextItems() {
     final PageItemsBuilder builder = pageItemsBuilder();
     expander.buildNext(builder, this::addCountryLinks, this::showNextItems);
 

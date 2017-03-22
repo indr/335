@@ -11,18 +11,26 @@ import android.support.annotation.NonNull;
 
 import ch.indr.threethreefive.libs.Environment;
 import ch.indr.threethreefive.libs.PageCommand;
+import rx.functions.Action0;
 import rx.functions.Action1;
 
 public class ActionCommand extends PageCommand {
 
-  private final Action1<Environment> action;
+  private Action0 action0;
+  private Action1<Environment> action1;
+
+  public ActionCommand(final @NonNull String title, final @NonNull Action0 action) {
+    super(title);
+    this.action0 = action;
+  }
 
   public ActionCommand(final @NonNull String title, final @NonNull Action1<Environment> action) {
     super(title);
-    this.action = action;
+    this.action1 = action;
   }
 
   @Override public void execute(@NonNull Environment environment) {
-    action.call(environment);
+    if (action0 != null) action0.call();
+    else if (action1 != null) action1.call(environment);
   }
 }

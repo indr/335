@@ -42,7 +42,7 @@ public class MusicMediaItemFactory {
 
   public static MediaItem make(final @NonNull MusicStore.Song song) {
 
-    final String pageUri = musicSong(song.getId());
+    final String pageUri = musicSong(song.getId()).toString();
     final String mediaUri = song.getData();
 
     final MediaMetadataCompat metadata = new Builder()

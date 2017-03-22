@@ -7,46 +7,52 @@
 
 package ch.indr.threethreefive.libs;
 
+import android.net.Uri;
+import android.support.annotation.NonNull;
+
 public abstract class PageUris {
 
-  public static String musicAlbum(String id) {
-    return "/music/albums/" + id;
+  @NonNull public static Uri musicAlbum(@NonNull String id) {
+    return build("/music/albums").appendPath(id).build();
   }
 
-  public static String musicArtist(String id) {
-    return "/music/artists/" + id;
+  @NonNull public static Uri musicArtist(@NonNull String id) {
+    return build("/music/artists/").appendPath(id).build();
   }
 
-  public static String musicGenre(String id) {
-    return "/music/genres/" + id;
+  @NonNull public static Uri musicGenre(@NonNull String id) {
+    return build("/music/genres/").appendPath(id).build();
   }
 
-  public static String musicSong(String id) {
-    return "/music/songs/" + id;
+  @NonNull public static Uri musicSong(@NonNull String id) {
+    return build("/music/songs/").appendPath(id).build();
   }
 
-  public static String radioCountryGenres(String country) {
-    return "/radio/countries/" + country + "/genres";
+  @NonNull public static Uri radioCountryGenres(@NonNull String country) {
+    return build("/radio/countries/").appendPath(country).appendPath("genres").build();
   }
 
-  public static String radioCountryGenre(String country, String genre) {
-    return "/radio/countries/" + country + "/genres/" + genre;
+  @NonNull public static Uri radioCountryGenre(@NonNull String country, @NonNull String genre) {
+    return build("/radio/countries/").appendPath(country).appendPath("genres").appendPath(genre).build();
   }
 
-  public static String radioCountryStations(String country) {
-    return "/radio/countries/" + country + "/stations";
+  @NonNull public static Uri radioCountryStations(@NonNull String country) {
+    return build("/radio/countries/").appendPath(country).appendPath("stations").build();
   }
 
-  public static String radioGenre(String genre) {
-    return "/radio/genres/" + genre;
+  @NonNull public static Uri radioGenre(@NonNull String genre) {
+    return build("/radio/genres/").appendPath(genre).build();
   }
 
-  public static String radioLanguage(String language) {
-    return "/radio/languages/" + language;
+  @NonNull public static Uri radioLanguage(@NonNull String language) {
+    return build("/radio/languages/").appendPath(language).build();
   }
 
-  public static String radioStation(String id) {
-    return "/radio/stations/" + id;
+  @NonNull public static Uri radioStation(@NonNull String id) {
+    return build("/radio/stations/").appendPath(id).build();
   }
 
+  private static Uri.Builder build(@NonNull String uriString) {
+    return Uri.parse(uriString).buildUpon();
+  }
 }

@@ -10,7 +10,7 @@ package ch.indr.threethreefive.libs;
 import java.util.ArrayList;
 import java.util.List;
 
-import rx.functions.Action1;
+import rx.functions.Action0;
 import rx.functions.Action2;
 
 public class PageItemsExpander<T> {
@@ -22,24 +22,24 @@ public class PageItemsExpander<T> {
     lists.add(new ListMeta(listItems, showTitle));
   }
 
-  public void buildFirst(PageItemsBuilder builder, Action2<PageItemsBuilder, List<T>> addItemsFunc, Action1<Environment> expandFunc) {
+  public void buildFirst(PageItemsBuilder builder, Action2<PageItemsBuilder, List<T>> addItemsFunc, Action0 expandFunc) {
     currentListIndex = 0;
     build(builder, addItemsFunc, expandFunc);
   }
 
-  public void buildNext(PageItemsBuilder builder, Action2<PageItemsBuilder, List<T>> addItemsFunc, Action1<Environment> expandFunc) {
+  public void buildNext(PageItemsBuilder builder, Action2<PageItemsBuilder, List<T>> addItemsFunc, Action0 expandFunc) {
     currentListIndex++;
     build(builder, addItemsFunc, expandFunc);
   }
 
-  private void build(PageItemsBuilder builder, Action2<PageItemsBuilder, List<T>> addItemsFunc, Action1<Environment> expandFunc) {
+  private void build(PageItemsBuilder builder, Action2<PageItemsBuilder, List<T>> addItemsFunc, Action0 expandFunc) {
     if (currentListIndex < lists.size()) {
       final ListMeta currentList = lists.get(currentListIndex);
       addItemsFunc.call(builder, currentList.getItems());
 
       final ListMeta nextList = getNextListMeta(currentListIndex + 1, currentList);
       if (nextList != null) {
-        builder.addItem(nextList.getTitle(), expandFunc);
+        builder.addAction(nextList.getTitle(), expandFunc);
       }
     } else {
       addItemsFunc.call(builder, new ArrayList<T>());

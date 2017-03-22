@@ -61,10 +61,10 @@ public class CountryGenresPage extends SpiceBasePage implements RequestListener<
     }
 
     populateLists(response);
-    showNextItems(null);
+    showNextItems();
   }
 
-  private void showNextItems(Environment environment) {
+  private void showNextItems() {
     final PageItemsBuilder builder = pageItemsBuilder();
     builder.addToggleFavorite(getCurrentPageLink());
     expander.buildNext(builder, this::addGenreLinks, this::showNextItems);

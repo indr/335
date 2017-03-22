@@ -78,9 +78,9 @@ public class QueueItemPage extends Page {
       final MediaItem mediaItem = currentQueue != null ? currentQueue.getMediaItem(queueItem) : null;
 
       playQueueItem = new PlayQueueItem(mediaItem);
-      builder.addItem(playQueueItem);
+      builder.add(playQueueItem);
       removeQueueItem = new RemoveQueueItem(mediaItem);
-      builder.addItem(removeQueueItem);
+      builder.add(removeQueueItem);
 
       addPageItems(builder, mediaItem != null ? mediaItem.getMediaMetadata() : null);
     } else {

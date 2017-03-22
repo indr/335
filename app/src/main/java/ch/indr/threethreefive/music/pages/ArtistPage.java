@@ -50,8 +50,8 @@ public class ArtistPage extends Page {
     final List<MusicStore.Song> songs = musicStore.getSongsByArtistId(artistId);
     final List<MediaItem> mediaItems = make(songs);
 
-    builder.addItem(new PlayMedias("Play all Albums", mediaItems));
-    builder.addItem(new AddToPlaylist("Add all Albums to Playlist", mediaItems));
+    builder.add(new PlayMedias("Play all Albums", mediaItems));
+    builder.add(new AddToPlaylist("Add all Albums to Playlist", mediaItems));
     builder.addToggleFavorite(getCurrentPageLink());
 
     final List<MusicStore.Album> albums = musicStore.findAlbumsByArtistId(artistId);

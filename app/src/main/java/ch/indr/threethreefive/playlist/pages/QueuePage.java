@@ -58,8 +58,8 @@ public class QueuePage extends Page {
       return builder;
     }
 
-    builder.addItem(new PlayQueue(queue.getQueueItem(0).getQueueId()));
-    builder.addItem(new ClearQueue());
+    builder.add(new PlayQueue(queue.getQueueItem(0).getQueueId()));
+    builder.add(new ClearQueue());
 
     for (QueueItem each : queue.queueItems()) {
       MediaDescriptionCompat description = each.getDescription();
