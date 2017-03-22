@@ -38,7 +38,6 @@ public class CountryStationsPage extends SpiceBasePage implements RequestListene
 
   public CountryStationsPage(Environment environment) {
     super(environment);
-
   }
 
   @Override public void onCreate(@NonNull Context context, @NonNull Uri uri, Bundle bundle) {

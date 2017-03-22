@@ -19,7 +19,7 @@ public class Tag {
 
   @Key private String value;
 
-  @Key private String stationcount;
+  @Key private int stationcount;
 
   public Tag() {
   }
@@ -27,7 +27,7 @@ public class Tag {
   public Tag(final @NonNull String name, final int stationcount) {
     this.name = name;
     this.value = name;
-    this.stationcount = String.valueOf(stationcount);
+    this.stationcount = stationcount;
   }
 
   public String getName() {
@@ -39,7 +39,7 @@ public class Tag {
   }
 
   public int getStationCount() {
-    return stationcount == null ? 0 : Integer.parseInt(stationcount);
+    return stationcount;
   }
 
   public static class NameComparator implements Comparator<Tag> {

@@ -22,6 +22,7 @@ import java.util.List;
 import ch.indr.threethreefive.R;
 import ch.indr.threethreefive.libs.Environment;
 import ch.indr.threethreefive.libs.PageItemsBuilder;
+import ch.indr.threethreefive.libs.PageItemsExpander;
 import ch.indr.threethreefive.libs.utils.CollectionUtils;
 import ch.indr.threethreefive.navigation.SpiceBasePage;
 import ch.indr.threethreefive.radio.radioBrowserInfo.api.StationsRequest;
@@ -31,9 +32,8 @@ import timber.log.Timber;
 public class LanguagePage extends SpiceBasePage implements RequestListener<Station[]> {
 
   private String language;
-  private List<Station> allStations;
-  private List<Station> moreStations;
-  private List<Station> topStations;
+
+  private PageItemsExpander<Station> expander = new PageItemsExpander<>();
 
   public LanguagePage(Environment environment) {
     super(environment);
@@ -65,44 +65,16 @@ public class LanguagePage extends SpiceBasePage implements RequestListener<Stati
     }
 
     populateLists(response);
-    showTopStations();
+    showNextItems(null);
   }
 
-  private void showTopStations() {
+  private void showNextItems(Environment environment) {
     final PageItemsBuilder builder = pageItemsBuilder();
     builder.addToggleFavorite(getCurrentPageLink());
-    addStationLinks(builder, topStations);
+    expander.buildNext(builder, this::addStationLinks, this::showNextItems);
 
-    if (moreStations.size() > topStations.size()) {
-      if (allStations.size() > moreStations.size()) {
-        builder.addItem(getString(R.string.show_more_stations), this::showMoreStations);
-      } else {
-        builder.addItem(getString(R.string.show_all_stations), this::showAllStations);
-      }
-    }
-
-    setPageItems(builder);
-  }
-
-  private void showMoreStations(Environment environment) {
     resetFirstVisibleItem();
-    final PageItemsBuilder builder = pageItemsBuilder();
-    builder.addToggleFavorite(getCurrentPageLink());
-    addStationLinks(builder, moreStations);
-
-    if (allStations.size() > moreStations.size()) {
-      builder.addItem(getString(R.string.show_all_stations), this::showAllStations);
-    }
-
-    setPageItems(builder);
-  }
-
-  private void showAllStations(Environment environment) {
-    resetFirstVisibleItem();
-    final PageItemsBuilder builder = pageItemsBuilder();
-    builder.addToggleFavorite(getCurrentPageLink());
-    addStationLinks(builder, allStations);
-    setPageItems(builder);
+    setPageItems(builder.build());
   }
 
   private void addStationLinks(PageItemsBuilder builder, List<Station> stations) {
@@ -122,14 +94,18 @@ public class LanguagePage extends SpiceBasePage implements RequestListener<Stati
   private void populateLists(@NonNull Station[] response) {
     Timber.d("populateLists stations %d, %s", response.length, this.toString());
 
-    this.allStations = Arrays.asList(response);
+    List<Station> allStations = Arrays.asList(response);
 
     Collections.sort(allStations, Station.getBestStationsComparator());
-    this.topStations = CollectionUtils.slice(allStations, 0, 15);
-    this.moreStations = CollectionUtils.slice(allStations, 0, 50);
+    List<Station> topStations = CollectionUtils.slice(allStations, 0, 15);
+    List<Station> moreStations = CollectionUtils.slice(allStations, 0, 50);
 
     Collections.sort(topStations, new Station.NameComparator());
     Collections.sort(moreStations, new Station.NameComparator());
     Collections.sort(allStations, new Station.NameComparator());
+
+    expander.add(topStations, "Show top Stations");
+    expander.add(moreStations, getString(R.string.show_more_stations));
+    expander.add(allStations, getString(R.string.show_all_stations));
   }
 }
