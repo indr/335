@@ -50,7 +50,7 @@ public abstract class SpiceBasePage extends Page {
     super.onStop();
   }
 
-  protected <TResult> void executeRequest(HttpClientSpiceRequest<TResult> request, RequestListener<TResult> listener) {
+  private <TResult> void executeRequest(HttpClientSpiceRequest<TResult> request, RequestListener<TResult> listener) {
     robospiceManager.getFromCacheAndLoadFromNetworkIfExpired(request, request.getCacheKey(), request.getCacheExpiryDuration(), listener);
   }
 }

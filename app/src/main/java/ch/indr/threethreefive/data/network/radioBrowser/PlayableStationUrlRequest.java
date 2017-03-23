@@ -5,14 +5,13 @@
  * the LICENSE file that was distributed with this source code.
  */
 
-package ch.indr.threethreefive.radio.radioBrowserInfo.api;
+package ch.indr.threethreefive.data.network.radioBrowser;
 
 import android.support.annotation.NonNull;
 
 import com.google.api.client.http.GenericUrl;
 
-import ch.indr.threethreefive.radio.radioBrowserInfo.RadioBrowserInfoRequest;
-import ch.indr.threethreefive.radio.radioBrowserInfo.api.json.PlayableStationUrl;
+import ch.indr.threethreefive.data.network.radioBrowser.model.PlayableStationUrl;
 
 public class PlayableStationUrlRequest extends RadioBrowserInfoRequest<PlayableStationUrl> {
 

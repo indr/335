@@ -1,19 +1,18 @@
 /*
- * Copyright (c) 2016 Reto Inderbitzin (mail@indr.ch)
+ * Copyright (c) 2017 Reto Inderbitzin (mail@indr.ch)
  *
  * For the full copyright and license information, please view
  * the LICENSE file that was distributed with this source code.
  */
 
-package ch.indr.threethreefive.radio.radioBrowserInfo.api;
+package ch.indr.threethreefive.data.network.radioBrowser;
 
 import android.support.annotation.Nullable;
 
 import com.google.api.client.http.GenericUrl;
 import com.octo.android.robospice.persistence.DurationInMillis;
 
-import ch.indr.threethreefive.radio.radioBrowserInfo.RadioBrowserInfoRequest;
-import ch.indr.threethreefive.radio.radioBrowserInfo.api.json.Tag;
+import ch.indr.threethreefive.data.network.radioBrowser.model.Tag;
 
 public class TagsRequest extends RadioBrowserInfoRequest<Tag[]> {
 

@@ -18,7 +18,7 @@ import org.mockito.ArgumentMatchers;
 import ch.indr.threethreefive.TtfRobolectricTestCase;
 import ch.indr.threethreefive.libs.net.RobospiceManager;
 import ch.indr.threethreefive.radio.pages.GenresPage;
-import ch.indr.threethreefive.radio.radioBrowserInfo.api.TagsRequest;
+import ch.indr.threethreefive.data.network.radioBrowser.TagsRequest;
 
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.ArgumentMatchers.anyString;

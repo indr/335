@@ -20,8 +20,8 @@ import com.octo.android.robospice.request.listener.RequestListener;
 import ch.indr.threethreefive.libs.MetadataKeys;
 import ch.indr.threethreefive.libs.net.RobospiceManagerImpl;
 import ch.indr.threethreefive.libs.utils.StringUtils;
-import ch.indr.threethreefive.radio.radioBrowserInfo.api.PlayableStationUrlRequest;
-import ch.indr.threethreefive.radio.radioBrowserInfo.api.json.PlayableStationUrl;
+import ch.indr.threethreefive.data.network.radioBrowser.PlayableStationUrlRequest;
+import ch.indr.threethreefive.data.network.radioBrowser.model.PlayableStationUrl;
 import timber.log.Timber;
 
 public class PlaybackAnswers {

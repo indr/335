@@ -5,7 +5,7 @@
  * the LICENSE file that was distributed with this source code.
  */
 
-package ch.indr.threethreefive.radio.radioBrowserInfo;
+package ch.indr.threethreefive.data.network.radioBrowser;
 
 import android.support.annotation.Nullable;
 

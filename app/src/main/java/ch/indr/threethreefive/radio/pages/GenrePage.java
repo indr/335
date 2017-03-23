@@ -26,8 +26,8 @@ import ch.indr.threethreefive.libs.PageItemsExpander;
 import ch.indr.threethreefive.libs.PageUris;
 import ch.indr.threethreefive.libs.utils.CollectionUtils;
 import ch.indr.threethreefive.navigation.SpiceBasePage;
-import ch.indr.threethreefive.radio.radioBrowserInfo.api.StationsRequest;
-import ch.indr.threethreefive.radio.radioBrowserInfo.api.json.Station;
+import ch.indr.threethreefive.data.network.radioBrowser.StationsRequest;
+import ch.indr.threethreefive.data.network.radioBrowser.model.Station;
 import timber.log.Timber;
 
 public class GenrePage extends SpiceBasePage implements RequestListener<Station[]> {
@@ -53,7 +53,7 @@ public class GenrePage extends SpiceBasePage implements RequestListener<Station[
   @Override public void onStart() {
     super.onStart();
 
-    executeRequest(StationsRequest.byTag(genre), this);
+    apiClient.getStationsByTag(genre, this);
   }
 
   @Override public void onRequestFailure(SpiceException spiceException) {

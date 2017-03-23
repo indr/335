@@ -10,8 +10,8 @@ package ch.indr.threethreefive.radio;
 import android.support.annotation.NonNull;
 import android.support.v4.media.MediaMetadataCompat;
 
+import ch.indr.threethreefive.data.network.radioBrowser.model.Station;
 import ch.indr.threethreefive.libs.MediaItem;
-import ch.indr.threethreefive.radio.radioBrowserInfo.api.json.Station;
 
 import static android.support.v4.media.MediaMetadataCompat.Builder;
 import static android.support.v4.media.MediaMetadataCompat.METADATA_KEY_DISPLAY_TITLE;

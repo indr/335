@@ -28,8 +28,8 @@ import ch.indr.threethreefive.libs.PageItemsExpander;
 import ch.indr.threethreefive.libs.PageUris;
 import ch.indr.threethreefive.libs.utils.CollectionUtils;
 import ch.indr.threethreefive.navigation.SpiceBasePage;
-import ch.indr.threethreefive.radio.radioBrowserInfo.api.TagsRequest;
-import ch.indr.threethreefive.radio.radioBrowserInfo.api.json.Tag;
+import ch.indr.threethreefive.data.network.radioBrowser.TagsRequest;
+import ch.indr.threethreefive.data.network.radioBrowser.model.Tag;
 import timber.log.Timber;
 
 public class GenresPage extends SpiceBasePage implements RequestListener<Tag[]> {
@@ -60,7 +60,7 @@ public class GenresPage extends SpiceBasePage implements RequestListener<Tag[]> 
   @Override public void onStart() {
     super.onStart();
 
-    executeRequest(new TagsRequest("hidebroken=true&order=stationcount"), this);
+    apiClient.getTags(this);
   }
 
   @Override public void onRequestFailure(SpiceException spiceException) {

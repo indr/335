@@ -23,6 +23,7 @@ import ch.indr.threethreefive.R;
 import ch.indr.threethreefive.libs.Environment;
 import ch.indr.threethreefive.libs.PageItemsBuilder;
 import ch.indr.threethreefive.libs.PageLink;
+import ch.indr.threethreefive.libs.PageUris;
 import ch.indr.threethreefive.libs.utils.MediaDescriptionUtils;
 import ch.indr.threethreefive.libs.utils.PlaybackStateUtils;
 import ch.indr.threethreefive.navigation.Page;
@@ -73,11 +74,11 @@ public class HomePage extends Page {
 
     // Static main menu items
     builder
-        .addLink("/music", getString(R.string.mainmenu_music_title), getString(R.string.mainmenu_music_subtitle), getString(R.string.mainmenu_music_description))
-        .addLink("/radio", getString(R.string.mainmenu_radio_title), getString(R.string.mainmenu_radio_subtitle), getString(R.string.mainmenu_radio_description))
-        .addLink("/playlist", getString(R.string.mainmenu_playlist_title), getString(R.string.mainmenu_playlist_subtitle), getString(R.string.mainmenu_playlist_description))
-        .addLink("/favorites", getString(R.string.mainmenu_favorites_title), getString(R.string.mainmenu_favorites_subtitle), getString(R.string.mainmenu_favorites_description))
-        .addLink("/preferences", getString(R.string.mainmenu_preferences_title), getString(R.string.mainmenu_preferences_subtitle), getString(R.string.mainmenu_preferences_description));
+        .addLink(PageUris.music(), getString(R.string.mainmenu_music_title), getString(R.string.mainmenu_music_subtitle), getString(R.string.mainmenu_music_description))
+        .addLink(PageUris.radio(), getString(R.string.mainmenu_radio_title), getString(R.string.mainmenu_radio_subtitle), getString(R.string.mainmenu_radio_description))
+        .addLink(PageUris.playlist(), getString(R.string.mainmenu_playlist_title), getString(R.string.mainmenu_playlist_subtitle), getString(R.string.mainmenu_playlist_description))
+        .addLink(PageUris.favorites(), getString(R.string.mainmenu_favorites_title), getString(R.string.mainmenu_favorites_subtitle), getString(R.string.mainmenu_favorites_description))
+        .addLink(PageUris.preferences(), getString(R.string.mainmenu_preferences_title), getString(R.string.mainmenu_preferences_subtitle), getString(R.string.mainmenu_preferences_description));
 
     setPageItems(builder);
   }
@@ -99,7 +100,7 @@ public class HomePage extends Page {
   public class NowPlayingItem extends PageLink {
 
     public NowPlayingItem(@NonNull PlaybackClient playbackClient) {
-      super(Uri.parse("/now-playing"), "Now Playing");
+      super(PageUris.nowPlaying(), "Now Playing");
 
       playbackClient.playbackState()
           .distinctUntilChanged()

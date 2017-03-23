@@ -1,11 +1,11 @@
 /*
- * Copyright (c) 2016 Reto Inderbitzin (mail@indr.ch)
+ * Copyright (c) 2017 Reto Inderbitzin (mail@indr.ch)
  *
  * For the full copyright and license information, please view
  * the LICENSE file that was distributed with this source code.
  */
 
-package ch.indr.threethreefive.radio.radioBrowserInfo.api.json;
+package ch.indr.threethreefive.data.network.radioBrowser.model;
 
 import com.google.api.client.util.Key;
 
@@ -17,7 +17,7 @@ import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 
-import ch.indr.threethreefive.radio.radioBrowserInfo.RadioBrowserInfoUtils;
+import ch.indr.threethreefive.data.network.radioBrowser.RadioBrowserInfoUtils;
 
 public class Station {
 

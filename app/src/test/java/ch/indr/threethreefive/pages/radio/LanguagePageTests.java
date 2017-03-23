@@ -20,7 +20,7 @@ import ch.indr.threethreefive.R;
 import ch.indr.threethreefive.TtfRobolectricTestCase;
 import ch.indr.threethreefive.libs.PageItem;
 import ch.indr.threethreefive.radio.pages.LanguagePage;
-import ch.indr.threethreefive.radio.radioBrowserInfo.api.json.Station;
+import ch.indr.threethreefive.data.network.radioBrowser.model.Station;
 import rx.observers.TestSubscriber;
 
 public class LanguagePageTests extends TtfRobolectricTestCase {

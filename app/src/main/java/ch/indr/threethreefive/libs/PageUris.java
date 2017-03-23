@@ -12,6 +12,14 @@ import android.support.annotation.NonNull;
 
 public abstract class PageUris {
 
+  @NonNull public static Uri favorites() {
+    return build("/favorites").build();
+  }
+
+  @NonNull public static Uri music() {
+    return build("/music").build();
+  }
+
   @NonNull public static Uri musicAlbum(@NonNull String id) {
     return build("/music/albums").appendPath(id).build();
   }
@@ -26,6 +34,14 @@ public abstract class PageUris {
 
   @NonNull public static Uri musicSong(@NonNull String id) {
     return build("/music/songs/").appendPath(id).build();
+  }
+
+  @NonNull public static Uri nowPlaying() {
+    return build("/now-playing").build();
+  }
+
+  @NonNull public static Uri radio() {
+    return build("/radio").build();
   }
 
   @NonNull public static Uri radioCountryGenres(@NonNull String country) {
@@ -50,6 +66,14 @@ public abstract class PageUris {
 
   @NonNull public static Uri radioStation(@NonNull String id) {
     return build("/radio/stations/").appendPath(id).build();
+  }
+
+  @NonNull public static Uri playlist() {
+    return build("/playlist").build();
+  }
+
+  @NonNull public static Uri preferences() {
+    return build("/preferences").build();
   }
 
   private static Uri.Builder build(@NonNull String uriString) {

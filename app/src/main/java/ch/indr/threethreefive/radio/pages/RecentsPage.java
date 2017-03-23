@@ -20,8 +20,8 @@ import ch.indr.threethreefive.libs.Environment;
 import ch.indr.threethreefive.libs.PageItemsBuilder;
 import ch.indr.threethreefive.libs.PageUris;
 import ch.indr.threethreefive.navigation.SpiceBasePage;
-import ch.indr.threethreefive.radio.radioBrowserInfo.api.StationsRequest;
-import ch.indr.threethreefive.radio.radioBrowserInfo.api.json.Station;
+import ch.indr.threethreefive.data.network.radioBrowser.StationsRequest;
+import ch.indr.threethreefive.data.network.radioBrowser.model.Station;
 
 public class RecentsPage extends SpiceBasePage implements RequestListener<Station[]> {
 
@@ -39,7 +39,7 @@ public class RecentsPage extends SpiceBasePage implements RequestListener<Statio
   @Override public void onStart() {
     super.onStart();
 
-    executeRequest(StationsRequest.recent(50), this);
+    apiClient.getNewStations(50, this);
   }
 
   @Override public void onRequestFailure(SpiceException spiceException) {

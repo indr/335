@@ -10,7 +10,7 @@ package ch.indr.threethreefive;
 import java.util.ArrayList;
 import java.util.List;
 
-import ch.indr.threethreefive.radio.radioBrowserInfo.api.json.Station;
+import ch.indr.threethreefive.data.network.radioBrowser.model.Station;
 
 public class Fake {
 

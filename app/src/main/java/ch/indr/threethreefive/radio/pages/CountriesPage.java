@@ -21,13 +21,12 @@ import java.util.List;
 import java.util.Locale;
 
 import ch.indr.threethreefive.R;
+import ch.indr.threethreefive.data.network.radioBrowser.model.Country;
 import ch.indr.threethreefive.libs.Environment;
 import ch.indr.threethreefive.libs.PageItemsBuilder;
 import ch.indr.threethreefive.libs.PageItemsExpander;
 import ch.indr.threethreefive.libs.PageUris;
 import ch.indr.threethreefive.navigation.SpiceBasePage;
-import ch.indr.threethreefive.radio.radioBrowserInfo.api.CountriesRequest;
-import ch.indr.threethreefive.radio.radioBrowserInfo.api.json.Country;
 import timber.log.Timber;
 
 public class CountriesPage extends SpiceBasePage implements RequestListener<Country[]> {
@@ -50,7 +49,7 @@ public class CountriesPage extends SpiceBasePage implements RequestListener<Coun
   @Override public void onStart() {
     super.onStart();
 
-    executeRequest(new CountriesRequest(), this);
+    apiClient.getCountries(this);
   }
 
   @Override public void onRequestFailure(SpiceException spiceException) {

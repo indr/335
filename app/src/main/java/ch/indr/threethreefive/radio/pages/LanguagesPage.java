@@ -22,8 +22,7 @@ import ch.indr.threethreefive.libs.Environment;
 import ch.indr.threethreefive.libs.PageItemsBuilder;
 import ch.indr.threethreefive.libs.PageUris;
 import ch.indr.threethreefive.navigation.SpiceBasePage;
-import ch.indr.threethreefive.radio.radioBrowserInfo.api.LanguagesRequest;
-import ch.indr.threethreefive.radio.radioBrowserInfo.api.json.Language;
+import ch.indr.threethreefive.data.network.radioBrowser.model.Language;
 
 public class LanguagesPage extends SpiceBasePage implements RequestListener<Language[]> {
 
@@ -42,7 +41,7 @@ public class LanguagesPage extends SpiceBasePage implements RequestListener<Lang
   @Override public void onStart() {
     super.onStart();
 
-    executeRequest(new LanguagesRequest(), this);
+    apiClient.getLanguages(this);
   }
 
   @Override public void onRequestFailure(SpiceException spiceException) {

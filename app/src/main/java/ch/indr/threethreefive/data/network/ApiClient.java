@@ -17,12 +17,16 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import ch.indr.threethreefive.data.network.radioBrowser.CountriesRequest;
+import ch.indr.threethreefive.data.network.radioBrowser.LanguagesRequest;
+import ch.indr.threethreefive.data.network.radioBrowser.StationRequest;
+import ch.indr.threethreefive.data.network.radioBrowser.StationsRequest;
+import ch.indr.threethreefive.data.network.radioBrowser.TagsRequest;
+import ch.indr.threethreefive.data.network.radioBrowser.model.Country;
+import ch.indr.threethreefive.data.network.radioBrowser.model.Language;
+import ch.indr.threethreefive.data.network.radioBrowser.model.Station;
+import ch.indr.threethreefive.data.network.radioBrowser.model.Tag;
 import ch.indr.threethreefive.libs.net.RobospiceManager;
-import ch.indr.threethreefive.radio.radioBrowserInfo.api.CountriesRequest;
-import ch.indr.threethreefive.radio.radioBrowserInfo.api.StationsRequest;
-import ch.indr.threethreefive.radio.radioBrowserInfo.api.json.Country;
-import ch.indr.threethreefive.radio.radioBrowserInfo.api.json.Station;
-import ch.indr.threethreefive.radio.radioBrowserInfo.api.json.Tag;
 
 public class ApiClient {
 
@@ -40,29 +44,58 @@ public class ApiClient {
   }
 
   public void getGenresByCountry(@NonNull String countryId, @NonNull RequestListener<List<Tag>> listener) {
-    robospiceManager.execute(StationsRequest.byCountry(countryId), new ResponseTransformer<Station[], List<Tag>>(listener) {
-      @Override public void onRequestSuccess(Station[] stations) {
-        final Map<String, Integer> map = new HashMap<String, Integer>();
-        for (Station station : stations) {
-          final String[] tags = station.getTags();
-          for (String tag : tags) {
-            if (map.containsKey(tag)) {
-              map.put(tag, map.get(tag) + 1);
-            } else {
-              map.put(tag, 1);
-            }
-          }
-        }
+    robospiceManager.execute(StationsRequest.byCountry(countryId),
+        new ResponseTransformer<Station[], List<Tag>>(listener) {
 
-        List<Tag> result = new ArrayList<>(map.size());
-        for (Map.Entry<String, Integer> entry : map.entrySet()) {
-          result.add(new Tag(entry.getKey(), entry.getValue()));
-        }
-        listener.onRequestSuccess(result);
-      }
-    });
+          @Override public void onRequestSuccess(Station[] stations) {
+            final Map<String, Integer> map = new HashMap<String, Integer>();
+            for (Station station : stations) {
+              final String[] tags = station.getTags();
+              for (String tag : tags) {
+                if (map.containsKey(tag)) {
+                  map.put(tag, map.get(tag) + 1);
+                } else {
+                  map.put(tag, 1);
+                }
+              }
+            }
+
+            List<Tag> result = new ArrayList<>(map.size());
+            for (Map.Entry<String, Integer> entry : map.entrySet()) {
+              result.add(new Tag(entry.getKey(), entry.getValue()));
+            }
+            listener.onRequestSuccess(result);
+          }
+        });
   }
 
+  public void getLanguages(RequestListener<Language[]> listener) {
+    robospiceManager.execute(new LanguagesRequest(), listener);
+  }
+
+  public void getNewStations(int number, RequestListener<Station[]> listener) {
+    robospiceManager.execute(StationsRequest.recent(number), listener);
+  }
+
+  public void getStation(String stationId, RequestListener<Station[]> listener) {
+    robospiceManager.execute(new StationRequest(stationId), listener);
+  }
+
+  public void getStationsByCountry(String country, RequestListener<Station[]> listener) {
+    robospiceManager.execute(StationsRequest.byCountry(country), listener);
+  }
+
+  public void getStationsByLanguage(String language, RequestListener<Station[]> listener) {
+    robospiceManager.execute(StationsRequest.byLanguage(language), listener);
+  }
+
+  public void getStationsByTag(String tag, RequestListener<Station[]> listener) {
+    robospiceManager.execute(StationsRequest.byTag(tag), listener);
+  }
+
+  public void getTags(RequestListener<Tag[]> listener) {
+    robospiceManager.execute(new TagsRequest("hidebroken=true&order=stationcount"), listener);
+  }
 
   private abstract class ResponseTransformer<TResult, TResponse> implements RequestListener<TResult> {
     private final RequestListener<TResponse> listener;

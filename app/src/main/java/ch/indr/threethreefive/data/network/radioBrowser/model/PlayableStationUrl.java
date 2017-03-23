@@ -5,7 +5,7 @@
  * the LICENSE file that was distributed with this source code.
  */
 
-package ch.indr.threethreefive.radio.radioBrowserInfo.api.json;
+package ch.indr.threethreefive.data.network.radioBrowser.model;
 
 import com.google.api.client.util.Key;
 

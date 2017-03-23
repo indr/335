@@ -24,7 +24,7 @@ import ch.indr.threethreefive.libs.PageItemsBuilder;
 import ch.indr.threethreefive.libs.PageItemsExpander;
 import ch.indr.threethreefive.libs.PageUris;
 import ch.indr.threethreefive.navigation.SpiceBasePage;
-import ch.indr.threethreefive.radio.radioBrowserInfo.api.json.Tag;
+import ch.indr.threethreefive.data.network.radioBrowser.model.Tag;
 
 public class CountryGenresPage extends SpiceBasePage implements RequestListener<List<Tag>> {
 
