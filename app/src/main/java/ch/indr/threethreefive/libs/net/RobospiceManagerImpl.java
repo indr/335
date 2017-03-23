@@ -29,11 +29,12 @@ public class RobospiceManagerImpl implements RobospiceManager {
     this.spiceManager.shouldStop();
   }
 
-  @Override public <TResult> void getFromCacheAndLoadFromNetworkIfExpired(HttpClientSpiceRequest<TResult> request, String cacheKey, long cacheExpiryDuration, RequestListener<TResult> listener) {
-    this.spiceManager.getFromCacheAndLoadFromNetworkIfExpired(request, cacheKey, cacheExpiryDuration, listener);
-  }
-
   @Override public <TResult> void execute(@NonNull HttpClientSpiceRequest<TResult> request, RequestListener<TResult> listener) {
-    this.spiceManager.execute(request, listener);
+    final long cacheExpiryDuration = request.getCacheExpiryDuration();
+    if (cacheExpiryDuration >= 0) {
+      this.spiceManager.getFromCacheAndLoadFromNetworkIfExpired(request, request.getCacheKey(), cacheExpiryDuration, listener);
+    } else {
+      this.spiceManager.execute(request, listener);
+    }
   }
 }

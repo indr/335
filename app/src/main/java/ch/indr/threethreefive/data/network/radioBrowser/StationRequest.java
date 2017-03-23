@@ -7,7 +7,11 @@
 
 package ch.indr.threethreefive.data.network.radioBrowser;
 
-import com.google.api.client.http.GenericUrl;
+import android.support.annotation.NonNull;
+
+import com.google.api.client.http.HttpRequest;
+
+import java.io.IOException;
 
 import ch.indr.threethreefive.data.network.radioBrowser.model.Station;
 
@@ -21,8 +25,8 @@ public class StationRequest extends RadioBrowserInfoRequest<Station[]> {
     this.stationId = stationId;
   }
 
-  @Override protected GenericUrl getUrl() {
-    return makeUrlV1("/stations/byid/" + stationId);
+  @NonNull @Override protected HttpRequest buildHttpRequest() throws IOException {
+    return getHttpRequestFactory().buildGetRequest(makeUrlV1("/stations/byid/" + stationId));
   }
 }
 

@@ -12,13 +12,10 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 
-import com.octo.android.robospice.request.listener.RequestListener;
-
 import javax.inject.Inject;
 
 import ch.indr.threethreefive.data.network.ApiClient;
 import ch.indr.threethreefive.libs.Environment;
-import ch.indr.threethreefive.libs.net.HttpClientSpiceRequest;
 import ch.indr.threethreefive.libs.net.RobospiceManager;
 
 public abstract class SpiceBasePage extends Page {
@@ -48,9 +45,5 @@ public abstract class SpiceBasePage extends Page {
     robospiceManager.shouldStop();
 
     super.onStop();
-  }
-
-  private <TResult> void executeRequest(HttpClientSpiceRequest<TResult> request, RequestListener<TResult> listener) {
-    robospiceManager.getFromCacheAndLoadFromNetworkIfExpired(request, request.getCacheKey(), request.getCacheExpiryDuration(), listener);
   }
 }

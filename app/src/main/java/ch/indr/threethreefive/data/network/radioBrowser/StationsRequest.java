@@ -7,12 +7,18 @@
 
 package ch.indr.threethreefive.data.network.radioBrowser;
 
+import android.support.annotation.NonNull;
+
 import com.google.api.client.http.GenericUrl;
+import com.google.api.client.http.HttpRequest;
 import com.octo.android.robospice.persistence.DurationInMillis;
+
+import java.io.IOException;
 
 import ch.indr.threethreefive.data.network.radioBrowser.model.Station;
 
 public class StationsRequest extends RadioBrowserInfoRequest<Station[]> {
+
   private static final String BASE_URL = "http://www.radio-browser.info/webservice/json/";
 
   private GenericUrl url;
@@ -20,10 +26,6 @@ public class StationsRequest extends RadioBrowserInfoRequest<Station[]> {
   private StationsRequest(GenericUrl url) {
     super(Station[].class);
     this.url = url;
-  }
-
-  @Override protected GenericUrl getUrl() {
-    return url;
   }
 
   public static StationsRequest byCountry(String country) {
@@ -46,5 +48,9 @@ public class StationsRequest extends RadioBrowserInfoRequest<Station[]> {
     StationsRequest request = new StationsRequest(new GenericUrl(url));
     request.setCacheExpiryDuration(DurationInMillis.ALWAYS_EXPIRED);
     return request;
+  }
+
+  @NonNull @Override protected HttpRequest buildHttpRequest() throws IOException {
+    return getHttpRequestFactory().buildGetRequest(this.url);
   }
 }

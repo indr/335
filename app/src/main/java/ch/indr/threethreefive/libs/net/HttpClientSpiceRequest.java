@@ -7,7 +7,8 @@
 
 package ch.indr.threethreefive.libs.net;
 
-import com.google.api.client.http.GenericUrl;
+import android.support.annotation.Nullable;
+
 import com.octo.android.robospice.persistence.DurationInMillis;
 import com.octo.android.robospice.request.googlehttpclient.GoogleHttpClientSpiceRequest;
 
@@ -19,20 +20,26 @@ import timber.log.Timber;
 
 public abstract class HttpClientSpiceRequest<TResult> extends GoogleHttpClientSpiceRequest<TResult> {
 
+  private long cacheExpiryDurationInMillis = DurationInMillis.ONE_HOUR;
+
   public HttpClientSpiceRequest(Class<TResult> clazz) {
     super(clazz);
   }
 
-  public abstract String getCacheKey();
+  @Nullable public abstract String getCacheKey();
 
   public long getCacheExpiryDuration() {
-    return DurationInMillis.ONE_MINUTE;
+    return this.cacheExpiryDurationInMillis;
   }
 
-  protected String makeCacheKey(GenericUrl url) {
+  public void setCacheExpiryDuration(long durationInMillis) {
+    this.cacheExpiryDurationInMillis = durationInMillis;
+  }
+
+  @Nullable protected String makeCacheKey(String value) {
     String cacheKey;
     try {
-      byte[] bytes = url.toString().getBytes("UTF-8");
+      byte[] bytes = value.getBytes("UTF-8");
       final MessageDigest md5 = MessageDigest.getInstance("MD5");
       byte[] digest = md5.digest(bytes);
       String hexStr = "";

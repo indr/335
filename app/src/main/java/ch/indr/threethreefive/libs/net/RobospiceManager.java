@@ -19,6 +19,4 @@ public interface RobospiceManager {
   void shouldStop();
 
   <TResult> void execute(@NonNull HttpClientSpiceRequest<TResult> request, RequestListener<TResult> listener);
-
-  <TResult> void getFromCacheAndLoadFromNetworkIfExpired(HttpClientSpiceRequest<TResult> request, String cacheKey, long cacheExpiryDuration, RequestListener<TResult> listener);
 }

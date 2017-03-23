@@ -69,7 +69,6 @@ public class ApiClient {
   }
 
   public void getTags(RequestListener<Tag[]> listener) {
-    robospiceManager.execute(new TagsRequest("hidebroken=true&order=stationcount"), listener);
+    robospiceManager.execute(new TagsRequest(), listener);
   }
-
 }

@@ -8,25 +8,25 @@
 package ch.indr.threethreefive.data.network.radioBrowser;
 
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 
 import com.google.api.client.http.GenericUrl;
 import com.google.api.client.http.HttpRequest;
 import com.google.api.client.http.HttpResponse;
 import com.google.api.client.json.jackson.JacksonFactory;
-import com.octo.android.robospice.persistence.DurationInMillis;
+
+import java.io.IOException;
 
 import ch.indr.threethreefive.libs.net.HttpClientSpiceRequest;
 import timber.log.Timber;
 
 public abstract class RadioBrowserInfoRequest<TResult> extends HttpClientSpiceRequest<TResult> {
 
-  private long cacheExpiryDurationInMillis = DurationInMillis.ONE_HOUR;
+  private HttpRequest request;
 
   public RadioBrowserInfoRequest(Class<TResult> clazz) {
     super(clazz);
   }
-
-  protected abstract GenericUrl getUrl();
 
   protected static GenericUrl makeUrlV1(@NonNull String path) {
     return new GenericUrl("http://www.radio-browser.info/webservice/json" + path);
@@ -36,28 +36,21 @@ public abstract class RadioBrowserInfoRequest<TResult> extends HttpClientSpiceRe
     return new GenericUrl("http://www.radio-browser.info/webservice/v2/json" + path);
   }
 
-  @Override public String getCacheKey() {
-    return makeCacheKey(getUrl());
-  }
-
-  @Override public long getCacheExpiryDuration() {
-    return this.cacheExpiryDurationInMillis;
-  }
-
-  public void setCacheExpiryDuration(long durationInMillis) {
-    this.cacheExpiryDurationInMillis = durationInMillis;
+  @Nullable @Override public String getCacheKey() {
+    return request == null ? null : makeCacheKey(request.getUrl() + request.getContent().toString());
   }
 
   @Override public TResult loadDataFromNetwork() throws Exception {
-    GenericUrl url = getUrl();
-    Timber.d("Requesting %s, %s", url.toString(), this.toString());
-
-    HttpRequest request = getHttpRequestFactory().buildGetRequest(url);
+    Timber.d("loadDataFromNetwork %s", this.toString());
+    this.request = buildHttpRequest();
     request.setParser(new JacksonFactory().createJsonObjectParser());
 
+    Timber.d("Requesting %s, %s", request.getUrl().toString(), this.toString());
     HttpResponse response = request.execute();
-    Timber.d("Response status code %d, %s", response.getStatusCode(), this.toString());
 
+    Timber.d("Response status code %d, %s", response.getStatusCode(), this.toString());
     return response.parseAs(getResultType());
   }
+
+  @NonNull abstract protected HttpRequest buildHttpRequest() throws IOException;
 }
