@@ -13,10 +13,12 @@ import android.net.Uri;
 import java.util.ArrayList;
 import java.util.List;
 
-import ch.indr.threethreefive.libs.pages.PageResolver;
 import ch.indr.threethreefive.libs.pages.Page;
 import ch.indr.threethreefive.libs.pages.PageMeta;
+import ch.indr.threethreefive.libs.pages.PageResolver;
 import timber.log.Timber;
+
+import static ch.indr.threethreefive.libs.PageUris.AUTHORITY;
 
 public class RadioPageResolver extends PageResolver {
 

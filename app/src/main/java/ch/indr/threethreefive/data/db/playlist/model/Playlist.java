@@ -5,7 +5,7 @@
  * the LICENSE file that was distributed with this source code.
  */
 
-package ch.indr.threethreefive.playlist.model;
+package ch.indr.threethreefive.data.db.playlist.model;
 
 import android.support.annotation.Nullable;
 

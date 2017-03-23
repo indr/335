@@ -2,8 +2,8 @@ package ch.indr.threethreefive.commands;
 
 import android.support.annotation.NonNull;
 
-import ch.indr.threethreefive.favorites.FavoritesStore;
-import ch.indr.threethreefive.favorites.model.Favorite;
+import ch.indr.threethreefive.data.db.favorites.FavoritesStore;
+import ch.indr.threethreefive.data.db.favorites.model.Favorite;
 import ch.indr.threethreefive.libs.Environment;
 import ch.indr.threethreefive.libs.PageCommand;
 import ch.indr.threethreefive.libs.PageLink;

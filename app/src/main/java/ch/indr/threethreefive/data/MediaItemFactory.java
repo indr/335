@@ -15,7 +15,7 @@ import java.util.List;
 
 import ch.indr.threethreefive.data.network.radioBrowser.model.Station;
 import ch.indr.threethreefive.libs.MediaItem;
-import ch.indr.threethreefive.music.MusicStore;
+import ch.indr.threethreefive.data.db.music.MusicStore;
 
 import static android.support.v4.media.MediaMetadataCompat.Builder;
 import static android.support.v4.media.MediaMetadataCompat.METADATA_KEY_ALBUM;

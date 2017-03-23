@@ -5,7 +5,7 @@
  * the LICENSE file that was distributed with this source code.
  */
 
-package ch.indr.threethreefive.favorites.model;
+package ch.indr.threethreefive.data.db.favorites.model;
 
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;

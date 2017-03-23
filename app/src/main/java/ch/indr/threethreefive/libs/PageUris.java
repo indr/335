@@ -12,6 +12,8 @@ import android.support.annotation.NonNull;
 
 public abstract class PageUris {
 
+  public static final String AUTHORITY = "ch.indr.threethreefive";
+
   @NonNull public static Uri favorites() {
     return build("/favorites").build();
   }
@@ -77,6 +79,6 @@ public abstract class PageUris {
   }
 
   private static Uri.Builder build(@NonNull String uriString) {
-    return Uri.parse(uriString).buildUpon();
+    return Uri.parse(uriString).buildUpon().authority(AUTHORITY);
   }
 }

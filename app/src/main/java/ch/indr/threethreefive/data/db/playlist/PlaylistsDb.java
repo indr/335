@@ -5,7 +5,7 @@
  * the LICENSE file that was distributed with this source code.
  */
 
-package ch.indr.threethreefive.playlist;
+package ch.indr.threethreefive.data.db.playlist;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -15,7 +15,7 @@ import android.database.sqlite.SQLiteDatabase;
 import java.util.ArrayList;
 import java.util.List;
 
-import ch.indr.threethreefive.playlist.model.PlaylistItem;
+import ch.indr.threethreefive.data.db.playlist.model.PlaylistItem;
 
 public class PlaylistsDb {
   private final PlaylistsDbHelper dbHelper;

@@ -5,7 +5,7 @@
  * the LICENSE file that was distributed with this source code.
  */
 
-package ch.indr.threethreefive.playlist;
+package ch.indr.threethreefive.data.db.playlist;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
@@ -13,8 +13,8 @@ import android.support.annotation.NonNull;
 import java.util.List;
 
 import ch.indr.threethreefive.libs.MediaItem;
-import ch.indr.threethreefive.playlist.model.Playlist;
-import ch.indr.threethreefive.playlist.model.PlaylistItem;
+import ch.indr.threethreefive.data.db.playlist.model.Playlist;
+import ch.indr.threethreefive.data.db.playlist.model.PlaylistItem;
 
 public class PlaylistManager {
 

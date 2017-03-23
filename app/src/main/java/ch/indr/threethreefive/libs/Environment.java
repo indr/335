@@ -16,7 +16,7 @@ import android.support.v4.media.session.MediaControllerCompat.TransportControls;
 import com.example.android.uamp.playback.QueueManager;
 
 import auto.parcel.AutoParcel;
-import ch.indr.threethreefive.favorites.FavoritesStore;
+import ch.indr.threethreefive.data.db.favorites.FavoritesStore;
 import ch.indr.threethreefive.services.PlaybackClient;
 import ch.indr.threethreefive.services.Speaker;
 import ch.indr.threethreefive.services.ToastManager;

@@ -5,7 +5,7 @@
  * the LICENSE file that was distributed with this source code.
  */
 
-package ch.indr.threethreefive.music;
+package ch.indr.threethreefive.data.db.music;
 
 import android.content.ContentResolver;
 import android.content.Context;

@@ -14,8 +14,8 @@ import android.support.annotation.NonNull;
 
 import java.util.List;
 
-import ch.indr.threethreefive.favorites.FavoritesStore;
-import ch.indr.threethreefive.favorites.model.Favorite;
+import ch.indr.threethreefive.data.db.favorites.FavoritesStore;
+import ch.indr.threethreefive.data.db.favorites.model.Favorite;
 import ch.indr.threethreefive.libs.Environment;
 import ch.indr.threethreefive.libs.PageItemsBuilder;
 import ch.indr.threethreefive.libs.pages.Page;

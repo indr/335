@@ -5,7 +5,7 @@
  * the LICENSE file that was distributed with this source code.
  */
 
-package ch.indr.threethreefive.favorites;
+package ch.indr.threethreefive.data.db.favorites;
 
 import android.provider.BaseColumns;
 

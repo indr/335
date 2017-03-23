@@ -17,7 +17,7 @@ import ch.indr.threethreefive.commands.PlayMedia;
 import ch.indr.threethreefive.libs.Environment;
 import ch.indr.threethreefive.libs.MediaItem;
 import ch.indr.threethreefive.libs.PageItemsBuilder;
-import ch.indr.threethreefive.music.MusicStore;
+import ch.indr.threethreefive.data.db.music.MusicStore;
 import ch.indr.threethreefive.libs.pages.Page;
 
 import static ch.indr.threethreefive.libs.PageUris.musicAlbum;

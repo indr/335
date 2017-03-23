@@ -5,13 +5,13 @@
  * the LICENSE file that was distributed with this source code.
  */
 
-package ch.indr.threethreefive.playlist;
+package ch.indr.threethreefive.data.db.playlist;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-import ch.indr.threethreefive.playlist.PlaylistsContract.PlaylistItem;
+import ch.indr.threethreefive.data.db.playlist.PlaylistsContract.PlaylistItem;
 
 public class PlaylistsDbHelper extends SQLiteOpenHelper {
     public static final int DATABASE_VERSION = 1;

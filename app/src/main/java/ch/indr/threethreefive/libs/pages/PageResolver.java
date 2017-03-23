@@ -17,9 +17,9 @@ import java.util.regex.MatchResult;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public abstract class PageResolver {
+import static ch.indr.threethreefive.libs.PageUris.AUTHORITY;
 
-  protected static final String AUTHORITY = "ch.indr.threethreefive";
+public abstract class PageResolver {
 
   protected Uri setDefaultAuthority(Uri uri) {
     return uri.buildUpon().authority(AUTHORITY).build();

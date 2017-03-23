@@ -10,9 +10,11 @@ package ch.indr.threethreefive.pages.music;
 import android.content.UriMatcher;
 import android.net.Uri;
 
-import ch.indr.threethreefive.libs.pages.PageResolver;
 import ch.indr.threethreefive.libs.pages.PageMeta;
+import ch.indr.threethreefive.libs.pages.PageResolver;
 import timber.log.Timber;
+
+import static ch.indr.threethreefive.libs.PageUris.AUTHORITY;
 
 public class MusicPageResolver extends PageResolver {
 

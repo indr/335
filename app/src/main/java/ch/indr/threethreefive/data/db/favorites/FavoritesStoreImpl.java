@@ -5,7 +5,7 @@
  * the LICENSE file that was distributed with this source code.
  */
 
-package ch.indr.threethreefive.favorites;
+package ch.indr.threethreefive.data.db.favorites;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -16,7 +16,7 @@ import android.support.annotation.NonNull;
 import java.util.ArrayList;
 import java.util.List;
 
-import ch.indr.threethreefive.favorites.model.Favorite;
+import ch.indr.threethreefive.data.db.favorites.model.Favorite;
 import ch.indr.threethreefive.libs.PageLink;
 
 public class FavoritesStoreImpl implements FavoritesStore {

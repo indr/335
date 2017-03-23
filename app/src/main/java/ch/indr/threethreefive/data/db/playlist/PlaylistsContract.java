@@ -5,7 +5,7 @@
  * the LICENSE file that was distributed with this source code.
  */
 
-package ch.indr.threethreefive.playlist;
+package ch.indr.threethreefive.data.db.playlist;
 
 import android.provider.BaseColumns;
 

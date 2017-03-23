@@ -5,13 +5,13 @@
  * the LICENSE file that was distributed with this source code.
  */
 
-package ch.indr.threethreefive.favorites;
+package ch.indr.threethreefive.data.db.favorites;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-import static ch.indr.threethreefive.favorites.FavoritesContract.FavoritesEntry;
+import static ch.indr.threethreefive.data.db.favorites.FavoritesContract.FavoritesEntry;
 
 public class FavoritesDbHelper extends SQLiteOpenHelper {
     // If you change the database schema, you must increment the database version.
