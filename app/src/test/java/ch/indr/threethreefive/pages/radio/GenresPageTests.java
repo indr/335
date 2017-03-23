@@ -12,27 +12,20 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 
 import org.junit.Test;
-import org.mockito.ArgumentMatcher;
-import org.mockito.ArgumentMatchers;
 
 import ch.indr.threethreefive.TtfRobolectricTestCase;
-import ch.indr.threethreefive.libs.net.RobospiceManager;
-import ch.indr.threethreefive.radio.pages.GenresPage;
-import ch.indr.threethreefive.data.network.radioBrowser.TagsRequest;
+import ch.indr.threethreefive.data.network.ApiClient;
 
-import static org.mockito.ArgumentMatchers.anyLong;
-import static org.mockito.ArgumentMatchers.anyString;
-import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.verify;
 
 public class GenresPageTests extends TtfRobolectricTestCase {
 
-  private RobospiceManager robospiceManager;
+  private ApiClient apiClient;
 
   @Override public void setUp() throws Exception {
     super.setUp();
 
-    this.robospiceManager = appModule().provideRobospiceManager();
+    this.apiClient = appModule().apiClient();
   }
 
   @Test
@@ -41,10 +34,7 @@ public class GenresPageTests extends TtfRobolectricTestCase {
 
     page.onStart();
 
-    verify(robospiceManager).getFromCacheAndLoadFromNetworkIfExpired(
-        ArgumentMatchers.argThat((ArgumentMatcher<TagsRequest>) argument ->
-            argument.getQuery().equals("hidebroken=true&order=stationcount")),
-        anyString(), anyLong(), eq(page));
+    verify(apiClient).getTags(page);
   }
 
   @NonNull private GenresPage createPage() {

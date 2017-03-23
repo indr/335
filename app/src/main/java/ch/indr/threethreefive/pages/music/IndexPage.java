@@ -5,30 +5,36 @@
  * the LICENSE file that was distributed with this source code.
  */
 
-package ch.indr.threethreefive.pages.errors;
+package ch.indr.threethreefive.pages.music;
 
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 
-import java.util.List;
-
+import ch.indr.threethreefive.R;
 import ch.indr.threethreefive.libs.Environment;
-import ch.indr.threethreefive.libs.PageItem;
+import ch.indr.threethreefive.libs.PageItemsBuilder;
 import ch.indr.threethreefive.libs.pages.Page;
 
-public class NotFound extends Page {
+public class IndexPage extends Page {
 
-  public NotFound(Environment environment) {
+  public IndexPage(Environment environment) {
     super(environment);
   }
 
   @Override public void onCreate(@NonNull Context context, @NonNull Uri uri, Bundle bundle) {
     super.onCreate(context, uri, bundle);
 
-    setTitle("Not Found");
-    final List<PageItem> pageItems = pageItemsBuilder().addText("Page not found: " + uri.toString()).build();
-    setPageItems(pageItems);
+    setTitle(context.getResources().getString(R.string.mainmenu_music_title));
+
+    final PageItemsBuilder builder = pageItemsBuilder();
+
+    builder.addLink("/music/artists", "Artists");
+    builder.addLink("/music/albums", "Albums");
+    builder.addLink("/music/genres", "Genres");
+    builder.addLink("/music/songs", "Songs");
+
+    setPageItems(builder);
   }
 }

@@ -26,7 +26,7 @@ import ch.indr.threethreefive.libs.PageLink;
 import ch.indr.threethreefive.libs.PageUris;
 import ch.indr.threethreefive.libs.utils.MediaDescriptionUtils;
 import ch.indr.threethreefive.libs.utils.PlaybackStateUtils;
-import ch.indr.threethreefive.navigation.Page;
+import ch.indr.threethreefive.libs.pages.Page;
 import ch.indr.threethreefive.services.PlaybackClient;
 import ch.indr.threethreefive.services.UiModeManager;
 

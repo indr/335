@@ -18,11 +18,11 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.Stack;
 
 import ch.indr.threethreefive.ThreeThreeFiveApp;
-import ch.indr.threethreefive.navigation.AbstractPageResolver;
-import ch.indr.threethreefive.navigation.Page;
-import ch.indr.threethreefive.navigation.PageMeta;
-import ch.indr.threethreefive.navigation.PageRequest;
-import ch.indr.threethreefive.navigation.PageResolver;
+import ch.indr.threethreefive.libs.pages.Page;
+import ch.indr.threethreefive.libs.pages.PageResolver;
+import ch.indr.threethreefive.libs.pages.PageMeta;
+import ch.indr.threethreefive.libs.pages.PageRequest;
+import ch.indr.threethreefive.pages.RootPageResolver;
 import ch.indr.threethreefive.pages.errors.NotFound;
 import timber.log.Timber;
 
@@ -39,18 +39,18 @@ public class PageManager {
   private static Page fetch(final @NonNull Context context, final @NonNull Uri pageUri, final @Nullable String pageTitle) {
     Timber.i("Fetching page for %s", pageUri.toString());
 
-    final ch.indr.threethreefive.navigation.Page page;
+    final Page page;
     final Environment environment = ((ThreeThreeFiveApp) context.getApplicationContext()).component().environment();
 
     try {
       PageMeta pageMeta = null;
       try {
-        pageMeta = new PageResolver().resolve(pageUri);
-      } catch (AbstractPageResolver.PageNotFoundException ex) {
+        pageMeta = new RootPageResolver().resolve(pageUri);
+      } catch (PageResolver.PageNotFoundException ex) {
         pageMeta = new PageMeta(NotFound.class, pageUri, new Bundle());
       }
       final Constructor constructor = pageMeta.getClazz().getConstructor(Environment.class);
-      page = (ch.indr.threethreefive.navigation.Page) constructor.newInstance(environment);
+      page = (Page) constructor.newInstance(environment);
       page.setTitle(pageTitle);
       page.onCreate(context, pageMeta.getUri(), pageMeta.getBundle());
       page.onStart();

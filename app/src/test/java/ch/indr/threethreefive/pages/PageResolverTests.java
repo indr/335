@@ -13,30 +13,31 @@ import android.os.Bundle;
 import org.junit.Test;
 
 import ch.indr.threethreefive.TtfRobolectricTestCase;
-import ch.indr.threethreefive.navigation.AbstractPageResolver;
-import ch.indr.threethreefive.navigation.PageMeta;
-import ch.indr.threethreefive.navigation.PageResolver;
-import ch.indr.threethreefive.radio.pages.CountriesPage;
-import ch.indr.threethreefive.radio.pages.CountryGenrePage;
-import ch.indr.threethreefive.radio.pages.CountryGenresPage;
-import ch.indr.threethreefive.radio.pages.CountryStationsPage;
-import ch.indr.threethreefive.radio.pages.GenrePage;
-import ch.indr.threethreefive.radio.pages.GenresPage;
-import ch.indr.threethreefive.radio.pages.LanguagePage;
-import ch.indr.threethreefive.radio.pages.LanguagesPage;
-import ch.indr.threethreefive.radio.pages.StationGenresPage;
-import ch.indr.threethreefive.radio.pages.StationPage;
+import ch.indr.threethreefive.libs.pages.PageResolver;
+import ch.indr.threethreefive.libs.pages.PageMeta;
+import ch.indr.threethreefive.pages.playlist.QueuePage;
+import ch.indr.threethreefive.pages.radio.IndexPage;
+import ch.indr.threethreefive.pages.radio.CountriesPage;
+import ch.indr.threethreefive.pages.radio.CountryGenrePage;
+import ch.indr.threethreefive.pages.radio.CountryGenresPage;
+import ch.indr.threethreefive.pages.radio.CountryStationsPage;
+import ch.indr.threethreefive.pages.radio.GenrePage;
+import ch.indr.threethreefive.pages.radio.GenresPage;
+import ch.indr.threethreefive.pages.radio.LanguagePage;
+import ch.indr.threethreefive.pages.radio.LanguagesPage;
+import ch.indr.threethreefive.pages.radio.StationGenresPage;
+import ch.indr.threethreefive.pages.radio.StationPage;
 import rx.functions.Action1;
 
 public class PageResolverTests extends TtfRobolectricTestCase {
 
-  @Test(expected = AbstractPageResolver.PageNotFoundException.class)
+  @Test(expected = PageResolver.PageNotFoundException.class)
   public void resolve_withInvalidUri_throwsPageNotFound() {
-    final PageResolver pageResolver = new PageResolver();
+    final RootPageResolver pageResolver = new RootPageResolver();
 
     try {
       pageResolver.resolve(Uri.parse("/a/b"));
-    } catch (AbstractPageResolver.PageNotFoundException ex) {
+    } catch (PageResolver.PageNotFoundException ex) {
       assertEquals("Page not found: //ch.indr.threethreefive/a/b", ex.getMessage());
       throw ex;
     }
@@ -45,12 +46,12 @@ public class PageResolverTests extends TtfRobolectricTestCase {
   @Test
   public void resolve_withValidUri_returnsPageMeta() {
     assertResolve("/", HomePage.class);
-    assertResolve("/favorites", ch.indr.threethreefive.favorites.pages.IndexPage.class);
-    assertResolve("/music", ch.indr.threethreefive.music.pages.IndexPage.class);
+    assertResolve("/favorites", ch.indr.threethreefive.pages.favorites.IndexPage.class);
+    assertResolve("/music", ch.indr.threethreefive.pages.music.IndexPage.class);
     assertResolve("/now-playing", NowPlayingPage.class);
-    assertResolve("/playlist", ch.indr.threethreefive.playlist.pages.QueuePage.class);
+    assertResolve("/playlist", QueuePage.class);
     assertResolve("/preferences", PreferencesPage.class);
-    assertResolve("/radio", ch.indr.threethreefive.radio.pages.IndexPage.class);
+    assertResolve("/radio", IndexPage.class);
 
     assertResolve("/radio/countries", CountriesPage.class);
     assertResolve("/radio/countries/New%20Zealand/stations", CountryStationsPage.class, b -> b.putString("countryId", "New Zealand"));
@@ -68,7 +69,7 @@ public class PageResolverTests extends TtfRobolectricTestCase {
   }
 
   private PageMeta assertResolve(String uri, Class<?> pageClass) {
-    final PageResolver pageResolver = new PageResolver();
+    final RootPageResolver pageResolver = new RootPageResolver();
     final PageMeta pageMeta = pageResolver.resolve(Uri.parse(uri));
 
     assertEquals(Uri.parse("//ch.indr.threethreefive" + uri), pageMeta.getUri());

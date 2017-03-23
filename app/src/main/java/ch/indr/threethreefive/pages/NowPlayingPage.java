@@ -18,7 +18,7 @@ import ch.indr.threethreefive.libs.Environment;
 import ch.indr.threethreefive.libs.PageItemsBuilder;
 import ch.indr.threethreefive.libs.PageLink;
 import ch.indr.threethreefive.libs.utils.StringUtils;
-import ch.indr.threethreefive.navigation.Page;
+import ch.indr.threethreefive.libs.pages.Page;
 import ch.indr.threethreefive.services.PlaybackClient;
 
 import static android.support.v4.media.MediaMetadataCompat.METADATA_KEY_ALBUM;

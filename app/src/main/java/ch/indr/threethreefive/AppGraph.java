@@ -8,10 +8,10 @@
 package ch.indr.threethreefive;
 
 import ch.indr.threethreefive.libs.Environment;
-import ch.indr.threethreefive.navigation.SpiceBasePage;
+import ch.indr.threethreefive.libs.pages.SpiceBasePage;
 import ch.indr.threethreefive.pages.HomePage;
 import ch.indr.threethreefive.pages.PreferencesPage;
-import ch.indr.threethreefive.radio.pages.StationPage;
+import ch.indr.threethreefive.pages.radio.StationPage;
 import ch.indr.threethreefive.ui.activities.ButtonGuideActivity;
 import ch.indr.threethreefive.ui.activities.ListGuideActivity;
 import ch.indr.threethreefive.ui.activities.NowPlayingProxyActivity;

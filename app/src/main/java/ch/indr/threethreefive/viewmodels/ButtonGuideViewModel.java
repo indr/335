@@ -19,7 +19,7 @@ import ch.indr.threethreefive.libs.PageLink;
 import ch.indr.threethreefive.libs.preferences.IntPreferenceType;
 import ch.indr.threethreefive.libs.utils.ObjectUtils;
 import ch.indr.threethreefive.libs.utils.UriUtils;
-import ch.indr.threethreefive.navigation.Page;
+import ch.indr.threethreefive.libs.pages.Page;
 import ch.indr.threethreefive.services.Speaker;
 import ch.indr.threethreefive.ui.activities.ButtonGuideActivity;
 import ch.indr.threethreefive.viewmodels.inputs.ButtonGuideViewModelInputs;

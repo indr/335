@@ -20,7 +20,6 @@ import java.util.HashMap;
 import java.util.List;
 
 public class MusicStore {
-  private static final String TAG = "MusicStore";
 
   private final Context context;
   private HashMap<String, String> albumArts;

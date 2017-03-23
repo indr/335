@@ -5,30 +5,27 @@
  * the LICENSE file that was distributed with this source code.
  */
 
-package ch.indr.threethreefive.pages.errors;
+package ch.indr.threethreefive.pages.radio;
 
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 
-import java.util.List;
-
 import ch.indr.threethreefive.libs.Environment;
-import ch.indr.threethreefive.libs.PageItem;
-import ch.indr.threethreefive.libs.pages.Page;
+import ch.indr.threethreefive.libs.pages.SpiceBasePage;
 
-public class NotFound extends Page {
+public class CountryGenrePage extends SpiceBasePage {
 
-  public NotFound(Environment environment) {
+  public CountryGenrePage(Environment environment) {
     super(environment);
   }
 
   @Override public void onCreate(@NonNull Context context, @NonNull Uri uri, Bundle bundle) {
     super.onCreate(context, uri, bundle);
+    component().inject(this);
 
-    setTitle("Not Found");
-    final List<PageItem> pageItems = pageItemsBuilder().addText("Page not found: " + uri.toString()).build();
-    setPageItems(pageItems);
+    getUriParam("countryId");
+    getUriParam("genreId");
   }
 }

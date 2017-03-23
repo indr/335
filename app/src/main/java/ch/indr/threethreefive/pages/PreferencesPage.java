@@ -18,7 +18,7 @@ import ch.indr.threethreefive.libs.Build;
 import ch.indr.threethreefive.libs.Environment;
 import ch.indr.threethreefive.libs.PageCommand;
 import ch.indr.threethreefive.libs.PageItemsBuilder;
-import ch.indr.threethreefive.navigation.Page;
+import ch.indr.threethreefive.libs.pages.Page;
 import ch.indr.threethreefive.services.Speaker;
 import ch.indr.threethreefive.services.UiModeManager;
 

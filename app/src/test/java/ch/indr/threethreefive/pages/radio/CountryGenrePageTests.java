@@ -14,7 +14,6 @@ import android.support.annotation.NonNull;
 import org.junit.Test;
 
 import ch.indr.threethreefive.TtfRobolectricTestCase;
-import ch.indr.threethreefive.radio.pages.CountryGenrePage;
 
 public class CountryGenrePageTests extends TtfRobolectricTestCase {
 

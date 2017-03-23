@@ -33,7 +33,7 @@ import ch.indr.threethreefive.libs.net.RobospiceManagerImpl;
 import ch.indr.threethreefive.libs.preferences.IntPreferenceType;
 import ch.indr.threethreefive.libs.qualifiers.ApplicationContext;
 import ch.indr.threethreefive.libs.qualifiers.AutoRepeatModePreference;
-import ch.indr.threethreefive.navigation.PageResolver;
+import ch.indr.threethreefive.pages.RootPageResolver;
 import ch.indr.threethreefive.playlist.PlaylistManager;
 import ch.indr.threethreefive.services.PlaybackAnnouncer;
 import ch.indr.threethreefive.services.PlaybackAnnouncerImpl;
@@ -128,8 +128,8 @@ public class AppModule {
 
   @Provides
   @Singleton
-  PageResolver providePageResolver() {
-    return new PageResolver();
+  RootPageResolver providePageResolver() {
+    return new RootPageResolver();
   }
 
   @Provides

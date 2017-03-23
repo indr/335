@@ -15,7 +15,6 @@ import org.junit.Test;
 
 import ch.indr.threethreefive.TtfRobolectricTestCase;
 import ch.indr.threethreefive.data.network.ApiClient;
-import ch.indr.threethreefive.radio.pages.CountryGenresPage;
 
 import static org.mockito.Mockito.verify;
 
