@@ -9,22 +9,20 @@ package ch.indr.threethreefive.data.network.radioBrowser.model;
 
 import android.support.annotation.NonNull;
 
-import com.google.api.client.util.Key;
-
 import java.util.Comparator;
 
-public class Tag {
+public class Genre {
 
-  @Key private String name;
+  private String name;
 
-  @Key private String value;
+  private String value;
 
-  @Key private int stationcount;
+  private int stationcount;
 
-  public Tag() {
+  public Genre() {
   }
 
-  public Tag(final @NonNull String name, final int stationcount) {
+  public Genre(final @NonNull String name, final int stationcount) {
     this.name = name;
     this.value = name;
     this.stationcount = stationcount;
@@ -42,15 +40,15 @@ public class Tag {
     return stationcount;
   }
 
-  public static class NameComparator implements Comparator<Tag> {
-    @Override public int compare(Tag tag1, Tag tag2) {
-      return tag1.getName().compareTo(tag2.getName());
+  public static class NameComparator implements Comparator<Genre> {
+    @Override public int compare(Genre genre1, Genre genre2) {
+      return genre1.getName().compareTo(genre2.getName());
     }
   }
 
-  public static class StationCountComparator implements Comparator<Tag> {
-    @Override public int compare(Tag tag1, Tag tag2) {
-      return tag2.getStationCount() - tag1.getStationCount();
+  public static class StationCountComparator implements Comparator<Genre> {
+    @Override public int compare(Genre genre1, Genre genre2) {
+      return genre2.getStationCount() - genre1.getStationCount();
     }
   }
 }

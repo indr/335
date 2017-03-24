@@ -11,7 +11,8 @@ import com.octo.android.robospice.persistence.exception.SpiceException;
 import com.octo.android.robospice.request.listener.RequestListener;
 
 public abstract class ResponseTransformer<TResult, TResponse> implements RequestListener<TResult> {
-  private final RequestListener<TResponse> listener;
+
+  protected final RequestListener<TResponse> listener;
 
   public ResponseTransformer(RequestListener<TResponse> listener) {
     this.listener = listener;

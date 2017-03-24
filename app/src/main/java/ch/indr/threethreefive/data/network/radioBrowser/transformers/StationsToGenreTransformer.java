@@ -14,17 +14,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import ch.indr.threethreefive.data.network.radioBrowser.model.Genre;
 import ch.indr.threethreefive.data.network.radioBrowser.model.Station;
-import ch.indr.threethreefive.data.network.radioBrowser.model.Tag;
 import ch.indr.threethreefive.libs.net.ResponseTransformer;
 
-public class StationsToTagsTransformer extends ResponseTransformer<Station[], List<Tag>> {
+public class StationsToGenreTransformer extends ResponseTransformer<Station[], List<Genre>> {
 
-  private final RequestListener<List<Tag>> listener;
-
-  public StationsToTagsTransformer(RequestListener<List<Tag>> listener) {
+  public StationsToGenreTransformer(RequestListener<List<Genre>> listener) {
     super(listener);
-    this.listener = listener;
   }
 
   @Override public void onRequestSuccess(Station[] stations) {
@@ -40,9 +37,9 @@ public class StationsToTagsTransformer extends ResponseTransformer<Station[], Li
       }
     }
 
-    List<Tag> result = new ArrayList<>(map.size());
+    List<Genre> result = new ArrayList<>(map.size());
     for (Map.Entry<String, Integer> entry : map.entrySet()) {
-      result.add(new Tag(entry.getKey(), entry.getValue()));
+      result.add(new Genre(entry.getKey(), entry.getValue()));
     }
     listener.onRequestSuccess(result);
   }

@@ -19,18 +19,18 @@ import java.util.List;
 import java.util.Locale;
 
 import ch.indr.threethreefive.R;
+import ch.indr.threethreefive.data.network.radioBrowser.model.Genre;
 import ch.indr.threethreefive.libs.Environment;
 import ch.indr.threethreefive.libs.PageItemsBuilder;
 import ch.indr.threethreefive.libs.PageItemsExpander;
 import ch.indr.threethreefive.libs.PageUris;
 import ch.indr.threethreefive.libs.pages.SpiceBasePage;
-import ch.indr.threethreefive.data.network.radioBrowser.model.Tag;
 
-public class CountryGenresPage extends SpiceBasePage implements RequestListener<List<Tag>> {
+public class CountryGenresPage extends SpiceBasePage implements RequestListener<List<Genre>> {
 
   private String countryId;
 
-  private PageItemsExpander<Tag> expander = new PageItemsExpander<>();
+  private PageItemsExpander<Genre> expander = new PageItemsExpander<>();
 
   public CountryGenresPage(Environment environment) {
     super(environment);
@@ -54,7 +54,7 @@ public class CountryGenresPage extends SpiceBasePage implements RequestListener<
     handle(spiceException);
   }
 
-  @Override public void onRequestSuccess(List<Tag> response) {
+  @Override public void onRequestSuccess(List<Genre> response) {
     if (response == null) {
       handle(getString(R.string.no_genres_found_error));
       return;
@@ -74,20 +74,20 @@ public class CountryGenresPage extends SpiceBasePage implements RequestListener<
     setPageItems(builder);
   }
 
-  private void addGenreLinks(PageItemsBuilder builder, List<Tag> tags) {
-    if (tags.size() == 0) {
+  private void addGenreLinks(PageItemsBuilder builder, List<Genre> genres) {
+    if (genres.size() == 0) {
       builder.addText(getString(R.string.no_genres_found));
       return;
     }
 
-    for (Tag each : tags) {
+    for (Genre each : genres) {
       final String subtitle = String.format(Locale.US, "%d radio stations", each.getStationCount());
       builder.addLink(PageUris.radioCountryGenre(countryId, each.getValue()),
           each.getName(), subtitle, each.getName() + ", " + subtitle);
     }
   }
 
-  private void populateLists(List<Tag> tags) {
-    expander.add(tags, getString(R.string.show_top_genres));
+  private void populateLists(List<Genre> genres) {
+    expander.add(genres, getString(R.string.show_top_genres));
   }
 }

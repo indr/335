@@ -29,12 +29,12 @@ public class GenresPageTests extends TtfRobolectricTestCase {
   }
 
   @Test
-  public void onStart_executesTagsRequest() {
+  public void onStart_getsGenres() {
     final GenresPage page = createPage();
 
     page.onStart();
 
-    verify(apiClient).getTags(page);
+    verify(apiClient).getGenres(page);
   }
 
   @NonNull private GenresPage createPage() {

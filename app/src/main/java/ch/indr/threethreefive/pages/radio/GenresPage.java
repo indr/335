@@ -22,16 +22,16 @@ import java.util.List;
 import java.util.Locale;
 
 import ch.indr.threethreefive.R;
+import ch.indr.threethreefive.data.network.radioBrowser.model.Genre;
 import ch.indr.threethreefive.libs.Environment;
 import ch.indr.threethreefive.libs.PageItemsBuilder;
 import ch.indr.threethreefive.libs.PageItemsExpander;
 import ch.indr.threethreefive.libs.PageUris;
-import ch.indr.threethreefive.libs.utils.CollectionUtils;
 import ch.indr.threethreefive.libs.pages.SpiceBasePage;
-import ch.indr.threethreefive.data.network.radioBrowser.model.Tag;
+import ch.indr.threethreefive.libs.utils.CollectionUtils;
 import timber.log.Timber;
 
-public class GenresPage extends SpiceBasePage implements RequestListener<Tag[]> {
+public class GenresPage extends SpiceBasePage implements RequestListener<List<Genre>> {
 
   private static final int MAX_NUMBER_OF_TOP_GENRES = 15;
   private static final int MAX_NUMBER_OF_MORE_GENRES = 50;
@@ -40,7 +40,7 @@ public class GenresPage extends SpiceBasePage implements RequestListener<Tag[]> 
   private List<String> excludedFromTopGenres;
   private List<String> excludedFromMoreGenres;
 
-  private PageItemsExpander<Tag> expander = new PageItemsExpander<>();
+  private PageItemsExpander<Genre> expander = new PageItemsExpander<>();
 
   public GenresPage(Environment environment) {
     super(environment);
@@ -59,14 +59,14 @@ public class GenresPage extends SpiceBasePage implements RequestListener<Tag[]> 
   @Override public void onStart() {
     super.onStart();
 
-    apiClient.getTags(this);
+    apiClient.getGenres(this);
   }
 
   @Override public void onRequestFailure(SpiceException spiceException) {
     handle(spiceException);
   }
 
-  @Override public void onRequestSuccess(Tag[] response) {
+  @Override public void onRequestSuccess(List<Genre> response) {
     if (response == null) {
       handle(getString(R.string.no_genres_found_error));
       return;
@@ -84,62 +84,62 @@ public class GenresPage extends SpiceBasePage implements RequestListener<Tag[]> 
     setPageItems(builder);
   }
 
-  private void addGenreLinks(PageItemsBuilder builder, List<Tag> genres) {
+  private void addGenreLinks(PageItemsBuilder builder, List<Genre> genres) {
     if (genres.size() == 0) {
       builder.addText(getString(R.string.no_genres_found));
       return;
     }
 
-    for (Tag each : genres) {
+    for (Genre each : genres) {
       final String subtitle = String.format(Locale.US, "%d radio stations", each.getStationCount());
       builder.addLink(PageUris.radioGenre(each.getValue()),
           each.getName(), subtitle, each.getName() + ", " + subtitle);
     }
   }
 
-  private void populateLists(@NonNull Tag[] response) {
-    Timber.d("populateLists tags %d, %s", response.length, this.toString());
+  private void populateLists(@NonNull List<Genre> response) {
+    Timber.d("populateLists genres %d, %s", response.size(), this.toString());
 
     Timber.d("Filtering min station count and building all genres list, %s", this.toString());
-    List<Tag> topGenres = new ArrayList<>();
-    List<Tag> moreGenres = new ArrayList<>();
-    List<Tag> allGenres = new ArrayList<>();
+    List<Genre> topGenres = new ArrayList<>();
+    List<Genre> moreGenres = new ArrayList<>();
+    List<Genre> allGenres = new ArrayList<>();
 
-    for (Tag tag : response) {
-      final int stationCount = tag.getStationCount();
+    for (Genre genre : response) {
+      final int stationCount = genre.getStationCount();
       if (stationCount < MIN_STATION_COUNT_FOR_ALL_GENRES) {
         continue;
       }
-      allGenres.add(tag);
+      allGenres.add(genre);
 
       // Performance approximation: Instead of sorting all genres by station count, we put
       // candidates for top and more genres lists
       if (stationCount > 100) {
-        topGenres.add(tag);
+        topGenres.add(genre);
       }
       if (stationCount > 40) {
-        moreGenres.add(tag);
+        moreGenres.add(genre);
       }
     }
 
     int numberOfExcludes = excludedFromMoreGenres.size() + excludedFromTopGenres.size();
 
     Timber.d("Building top genres list, %s", this.toString());
-    Collections.sort(topGenres, new Tag.StationCountComparator());
+    Collections.sort(topGenres, new Genre.StationCountComparator());
     topGenres = topGenres.subList(0, Math.min(topGenres.size(), MAX_NUMBER_OF_TOP_GENRES + numberOfExcludes));
     topGenres = CollectionUtils.reject(topGenres, this::isExcludedFromTopGenres);
     topGenres = topGenres.subList(0, Math.min(topGenres.size(), MAX_NUMBER_OF_TOP_GENRES));
 
     Timber.d("Building more genres list, %s", this.toString());
-    Collections.sort(moreGenres, new Tag.StationCountComparator());
+    Collections.sort(moreGenres, new Genre.StationCountComparator());
     moreGenres = moreGenres.subList(0, Math.min(moreGenres.size(), MAX_NUMBER_OF_MORE_GENRES + numberOfExcludes));
     moreGenres = CollectionUtils.reject(moreGenres, this::isExcludedFromMoreGenres);
     moreGenres = moreGenres.subList(0, Math.min(moreGenres.size(), MAX_NUMBER_OF_MORE_GENRES));
 
     Timber.d("Sorting lists by name");
-    Collections.sort(topGenres, new Tag.NameComparator());
-    Collections.sort(moreGenres, new Tag.NameComparator());
-    Collections.sort(allGenres, new Tag.NameComparator());
+    Collections.sort(topGenres, new Genre.NameComparator());
+    Collections.sort(moreGenres, new Genre.NameComparator());
+    Collections.sort(allGenres, new Genre.NameComparator());
 
     Timber.d("top %d, more %d, all %d, %s", topGenres.size(), moreGenres.size(), allGenres.size(), this.toString());
 
@@ -148,12 +148,12 @@ public class GenresPage extends SpiceBasePage implements RequestListener<Tag[]> 
     expander.add(allGenres, getString(R.string.show_all_genres));
   }
 
-  private boolean isExcludedFromTopGenres(Tag tag) {
-    return excludedFromTopGenres.contains(tag.getValue())
-        || isExcludedFromMoreGenres(tag);
+  private boolean isExcludedFromTopGenres(Genre genre) {
+    return excludedFromTopGenres.contains(genre.getValue())
+        || isExcludedFromMoreGenres(genre);
   }
 
-  private boolean isExcludedFromMoreGenres(Tag tag) {
-    return excludedFromMoreGenres.contains(tag.getValue());
+  private boolean isExcludedFromMoreGenres(Genre genre) {
+    return excludedFromMoreGenres.contains(genre.getValue());
   }
 }

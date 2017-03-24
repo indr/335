@@ -28,18 +28,18 @@ public class StationsRequest extends RadioBrowserInfoRequest<Station[]> {
     this.url = url;
   }
 
-  public static StationsRequest byCountry(String country) {
+  public static StationsRequest byCountry(@NonNull String country) {
     String url = BASE_URL + "stations/bycountryexact/" + country;
     return new StationsRequest(new GenericUrl(url));
   }
 
-  public static StationsRequest byLanguage(String language) {
+  public static StationsRequest byLanguage(@NonNull String language) {
     String url = BASE_URL + "stations/bylanguageexact/" + language;
     return new StationsRequest(new GenericUrl(url));
   }
 
-  public static StationsRequest byTag(String tag) {
-    String url = BASE_URL + "stations/bytagexact/" + tag;
+  public static StationsRequest byGenre(@NonNull String genre) {
+    String url = BASE_URL + "stations/bytagexact/" + genre;
     return new StationsRequest(new GenericUrl(url));
   }
 
