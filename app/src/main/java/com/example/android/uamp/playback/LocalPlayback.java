@@ -165,7 +165,16 @@ public class LocalPlayback implements PlaybackType, AudioManager.OnAudioFocusCha
       mCurrentMediaId = mediaId;
     }
 
+    // If playback is resumed from STATE_STOPPED, start playback from the beginning of the media file.
+    // This is a quickfix for the case where handleStopRequest sets mCurrentPosition to
+    // the end of the file when onCompletion is called.
+    // Maybe we should set mCurrentPosition to zero in onStop?
+    if (mState == PlaybackStateCompat.STATE_STOPPED) {
+      mCurrentPosition = 0;
+    }
+
     if (mState == PlaybackStateCompat.STATE_PAUSED && !mediaHasChanged && mMediaPlayer != null) {
+      Timber.d("Resuming playback from state %d", mState);
       configMediaPlayerState();
     } else {
       mState = PlaybackStateCompat.STATE_STOPPED;
@@ -404,8 +413,6 @@ public class LocalPlayback implements PlaybackType, AudioManager.OnAudioFocusCha
   @Override
   public void onCompletion(MediaPlayer player) {
     Timber.d("onCompletion from MediaPlayer");
-
-    mCurrentPosition = 0;
 
     // The media player finished playing the current song, so we go ahead
     // and start the next.
