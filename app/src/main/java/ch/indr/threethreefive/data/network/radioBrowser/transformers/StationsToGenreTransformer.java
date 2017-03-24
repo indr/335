@@ -28,6 +28,7 @@ public class StationsToGenreTransformer extends ResponseTransformer<Station[], L
     final Map<String, Integer> map = new HashMap<String, Integer>();
     for (Station station : stations) {
       final String[] tags = station.getTags();
+      if (tags == null) continue;
       for (String tag : tags) {
         if (map.containsKey(tag)) {
           map.put(tag, map.get(tag) + 1);

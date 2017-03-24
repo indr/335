@@ -8,26 +8,35 @@
 package ch.indr.threethreefive.libs.utils;
 
 public final class StringUtils {
+
   private StringUtils() {
   }
 
-  public static boolean isEmpty(String string) {
+  public static boolean isEmpty(final String string) {
     return string == null || string.isEmpty();
   }
 
-  public static boolean isEmpty(CharSequence string) {
+  public static boolean isEmpty(final CharSequence string) {
     return string == null || string.length() == 0;
   }
 
-  public static boolean isNotEmpty(String string) {
+  public static boolean isNotEmpty(final String string) {
     return !isEmpty(string);
   }
 
-  public static boolean isNotEmpty(CharSequence string) {
+  public static boolean isNotEmpty(final CharSequence string) {
     return !isEmpty(string);
   }
 
-  public static String getString(CharSequence value) {
+  public static String getString(final CharSequence value) {
     return value == null ? null : value.toString();
+  }
+
+  public static String join(final Object[] array, final String separator) {
+    return org.apache.commons.lang3.StringUtils.join(array, separator);
+  }
+
+  public static String join(final Iterable<?> iterable, final String separator) {
+    return org.apache.commons.lang3.StringUtils.join(iterable, separator);
   }
 }

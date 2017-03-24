@@ -48,9 +48,12 @@ public class Tag {
     }
   }
 
-  public static class StationCountComparator implements Comparator<Tag> {
+  public static class StationCountComparator extends NameComparator {
     @Override public int compare(Tag tag1, Tag tag2) {
-      return tag2.getStationCount() - tag1.getStationCount();
+      int result = tag2.getStationCount() - tag1.getStationCount();
+      if (result != 0) return result;
+
+      return super.compare(tag1, tag2);
     }
   }
 }

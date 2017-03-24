@@ -9,8 +9,6 @@ package ch.indr.threethreefive.data.network.radioBrowser.model;
 
 import com.google.api.client.util.Key;
 
-import org.apache.commons.lang3.StringUtils;
-
 import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -18,6 +16,7 @@ import java.util.Date;
 import java.util.List;
 
 import ch.indr.threethreefive.data.network.radioBrowser.RadioBrowserInfoUtils;
+import ch.indr.threethreefive.libs.utils.StringUtils;
 
 public class Station {
 
@@ -88,7 +87,7 @@ public class Station {
   }
 
   public String[] getTags() {
-    return tags == null ? null : tags.split(",");
+    return StringUtils.isEmpty(tags) ? null : tags.split(",");
   }
 
   public String getCountry() {

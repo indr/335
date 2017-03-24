@@ -15,6 +15,7 @@ import android.support.annotation.NonNull;
 import com.octo.android.robospice.persistence.exception.SpiceException;
 import com.octo.android.robospice.request.listener.RequestListener;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 
@@ -25,8 +26,12 @@ import ch.indr.threethreefive.libs.PageItemsBuilder;
 import ch.indr.threethreefive.libs.PageItemsExpander;
 import ch.indr.threethreefive.libs.PageUris;
 import ch.indr.threethreefive.libs.pages.SpiceBasePage;
+import ch.indr.threethreefive.libs.utils.CollectionUtils;
 
 public class CountryGenresPage extends SpiceBasePage implements RequestListener<List<Genre>> {
+
+  private static final int MAX_NUMBER_OF_TOP_GENRES = 15;
+  private static final int MAX_NUMBER_OF_MORE_GENRES = 50;
 
   private String countryId;
 
@@ -88,6 +93,17 @@ public class CountryGenresPage extends SpiceBasePage implements RequestListener<
   }
 
   private void populateLists(List<Genre> genres) {
-    expander.add(genres, getString(R.string.show_top_genres));
+    Collections.sort(genres, new Genre.StationCountComparator());
+
+    List<Genre> topGenres = CollectionUtils.slice(genres, 0, Math.min(genres.size(), MAX_NUMBER_OF_TOP_GENRES));
+    List<Genre> moreGenres = CollectionUtils.slice(genres, 0, Math.min(genres.size(), MAX_NUMBER_OF_MORE_GENRES));
+
+    Collections.sort(genres, new Genre.NameComparator());
+    Collections.sort(topGenres, new Genre.NameComparator());
+    Collections.sort(moreGenres, new Genre.NameComparator());
+
+    expander.add(topGenres, getString(R.string.show_top_genres));
+    expander.add(moreGenres, getString(R.string.show_more_genres));
+    expander.add(genres, getString(R.string.show_all_genres));
   }
 }

@@ -46,9 +46,12 @@ public class Genre {
     }
   }
 
-  public static class StationCountComparator implements Comparator<Genre> {
+  public static class StationCountComparator extends NameComparator {
     @Override public int compare(Genre genre1, Genre genre2) {
-      return genre2.getStationCount() - genre1.getStationCount();
+      int result = genre2.getStationCount() - genre1.getStationCount();
+      if (result != 0) return result;
+
+      return super.compare(genre1, genre2);
     }
   }
 }
