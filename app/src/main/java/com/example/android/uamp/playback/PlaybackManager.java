@@ -15,7 +15,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.media.session.MediaSessionCompat;
 import android.support.v4.media.session.PlaybackStateCompat;
 
-import com.example.android.uamp.utils.MediaIDHelper;
+import ch.indr.threethreefive.libs.MediaIdHelper;
 
 import ch.indr.threethreefive.R;
 import timber.log.Timber;
@@ -155,7 +155,7 @@ public class PlaybackManager implements PlaybackType.Callback {
     if (mediaId == null) {
       return;
     }
-    String musicId = MediaIDHelper.extractMusicIDFromMediaID(mediaId);
+    String musicId = MediaIdHelper.extractMusicIDFromMediaID(mediaId);
     int favoriteIcon = isFavorite(musicId) ?
         R.drawable.ic_star_on : R.drawable.ic_star_off;
     Timber.d("updatePlaybackState, setting Favorite custom action of music " + musicId + " current favorite=" + isFavorite(musicId));

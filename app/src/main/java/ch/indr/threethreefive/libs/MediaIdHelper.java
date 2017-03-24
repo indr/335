@@ -1,20 +1,11 @@
 /*
- * Copyright (C) 2014 The Android Open Source Project
+ * Copyright (c) 2017 Reto Inderbitzin (mail@indr.ch)
  *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ * For the full copyright and license information, please view
+ * the LICENSE file that was distributed with this source code.
  */
 
-package com.example.android.uamp.utils;
+package ch.indr.threethreefive.libs;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
@@ -28,7 +19,7 @@ import java.util.Arrays;
 /**
  * Utility class to help on queue related tasks.
  */
-public class MediaIDHelper {
+public class MediaIdHelper {
 
   // Media IDs used on browseable items of MediaBrowser
   public static final String MEDIA_ID_EMPTY_ROOT = "__EMPTY_ROOT__";
@@ -155,7 +146,7 @@ public class MediaIDHelper {
     if (controller != null && controller.getMetadata() != null) {
       String currentPlayingMediaId = controller.getMetadata().getDescription()
           .getMediaId();
-      String itemMusicId = MediaIDHelper.extractMusicIDFromMediaID(
+      String itemMusicId = MediaIdHelper.extractMusicIDFromMediaID(
           mediaItem.getDescription().getMediaId());
       if (currentPlayingMediaId != null
           && TextUtils.equals(currentPlayingMediaId, itemMusicId)) {

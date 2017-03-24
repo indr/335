@@ -38,7 +38,7 @@ import ch.indr.threethreefive.ThreeThreeFiveApp;
 import ch.indr.threethreefive.ui.activities.StartActivity;
 import timber.log.Timber;
 
-import static com.example.android.uamp.utils.MediaIDHelper.MEDIA_ID_EMPTY_ROOT;
+import static ch.indr.threethreefive.libs.MediaIdHelper.MEDIA_ID_EMPTY_ROOT;
 
 /**
  * This class provides a MediaBrowser through a service. It exposes the media library to a browsing

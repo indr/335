@@ -345,7 +345,7 @@ public class MediaNotificationManager extends BroadcastReceiver {
   }
 
   private void setNotificationPlaybackState(NotificationCompat.Builder builder) {
-    Timber.d("setNotificationPlaybackState mPlaybackState=%d, %s", mPlaybackState.toString(), this.toString());
+    Timber.d("setNotificationPlaybackState mPlaybackState=%s, %s", mPlaybackState.toString(), this.toString());
 
     if (mPlaybackState == null || !mStarted) {
       Timber.d("setNotificationPlaybackState cancelling notification!");

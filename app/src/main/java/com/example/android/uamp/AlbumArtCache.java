@@ -20,7 +20,7 @@ import android.graphics.Bitmap;
 import android.os.AsyncTask;
 import android.util.LruCache;
 
-import com.example.android.uamp.utils.BitmapHelper;
+import ch.indr.threethreefive.libs.BitmapHelper;
 
 import java.io.IOException;
 
