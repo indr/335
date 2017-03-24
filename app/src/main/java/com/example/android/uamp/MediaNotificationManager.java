@@ -34,8 +34,6 @@ import android.support.v4.media.session.MediaSessionCompat;
 import android.support.v4.media.session.PlaybackStateCompat;
 import android.support.v7.app.NotificationCompat;
 
-import com.example.android.uamp.utils.LogHelper;
-
 import ch.indr.threethreefive.R;
 import ch.indr.threethreefive.ui.activities.NowPlayingProxyActivity;
 import timber.log.Timber;
@@ -46,7 +44,6 @@ import timber.log.Timber;
  * won't be killed during playback.
  */
 public class MediaNotificationManager extends BroadcastReceiver {
-  private static final String TAG = LogHelper.makeLogTag(MediaNotificationManager.class);
 
   private static final int NOTIFICATION_ID = 412;
   private static final int REQUEST_CODE = 100;
@@ -157,7 +154,7 @@ public class MediaNotificationManager extends BroadcastReceiver {
   @Override
   public void onReceive(Context context, Intent intent) {
     final String action = intent.getAction();
-    LogHelper.d(TAG, "Received intent with action " + action);
+    Timber.d("Received intent with action " + action);
     switch (action) {
       case ACTION_PAUSE:
         mTransportControls.pause();
@@ -175,7 +172,7 @@ public class MediaNotificationManager extends BroadcastReceiver {
         mTransportControls.skipToPrevious();
         break;
       default:
-        LogHelper.w(TAG, "Unknown intent ignored. Action=", action);
+        Timber.w("Unknown intent ignored. Action=%s", action);
     }
   }
 
@@ -248,11 +245,11 @@ public class MediaNotificationManager extends BroadcastReceiver {
     @Override
     public void onSessionDestroyed() {
       super.onSessionDestroyed();
-      LogHelper.d(TAG, "Session was destroyed, resetting to the new session token");
+      Timber.d("Session was destroyed, resetting to the new session token");
       try {
         updateSessionToken();
       } catch (RemoteException e) {
-        LogHelper.e(TAG, e, "could not connect media controller");
+        Timber.e(e, "could not connect media controller");
       }
     }
   };
@@ -326,12 +323,12 @@ public class MediaNotificationManager extends BroadcastReceiver {
   }
 
   private void addStopAction(NotificationCompat.Builder builder) {
-    LogHelper.d(TAG, "updateStopAction");
+    Timber.d("updateStopAction");
     builder.addAction(new NotificationCompat.Action(R.drawable.ic_stop_white_24dp, "Stop", mStopIntent));
   }
 
   private void addPlayPauseAction(NotificationCompat.Builder builder) {
-    LogHelper.d(TAG, "updatePlayPauseAction");
+    Timber.d("addPlayPauseAction %s", this.toString());
     String label;
     int icon;
     PendingIntent intent;
@@ -348,9 +345,10 @@ public class MediaNotificationManager extends BroadcastReceiver {
   }
 
   private void setNotificationPlaybackState(NotificationCompat.Builder builder) {
-    LogHelper.d(TAG, "updateNotificationPlaybackState. mPlaybackState=" + mPlaybackState);
+    Timber.d("setNotificationPlaybackState mPlaybackState=%d, %s", mPlaybackState.toString(), this.toString());
+
     if (mPlaybackState == null || !mStarted) {
-      LogHelper.d(TAG, "updateNotificationPlaybackState. cancelling notification!");
+      Timber.d("setNotificationPlaybackState cancelling notification!");
       mService.stopForeground(true);
       return;
     }
@@ -387,7 +385,7 @@ public class MediaNotificationManager extends BroadcastReceiver {
         if (mMetadata != null && mMetadata.getDescription().getIconUri() != null &&
             mMetadata.getDescription().getIconUri().toString().equals(artUrl)) {
           // If the media is still the same, update the notification:
-          LogHelper.d(TAG, "fetchBitmapFromURLAsync: set bitmap to ", artUrl);
+          Timber.d("fetchBitmapFromURLAsync: set bitmap to %s", artUrl);
           builder.setLargeIcon(bitmap);
           mNotificationManager.notify(NOTIFICATION_ID, builder.build());
         }

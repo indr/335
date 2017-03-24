@@ -27,7 +27,6 @@ import com.example.android.uamp.playback.LocalPlayback;
 import com.example.android.uamp.playback.PlaybackManager;
 import com.example.android.uamp.playback.QueueManager;
 import com.example.android.uamp.playback.QueueManagerImpl;
-import com.example.android.uamp.utils.LogHelper;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
@@ -99,8 +98,6 @@ import static com.example.android.uamp.utils.MediaIDHelper.MEDIA_ID_EMPTY_ROOT;
 public class MusicService extends MediaBrowserServiceCompat implements
     PlaybackManager.PlaybackServiceCallback {
 
-  private static final String TAG = LogHelper.makeLogTag(MusicService.class);
-
   // The action of the incoming Intent indicating that it contains a command
   // to be executed (see {@link #onStartCommand})
   public static final String ACTION_CMD = "com.example.android.uamp.ACTION_CMD";
@@ -127,7 +124,7 @@ public class MusicService extends MediaBrowserServiceCompat implements
   @Override
   public void onCreate() {
     super.onCreate();
-    LogHelper.d(TAG, "onCreate");
+    Timber.d("onCreate %s", this.toString());
 
     final AppComponent application = ((ThreeThreeFiveApp) getApplicationContext()).component();
     mQueueManager = application.environment().queueManager();
@@ -192,7 +189,7 @@ public class MusicService extends MediaBrowserServiceCompat implements
    */
   @Override
   public void onDestroy() {
-    LogHelper.d(TAG, "onDestroy");
+    Timber.d("onDestroy %s", this.toString());
     // Service is being killed, so make sure we release our resources
     mQueueManager.removeListener(queueListener);
     mPlaybackManager.handleStopRequest(null);
@@ -311,10 +308,10 @@ public class MusicService extends MediaBrowserServiceCompat implements
       MusicService service = mWeakReference.get();
       if (service != null && service.mPlaybackManager.getPlayback() != null) {
         if (service.mPlaybackManager.getPlayback().isPlaying()) {
-          LogHelper.d(TAG, "Ignoring delayed stop since the media player is in use.");
+          Timber.d("Ignoring delayed stop since the media player is in use.");
           return;
         }
-        LogHelper.d(TAG, "Stopping service with delay handler.");
+        Timber.d("Stopping service with delay handler.");
         service.stopSelf();
       }
     }

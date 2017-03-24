@@ -14,13 +14,13 @@ import android.support.v4.media.MediaMetadataCompat;
 import android.support.v4.media.session.MediaSessionCompat.QueueItem;
 
 import com.example.android.uamp.AlbumArtCache;
-import com.example.android.uamp.utils.LogHelper;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
 import ch.indr.threethreefive.libs.MediaItem;
+import timber.log.Timber;
 
 /**
  * Simple data provider for queues. Keeps track of a current queue and a current index in the
@@ -28,7 +28,6 @@ import ch.indr.threethreefive.libs.MediaItem;
  * given MusicProvider to provide the actual media metadata.
  */
 public class QueueManagerImpl implements QueueManager {
-  private static final String TAG = LogHelper.makeLogTag(QueueManagerImpl.class);
 
   private MetadataUpdateListener mListener;
 
@@ -77,8 +76,7 @@ public class QueueManagerImpl implements QueueManager {
       index %= mQueue.size();
     }
     if (!mQueue.isIndexPlayable(index)) {
-      LogHelper.e(TAG, "Cannot increment queue index by ", amount,
-          ". Current=", mCurrentIndex, " queue length=", mQueue.size());
+      Timber.e("Cannot increment queue index by " + amount + ". Current=" + mCurrentIndex + " queue length=" + mQueue.size());
       return false;
     }
     mCurrentIndex = index;

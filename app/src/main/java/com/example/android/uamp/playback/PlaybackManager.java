@@ -15,7 +15,6 @@ import android.support.annotation.Nullable;
 import android.support.v4.media.session.MediaSessionCompat;
 import android.support.v4.media.session.PlaybackStateCompat;
 
-import com.example.android.uamp.utils.LogHelper;
 import com.example.android.uamp.utils.MediaIDHelper;
 
 import ch.indr.threethreefive.R;
@@ -26,7 +25,6 @@ import timber.log.Timber;
  */
 public class PlaybackManager implements PlaybackType.Callback {
 
-  private static final String TAG = LogHelper.makeLogTag(PlaybackManager.class);
   // Action to thumbs up a media item
   private static final String CUSTOM_ACTION_THUMBS_UP = "com.example.android.uamp.THUMBS_UP";
 
@@ -61,7 +59,7 @@ public class PlaybackManager implements PlaybackType.Callback {
    * Handle a request to play music
    */
   public void handlePlayRequest() {
-    LogHelper.d(TAG, "handlePlayRequest: mState=" + mPlayback.getState());
+    Timber.d("handlePlayRequest: mState=" + mPlayback.getState());
     MediaSessionCompat.QueueItem currentMusic = mQueueManager.getCurrentQueueItem();
     if (currentMusic != null) {
       mServiceCallback.onPlaybackStart();
@@ -77,7 +75,7 @@ public class PlaybackManager implements PlaybackType.Callback {
    * Handle a request to pause music
    */
   public void handlePauseRequest() {
-    LogHelper.d(TAG, "handlePauseRequest: mState=" + mPlayback.getState());
+    Timber.d("handlePauseRequest: mState=" + mPlayback.getState());
     if (mPlayback.isPlaying()) {
       mPlayback.pause();
       mServiceCallback.onPlaybackPause();
@@ -92,7 +90,7 @@ public class PlaybackManager implements PlaybackType.Callback {
    *                  MediaController clients.
    */
   public void handleStopRequest(String withError) {
-    LogHelper.d(TAG, "handleStopRequest: mState=" + mPlayback.getState() + " error=", withError);
+    Timber.d("handleStopRequest: mState=" + mPlayback.getState() + " error=" + withError);
     mPlayback.stop(true);
     mServiceCallback.onPlaybackStop();
     updatePlaybackState(withError);
@@ -110,7 +108,7 @@ public class PlaybackManager implements PlaybackType.Callback {
    * @param error if not null, error message to present to the user.
    */
   public void updatePlaybackState(String error) {
-    LogHelper.d(TAG, "updatePlaybackState, playback state=" + mPlayback.getState());
+    Timber.d("updatePlaybackState, playback state=" + mPlayback.getState());
     long position = PlaybackStateCompat.PLAYBACK_POSITION_UNKNOWN;
     if (mPlayback != null && mPlayback.isConnected()) {
       position = mPlayback.getCurrentStreamPosition();
@@ -160,8 +158,7 @@ public class PlaybackManager implements PlaybackType.Callback {
     String musicId = MediaIDHelper.extractMusicIDFromMediaID(mediaId);
     int favoriteIcon = isFavorite(musicId) ?
         R.drawable.ic_star_on : R.drawable.ic_star_off;
-    LogHelper.d(TAG, "updatePlaybackState, setting Favorite custom action of music ",
-        musicId, " current favorite=", isFavorite(musicId));
+    Timber.d("updatePlaybackState, setting Favorite custom action of music " + musicId + " current favorite=" + isFavorite(musicId));
     Bundle customActionExtras = new Bundle();
     stateBuilder.addCustomAction(new PlaybackStateCompat.CustomAction.Builder(
         CUSTOM_ACTION_THUMBS_UP, mResources.getString(R.string.favorite), favoriteIcon)
@@ -218,7 +215,7 @@ public class PlaybackManager implements PlaybackType.Callback {
   private class MediaSessionCallback extends MediaSessionCompat.Callback {
     @Override
     public void onPlay() {
-      LogHelper.d(TAG, "play");
+      Timber.d("onPlay");
       if (mQueueManager.getCurrentQueueItem() == null) {
         notifyOptionNotAvailable(R.string.speech_can_not_play_empty_queue);
         return;
@@ -228,27 +225,27 @@ public class PlaybackManager implements PlaybackType.Callback {
 
     @Override
     public void onSkipToQueueItem(long queueId) {
-      LogHelper.d(TAG, "OnSkipToQueueItem:" + queueId);
+      Timber.d("onSkipToQueueItem: " + queueId);
       mQueueManager.setCurrentQueueItem(queueId);
       mQueueManager.updateMetadata();
     }
 
     @Override
     public void onSeekTo(long position) {
-      LogHelper.d(TAG, "onSeekTo:", position);
+      Timber.d("onSeekTo: " + position);
       mPlayback.seekTo((int) position);
     }
 
     @Override
     public void onPause() {
-      LogHelper.d(TAG, "pause. current state=" + mPlayback.getState());
+      Timber.d("onPause, current state=" + mPlayback.getState());
       handlePauseRequest();
     }
 
     @Override
     public void onStop() {
       Timber.d("onStop %s", this.toString());
-      LogHelper.d(TAG, "stop. current state=" + mPlayback.getState());
+      Timber.d("onStop. current state=" + mPlayback.getState());
       handleStopRequest(null);
     }
 

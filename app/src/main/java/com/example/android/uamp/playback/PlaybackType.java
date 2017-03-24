@@ -15,8 +15,6 @@
  */
 package com.example.android.uamp.playback;
 
-import android.support.v4.media.session.PlaybackStateCompat;
-
 import com.example.android.uamp.MusicService;
 
 import static android.support.v4.media.session.MediaSessionCompat.QueueItem;
@@ -95,6 +93,7 @@ public interface PlaybackType {
    * Seek to the given position
    */
   void seekTo(int position);
+
   void seekTo(int position, int state);
 
   /**
