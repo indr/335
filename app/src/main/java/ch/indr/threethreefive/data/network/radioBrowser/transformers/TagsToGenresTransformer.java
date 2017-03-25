@@ -9,16 +9,16 @@ package ch.indr.threethreefive.data.network.radioBrowser.transformers;
 
 import com.octo.android.robospice.request.listener.RequestListener;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Collection;
 
 import ch.indr.threethreefive.data.network.radioBrowser.model.Genre;
+import ch.indr.threethreefive.data.network.radioBrowser.model.GenresBuilder;
 import ch.indr.threethreefive.data.network.radioBrowser.model.Tag;
 import ch.indr.threethreefive.libs.net.ResponseTransformer;
 
-public class TagsToGenresTransformer extends ResponseTransformer<Tag[], List<Genre>> {
+public class TagsToGenresTransformer extends ResponseTransformer<Tag[], Collection<Genre>> {
 
-  public TagsToGenresTransformer(RequestListener<List<Genre>> listener) {
+  public TagsToGenresTransformer(RequestListener<Collection<Genre>> listener) {
     super(listener);
   }
 
@@ -28,11 +28,7 @@ public class TagsToGenresTransformer extends ResponseTransformer<Tag[], List<Gen
       return;
     }
 
-    final List<Genre> genres = new ArrayList<>(tags.length);
-    for (Tag tag : tags) {
-      genres.add(new Genre(tag.getName(), tag.getStationCount()));
-    }
-
+    final Collection<Genre> genres = GenresBuilder.getGenres(tags);
     listener.onRequestSuccess(genres);
   }
 }

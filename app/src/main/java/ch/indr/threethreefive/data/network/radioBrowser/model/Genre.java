@@ -9,35 +9,60 @@ package ch.indr.threethreefive.data.network.radioBrowser.model;
 
 import android.support.annotation.NonNull;
 
+import org.apache.commons.lang3.text.WordUtils;
+
+import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.List;
 
 public class Genre {
 
+  private String id;
+
   private String name;
 
-  private String value;
+  private List<Tag> tags = new ArrayList<>();
 
-  private int stationcount;
+  private int stationCount;
 
   public Genre() {
   }
 
-  public Genre(final @NonNull String name, final int stationcount) {
-    this.name = name;
-    this.value = name;
-    this.stationcount = stationcount;
+  public Genre(final @NonNull String id, final int stationCount) {
+    this.id = id;
+    this.name = WordUtils.capitalize(id);
+    this.stationCount = stationCount;
+    this.tags.add(new Tag(id, stationCount));
+  }
+
+  public Genre(final @NonNull String id, List<String> tagIds) {
+    this.id = id;
+    this.name = WordUtils.capitalize(id);
+    this.stationCount = 0;
+    for (String tagId : tagIds) {
+      this.tags.add(new Tag(tagId, 0));
+    }
+  }
+
+  public String getId() {
+    return id;
   }
 
   public String getName() {
     return name;
   }
 
-  public String getValue() {
-    return value;
+  public int getStationCount() {
+    return stationCount;
   }
 
-  public int getStationCount() {
-    return stationcount;
+  public List<Tag> getTags() {
+    return tags;
+  }
+
+  public void add(Tag tag) {
+    this.stationCount += tag.getStationCount();
+    this.tags.add(tag);
   }
 
   public static class NameComparator implements Comparator<Genre> {

@@ -11,6 +11,8 @@ import com.google.api.client.util.Key;
 
 import java.text.DateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
@@ -34,7 +36,8 @@ public class Station {
 
   @Key private String homepage;
 
-  @Key private String tags;
+  @Key("tags")
+  protected String _tags;
 
   @Key private String country;
 
@@ -53,6 +56,10 @@ public class Station {
   @Key private String clickcount;
 
   @Key private String clicktrend;
+
+  protected List<String> tags = null;
+
+  private Collection<Genre> genres = null;
 
   public Station() {
   }
@@ -86,8 +93,20 @@ public class Station {
     return homepage;
   }
 
-  public String[] getTags() {
-    return StringUtils.isEmpty(tags) ? null : tags.split(",");
+  public Collection<Genre> getGenres() {
+    if (this.genres == null) this.genres = GenresBuilder.getGenres(getTagNames());
+    return this.genres;
+  }
+
+  public List<String> getTagNames() {
+    if (tags == null) {
+      tags = new ArrayList<>();
+      String[] strings = StringUtils.isEmpty(_tags) ? new String[0] : _tags.split(" *, *");
+      for (String tag : strings) {
+        if (StringUtils.isNotEmpty(tag)) tags.add(tag);
+      }
+    }
+    return tags;
   }
 
   public String getCountry() {
@@ -130,6 +149,24 @@ public class Station {
     return clicktrend == null ? 0 : Integer.parseInt(clicktrend);
   }
 
+  @Override public boolean equals(Object o) {
+    if (this == o) return true;
+    if (o == null || getClass() != o.getClass()) return false;
+
+    Station station = (Station) o;
+
+    if (!id.equals(station.id)) return false;
+    if (!name.equals(station.name)) return false;
+    return country != null ? country.equals(station.country) : station.country == null;
+
+  }
+
+  @Override public int hashCode() {
+    int result = id.hashCode();
+    result = 31 * result + name.hashCode();
+    return result;
+  }
+
   public String makeSubtitle(String props) {
     List<String> result = new ArrayList<>();
 
@@ -140,8 +177,15 @@ public class Station {
           value = this.getCountry();
           break;
         case 'G': // Genre
+          final Collection<Genre> genres = this.getGenres();
+          final List<String> genresAsString = new ArrayList<>();
+          for (Genre genre : genres) {
+            genresAsString.add(genre.getName());
+          }
+          value = StringUtils.join(genresAsString, ", ");
+          break;
         case 'T': // Tag
-          value = StringUtils.join(this.getTags(), ", ");
+          value = StringUtils.join(getTagNames(), ", ");
           break;
         case 'L': // Languages
           value = this.getLanguage();

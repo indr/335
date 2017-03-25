@@ -19,7 +19,6 @@ import ch.indr.threethreefive.Fake;
 import ch.indr.threethreefive.R;
 import ch.indr.threethreefive.TtfRobolectricTestCase;
 import ch.indr.threethreefive.libs.PageItem;
-import ch.indr.threethreefive.data.network.radioBrowser.model.Station;
 import rx.observers.TestSubscriber;
 
 public class LanguagePageTests extends TtfRobolectricTestCase {
@@ -59,7 +58,7 @@ public class LanguagePageTests extends TtfRobolectricTestCase {
   public void onRequestSuccess_withEmptyResponse_noStationsFound() {
     final LanguagePage page = createPage();
 
-    page.onRequestSuccess(new Station[0]);
+    page.onRequestSuccess(Fake.stations(0));
 
     final List<PageItem> pageItems = page.getPageItems();
     assertEquals(getString(R.string.no_stations_found), pageItems.get(1).getTitle());

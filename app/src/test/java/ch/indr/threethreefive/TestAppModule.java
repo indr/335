@@ -8,10 +8,12 @@
 package ch.indr.threethreefive;
 
 import android.app.Application;
+import android.content.Context;
 import android.support.annotation.NonNull;
 
 import ch.indr.threethreefive.data.network.ApiClient;
 import ch.indr.threethreefive.libs.net.RobospiceManager;
+import ch.indr.threethreefive.libs.qualifiers.ApplicationContext;
 import dagger.Provides;
 
 import static org.mockito.Mockito.mock;
@@ -26,7 +28,7 @@ public class TestAppModule extends AppModule {
   }
 
   @Provides
-  @NonNull @Override public ApiClient apiClient() {
+  @NonNull @Override public ApiClient apiClient(@NonNull @ApplicationContext Context context) {
     if (apiClient == null) apiClient = mock(ApiClient.class);
     return apiClient;
   }

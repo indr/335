@@ -15,12 +15,15 @@ import android.support.annotation.NonNull;
 import com.octo.android.robospice.persistence.exception.SpiceException;
 import com.octo.android.robospice.request.listener.RequestListener;
 
+import java.util.Collection;
+
 import ch.indr.threethreefive.R;
+import ch.indr.threethreefive.data.network.radioBrowser.model.Genre;
+import ch.indr.threethreefive.data.network.radioBrowser.model.Station;
 import ch.indr.threethreefive.libs.Environment;
 import ch.indr.threethreefive.libs.PageItemsBuilder;
 import ch.indr.threethreefive.libs.PageUris;
 import ch.indr.threethreefive.libs.pages.SpiceBasePage;
-import ch.indr.threethreefive.data.network.radioBrowser.model.Station;
 
 public class StationGenresPage extends SpiceBasePage implements RequestListener<Station[]> {
 
@@ -54,20 +57,20 @@ public class StationGenresPage extends SpiceBasePage implements RequestListener<
       return;
     }
 
-    final String[] tags = stations[0].getTags();
+    final Collection<Genre> genres = stations[0].getGenres();
     final PageItemsBuilder builder = pageItemsBuilder();
-    addGenreLinks(builder, tags);
+    addGenreLinks(builder, genres);
     setPageItems(builder);
   }
 
-  private void addGenreLinks(PageItemsBuilder builder, String[] tags) {
-    if (tags.length == 0) {
+  private void addGenreLinks(PageItemsBuilder builder, Collection<Genre> genres) {
+    if (genres.size() == 0) {
       builder.addText(getString(R.string.no_genres_found));
       return;
     }
 
-    for (String tag : tags) {
-      builder.addLink(PageUris.radioGenre(tag), tag);
+    for (Genre genre : genres) {
+      builder.addLink(PageUris.radioGenre(genre.getId()), genre.getName());
     }
   }
 }

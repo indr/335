@@ -28,7 +28,7 @@ import ch.indr.threethreefive.libs.pages.SpiceBasePage;
 import ch.indr.threethreefive.data.network.radioBrowser.model.Station;
 import timber.log.Timber;
 
-public class LanguagePage extends SpiceBasePage implements RequestListener<Station[]> {
+public class LanguagePage extends SpiceBasePage implements RequestListener<List<Station>> {
 
   private String language;
 
@@ -56,7 +56,7 @@ public class LanguagePage extends SpiceBasePage implements RequestListener<Stati
     this.handle(spiceException);
   }
 
-  @Override public void onRequestSuccess(Station[] response) {
+  @Override public void onRequestSuccess(List<Station> response) {
     if (response == null) {
       handle(R.string.no_stations_found_error);
       return;
@@ -84,15 +84,13 @@ public class LanguagePage extends SpiceBasePage implements RequestListener<Stati
     for (Station station : stations) {
       builder.addLink("/radio/stations/" + station.getId(),
           station.getName(),
-          station.makeSubtitle("CT"),
-          station.makeDescription("CT"));
+          station.makeSubtitle("CG"),
+          station.makeDescription("CG"));
     }
   }
 
-  private void populateLists(@NonNull Station[] response) {
-    Timber.d("populateLists stations %d, %s", response.length, this.toString());
-
-    List<Station> allStations = Arrays.asList(response);
+  private void populateLists(@NonNull List<Station> allStations) {
+    Timber.d("populateLists stations %d, %s", allStations.size(), this.toString());
 
     Collections.sort(allStations, Station.getBestStationsComparator());
     List<Station> topStations = CollectionUtils.slice(allStations, 0, 15);

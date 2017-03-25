@@ -11,36 +11,65 @@ import android.support.annotation.NonNull;
 
 import com.google.api.client.util.Key;
 
+import org.apache.commons.lang3.text.WordUtils;
+
 import java.util.Comparator;
 
 public class Tag {
 
-  @Key private String name;
+  @Key("value")
+  private String _id;
+  private String id;
 
-  @Key private String value;
+  @Key("name")
+  private String _name;
+  private String name;
 
-  @Key private int stationcount;
+  @Key("stationcount")
+  private int stationCount;
+
+  public static Tag fromName(final @NonNull String name) {
+    return new Tag(name.toLowerCase(), name, 0);
+  }
+
+  public static Tag fromName(final @NonNull String name, final int stationCount) {
+    return new Tag(name.toLowerCase(), name, stationCount);
+  }
 
   public Tag() {
   }
 
-  public Tag(final @NonNull String name, final int stationcount) {
+  public Tag(final @NonNull String name, final int stationCount) {
+    this._id = name;
+    this._name = name;
+    this.stationCount = stationCount;
+  }
+
+  private Tag(final @NonNull String id, final @NonNull String name, final int stationCount) {
+    this.id = id;
     this.name = name;
-    this.value = name;
-    this.stationcount = stationcount;
+    this.stationCount = stationCount;
+  }
+
+  public String getId() {
+    if (id == null) id = _id.toLowerCase();
+    return id;
   }
 
   public String getName() {
+    // TODO: Get translated tag name
+    if (name == null) name = WordUtils.capitalize(_name);
     return name;
   }
 
-  public String getValue() {
-    return value;
+  public void setName(final @NonNull String name) {
+    this.name = name;
   }
 
   public int getStationCount() {
-    return stationcount;
+    return stationCount;
   }
+
 
   public static class NameComparator implements Comparator<Tag> {
     @Override public int compare(Tag tag1, Tag tag2) {

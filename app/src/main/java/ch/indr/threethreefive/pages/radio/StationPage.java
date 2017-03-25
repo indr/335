@@ -18,6 +18,9 @@ import com.octo.android.robospice.request.listener.RequestListener;
 import org.apache.commons.lang3.StringUtils;
 
 import java.text.DateFormat;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 import java.util.Locale;
 
 import javax.inject.Inject;
@@ -26,11 +29,12 @@ import ch.indr.threethreefive.R;
 import ch.indr.threethreefive.commands.AddToPlaylist;
 import ch.indr.threethreefive.commands.OpenWebsite;
 import ch.indr.threethreefive.commands.PlayMedia;
+import ch.indr.threethreefive.data.MediaItemFactory;
+import ch.indr.threethreefive.data.network.radioBrowser.model.Genre;
 import ch.indr.threethreefive.data.network.radioBrowser.model.Station;
 import ch.indr.threethreefive.libs.Environment;
 import ch.indr.threethreefive.libs.MediaItem;
 import ch.indr.threethreefive.libs.PageItemsBuilder;
-import ch.indr.threethreefive.data.MediaItemFactory;
 import ch.indr.threethreefive.libs.pages.SpiceBasePage;
 import ch.indr.threethreefive.services.UiModeManager;
 
@@ -90,8 +94,13 @@ public class StationPage extends SpiceBasePage implements RequestListener<Statio
     }
 
     // Genres
-    if (station.getTags() != null) {
-      builder.addLink(String.format("/radio/stations/%s/genres", station.getId()), "Genres: " + StringUtils.join(station.getTags(), ", "));
+    Collection<Genre> genres = station.getGenres();
+    if (genres != null && genres.size() > 0) {
+      List<String> genresAsString = new ArrayList<>();
+      for (Genre genre : station.getGenres()) {
+        genresAsString.add(genre.getName());
+      }
+      builder.addLink(String.format("/radio/stations/%s/genres", station.getId()), "Genres: " + StringUtils.join(genresAsString, ", "));
     }
 
     // Votes

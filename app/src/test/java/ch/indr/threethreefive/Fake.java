@@ -14,11 +14,11 @@ import ch.indr.threethreefive.data.network.radioBrowser.model.Station;
 
 public class Fake {
 
-  public static Station[] stations(int number) {
+  public static List<Station> stations(int number) {
     final List<Station> stations = new ArrayList<>();
     for (int i = 0; i < number; i++) {
       stations.add(new Station(i));
     }
-    return stations.toArray(new Station[0]);
+    return stations;
   }
 }

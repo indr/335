@@ -85,10 +85,12 @@ public class CountryGenresPage extends SpiceBasePage implements RequestListener<
       return;
     }
 
-    for (Genre each : genres) {
-      final String subtitle = String.format(Locale.US, "%d radio stations", each.getStationCount());
-      builder.addLink(PageUris.radioCountryGenre(countryId, each.getValue()),
-          each.getName(), subtitle, each.getName() + ", " + subtitle);
+    for (Genre genre : genres) {
+      final String subtitle = String.format(Locale.US, "%d radio stations", genre.getStationCount());
+      builder.addLink(PageUris.radioCountryGenre(countryId, genre.getId()),
+          genre.getName(),
+          subtitle,
+          genre.getName() + ", " + subtitle);
     }
   }
 

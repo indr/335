@@ -7,6 +7,8 @@
 
 package ch.indr.threethreefive.libs.utils;
 
+import android.support.annotation.Nullable;
+
 public final class StringUtils {
 
   private StringUtils() {
@@ -38,5 +40,9 @@ public final class StringUtils {
 
   public static String join(final Iterable<?> iterable, final String separator) {
     return org.apache.commons.lang3.StringUtils.join(iterable, separator);
+  }
+
+  public static @Nullable String[] split(@Nullable String str, char separatorChar) {
+    return org.apache.commons.lang3.StringUtils.split(str, separatorChar);
   }
 }

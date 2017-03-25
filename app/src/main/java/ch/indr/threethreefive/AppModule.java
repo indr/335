@@ -79,8 +79,8 @@ public class AppModule {
   }
 
   @Provides
-  @NonNull ApiClient apiClient() {
-    return new ApiClient();
+  @NonNull ApiClient apiClient(final @ApplicationContext @NonNull Context context) {
+    return new ApiClient(context);
   }
 
   @Provides

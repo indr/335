@@ -46,7 +46,7 @@ public class CountryStationsPageTests extends TtfRobolectricTestCase {
   }
 
   @Test
-  public void onRequestSuccess_withNullResponse_noStationsFound() {
+  public void onRequestSuccess_withNullResponse_noStationsFoundError() {
     final CountryStationsPage page = createPage();
 
     page.onRequestSuccess(null);
@@ -59,7 +59,7 @@ public class CountryStationsPageTests extends TtfRobolectricTestCase {
   public void onRequestSuccess_withEmptyResponse_noStationsFound() {
     final CountryStationsPage page = createPage();
 
-    page.onRequestSuccess(new Station[0]);
+    page.onRequestSuccess(Fake.stations(0));
 
     final List<PageItem> pageItems = page.getPageItems();
     assertEquals(getString(R.string.no_stations_found), pageItems.get(1).getTitle());

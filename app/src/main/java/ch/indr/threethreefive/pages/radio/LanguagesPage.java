@@ -18,11 +18,11 @@ import com.octo.android.robospice.request.listener.RequestListener;
 import java.util.Locale;
 
 import ch.indr.threethreefive.R;
+import ch.indr.threethreefive.data.network.radioBrowser.model.Language;
 import ch.indr.threethreefive.libs.Environment;
 import ch.indr.threethreefive.libs.PageItemsBuilder;
 import ch.indr.threethreefive.libs.PageUris;
 import ch.indr.threethreefive.libs.pages.SpiceBasePage;
-import ch.indr.threethreefive.data.network.radioBrowser.model.Language;
 
 public class LanguagesPage extends SpiceBasePage implements RequestListener<Language[]> {
 
@@ -50,7 +50,7 @@ public class LanguagesPage extends SpiceBasePage implements RequestListener<Lang
 
   @Override public void onRequestSuccess(Language[] languages) {
     if (languages == null) {
-      handle(getString(R.string.no_languages_found_error));
+      handle(R.string.no_languages_found_error);
       return;
     }
 

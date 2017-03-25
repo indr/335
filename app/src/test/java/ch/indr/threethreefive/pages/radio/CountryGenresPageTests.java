@@ -25,7 +25,7 @@ public class CountryGenresPageTests extends TtfRobolectricTestCase {
   @Override public void setUp() throws Exception {
     super.setUp();
 
-    this.apiClient = appModule().apiClient();
+    this.apiClient = appModule().apiClient(context());
   }
 
   @Test(expected = IllegalArgumentException.class)

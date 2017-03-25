@@ -17,6 +17,7 @@ import com.octo.android.robospice.request.listener.RequestListener;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
@@ -31,7 +32,7 @@ import ch.indr.threethreefive.libs.pages.SpiceBasePage;
 import ch.indr.threethreefive.libs.utils.CollectionUtils;
 import timber.log.Timber;
 
-public class GenresPage extends SpiceBasePage implements RequestListener<List<Genre>> {
+public class GenresPage extends SpiceBasePage implements RequestListener<Collection<Genre>> {
 
   private static final int MAX_NUMBER_OF_TOP_GENRES = 15;
   private static final int MAX_NUMBER_OF_MORE_GENRES = 50;
@@ -66,7 +67,7 @@ public class GenresPage extends SpiceBasePage implements RequestListener<List<Ge
     handle(spiceException);
   }
 
-  @Override public void onRequestSuccess(List<Genre> response) {
+  @Override public void onRequestSuccess(Collection<Genre> response) {
     if (response == null) {
       handle(getString(R.string.no_genres_found_error));
       return;
@@ -84,20 +85,22 @@ public class GenresPage extends SpiceBasePage implements RequestListener<List<Ge
     setPageItems(builder);
   }
 
-  private void addGenreLinks(PageItemsBuilder builder, List<Genre> genres) {
+  private void addGenreLinks(PageItemsBuilder builder, Collection<Genre> genres) {
     if (genres.size() == 0) {
       builder.addText(getString(R.string.no_genres_found));
       return;
     }
 
-    for (Genre each : genres) {
-      final String subtitle = String.format(Locale.US, "%d radio stations", each.getStationCount());
-      builder.addLink(PageUris.radioGenre(each.getValue()),
-          each.getName(), subtitle, each.getName() + ", " + subtitle);
+    for (Genre genre : genres) {
+      final String subtitle = String.format(Locale.US, "%d radio stations", genre.getStationCount());
+      builder.addLink(PageUris.radioGenre(genre.getId()),
+          genre.getName(),
+          subtitle,
+          genre.getName() + ", " + subtitle);
     }
   }
 
-  private void populateLists(@NonNull List<Genre> response) {
+  private void populateLists(@NonNull Collection<Genre> response) {
     Timber.d("populateLists genres %d, %s", response.size(), this.toString());
 
     Timber.d("Filtering min station count and building all genres list, %s", this.toString());
@@ -149,11 +152,11 @@ public class GenresPage extends SpiceBasePage implements RequestListener<List<Ge
   }
 
   private boolean isExcludedFromTopGenres(Genre genre) {
-    return excludedFromTopGenres.contains(genre.getValue())
+    return excludedFromTopGenres.contains(genre.getId())
         || isExcludedFromMoreGenres(genre);
   }
 
   private boolean isExcludedFromMoreGenres(Genre genre) {
-    return excludedFromMoreGenres.contains(genre.getValue());
+    return excludedFromMoreGenres.contains(genre.getId());
   }
 }

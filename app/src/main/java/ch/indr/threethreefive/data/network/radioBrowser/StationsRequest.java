@@ -14,6 +14,7 @@ import com.google.api.client.http.HttpRequest;
 import com.octo.android.robospice.persistence.DurationInMillis;
 
 import java.io.IOException;
+import java.util.Map;
 
 import ch.indr.threethreefive.data.network.radioBrowser.model.Station;
 
@@ -38,8 +39,8 @@ public class StationsRequest extends RadioBrowserInfoRequest<Station[]> {
     return new StationsRequest(new GenericUrl(url));
   }
 
-  public static StationsRequest byGenre(@NonNull String genre) {
-    String url = BASE_URL + "stations/bytagexact/" + genre;
+  public static StationsRequest byTag(@NonNull String tag) {
+    String url = BASE_URL + "stations/bytagexact/" + tag;
     return new StationsRequest(new GenericUrl(url));
   }
 

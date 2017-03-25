@@ -15,11 +15,13 @@ import android.support.annotation.NonNull;
 import com.octo.android.robospice.persistence.exception.SpiceException;
 import com.octo.android.robospice.request.listener.RequestListener;
 
-import java.util.Arrays;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
 import ch.indr.threethreefive.R;
+import ch.indr.threethreefive.data.network.radioBrowser.model.Genre;
+import ch.indr.threethreefive.data.network.radioBrowser.model.GenresBuilder;
 import ch.indr.threethreefive.data.network.radioBrowser.model.Station;
 import ch.indr.threethreefive.libs.Environment;
 import ch.indr.threethreefive.libs.PageItemsBuilder;
@@ -29,7 +31,7 @@ import ch.indr.threethreefive.libs.pages.SpiceBasePage;
 import ch.indr.threethreefive.libs.utils.CollectionUtils;
 import timber.log.Timber;
 
-public class GenrePage extends SpiceBasePage implements RequestListener<Station[]> {
+public class GenrePage extends SpiceBasePage implements RequestListener<List<Station>> {
 
   private String genre;
   private PageItemsExpander<Station> expander = new PageItemsExpander<>();
@@ -49,6 +51,7 @@ public class GenrePage extends SpiceBasePage implements RequestListener<Station[
   @Override public void onStart() {
     super.onStart();
 
+    Genre genre = GenresBuilder.getGenre(this.genre);
     apiClient.getStationsByGenre(genre, this);
   }
 
@@ -56,7 +59,7 @@ public class GenrePage extends SpiceBasePage implements RequestListener<Station[
     handle(spiceException);
   }
 
-  @Override public void onRequestSuccess(Station[] response) {
+  @Override public void onRequestSuccess(List<Station> response) {
     if (response == null) {
       handle(R.string.no_stations_found_error);
       return;
@@ -75,7 +78,7 @@ public class GenrePage extends SpiceBasePage implements RequestListener<Station[
     setPageItems(builder);
   }
 
-  private void addStationLinks(PageItemsBuilder builder, List<Station> stations) {
+  private void addStationLinks(PageItemsBuilder builder, Collection<Station> stations) {
     if (stations == null) {
       handle(getString(R.string.no_stations_found_error));
       return;
@@ -88,16 +91,14 @@ public class GenrePage extends SpiceBasePage implements RequestListener<Station[
     for (Station station : stations) {
       builder.addLink(PageUris.radioStation(station.getId()),
           station.getName(),
-          station.makeSubtitle("LT"),
-          station.makeDescription("LT")
+          station.makeSubtitle("LG"),
+          station.makeDescription("LG")
       );
     }
   }
 
-  private void populateLists(Station[] response) {
-    Timber.d("populateLists stations %d, %s", response.length, this.toString());
-
-    List<Station> allStations = Arrays.asList(response);
+  private void populateLists(List<Station> allStations) {
+    Timber.d("populateLists stations %d, %s", allStations.size(), this.toString());
 
     Collections.sort(allStations, Station.getBestStationsComparator());
     List<Station> topStations = CollectionUtils.slice(allStations, 0, 15);
