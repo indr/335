@@ -27,7 +27,6 @@ import ch.indr.threethreefive.data.network.radioBrowser.model.Country;
 import ch.indr.threethreefive.data.network.radioBrowser.model.Genre;
 import ch.indr.threethreefive.data.network.radioBrowser.model.GenreMaps;
 import ch.indr.threethreefive.data.network.radioBrowser.model.GenreNames;
-import ch.indr.threethreefive.data.network.radioBrowser.model.GenresBuilder;
 import ch.indr.threethreefive.data.network.radioBrowser.model.Language;
 import ch.indr.threethreefive.data.network.radioBrowser.model.Station;
 import ch.indr.threethreefive.data.network.radioBrowser.model.Tag;
@@ -82,8 +81,8 @@ public class ApiClient {
     robospiceManager.execute(StationsRequest.byCountry(country), Transformers.ArrayToList(listener));
   }
 
-  public void getStationsByCountryAndGenre(String countryId, String genreId, RequestListener<List<Station>> listener) {
-    final Genre genre = GenresBuilder.getGenre(genreId);
+  public void getStationsByCountryAndGenre(final @NonNull String countryId, final @NonNull Genre genre,
+                                           final @NonNull RequestListener<List<Station>> listener) {
     final List<Tag> tags = genre.getTags();
     if (tags.size() == 0) {
       Timber.w("Genre %s contains no tags, %s", genre.toString(), this.toString());

@@ -12,7 +12,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 
-import com.octo.android.robospice.persistence.exception.SpiceException;
 import com.octo.android.robospice.request.listener.RequestListener;
 
 import java.util.ArrayList;
@@ -51,7 +50,7 @@ public class GenresPage extends SpiceBasePage implements RequestListener<Collect
     super.onCreate(context, uri, bundle);
     component().inject(this);
 
-    setTitle("Genres");
+    setTitle(getString(R.string.genres));
 
     this.excludedFromTopGenres = Arrays.asList(context.getResources().getStringArray(R.array.excluded_from_top_genres));
     this.excludedFromMoreGenres = Arrays.asList(context.getResources().getStringArray(R.array.excluded_from_more_genres));

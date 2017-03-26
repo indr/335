@@ -32,7 +32,7 @@ import timber.log.Timber;
 
 public class GenrePage extends SpiceBasePage implements RequestListener<List<Station>> {
 
-  private String genreId;
+  private Genre genre;
   private PageItemsExpander<Station> expander = new PageItemsExpander<>();
 
   public GenrePage(Environment environment) {
@@ -43,13 +43,14 @@ public class GenrePage extends SpiceBasePage implements RequestListener<List<Sta
     super.onCreate(context, uri, bundle);
     component().inject(this);
 
-    this.genreId = getUriParam("id");
+    final String genreId = getUriParam("id");
+    this.genre = GenresBuilder.getGenre(genreId);
+    setTitle(this.genre.getName());
   }
 
   @Override public void onStart() {
     super.onStart();
 
-    Genre genre = GenresBuilder.getGenre(this.genreId);
     apiClient.getStationsByGenre(genre, this);
   }
 

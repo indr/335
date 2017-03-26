@@ -63,6 +63,19 @@ public class Genre {
     this.tags.add(tag);
   }
 
+  @Override public boolean equals(Object o) {
+    if (this == o) return true;
+    if (o == null || getClass() != o.getClass()) return false;
+
+    Genre genre = (Genre) o;
+
+    return id.equals(genre.id);
+  }
+
+  @Override public int hashCode() {
+    return id.hashCode();
+  }
+
   public static class NameComparator implements Comparator<Genre> {
     @Override public int compare(Genre genre1, Genre genre2) {
       return genre1.getName().compareTo(genre2.getName());

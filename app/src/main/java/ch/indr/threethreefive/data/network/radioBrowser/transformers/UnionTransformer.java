@@ -7,6 +7,8 @@
 
 package ch.indr.threethreefive.data.network.radioBrowser.transformers;
 
+import android.support.annotation.NonNull;
+
 import com.octo.android.robospice.persistence.exception.SpiceException;
 import com.octo.android.robospice.request.listener.RequestListener;
 
@@ -27,7 +29,9 @@ public class UnionTransformer<T> implements RequestListener<T[]> {
 
   private Set<T> result = new HashSet<>();
 
-  public UnionTransformer(int waitFor, RequestListener<List<T>> listener) {
+  public UnionTransformer(final int waitFor, final @NonNull RequestListener<List<T>> listener) {
+    if (waitFor <= 0) throw new IllegalArgumentException("waitFor must be greater than zero");
+
     this.waitFor = waitFor;
     this.listener = listener;
   }

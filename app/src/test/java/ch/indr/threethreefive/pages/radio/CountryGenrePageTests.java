@@ -7,7 +7,6 @@
 
 package ch.indr.threethreefive.pages.radio;
 
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 
@@ -21,11 +20,17 @@ import ch.indr.threethreefive.Fake;
 import ch.indr.threethreefive.R;
 import ch.indr.threethreefive.TtfRobolectricTestCase;
 import ch.indr.threethreefive.data.network.ApiClient;
+import ch.indr.threethreefive.data.network.radioBrowser.model.GenresBuilder;
 import ch.indr.threethreefive.libs.PageItem;
+import ch.indr.threethreefive.libs.PageUris;
+import rx.observers.TestSubscriber;
 
 import static org.mockito.Mockito.verify;
 
 public class CountryGenrePageTests extends TtfRobolectricTestCase {
+
+  private final String COUNTRY_ID = "new zealand";
+  private final String GENRE_ID = "classic rock";
 
   private ApiClient apiClient;
 
@@ -38,7 +43,7 @@ public class CountryGenrePageTests extends TtfRobolectricTestCase {
   @Test(expected = IllegalArgumentException.class)
   public void onCreate_withoutCountryId_throws() {
     final Bundle bundle = new Bundle();
-    bundle.putString("genreId", "jazz");
+    bundle.putString("genreId", GENRE_ID);
     try {
       createPage(bundle);
     } catch (Exception ex) {
@@ -50,7 +55,7 @@ public class CountryGenrePageTests extends TtfRobolectricTestCase {
   @Test(expected = IllegalArgumentException.class)
   public void onCreate_withoutGenreId_throws() {
     final Bundle bundle = new Bundle();
-    bundle.putString("countryId", "england");
+    bundle.putString("countryId", COUNTRY_ID);
     try {
       createPage(bundle);
     } catch (Exception ex) {
@@ -60,12 +65,21 @@ public class CountryGenrePageTests extends TtfRobolectricTestCase {
   }
 
   @Test
+  public void onCreate_setsPageTitle() {
+    final CountryGenrePage page = createPage();
+    final TestSubscriber<String> title = new TestSubscriber<>();
+    page.pageTitle().subscribe(title);
+
+    title.assertValue("Classic Rock");
+  }
+
+  @Test
   public void onStart_getsGenresByCountry() {
     final CountryGenrePage page = createPage();
 
     page.onStart();
 
-    verify(apiClient).getStationsByCountryAndGenre("england", "jazz", page);
+    verify(apiClient).getStationsByCountryAndGenre(COUNTRY_ID, GenresBuilder.getGenre(GENRE_ID), page);
   }
 
   @Test
@@ -132,14 +146,14 @@ public class CountryGenrePageTests extends TtfRobolectricTestCase {
 
   @NonNull private CountryGenrePage createPage() {
     final Bundle bundle = new Bundle();
-    bundle.putString("countryId", "england");
-    bundle.putString("genreId", "jazz");
+    bundle.putString("countryId", COUNTRY_ID);
+    bundle.putString("genreId", GENRE_ID);
     return createPage(bundle);
   }
 
   @NonNull private CountryGenrePage createPage(Bundle bundle) {
     final CountryGenrePage page = new CountryGenrePage(environment());
-    page.onCreate(context(), Uri.parse("/radio/countries/Country/genres/Genre"), bundle);
+    page.onCreate(context(), PageUris.radioCountryGenre(COUNTRY_ID, GENRE_ID), bundle);
     return page;
   }
 }

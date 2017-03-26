@@ -13,8 +13,10 @@ import android.support.annotation.NonNull;
 
 import org.junit.Test;
 
+import ch.indr.threethreefive.R;
 import ch.indr.threethreefive.TtfRobolectricTestCase;
 import ch.indr.threethreefive.data.network.ApiClient;
+import rx.observers.TestSubscriber;
 
 import static org.mockito.Mockito.verify;
 
@@ -26,6 +28,15 @@ public class GenresPageTests extends TtfRobolectricTestCase {
     super.setUp();
 
     this.apiClient = appModule().apiClient(context());
+  }
+
+  @Test
+  public void onCreate_setsPageTitle() {
+    final GenresPage page = createPage();
+    final TestSubscriber<String> title = new TestSubscriber<>();
+    page.pageTitle().subscribe(title);
+
+    title.assertValue(getString(R.string.genres));
   }
 
   @Test

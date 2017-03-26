@@ -7,10 +7,10 @@
 
 package ch.indr.threethreefive.pages.radio;
 
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 
+import org.junit.Ignore;
 import org.junit.Test;
 
 import java.util.List;
@@ -19,9 +19,12 @@ import ch.indr.threethreefive.Fake;
 import ch.indr.threethreefive.R;
 import ch.indr.threethreefive.TtfRobolectricTestCase;
 import ch.indr.threethreefive.libs.PageItem;
+import ch.indr.threethreefive.libs.PageUris;
 import rx.observers.TestSubscriber;
 
 public class GenrePageTests extends TtfRobolectricTestCase {
+
+  private final String GENRE_ID = "classic rock";
 
   @Test(expected = IllegalArgumentException.class)
   public void onCreate_withoutIdInBundle_throws() {
@@ -34,14 +37,12 @@ public class GenrePageTests extends TtfRobolectricTestCase {
   }
 
   @Test
-  public void onCreate_withIdInBundle_setsPageTitle() {
-    final Bundle bundle = new Bundle();
-    bundle.putString("id", "Fantasian");
-    final GenrePage page = createPage(bundle);
+  public void onCreate_setsPageTitle() {
+    final GenrePage page = createPage();
     final TestSubscriber<String> title = new TestSubscriber<>();
     page.pageTitle().subscribe(title);
 
-    title.assertValue("Fantasian");
+    title.assertValue("Classic Rock");
   }
 
   @Test
@@ -52,6 +53,12 @@ public class GenrePageTests extends TtfRobolectricTestCase {
 
     final List<PageItem> pageItems = page.getPageItems();
     assertEquals(getString(R.string.no_stations_found_error), pageItems.get(0).getTitle());
+  }
+
+  @Test
+  @Ignore
+  public void onStart_getsStationsByGenre() {
+
   }
 
   @Test
@@ -98,14 +105,13 @@ public class GenrePageTests extends TtfRobolectricTestCase {
 
   @NonNull private GenrePage createPage() {
     final Bundle bundle = new Bundle();
-    bundle.putString("id", "Dreaming");
+    bundle.putString("id", GENRE_ID);
     return createPage(bundle);
   }
 
   @NonNull private GenrePage createPage(@NonNull final Bundle bundle) {
     final GenrePage page = new GenrePage(environment());
-    page.onCreate(context(), Uri.parse("/radio/language/Fantasian"), bundle);
+    page.onCreate(context(), PageUris.radioGenre(GENRE_ID), bundle);
     return page;
   }
-
 }

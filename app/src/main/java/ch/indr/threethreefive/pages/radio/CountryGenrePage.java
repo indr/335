@@ -18,6 +18,8 @@ import java.util.Collections;
 import java.util.List;
 
 import ch.indr.threethreefive.R;
+import ch.indr.threethreefive.data.network.radioBrowser.model.Genre;
+import ch.indr.threethreefive.data.network.radioBrowser.model.GenresBuilder;
 import ch.indr.threethreefive.data.network.radioBrowser.model.Station;
 import ch.indr.threethreefive.libs.Environment;
 import ch.indr.threethreefive.libs.PageItemsBuilder;
@@ -30,7 +32,7 @@ import timber.log.Timber;
 public class CountryGenrePage extends SpiceBasePage implements RequestListener<List<Station>> {
 
   private String countryId;
-  private String genreId;
+  private Genre genre;
 
   private PageItemsExpander<Station> expander = new PageItemsExpander<>();
 
@@ -43,13 +45,15 @@ public class CountryGenrePage extends SpiceBasePage implements RequestListener<L
     component().inject(this);
 
     this.countryId = getUriParam("countryId");
-    this.genreId = getUriParam("genreId");
+    final String genreId = getUriParam("genreId");
+    this.genre = GenresBuilder.getGenre(genreId);
+    setTitle(genre.getName());
   }
 
   @Override public void onStart() {
     super.onStart();
 
-    apiClient.getStationsByCountryAndGenre(countryId, genreId, this);
+    apiClient.getStationsByCountryAndGenre(countryId, genre, this);
   }
 
   @Override public void onRequestSuccess(List<Station> response) {
