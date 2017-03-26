@@ -9,11 +9,11 @@ package ch.indr.threethreefive.data.network.radioBrowser.model;
 
 import android.support.annotation.NonNull;
 
-import org.apache.commons.lang3.text.WordUtils;
-
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+
+import ch.indr.threethreefive.libs.utils.WordUtils;
 
 public class Genre {
 

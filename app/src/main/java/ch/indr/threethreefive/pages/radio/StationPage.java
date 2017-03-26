@@ -15,8 +15,6 @@ import android.support.annotation.NonNull;
 import com.octo.android.robospice.persistence.exception.SpiceException;
 import com.octo.android.robospice.request.listener.RequestListener;
 
-import org.apache.commons.lang3.StringUtils;
-
 import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -36,6 +34,7 @@ import ch.indr.threethreefive.libs.Environment;
 import ch.indr.threethreefive.libs.MediaItem;
 import ch.indr.threethreefive.libs.PageItemsBuilder;
 import ch.indr.threethreefive.libs.pages.SpiceBasePage;
+import ch.indr.threethreefive.libs.utils.StringUtils;
 import ch.indr.threethreefive.services.UiModeManager;
 
 public class StationPage extends SpiceBasePage implements RequestListener<Station[]> {
@@ -100,7 +99,8 @@ public class StationPage extends SpiceBasePage implements RequestListener<Statio
       for (Genre genre : station.getGenres()) {
         genresAsString.add(genre.getName());
       }
-      builder.addLink(String.format("/radio/stations/%s/genres", station.getId()), "Genres: " + StringUtils.join(genresAsString, ", "));
+      builder.addLink(String.format("/radio/stations/%s/genres", station.getId()),
+          "Genres: " + StringUtils.join(genresAsString, ", "));
     }
 
     // Votes

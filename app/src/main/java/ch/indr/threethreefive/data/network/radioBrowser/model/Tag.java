@@ -11,9 +11,9 @@ import android.support.annotation.NonNull;
 
 import com.google.api.client.util.Key;
 
-import org.apache.commons.lang3.text.WordUtils;
-
 import java.util.Comparator;
+
+import ch.indr.threethreefive.libs.utils.WordUtils;
 
 public class Tag {
 

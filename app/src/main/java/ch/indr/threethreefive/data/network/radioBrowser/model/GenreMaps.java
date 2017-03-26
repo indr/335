@@ -9,8 +9,6 @@ package ch.indr.threethreefive.data.network.radioBrowser.model;
 
 import android.content.res.Resources;
 
-import org.apache.commons.lang3.StringUtils;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -20,6 +18,7 @@ import java.util.List;
 import java.util.Map;
 
 import ch.indr.threethreefive.R;
+import ch.indr.threethreefive.libs.utils.StringUtils;
 import timber.log.Timber;
 
 public class GenreMaps {
@@ -58,7 +57,7 @@ public class GenreMaps {
       String line;
       while ((line = reader.readLine()) != null) {
         String[] strings = StringUtils.split(line, ',');
-        if (strings.length != 2) continue;
+        if (strings == null || strings.length != 2) continue;
         tagToGenreMap.put(strings[0], strings[1]);
       }
     } finally {

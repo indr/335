@@ -13,7 +13,8 @@ import android.support.annotation.Nullable;
 import rx.functions.Func1;
 
 public final class ObjectUtils {
-  private ObjectUtils(){}
+  private ObjectUtils() {
+  }
 
   public static boolean isNull(final @Nullable Object object) {
     return object == null;
@@ -109,6 +110,11 @@ public final class ObjectUtils {
 
     return null;
   }
+
+  public static @NonNull String toString(final @Nullable Object obj) {
+    return obj == null ? "" : obj.toString();
+  }
+
 
   /**
    * Cast a `null`able value into a non-`null` value, and throw a `NullPointerException` if the value is `null`.
