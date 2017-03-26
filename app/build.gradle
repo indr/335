@@ -40,8 +40,16 @@ android {
 }
 
 configurations {
+    // WARNING: Dependency org.apache.httpcomponents:httpclient:4.0.1 is ignored for release as it
+    // may be conflicting with the internal version provided by Android.
+    // In case of problem, please repackage it with jarjar to change the class packages
     // http://stackoverflow.com/a/41379193
     compile.exclude group: "org.apache.httpcomponents", module: "httpclient"
+
+    // Execution failed for task ':app:transformClassesWithJarMergingForDebug'.
+    // > com.android.build.api.transform.TransformException: java.util.zip.ZipException: duplicate entry: org/apache/commons/io/CopyUtils.class
+    // http://stackoverflow.com/a/42982662
+    compile.exclude group: "org.apache.commons"
 }
 
 dependencies {
