@@ -13,6 +13,7 @@ import android.support.annotation.NonNull;
 
 import com.octo.android.robospice.persistence.exception.SpiceException;
 
+import org.junit.Before;
 import org.junit.Test;
 
 import java.util.List;
@@ -25,52 +26,29 @@ import ch.indr.threethreefive.libs.PageItem;
 
 import static org.mockito.Mockito.verify;
 
-public class CountryGenrePageTests extends TtfRobolectricTestCase {
+public class TrendingPageTests extends TtfRobolectricTestCase {
 
   private ApiClient apiClient;
 
+  @Before
   @Override public void setUp() throws Exception {
     super.setUp();
 
     this.apiClient = appModule().apiClient(context());
   }
 
-  @Test(expected = IllegalArgumentException.class)
-  public void onCreate_withoutCountryId_throws() {
-    final Bundle bundle = new Bundle();
-    bundle.putString("genreId", "jazz");
-    try {
-      createPage(bundle);
-    } catch (Exception ex) {
-      assertTrue(ex.getMessage().contains("key countryId"));
-      throw ex;
-    }
-  }
-
-  @Test(expected = IllegalArgumentException.class)
-  public void onCreate_withoutGenreId_throws() {
-    final Bundle bundle = new Bundle();
-    bundle.putString("countryId", "england");
-    try {
-      createPage(bundle);
-    } catch (Exception ex) {
-      assertTrue(ex.getMessage().contains("key genreId"));
-      throw ex;
-    }
-  }
-
   @Test
-  public void onStart_getsGenresByCountry() {
-    final CountryGenrePage page = createPage();
+  public void onStart_getsTrendingStations() {
+    final TrendingPage page = createPage();
 
     page.onStart();
 
-    verify(apiClient).getStationsByCountryAndGenre("england", "jazz", page);
+    verify(apiClient).getTrendingStations(page);
   }
 
   @Test
   public void onRequestFailure_showsExceptionMessage() {
-    final CountryGenrePage page = createPage();
+    final TrendingPage page = createPage();
 
     page.onRequestFailure(new SpiceException("Test spice exception message"));
 
@@ -79,18 +57,8 @@ public class CountryGenrePageTests extends TtfRobolectricTestCase {
   }
 
   @Test
-  public void onRequestSuccess_withNullResponse_noStationsFoundError() {
-    final CountryGenrePage page = createPage();
-
-    page.onRequestSuccess(null);
-
-    final List<PageItem> pageItems = page.getPageItems();
-    assertEquals(getString(R.string.no_stations_found_error), pageItems.get(0).getTitle());
-  }
-
-  @Test
   public void onRequestSuccess_withEmptyResponse_noStationsFound() {
-    final CountryGenrePage page = createPage();
+    final TrendingPage page = createPage();
 
     page.onRequestSuccess(Fake.stations(0));
 
@@ -100,7 +68,7 @@ public class CountryGenrePageTests extends TtfRobolectricTestCase {
 
   @Test
   public void onRequestSuccess_with15Stations_show15Stations() {
-    final CountryGenrePage page = createPage();
+    final TrendingPage page = createPage();
 
     page.onRequestSuccess(Fake.stations(15));
 
@@ -110,7 +78,7 @@ public class CountryGenrePageTests extends TtfRobolectricTestCase {
 
   @Test
   public void onRequestSuccess_with50Stations_shows15StationsAndShowAll() {
-    final CountryGenrePage page = createPage();
+    final TrendingPage page = createPage();
 
     page.onRequestSuccess(Fake.stations(50));
 
@@ -121,7 +89,7 @@ public class CountryGenrePageTests extends TtfRobolectricTestCase {
 
   @Test
   public void onRequestSuccess_with51Stations_shows15StationsAndShowMore() {
-    final CountryGenrePage page = createPage();
+    final TrendingPage page = createPage();
 
     page.onRequestSuccess(Fake.stations(51));
 
@@ -130,16 +98,14 @@ public class CountryGenrePageTests extends TtfRobolectricTestCase {
     assertEquals(getString(R.string.show_more_stations), pageItems.get(pageItems.size() - 1).getTitle());
   }
 
-  @NonNull private CountryGenrePage createPage() {
+  @NonNull private TrendingPage createPage() {
     final Bundle bundle = new Bundle();
-    bundle.putString("countryId", "england");
-    bundle.putString("genreId", "jazz");
     return createPage(bundle);
   }
 
-  @NonNull private CountryGenrePage createPage(Bundle bundle) {
-    final CountryGenrePage page = new CountryGenrePage(environment());
-    page.onCreate(context(), Uri.parse("/radio/countries/Country/genres/Genre"), bundle);
+  private TrendingPage createPage(Bundle bundle) {
+    final TrendingPage page = new TrendingPage(environment());
+    page.onCreate(context(), Uri.parse("/radio/trending"), bundle);
     return page;
   }
 }

@@ -55,10 +55,6 @@ public class CountryGenresPage extends SpiceBasePage implements RequestListener<
     apiClient.getGenresByCountry(countryId, this);
   }
 
-  @Override public void onRequestFailure(SpiceException spiceException) {
-    handle(spiceException);
-  }
-
   @Override public void onRequestSuccess(List<Genre> response) {
     if (response == null) {
       handle(getString(R.string.no_genres_found_error));

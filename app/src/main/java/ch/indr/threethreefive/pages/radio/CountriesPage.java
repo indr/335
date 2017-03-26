@@ -52,10 +52,6 @@ public class CountriesPage extends SpiceBasePage implements RequestListener<Coun
     apiClient.getCountries(this);
   }
 
-  @Override public void onRequestFailure(SpiceException spiceException) {
-    handle(spiceException);
-  }
-
   @Override public void onRequestSuccess(Country[] response) {
     if (response == null) {
       handle(R.string.no_countries_found_error);

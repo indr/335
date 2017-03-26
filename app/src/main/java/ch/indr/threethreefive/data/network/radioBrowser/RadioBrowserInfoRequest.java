@@ -24,6 +24,9 @@ public abstract class RadioBrowserInfoRequest<TResult> extends HttpClientSpiceRe
 
   private HttpRequest request;
 
+  public static final boolean ORDER_ASC = false; // reverse=false
+  public static final boolean ORDER_DESC = true; // reverse=true
+
   public RadioBrowserInfoRequest(Class<TResult> clazz) {
     super(clazz);
   }

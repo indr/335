@@ -61,10 +61,6 @@ public class StationPage extends SpiceBasePage implements RequestListener<Statio
     apiClient.getStation(stationId, this);
   }
 
-  @Override public void onRequestFailure(SpiceException spiceException) {
-    handle(spiceException);
-  }
-
   @Override public void onRequestSuccess(Station[] stations) {
     if (stations == null || stations.length != 1) {
       getString(R.string.station_not_found_error, this.stationId);

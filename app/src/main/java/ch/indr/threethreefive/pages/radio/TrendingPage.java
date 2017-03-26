@@ -11,7 +11,9 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 
+import java.util.Comparator;
 import java.util.List;
 
 import ch.indr.threethreefive.R;
@@ -20,9 +22,9 @@ import ch.indr.threethreefive.libs.Environment;
 import ch.indr.threethreefive.libs.PageItemsBuilder;
 import ch.indr.threethreefive.libs.PageUris;
 
-public class RecentsPage extends StationListBasePage {
+public class TrendingPage extends StationListBasePage {
 
-  public RecentsPage(Environment environment) {
+  public TrendingPage(Environment environment) {
     super(environment);
   }
 
@@ -30,16 +32,16 @@ public class RecentsPage extends StationListBasePage {
     super.onCreate(context, uri, bundle);
     component().inject(this);
 
-    setTitle(getString(R.string.new_stations));
+    setTitle(getString(R.string.trending));
   }
 
   @Override public void onStart() {
     super.onStart();
 
-    apiClient.getNewStations(50, this);
+    apiClient.getTrendingStations(this);
   }
 
-  protected void addStationLinks(PageItemsBuilder builder, List<Station> stations) {
+  @Override protected void addStationLinks(PageItemsBuilder builder, List<Station> stations) {
     if (stations.size() == 0) {
       builder.addText(getString(R.string.no_stations_found));
       return;
@@ -51,5 +53,9 @@ public class RecentsPage extends StationListBasePage {
           station.makeSubtitle("CLG"),
           station.makeDescription("CLG"));
     }
+  }
+
+  @Nullable @Override protected Comparator<Station> getStationsComparator() {
+    return null;
   }
 }

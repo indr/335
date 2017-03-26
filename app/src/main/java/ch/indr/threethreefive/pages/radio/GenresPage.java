@@ -63,10 +63,6 @@ public class GenresPage extends SpiceBasePage implements RequestListener<Collect
     apiClient.getGenres(this);
   }
 
-  @Override public void onRequestFailure(SpiceException spiceException) {
-    handle(spiceException);
-  }
-
   @Override public void onRequestSuccess(Collection<Genre> response) {
     if (response == null) {
       handle(getString(R.string.no_genres_found_error));

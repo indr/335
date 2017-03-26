@@ -52,10 +52,6 @@ public class LanguagePage extends SpiceBasePage implements RequestListener<List<
     apiClient.getStationsByLanguage(language, this);
   }
 
-  @Override public void onRequestFailure(SpiceException spiceException) {
-    this.handle(spiceException);
-  }
-
   @Override public void onRequestSuccess(List<Station> response) {
     if (response == null) {
       handle(R.string.no_stations_found_error);

@@ -13,20 +13,21 @@ import android.os.Bundle;
 import org.junit.Test;
 
 import ch.indr.threethreefive.TtfRobolectricTestCase;
-import ch.indr.threethreefive.libs.pages.PageResolver;
 import ch.indr.threethreefive.libs.pages.PageMeta;
+import ch.indr.threethreefive.libs.pages.PageResolver;
 import ch.indr.threethreefive.pages.playlist.QueuePage;
-import ch.indr.threethreefive.pages.radio.IndexPage;
 import ch.indr.threethreefive.pages.radio.CountriesPage;
 import ch.indr.threethreefive.pages.radio.CountryGenrePage;
 import ch.indr.threethreefive.pages.radio.CountryGenresPage;
 import ch.indr.threethreefive.pages.radio.CountryStationsPage;
 import ch.indr.threethreefive.pages.radio.GenrePage;
 import ch.indr.threethreefive.pages.radio.GenresPage;
+import ch.indr.threethreefive.pages.radio.IndexPage;
 import ch.indr.threethreefive.pages.radio.LanguagePage;
 import ch.indr.threethreefive.pages.radio.LanguagesPage;
 import ch.indr.threethreefive.pages.radio.StationGenresPage;
 import ch.indr.threethreefive.pages.radio.StationPage;
+import ch.indr.threethreefive.pages.radio.TrendingPage;
 import rx.functions.Action1;
 
 public class PageResolverTests extends TtfRobolectricTestCase {
@@ -66,6 +67,7 @@ public class PageResolverTests extends TtfRobolectricTestCase {
     assertResolve("/radio/genres/Top%2040", GenrePage.class, b -> b.putString("id", "Top 40"));
     assertResolve("/radio/stations/1234", StationPage.class, b -> b.putString("id", "1234"));
     assertResolve("/radio/stations/1234/genres", StationGenresPage.class, b -> b.putString("id", "1234"));
+    assertResolve("/radio/trending", TrendingPage.class);
   }
 
   private PageMeta assertResolve(String uri, Class<?> pageClass) {

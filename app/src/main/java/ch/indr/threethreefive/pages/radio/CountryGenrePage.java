@@ -53,10 +53,6 @@ public class CountryGenrePage extends SpiceBasePage implements RequestListener<L
     apiClient.getStationsByCountryAndGenre(countryId, genreId, this);
   }
 
-  @Override public void onRequestFailure(SpiceException spiceException) {
-    handle(spiceException);
-  }
-
   @Override public void onRequestSuccess(List<Station> response) {
     if (response == null) {
       handle(R.string.no_stations_found_error);

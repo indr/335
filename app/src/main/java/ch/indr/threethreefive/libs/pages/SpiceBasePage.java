@@ -12,6 +12,8 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 
+import com.octo.android.robospice.persistence.exception.SpiceException;
+
 import javax.inject.Inject;
 
 import ch.indr.threethreefive.data.network.ApiClient;
@@ -45,5 +47,9 @@ public abstract class SpiceBasePage extends Page {
     robospiceManager.shouldStop();
 
     super.onStop();
+  }
+
+  public void onRequestFailure(SpiceException spiceException) {
+    handle(spiceException);
   }
 }

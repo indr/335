@@ -55,10 +55,6 @@ public class GenrePage extends SpiceBasePage implements RequestListener<List<Sta
     apiClient.getStationsByGenre(genre, this);
   }
 
-  @Override public void onRequestFailure(SpiceException spiceException) {
-    handle(spiceException);
-  }
-
   @Override public void onRequestSuccess(List<Station> response) {
     if (response == null) {
       handle(R.string.no_stations_found_error);

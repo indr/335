@@ -10,13 +10,12 @@ package ch.indr.threethreefive.data.network;
 import android.content.Context;
 import android.support.annotation.NonNull;
 
+import com.octo.android.robospice.persistence.DurationInMillis;
 import com.octo.android.robospice.request.listener.RequestListener;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import ch.indr.threethreefive.data.network.radioBrowser.CountriesRequest;
 import ch.indr.threethreefive.data.network.radioBrowser.LanguagesRequest;
@@ -31,12 +30,15 @@ import ch.indr.threethreefive.data.network.radioBrowser.model.GenresBuilder;
 import ch.indr.threethreefive.data.network.radioBrowser.model.Language;
 import ch.indr.threethreefive.data.network.radioBrowser.model.Station;
 import ch.indr.threethreefive.data.network.radioBrowser.model.Tag;
-import ch.indr.threethreefive.data.network.radioBrowser.transformers.ArrayToListTransformer;
 import ch.indr.threethreefive.data.network.radioBrowser.transformers.StationsToGenreTransformer;
 import ch.indr.threethreefive.data.network.radioBrowser.transformers.TagsToGenresTransformer;
+import ch.indr.threethreefive.data.network.radioBrowser.transformers.Transformers;
 import ch.indr.threethreefive.data.network.radioBrowser.transformers.UnionTransformer;
 import ch.indr.threethreefive.libs.net.RobospiceManager;
 import timber.log.Timber;
+
+import static ch.indr.threethreefive.data.network.radioBrowser.RadioBrowserInfoRequest.ORDER_ASC;
+import static ch.indr.threethreefive.data.network.radioBrowser.RadioBrowserInfoRequest.ORDER_DESC;
 
 public class ApiClient {
 
@@ -66,8 +68,8 @@ public class ApiClient {
     robospiceManager.execute(new LanguagesRequest(), listener);
   }
 
-  public void getNewStations(int number, RequestListener<Station[]> listener) {
-    robospiceManager.execute(StationsRequest.recent(number), listener);
+  public void getNewStations(int number, RequestListener<List<Station>> listener) {
+    robospiceManager.execute(StationsRequest.recent(number), Transformers.ArrayToList(listener));
   }
 
   public void getStation(String stationId, RequestListener<Station[]> listener) {
@@ -75,7 +77,7 @@ public class ApiClient {
   }
 
   public void getStationsByCountry(String country, RequestListener<List<Station>> listener) {
-    robospiceManager.execute(StationsRequest.byCountry(country), new ArrayToListTransformer<>(listener));
+    robospiceManager.execute(StationsRequest.byCountry(country), Transformers.ArrayToList(listener));
   }
 
   public void getStationsByCountryAndGenre(String countryId, String genreId, RequestListener<List<Station>> listener) {
@@ -87,18 +89,19 @@ public class ApiClient {
     } else {
       RequestListener<Station[]> unionTransformer = new UnionTransformer<>(tags.size(), listener);
       for (Tag tag : tags) {
-        final Map<String, String> params = new HashMap<>();
-        params.put("country", countryId);
-        params.put("countryExact", "true");
-        params.put("tag", tag.getId());
-        params.put("tagExact", "true");
-        robospiceManager.execute(new StationsSearchRequest(params), unionTransformer);
+        final StationsSearchRequest request = new StationsSearchRequest()
+            .where("country", countryId)
+            .where("countryExact", "true")
+            .where("tag", tag.getId())
+            .where("tagExact", "true")
+            .order("name", ORDER_ASC);
+        robospiceManager.execute(request, unionTransformer);
       }
     }
   }
 
   public void getStationsByLanguage(String language, RequestListener<List<Station>> listener) {
-    robospiceManager.execute(StationsRequest.byLanguage(language), new ArrayToListTransformer<>(listener));
+    robospiceManager.execute(StationsRequest.byLanguage(language), Transformers.ArrayToList(listener));
   }
 
   public void getStationsByGenre(Genre genre, RequestListener<List<Station>> listener) {
@@ -112,5 +115,13 @@ public class ApiClient {
         robospiceManager.execute(StationsRequest.byTag(tag.getId()), unionTransformer);
       }
     }
+  }
+
+  public void getTrendingStations(RequestListener<List<Station>> listener) {
+    final StationsSearchRequest request = new StationsSearchRequest()
+        .expiresIn(DurationInMillis.ONE_MINUTE)
+        .order("clicktrend", ORDER_DESC)
+        .limit(50);
+    robospiceManager.execute(request, Transformers.ArrayToList(listener));
   }
 }

@@ -33,6 +33,7 @@ public class RadioPageResolver extends PageResolver {
   private static final int RECENTS_ID = GENRE_ID + 1;
   private static final int STATION_ID = RECENTS_ID + 1;
   private static final int STATION_ID_GENRES = STATION_ID + 1;
+  private static final int TRENDING_ID = STATION_ID_GENRES + 1;
 
   private static final List<UrlPattern> urlPatterns = new ArrayList<>();
 
@@ -49,6 +50,7 @@ public class RadioPageResolver extends PageResolver {
     uriMatcher.addURI(AUTHORITY, base_path + "/recents", RECENTS_ID);
     uriMatcher.addURI(AUTHORITY, base_path + "/stations/*", STATION_ID);
     uriMatcher.addURI(AUTHORITY, base_path + "/stations/*/genres", STATION_ID_GENRES);
+    uriMatcher.addURI(AUTHORITY, base_path + "/trending", TRENDING_ID);
   }
 
   private static void addPattern(String path, Class<? extends Page> pageClass) {
@@ -80,6 +82,8 @@ public class RadioPageResolver extends PageResolver {
         return makeMeta(StationPage.class, uri, uri.getLastPathSegment());
       case STATION_ID_GENRES:
         return makeMeta(StationGenresPage.class, uri, uri.getPathSegments().get(uri.getPathSegments().size() - 2));
+      case TRENDING_ID:
+        return makeMeta(TrendingPage.class, uri);
       default:
         return resolvePatterns(urlPatterns, uri);
     }
