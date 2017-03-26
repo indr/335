@@ -13,8 +13,6 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
-import ch.indr.threethreefive.libs.utils.WordUtils;
-
 public class Genre {
 
   private String id;
@@ -30,14 +28,14 @@ public class Genre {
 
   public Genre(final @NonNull String id, final int stationCount) {
     this.id = id;
-    this.name = WordUtils.capitalize(id);
+    this.name = GenreNames.getNameById(id);
     this.stationCount = stationCount;
     this.tags.add(new Tag(id, stationCount));
   }
 
   public Genre(final @NonNull String id, List<String> tagIds) {
     this.id = id;
-    this.name = WordUtils.capitalize(id);
+    this.name = GenreNames.getNameById(id);
     this.stationCount = 0;
     for (String tagId : tagIds) {
       this.tags.add(new Tag(tagId, 0));

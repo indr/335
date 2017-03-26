@@ -8,6 +8,7 @@
 package ch.indr.threethreefive.data.network.radioBrowser.model;
 
 import android.content.res.Resources;
+import android.support.annotation.NonNull;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -34,7 +35,7 @@ public class GenreMaps {
     return genreToTagsMap;
   }
 
-  public static void load(Resources resources) {
+  public static void load(@NonNull Resources resources) {
     tagToGenreMap.clear();
     genreToTagsMap.clear();
 

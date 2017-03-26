@@ -26,6 +26,7 @@ import ch.indr.threethreefive.data.network.radioBrowser.TagsRequest;
 import ch.indr.threethreefive.data.network.radioBrowser.model.Country;
 import ch.indr.threethreefive.data.network.radioBrowser.model.Genre;
 import ch.indr.threethreefive.data.network.radioBrowser.model.GenreMaps;
+import ch.indr.threethreefive.data.network.radioBrowser.model.GenreNames;
 import ch.indr.threethreefive.data.network.radioBrowser.model.GenresBuilder;
 import ch.indr.threethreefive.data.network.radioBrowser.model.Language;
 import ch.indr.threethreefive.data.network.radioBrowser.model.Station;
@@ -45,6 +46,7 @@ public class ApiClient {
   private RobospiceManager robospiceManager;
 
   public ApiClient(@NonNull Context context) {
+    GenreNames.load(context.getResources());
     GenreMaps.load(context.getResources());
   }
 

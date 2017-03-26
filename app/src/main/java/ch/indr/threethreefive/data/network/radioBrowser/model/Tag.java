@@ -47,7 +47,7 @@ public class Tag {
 
   private Tag(final @NonNull String id, final @NonNull String name, final int stationCount) {
     this.id = id;
-    this.name = name;
+    this.name = GenreNames.getNameById(id);
     this.stationCount = stationCount;
   }
 

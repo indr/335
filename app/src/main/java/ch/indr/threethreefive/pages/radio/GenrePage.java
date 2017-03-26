@@ -12,7 +12,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 
-import com.octo.android.robospice.persistence.exception.SpiceException;
 import com.octo.android.robospice.request.listener.RequestListener;
 
 import java.util.Collection;
@@ -33,7 +32,7 @@ import timber.log.Timber;
 
 public class GenrePage extends SpiceBasePage implements RequestListener<List<Station>> {
 
-  private String genre;
+  private String genreId;
   private PageItemsExpander<Station> expander = new PageItemsExpander<>();
 
   public GenrePage(Environment environment) {
@@ -44,14 +43,13 @@ public class GenrePage extends SpiceBasePage implements RequestListener<List<Sta
     super.onCreate(context, uri, bundle);
     component().inject(this);
 
-    this.genre = getUriParam("id");
-    setTitle(genre);
+    this.genreId = getUriParam("id");
   }
 
   @Override public void onStart() {
     super.onStart();
 
-    Genre genre = GenresBuilder.getGenre(this.genre);
+    Genre genre = GenresBuilder.getGenre(this.genreId);
     apiClient.getStationsByGenre(genre, this);
   }
 
