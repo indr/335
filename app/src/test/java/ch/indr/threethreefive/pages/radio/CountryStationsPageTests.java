@@ -18,11 +18,21 @@ import java.util.List;
 import ch.indr.threethreefive.Fake;
 import ch.indr.threethreefive.R;
 import ch.indr.threethreefive.TtfRobolectricTestCase;
+import ch.indr.threethreefive.data.network.ApiClient;
 import ch.indr.threethreefive.libs.PageItem;
-import ch.indr.threethreefive.data.network.radioBrowser.model.Station;
 import rx.observers.TestSubscriber;
 
+import static org.mockito.Mockito.verify;
+
 public class CountryStationsPageTests extends TtfRobolectricTestCase {
+
+  private ApiClient apiClient;
+
+  @Override public void setUp() throws Exception {
+    super.setUp();
+
+    this.apiClient = appModule().apiClient(context());
+  }
 
   @Test(expected = IllegalArgumentException.class)
   public void onCreate_withoutCountryIdInBundle_throws() {
@@ -46,6 +56,15 @@ public class CountryStationsPageTests extends TtfRobolectricTestCase {
   }
 
   @Test
+  public void onStart_getStationsByCountry() {
+    final CountryStationsPage page = createPage();
+
+    page.onStart();
+
+    verify(apiClient).getStationsByCountry("Dreamland", page);
+  }
+
+  @Test
   public void onRequestSuccess_withNullResponse_noStationsFoundError() {
     final CountryStationsPage page = createPage();
 
@@ -62,7 +81,7 @@ public class CountryStationsPageTests extends TtfRobolectricTestCase {
     page.onRequestSuccess(Fake.stations(0));
 
     final List<PageItem> pageItems = page.getPageItems();
-    assertEquals(getString(R.string.no_stations_found), pageItems.get(1).getTitle());
+    assertEquals(getString(R.string.no_stations_found), pageItems.get(0).getTitle());
   }
 
   @Test

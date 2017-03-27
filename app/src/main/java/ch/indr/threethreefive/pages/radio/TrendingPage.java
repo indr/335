@@ -38,7 +38,7 @@ public class TrendingPage extends StationListBasePage {
   @Override public void onStart() {
     super.onStart();
 
-    apiClient.getTrendingStations(this);
+    apiClient.getTrendingStations(MAX_NUMBER_OF_MORE_STATIONS, this);
   }
 
   @Override protected void addPageItems(PageItemsBuilder builder, List<Station> stations) {
@@ -46,6 +46,8 @@ public class TrendingPage extends StationListBasePage {
       builder.addText(getString(R.string.no_stations_found));
       return;
     }
+
+    builder.addToggleFavorite(getCurrentPageLink());
 
     for (Station station : stations) {
       builder.addLink(PageUris.radioStation(station.getId()),

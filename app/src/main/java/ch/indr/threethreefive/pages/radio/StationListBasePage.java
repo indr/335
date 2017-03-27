@@ -27,6 +27,9 @@ import timber.log.Timber;
 
 public abstract class StationListBasePage extends SpiceBasePage implements RequestListener<List<Station>> {
 
+  protected static final int MAX_NUMBER_OF_TOP_STATIONS = 15;
+  protected static final int MAX_NUMBER_OF_MORE_STATIONS = 50;
+
   protected PageItemsExpander<Station> expander = new PageItemsExpander<>();
 
   public StationListBasePage(Environment environment) {
@@ -50,8 +53,8 @@ public abstract class StationListBasePage extends SpiceBasePage implements Reque
     if (stationsComparator != null) {
       Collections.sort(allStations, stationsComparator);
     }
-    List<Station> topStations = CollectionUtils.slice(allStations, 0, 15);
-    List<Station> moreStations = CollectionUtils.slice(allStations, 0, 50);
+    List<Station> topStations = CollectionUtils.slice(allStations, 0, MAX_NUMBER_OF_TOP_STATIONS);
+    List<Station> moreStations = CollectionUtils.slice(allStations, 0, MAX_NUMBER_OF_MORE_STATIONS);
 
     Collections.sort(topStations, new Station.NameComparator());
     Collections.sort(moreStations, new Station.NameComparator());
@@ -68,7 +71,6 @@ public abstract class StationListBasePage extends SpiceBasePage implements Reque
 
   protected void showNextItems() {
     final PageItemsBuilder builder = pageItemsBuilder();
-    builder.addToggleFavorite(getCurrentPageLink());
     expander.buildNext(builder, this::addPageItems, this::showNextItems);
 
     resetFirstVisibleItem();

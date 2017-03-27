@@ -49,6 +49,8 @@ public class CountryStationsPage extends StationListBasePage {
       return;
     }
 
+    builder.addToggleFavorite(getCurrentPageLink());
+
     for (Station station : stations) {
       builder.addLink(PageUris.radioStation(station.getId()),
           station.getName(),

@@ -10,7 +10,6 @@ package ch.indr.threethreefive.pages.radio;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 
-import org.junit.Ignore;
 import org.junit.Test;
 
 import java.util.List;
@@ -18,13 +17,25 @@ import java.util.List;
 import ch.indr.threethreefive.Fake;
 import ch.indr.threethreefive.R;
 import ch.indr.threethreefive.TtfRobolectricTestCase;
+import ch.indr.threethreefive.data.network.ApiClient;
+import ch.indr.threethreefive.data.network.radioBrowser.model.GenresBuilder;
 import ch.indr.threethreefive.libs.PageItem;
 import ch.indr.threethreefive.libs.PageUris;
 import rx.observers.TestSubscriber;
 
+import static org.mockito.Mockito.verify;
+
 public class GenrePageTests extends TtfRobolectricTestCase {
 
   private final String GENRE_ID = "classic rock";
+
+  private ApiClient apiClient;
+
+  @Override public void setUp() throws Exception {
+    super.setUp();
+
+    this.apiClient = appModule().apiClient(context());
+  }
 
   @Test(expected = IllegalArgumentException.class)
   public void onCreate_withoutIdInBundle_throws() {
@@ -46,6 +57,15 @@ public class GenrePageTests extends TtfRobolectricTestCase {
   }
 
   @Test
+  public void onStart_getsStationsByGenre() {
+    final GenrePage page = createPage();
+
+    page.onStart();
+
+    verify(apiClient).getStationsByGenre(GenresBuilder.getGenre(GENRE_ID), page);
+  }
+
+  @Test
   public void onRequestSuccess_withNullResponse_noStationsFound() {
     final GenrePage page = createPage();
 
@@ -56,19 +76,13 @@ public class GenrePageTests extends TtfRobolectricTestCase {
   }
 
   @Test
-  @Ignore
-  public void onStart_getsStationsByGenre() {
-
-  }
-
-  @Test
   public void onRequestSuccess_withEmptyResponse_noStationsFound() {
     final GenrePage page = createPage();
 
     page.onRequestSuccess(Fake.stations(0));
 
     final List<PageItem> pageItems = page.getPageItems();
-    assertEquals(getString(R.string.no_stations_found), pageItems.get(1).getTitle());
+    assertEquals(getString(R.string.no_stations_found), pageItems.get(0).getTitle());
   }
 
   @Test

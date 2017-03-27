@@ -113,11 +113,11 @@ public class ApiClient {
     }
   }
 
-  public void getTrendingStations(RequestListener<List<Station>> listener) {
+  public void getTrendingStations(int limit, RequestListener<List<Station>> listener) {
     final StationsSearchRequest request = new StationsSearchRequest()
         .expiresIn(DurationInMillis.ONE_MINUTE)
         .order("clicktrend", ORDER_DESC)
-        .limit(50);
+        .limit(limit);
     robospiceManager.execute(request, Transformers.ArrayToList(listener));
   }
 }

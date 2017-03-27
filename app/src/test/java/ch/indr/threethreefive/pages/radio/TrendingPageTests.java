@@ -43,7 +43,7 @@ public class TrendingPageTests extends TtfRobolectricTestCase {
 
     page.onStart();
 
-    verify(apiClient).getTrendingStations(page);
+    verify(apiClient).getTrendingStations(TrendingPage.MAX_NUMBER_OF_MORE_STATIONS, page);
   }
 
   @Test
@@ -63,7 +63,7 @@ public class TrendingPageTests extends TtfRobolectricTestCase {
     page.onRequestSuccess(Fake.stations(0));
 
     final List<PageItem> pageItems = page.getPageItems();
-    assertEquals(getString(R.string.no_stations_found), pageItems.get(1).getTitle());
+    assertEquals(getString(R.string.no_stations_found), pageItems.get(0).getTitle());
   }
 
   @Test
