@@ -12,7 +12,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 
-import com.octo.android.robospice.persistence.exception.SpiceException;
 import com.octo.android.robospice.request.listener.RequestListener;
 
 import java.text.DateFormat;
@@ -33,6 +32,7 @@ import ch.indr.threethreefive.data.network.radioBrowser.model.Station;
 import ch.indr.threethreefive.libs.Environment;
 import ch.indr.threethreefive.libs.MediaItem;
 import ch.indr.threethreefive.libs.PageItemsBuilder;
+import ch.indr.threethreefive.libs.PageUris;
 import ch.indr.threethreefive.libs.pages.SpiceBasePage;
 import ch.indr.threethreefive.libs.utils.StringUtils;
 import ch.indr.threethreefive.services.UiModeManager;
@@ -46,7 +46,6 @@ public class StationPage extends SpiceBasePage implements RequestListener<Statio
   public StationPage(Environment environment) {
     super(environment);
   }
-
 
   @Override public void onCreate(@NonNull Context context, @NonNull Uri uri, Bundle bundle) {
     super.onCreate(context, uri, bundle);
@@ -80,12 +79,12 @@ public class StationPage extends SpiceBasePage implements RequestListener<Statio
 
     // Country
     if (station.getCountry() != null) {
-      builder.addLink("/radio/countries/" + station.getCountry(), "Country: " + station.getCountry());
+      builder.addLink(PageUris.radioCountry(station.getCountry()), "Country: " + station.getCountry());
     }
 
     // Language
     if (station.getLanguage() != null) {
-      builder.addLink("/radio/languages/" + station.getLanguage(), "Language: " + station.getLanguage());
+      builder.addLink(PageUris.radioLanguage(station.getLanguage()), "Language: " + station.getLanguage());
     }
 
     // Genres
@@ -95,8 +94,7 @@ public class StationPage extends SpiceBasePage implements RequestListener<Statio
       for (Genre genre : station.getGenres()) {
         genresAsString.add(genre.getName());
       }
-      builder.addLink(String.format("/radio/stations/%s/genres", station.getId()),
-          "Genres: " + StringUtils.join(genresAsString, ", "));
+      builder.addLink(PageUris.radioStationGenres(station.getId()), "Genres: " + StringUtils.join(genresAsString, ", "));
     }
 
     // Votes
@@ -123,5 +121,4 @@ public class StationPage extends SpiceBasePage implements RequestListener<Statio
   private boolean isButtonView() {
     return uiModeManager.getCurrentUiMode() == UiModeManager.UI_MODE_BUTTONS;
   }
-
 }

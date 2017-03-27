@@ -46,6 +46,14 @@ public abstract class PageUris {
     return build("/radio").build();
   }
 
+  @NonNull public static Uri radioCountries() {
+    return build("/radio/countries").build();
+  }
+
+  @NonNull public static Uri radioCountry(final @NonNull String countryId) {
+    return radioCountryGenres(countryId);
+  }
+
   @NonNull public static Uri radioCountryGenres(final @NonNull String countryId) {
     return build("/radio/countries/").appendPath(countryId).appendPath("genres").build();
   }
@@ -62,12 +70,28 @@ public abstract class PageUris {
     return build("/radio/genres/").appendPath(genreId).build();
   }
 
+  @NonNull public static Uri radioGenres() {
+    return build("/radio/genres").build();
+  }
+
   @NonNull public static Uri radioLanguage(final @NonNull String languageId) {
     return build("/radio/languages/").appendPath(languageId).build();
   }
 
+  @NonNull public static Uri radioLanguages() {
+    return build("/radio/languages").build();
+  }
+
   @NonNull public static Uri radioStation(final @NonNull String stationId) {
     return build("/radio/stations/").appendPath(stationId).build();
+  }
+
+  @NonNull public static Uri radioStationGenres(final @NonNull String stationId) {
+    return build("/radio/stations/").appendPath(stationId).appendPath("genres").build();
+  }
+
+  @NonNull public static Uri radioTrending() {
+    return build("/radio/trending").build();
   }
 
   @NonNull public static Uri playlist() {

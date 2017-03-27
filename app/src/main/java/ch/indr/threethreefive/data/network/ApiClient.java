@@ -69,10 +69,6 @@ public class ApiClient {
     robospiceManager.execute(new LanguagesRequest(), listener);
   }
 
-  public void getNewStations(int number, RequestListener<List<Station>> listener) {
-    robospiceManager.execute(StationsRequest.recent(number), Transformers.ArrayToList(listener));
-  }
-
   public void getStation(String stationId, RequestListener<Station[]> listener) {
     robospiceManager.execute(new StationRequest(stationId), listener);
   }

@@ -15,6 +15,7 @@ import android.support.annotation.NonNull;
 import ch.indr.threethreefive.R;
 import ch.indr.threethreefive.libs.Environment;
 import ch.indr.threethreefive.libs.PageItemsBuilder;
+import ch.indr.threethreefive.libs.PageUris;
 import ch.indr.threethreefive.libs.pages.Page;
 
 public class IndexPage extends Page {
@@ -30,11 +31,10 @@ public class IndexPage extends Page {
 
     final PageItemsBuilder builder = pageItemsBuilder();
 
-    // builder.addLink("/radio/recents", R.string.new_stations);
-    builder.addLink("/radio/trending", R.string.trending);
-    builder.addLink("/radio/genres", R.string.genres);
-    builder.addLink("/radio/countries", R.string.countries);
-    builder.addLink("/radio/languages", R.string.languages);
+    builder.addLink(PageUris.radioTrending(), R.string.trending);
+    builder.addLink(PageUris.radioGenres(), R.string.genres);
+    builder.addLink(PageUris.radioCountries(), R.string.countries);
+    builder.addLink(PageUris.radioLanguages(), R.string.languages);
 
     setPageItems(builder);
   }

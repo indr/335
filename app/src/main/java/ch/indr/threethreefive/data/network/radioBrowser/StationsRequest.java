@@ -11,10 +11,8 @@ import android.support.annotation.NonNull;
 
 import com.google.api.client.http.GenericUrl;
 import com.google.api.client.http.HttpRequest;
-import com.octo.android.robospice.persistence.DurationInMillis;
 
 import java.io.IOException;
-import java.util.Map;
 
 import ch.indr.threethreefive.data.network.radioBrowser.model.Station;
 
@@ -42,13 +40,6 @@ public class StationsRequest extends RadioBrowserInfoRequest<Station[]> {
   public static StationsRequest byTag(@NonNull String tag) {
     String url = BASE_URL + "stations/bytagexact/" + tag;
     return new StationsRequest(new GenericUrl(url));
-  }
-
-  public static StationsRequest recent(int rowCount) {
-    String url = BASE_URL + "stations/lastchange/" + rowCount;
-    StationsRequest request = new StationsRequest(new GenericUrl(url));
-    request.setCacheExpiryDuration(DurationInMillis.ALWAYS_EXPIRED);
-    return request;
   }
 
   @NonNull @Override protected HttpRequest buildHttpRequest() throws IOException {

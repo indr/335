@@ -30,8 +30,7 @@ public class RadioPageResolver extends PageResolver {
   private static final int LANGUAGE_NAME = LANGUAGES + 1;
   private static final int GENRES = LANGUAGE_NAME + 1;
   private static final int GENRE_ID = GENRES + 1;
-  private static final int RECENTS_ID = GENRE_ID + 1;
-  private static final int STATION_ID = RECENTS_ID + 1;
+  private static final int STATION_ID = GENRE_ID + 1;
   private static final int STATION_ID_GENRES = STATION_ID + 1;
   private static final int TRENDING_ID = STATION_ID_GENRES + 1;
 
@@ -47,7 +46,6 @@ public class RadioPageResolver extends PageResolver {
     uriMatcher.addURI(AUTHORITY, base_path + "/languages/*", LANGUAGE_NAME);
     uriMatcher.addURI(AUTHORITY, base_path + "/genres", GENRES);
     uriMatcher.addURI(AUTHORITY, base_path + "/genres/*", GENRE_ID);
-    uriMatcher.addURI(AUTHORITY, base_path + "/recents", RECENTS_ID);
     uriMatcher.addURI(AUTHORITY, base_path + "/stations/*", STATION_ID);
     uriMatcher.addURI(AUTHORITY, base_path + "/stations/*/genres", STATION_ID_GENRES);
     uriMatcher.addURI(AUTHORITY, base_path + "/trending", TRENDING_ID);
@@ -76,8 +74,6 @@ public class RadioPageResolver extends PageResolver {
         return makeMeta(GenresPage.class, uri);
       case GENRE_ID:
         return makeMeta(GenrePage.class, uri, uri.getLastPathSegment());
-      case RECENTS_ID:
-        return makeMeta(RecentsPage.class, uri);
       case STATION_ID:
         return makeMeta(StationPage.class, uri, uri.getLastPathSegment());
       case STATION_ID_GENRES:
