@@ -39,11 +39,11 @@ public class GenresBuilder {
     }
   }
 
-  public List<Genre> getGenres() {
+  @NonNull public List<Genre> getGenres() {
     return new ArrayList<>(genres.values());
   }
 
-  public static Collection<Genre> getGenres(Collection<String> tagNames) {
+  @NonNull public static List<Genre> getGenres(final @NonNull Collection<String> tagNames) {
     final GenresBuilder genresBuilder = new GenresBuilder();
     for (String tagName : tagNames) {
       genresBuilder.add(Tag.fromName(tagName));
@@ -51,7 +51,7 @@ public class GenresBuilder {
     return genresBuilder.getGenres();
   }
 
-  public static Collection<Genre> getGenres(Tag[] tags) {
+  @NonNull public static List<Genre> getGenres(final @NonNull Tag[] tags) {
     final GenresBuilder genresBuilder = new GenresBuilder();
     for (Tag tag : tags) {
       genresBuilder.add(tag);
@@ -59,7 +59,7 @@ public class GenresBuilder {
     return genresBuilder.getGenres();
   }
 
-  public static Genre getGenre(String genreId) {
+  @NonNull public static Genre getGenre(final @NonNull String genreId) {
     final Map<String, List<String>> genreToTagsMap = GenreMaps.getGenreToTagsMap();
 
     List<String> tagIds = genreToTagsMap.get(genreId);

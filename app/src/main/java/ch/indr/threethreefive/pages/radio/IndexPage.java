@@ -29,6 +29,10 @@ public class IndexPage extends Page {
 
     setTitle("Radio");
 
+    addPageItems();
+  }
+
+  private void addPageItems() {
     final PageItemsBuilder builder = pageItemsBuilder();
 
     builder.addLink(PageUris.radioTrending(), R.string.trending);

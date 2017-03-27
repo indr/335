@@ -14,7 +14,6 @@ import com.octo.android.robospice.persistence.DurationInMillis;
 import com.octo.android.robospice.request.listener.RequestListener;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 import ch.indr.threethreefive.data.network.radioBrowser.CountriesRequest;
@@ -57,7 +56,7 @@ public class ApiClient {
     robospiceManager.execute(new CountriesRequest(), listener);
   }
 
-  public void getGenres(RequestListener<Collection<Genre>> listener) {
+  public void getGenres(RequestListener<List<Genre>> listener) {
     robospiceManager.execute(new TagsRequest(), new TagsToGenresTransformer(listener));
   }
 

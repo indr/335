@@ -47,6 +47,7 @@ public class CountryGenrePage extends SpiceBasePage implements RequestListener<L
     this.countryId = getUriParam("countryId");
     final String genreId = getUriParam("genreId");
     this.genre = GenresBuilder.getGenre(genreId);
+
     setTitle(genre.getName());
   }
 
@@ -69,13 +70,13 @@ public class CountryGenrePage extends SpiceBasePage implements RequestListener<L
   private void showNextItems() {
     final PageItemsBuilder builder = pageItemsBuilder();
     builder.addToggleFavorite(getCurrentPageLink());
-    expander.buildNext(builder, this::addStationLinks, this::showNextItems);
+    expander.buildNext(builder, this::addPageItems, this::showNextItems);
 
     resetFirstVisibleItem();
     setPageItems(builder);
   }
 
-  private void addStationLinks(PageItemsBuilder builder, List<Station> stations) {
+  private void addPageItems(PageItemsBuilder builder, List<Station> stations) {
     if (stations.size() == 0) {
       builder.addText(getString(R.string.no_stations_found));
       return;

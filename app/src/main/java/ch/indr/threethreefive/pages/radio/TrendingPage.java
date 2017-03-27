@@ -41,7 +41,7 @@ public class TrendingPage extends StationListBasePage {
     apiClient.getTrendingStations(this);
   }
 
-  @Override protected void addStationLinks(PageItemsBuilder builder, List<Station> stations) {
+  @Override protected void addPageItems(PageItemsBuilder builder, List<Station> stations) {
     if (stations.size() == 0) {
       builder.addText(getString(R.string.no_stations_found));
       return;

@@ -12,11 +12,8 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 
-import com.octo.android.robospice.request.listener.RequestListener;
-
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
@@ -25,22 +22,16 @@ import ch.indr.threethreefive.R;
 import ch.indr.threethreefive.data.network.radioBrowser.model.Genre;
 import ch.indr.threethreefive.libs.Environment;
 import ch.indr.threethreefive.libs.PageItemsBuilder;
-import ch.indr.threethreefive.libs.PageItemsExpander;
 import ch.indr.threethreefive.libs.PageUris;
-import ch.indr.threethreefive.libs.pages.SpiceBasePage;
 import ch.indr.threethreefive.libs.utils.CollectionUtils;
 import timber.log.Timber;
 
-public class GenresPage extends SpiceBasePage implements RequestListener<Collection<Genre>> {
+public class GenresPage extends GenreListBasePage {
 
-  private static final int MAX_NUMBER_OF_TOP_GENRES = 15;
-  private static final int MAX_NUMBER_OF_MORE_GENRES = 50;
   private static final int MIN_STATION_COUNT_FOR_ALL_GENRES = 9;
 
   private List<String> excludedFromTopGenres;
   private List<String> excludedFromMoreGenres;
-
-  private PageItemsExpander<Genre> expander = new PageItemsExpander<>();
 
   public GenresPage(Environment environment) {
     super(environment);
@@ -50,10 +41,10 @@ public class GenresPage extends SpiceBasePage implements RequestListener<Collect
     super.onCreate(context, uri, bundle);
     component().inject(this);
 
-    setTitle(getString(R.string.genres));
-
     this.excludedFromTopGenres = Arrays.asList(context.getResources().getStringArray(R.array.excluded_from_top_genres));
     this.excludedFromMoreGenres = Arrays.asList(context.getResources().getStringArray(R.array.excluded_from_more_genres));
+
+    setTitle(getString(R.string.genres));
   }
 
   @Override public void onStart() {
@@ -62,25 +53,7 @@ public class GenresPage extends SpiceBasePage implements RequestListener<Collect
     apiClient.getGenres(this);
   }
 
-  @Override public void onRequestSuccess(Collection<Genre> response) {
-    if (response == null) {
-      handle(getString(R.string.no_genres_found_error));
-      return;
-    }
-
-    populateLists(response);
-    showNextItems();
-  }
-
-  private void showNextItems() {
-    final PageItemsBuilder builder = pageItemsBuilder();
-    expander.buildNext(builder, this::addGenreLinks, this::showNextItems);
-
-    resetFirstVisibleItem();
-    setPageItems(builder);
-  }
-
-  private void addGenreLinks(PageItemsBuilder builder, Collection<Genre> genres) {
+  @Override protected void addPageItems(PageItemsBuilder builder, List<Genre> genres) {
     if (genres.size() == 0) {
       builder.addText(getString(R.string.no_genres_found));
       return;
@@ -95,7 +68,7 @@ public class GenresPage extends SpiceBasePage implements RequestListener<Collect
     }
   }
 
-  private void populateLists(@NonNull Collection<Genre> response) {
+  @Override protected void populateLists(@NonNull List<Genre> response) {
     Timber.d("populateLists genres %d, %s", response.size(), this.toString());
 
     Timber.d("Filtering min station count and building all genres list, %s", this.toString());

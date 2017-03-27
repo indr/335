@@ -67,9 +67,11 @@ public class StationPage extends SpiceBasePage implements RequestListener<Statio
     }
 
     Station station = stations[0];
+    setTitle(station.getName());
+    addPageItems(station);
+  }
 
-    // setTitle(station.getName());
-
+  private void addPageItems(final @NonNull Station station) {
     final PageItemsBuilder builder = pageItemsBuilder();
 
     MediaItem mediaItem = MediaItemFactory.make(station);

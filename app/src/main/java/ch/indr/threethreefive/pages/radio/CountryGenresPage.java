@@ -12,9 +12,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 
-import com.octo.android.robospice.persistence.exception.SpiceException;
-import com.octo.android.robospice.request.listener.RequestListener;
-
 import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
@@ -23,19 +20,12 @@ import ch.indr.threethreefive.R;
 import ch.indr.threethreefive.data.network.radioBrowser.model.Genre;
 import ch.indr.threethreefive.libs.Environment;
 import ch.indr.threethreefive.libs.PageItemsBuilder;
-import ch.indr.threethreefive.libs.PageItemsExpander;
 import ch.indr.threethreefive.libs.PageUris;
-import ch.indr.threethreefive.libs.pages.SpiceBasePage;
 import ch.indr.threethreefive.libs.utils.CollectionUtils;
 
-public class CountryGenresPage extends SpiceBasePage implements RequestListener<List<Genre>> {
-
-  private static final int MAX_NUMBER_OF_TOP_GENRES = 15;
-  private static final int MAX_NUMBER_OF_MORE_GENRES = 50;
+public class CountryGenresPage extends GenreListBasePage {
 
   private String countryId;
-
-  private PageItemsExpander<Genre> expander = new PageItemsExpander<>();
 
   public CountryGenresPage(Environment environment) {
     super(environment);
@@ -55,27 +45,7 @@ public class CountryGenresPage extends SpiceBasePage implements RequestListener<
     apiClient.getGenresByCountry(countryId, this);
   }
 
-  @Override public void onRequestSuccess(List<Genre> response) {
-    if (response == null) {
-      handle(getString(R.string.no_genres_found_error));
-      return;
-    }
-
-    populateLists(response);
-    showNextItems();
-  }
-
-  private void showNextItems() {
-    final PageItemsBuilder builder = pageItemsBuilder();
-    builder.addToggleFavorite(getCurrentPageLink());
-    expander.buildNext(builder, this::addGenreLinks, this::showNextItems);
-    builder.addLink(PageUris.radioCountryStations(countryId), getString(R.string.show_all_stations));
-
-    resetFirstVisibleItem();
-    setPageItems(builder);
-  }
-
-  private void addGenreLinks(PageItemsBuilder builder, List<Genre> genres) {
+  @Override protected void addPageItems(PageItemsBuilder builder, List<Genre> genres) {
     if (genres.size() == 0) {
       builder.addText(getString(R.string.no_genres_found));
       return;
@@ -88,9 +58,11 @@ public class CountryGenresPage extends SpiceBasePage implements RequestListener<
           subtitle,
           genre.getName() + ", " + subtitle);
     }
+
+    builder.addLink(PageUris.radioCountryStations(countryId), getString(R.string.show_all_stations));
   }
 
-  private void populateLists(List<Genre> genres) {
+  @Override protected void populateLists(List<Genre> genres) {
     Collections.sort(genres, new Genre.StationCountComparator());
 
     List<Genre> topGenres = CollectionUtils.slice(genres, 0, Math.min(genres.size(), MAX_NUMBER_OF_TOP_GENRES));

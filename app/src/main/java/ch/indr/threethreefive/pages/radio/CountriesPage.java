@@ -12,7 +12,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 
-import com.octo.android.robospice.persistence.exception.SpiceException;
 import com.octo.android.robospice.request.listener.RequestListener;
 
 import java.util.ArrayList;
@@ -64,13 +63,13 @@ public class CountriesPage extends SpiceBasePage implements RequestListener<Coun
 
   private void showNextItems() {
     final PageItemsBuilder builder = pageItemsBuilder();
-    expander.buildNext(builder, this::addCountryLinks, this::showNextItems);
+    expander.buildNext(builder, this::addPageItems, this::showNextItems);
 
     resetFirstVisibleItem();
     setPageItems(builder);
   }
 
-  private void addCountryLinks(PageItemsBuilder builder, List<Country> countries) {
+  private void addPageItems(PageItemsBuilder builder, List<Country> countries) {
     if (countries.size() == 0) {
       builder.addText(getString(R.string.no_countries_found));
       return;

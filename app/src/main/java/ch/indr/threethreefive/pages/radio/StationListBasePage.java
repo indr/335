@@ -69,11 +69,11 @@ public abstract class StationListBasePage extends SpiceBasePage implements Reque
   protected void showNextItems() {
     final PageItemsBuilder builder = pageItemsBuilder();
     builder.addToggleFavorite(getCurrentPageLink());
-    expander.buildNext(builder, this::addStationLinks, this::showNextItems);
+    expander.buildNext(builder, this::addPageItems, this::showNextItems);
 
     resetFirstVisibleItem();
     setPageItems(builder);
   }
 
-  protected abstract void addStationLinks(PageItemsBuilder builder, List<Station> stations);
+  protected abstract void addPageItems(PageItemsBuilder builder, List<Station> stations);
 }

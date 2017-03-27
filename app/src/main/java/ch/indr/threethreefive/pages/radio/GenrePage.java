@@ -12,10 +12,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 
-import com.octo.android.robospice.request.listener.RequestListener;
-
-import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
 
 import ch.indr.threethreefive.R;
@@ -26,13 +22,11 @@ import ch.indr.threethreefive.libs.Environment;
 import ch.indr.threethreefive.libs.PageItemsBuilder;
 import ch.indr.threethreefive.libs.PageItemsExpander;
 import ch.indr.threethreefive.libs.PageUris;
-import ch.indr.threethreefive.libs.pages.SpiceBasePage;
-import ch.indr.threethreefive.libs.utils.CollectionUtils;
-import timber.log.Timber;
 
-public class GenrePage extends SpiceBasePage implements RequestListener<List<Station>> {
+public class GenrePage extends StationListBasePage {
 
   private Genre genre;
+
   private PageItemsExpander<Station> expander = new PageItemsExpander<>();
 
   public GenrePage(Environment environment) {
@@ -45,6 +39,7 @@ public class GenrePage extends SpiceBasePage implements RequestListener<List<Sta
 
     final String genreId = getUriParam("id");
     this.genre = GenresBuilder.getGenre(genreId);
+
     setTitle(this.genre.getName());
   }
 
@@ -54,34 +49,13 @@ public class GenrePage extends SpiceBasePage implements RequestListener<List<Sta
     apiClient.getStationsByGenre(genre, this);
   }
 
-  @Override public void onRequestSuccess(List<Station> response) {
-    if (response == null) {
-      handle(R.string.no_stations_found_error);
-      return;
-    }
-
-    populateLists(response);
-    showNextItems();
-  }
-
-  private void showNextItems() {
-    final PageItemsBuilder builder = pageItemsBuilder();
-    builder.addToggleFavorite(getCurrentPageLink());
-    expander.buildNext(builder, this::addStationLinks, this::showNextItems);
-
-    resetFirstVisibleItem();
-    setPageItems(builder);
-  }
-
-  private void addStationLinks(PageItemsBuilder builder, Collection<Station> stations) {
-    if (stations == null) {
-      handle(getString(R.string.no_stations_found_error));
-      return;
-    }
+  @Override protected void addPageItems(PageItemsBuilder builder, List<Station> stations) {
     if (stations.size() == 0) {
       builder.addText(getString(R.string.no_stations_found));
       return;
     }
+
+    builder.addToggleFavorite(getCurrentPageLink());
 
     for (Station station : stations) {
       builder.addLink(PageUris.radioStation(station.getId()),
@@ -90,21 +64,5 @@ public class GenrePage extends SpiceBasePage implements RequestListener<List<Sta
           station.makeDescription("LG")
       );
     }
-  }
-
-  private void populateLists(List<Station> allStations) {
-    Timber.d("populateLists stations %d, %s", allStations.size(), this.toString());
-
-    Collections.sort(allStations, Station.getBestStationsComparator());
-    List<Station> topStations = CollectionUtils.slice(allStations, 0, 15);
-    List<Station> moreStations = CollectionUtils.slice(allStations, 0, 50);
-
-    Collections.sort(topStations, new Station.NameComparator());
-    Collections.sort(moreStations, new Station.NameComparator());
-    Collections.sort(allStations, new Station.NameComparator());
-
-    expander.add(topStations, getString(R.string.show_top_stations));
-    expander.add(moreStations, getString(R.string.show_more_stations));
-    expander.add(allStations, getString(R.string.show_all_stations));
   }
 }

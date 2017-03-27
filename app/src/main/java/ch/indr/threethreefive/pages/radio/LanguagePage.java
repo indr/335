@@ -12,25 +12,23 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 
-import com.octo.android.robospice.persistence.exception.SpiceException;
 import com.octo.android.robospice.request.listener.RequestListener;
 
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
 import ch.indr.threethreefive.R;
+import ch.indr.threethreefive.data.network.radioBrowser.model.Station;
 import ch.indr.threethreefive.libs.Environment;
 import ch.indr.threethreefive.libs.PageItemsBuilder;
 import ch.indr.threethreefive.libs.PageItemsExpander;
-import ch.indr.threethreefive.libs.utils.CollectionUtils;
 import ch.indr.threethreefive.libs.pages.SpiceBasePage;
-import ch.indr.threethreefive.data.network.radioBrowser.model.Station;
+import ch.indr.threethreefive.libs.utils.CollectionUtils;
 import timber.log.Timber;
 
 public class LanguagePage extends SpiceBasePage implements RequestListener<List<Station>> {
 
-  private String language;
+  private String languageId;
 
   private PageItemsExpander<Station> expander = new PageItemsExpander<>();
 
@@ -42,14 +40,15 @@ public class LanguagePage extends SpiceBasePage implements RequestListener<List<
     super.onCreate(context, uri, bundle);
     component().inject(this);
 
-    this.language = getUriParam("id");
-    setTitle(language);
+    this.languageId = getUriParam("id");
+
+    setTitle(languageId);
   }
 
   @Override public void onStart() {
     super.onStart();
 
-    apiClient.getStationsByLanguage(language, this);
+    apiClient.getStationsByLanguage(languageId, this);
   }
 
   @Override public void onRequestSuccess(List<Station> response) {
@@ -65,13 +64,13 @@ public class LanguagePage extends SpiceBasePage implements RequestListener<List<
   private void showNextItems() {
     final PageItemsBuilder builder = pageItemsBuilder();
     builder.addToggleFavorite(getCurrentPageLink());
-    expander.buildNext(builder, this::addStationLinks, this::showNextItems);
+    expander.buildNext(builder, this::addPageItems, this::showNextItems);
 
     resetFirstVisibleItem();
     setPageItems(builder.build());
   }
 
-  private void addStationLinks(PageItemsBuilder builder, List<Station> stations) {
+  private void addPageItems(PageItemsBuilder builder, List<Station> stations) {
     if (stations.size() == 0) {
       builder.addText(getString(R.string.no_stations_found));
       return;

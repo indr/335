@@ -12,7 +12,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 
-import com.octo.android.robospice.persistence.exception.SpiceException;
 import com.octo.android.robospice.request.listener.RequestListener;
 
 import java.util.Locale;
@@ -28,7 +27,6 @@ public class LanguagesPage extends SpiceBasePage implements RequestListener<Lang
 
   public LanguagesPage(Environment environment) {
     super(environment);
-
   }
 
   @Override public void onCreate(@NonNull Context context, @NonNull Uri uri, Bundle bundle) {
@@ -51,11 +49,11 @@ public class LanguagesPage extends SpiceBasePage implements RequestListener<Lang
     }
 
     final PageItemsBuilder builder = pageItemsBuilder();
-    addLanguageLinks(builder, languages);
+    addPageItems(builder, languages);
     setPageItems(builder);
   }
 
-  private void addLanguageLinks(PageItemsBuilder builder, Language[] languages) {
+  private void addPageItems(PageItemsBuilder builder, Language[] languages) {
     if (languages.length == 0) {
       builder.addText(getString(R.string.no_langauges_found));
       return;

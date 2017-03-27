@@ -12,24 +12,17 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 
-import com.octo.android.robospice.request.listener.RequestListener;
-
-import java.util.Collections;
 import java.util.List;
 
 import ch.indr.threethreefive.R;
 import ch.indr.threethreefive.data.network.radioBrowser.model.Station;
 import ch.indr.threethreefive.libs.Environment;
 import ch.indr.threethreefive.libs.PageItemsBuilder;
-import ch.indr.threethreefive.libs.PageItemsExpander;
 import ch.indr.threethreefive.libs.PageUris;
-import ch.indr.threethreefive.libs.pages.SpiceBasePage;
-import ch.indr.threethreefive.libs.utils.CollectionUtils;
-import timber.log.Timber;
 
 public class CountryStationsPage extends StationListBasePage {
 
-  private String country;
+  private String countryId;
 
   public CountryStationsPage(Environment environment) {
     super(environment);
@@ -39,17 +32,18 @@ public class CountryStationsPage extends StationListBasePage {
     super.onCreate(context, uri, bundle);
     component().inject(this);
 
-    this.country = getUriParam("countryId");
-    setTitle(country);
+    this.countryId = getUriParam("countryId");
+
+    setTitle(countryId);
   }
 
   @Override public void onStart() {
     super.onStart();
 
-    apiClient.getStationsByCountry(country, this);
+    apiClient.getStationsByCountry(countryId, this);
   }
 
-  protected void addStationLinks(PageItemsBuilder builder, List<Station> stations) {
+  protected void addPageItems(PageItemsBuilder builder, List<Station> stations) {
     if (stations.size() == 0) {
       builder.addText(getString(R.string.no_stations_found));
       return;
@@ -63,6 +57,4 @@ public class CountryStationsPage extends StationListBasePage {
       );
     }
   }
-
-
 }

@@ -36,8 +36,9 @@ public class StationGenresPage extends SpiceBasePage implements RequestListener<
     super.onCreate(context, uri, bundle);
     component().inject(this);
 
-    setTitle(getString(R.string.genres));
     this.stationId = bundle.getString("id");
+
+    setTitle(getString(R.string.genres));
   }
 
   @Override public void onStart() {
@@ -54,11 +55,11 @@ public class StationGenresPage extends SpiceBasePage implements RequestListener<
 
     final Collection<Genre> genres = stations[0].getGenres();
     final PageItemsBuilder builder = pageItemsBuilder();
-    addGenreLinks(builder, genres);
+    addPageItems(builder, genres);
     setPageItems(builder);
   }
 
-  private void addGenreLinks(PageItemsBuilder builder, Collection<Genre> genres) {
+  private void addPageItems(PageItemsBuilder builder, Collection<Genre> genres) {
     if (genres.size() == 0) {
       builder.addText(getString(R.string.no_genres_found));
       return;
