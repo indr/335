@@ -66,7 +66,7 @@ public abstract class StationListBasePage extends SpiceBasePage implements Reque
   }
 
   @Nullable protected Comparator<Station> getStationsComparator() {
-    return Station.getBestStationsComparator();
+    return Station.getDefaultStationListComparator();
   }
 
   protected void showNextItems() {

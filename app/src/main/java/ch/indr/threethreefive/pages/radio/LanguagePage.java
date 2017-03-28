@@ -87,7 +87,7 @@ public class LanguagePage extends SpiceBasePage implements RequestListener<List<
   private void populateLists(@NonNull List<Station> allStations) {
     Timber.d("populateLists stations %d, %s", allStations.size(), this.toString());
 
-    Collections.sort(allStations, Station.getBestStationsComparator());
+    Collections.sort(allStations, Station.getDefaultStationListComparator());
     List<Station> topStations = CollectionUtils.slice(allStations, 0, 15);
     List<Station> moreStations = CollectionUtils.slice(allStations, 0, 50);
 

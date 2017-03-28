@@ -58,6 +58,7 @@ public class TrendingPage extends StationListBasePage {
   }
 
   @Nullable @Override protected Comparator<Station> getStationsComparator() {
+    // API returns stations already sorted by click trend and/or click trend.
     return null;
   }
 }

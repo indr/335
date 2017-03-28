@@ -11,7 +11,6 @@ import com.google.api.client.util.Key;
 
 import java.text.DateFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.Comparator;
 import java.util.Date;
@@ -228,19 +227,19 @@ public class Station {
     }
   }
 
-  public static class ClickCountComparator extends SummedVoteComparator {
+  public static class ClickTrendAndCountComparator extends SummedVoteComparator {
     @Override public int compare(Station station1, Station station2) {
-      int result = station2.getClickCount() - station1.getClickCount();
+      int result = station2.getClickTrend() - station1.getClickTrend();
       if (result != 0) return result;
 
-      result = station2.getClickTrend() - station1.getClickTrend();
+      result = station2.getClickCount() - station1.getClickCount();
       if (result != 0) return result;
 
       return super.compare(station1, station2);
     }
   }
 
-  public static Comparator<Station> getBestStationsComparator() {
-    return new ClickCountComparator();
+  public static Comparator<Station> getDefaultStationListComparator() {
+    return new ClickTrendAndCountComparator();
   }
 }
