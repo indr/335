@@ -181,11 +181,15 @@ public class LocalPlayback implements PlaybackType, AudioManager.OnAudioFocusCha
       relaxResources(false); // release everything except MediaPlayer
 
       Uri source = item.getDescription().getMediaUri();
+      if (source == null) {
+        playbackCallback.onError("Media URI is null");
+        return;
+      }
 
       try {
         createMediaPlayerIfNeeded();
 
-        if (!UriUtils.isFile(source)) {
+        if (UriUtils.isStream(source)) {
           mState = PlaybackStateCompat.STATE_CONNECTING;
         }
 
@@ -202,7 +206,9 @@ public class LocalPlayback implements PlaybackType, AudioManager.OnAudioFocusCha
         // If we are streaming from the internet, we want to hold a
         // Wifi lock, which prevents the Wifi radio from going to
         // sleep while the song is playing.
-        mWifiLock.acquire();
+        if (UriUtils.isStream(source)) {
+          mWifiLock.acquire();
+        }
 
         if (playbackCallback != null) {
           playbackCallback.onPlaybackStatusChanged(mState);

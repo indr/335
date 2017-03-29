@@ -8,6 +8,8 @@
 package ch.indr.threethreefive.libs.utils;
 
 import android.net.Uri;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 
 import java.util.List;
 
@@ -36,20 +38,23 @@ public class UriUtils {
   /**
    * Returns true if provided uri is null or equal to "".
    */
-  public static boolean isEmpty(Uri uri) {
+  public static boolean isEmpty(final @Nullable Uri uri) {
     return !isNotEmpty(uri);
   }
 
   /**
    * Returns true if provided uri is null or equal to "".
    */
-  public static Boolean isNotEmpty(Uri uri) {
+  public static Boolean isNotEmpty(final @Nullable Uri uri) {
     return uri != null && !uri.toString().isEmpty();
   }
 
-  public static boolean isFile(Uri uri) {
+  public static boolean isFile(final @NonNull Uri uri) {
     String scheme = uri.getScheme();
     return scheme == null || "file".equals(scheme.toLowerCase());
   }
 
+  public static boolean isStream(final @NonNull Uri uri) {
+    return !isFile(uri);
+  }
 }
