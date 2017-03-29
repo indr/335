@@ -91,10 +91,6 @@ public class LanguagePage extends SpiceBasePage implements RequestListener<List<
     List<Station> topStations = CollectionUtils.slice(allStations, 0, 15);
     List<Station> moreStations = CollectionUtils.slice(allStations, 0, 50);
 
-    Collections.sort(topStations, new Station.NameComparator());
-    Collections.sort(moreStations, new Station.NameComparator());
-    Collections.sort(allStations, new Station.NameComparator());
-
     expander.add(topStations, getString(R.string.show_top_stations));
     expander.add(moreStations, getString(R.string.show_more_stations));
     expander.add(allStations, getString(R.string.show_all_stations));

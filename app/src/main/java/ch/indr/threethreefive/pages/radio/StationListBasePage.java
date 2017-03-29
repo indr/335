@@ -56,10 +56,6 @@ public abstract class StationListBasePage extends SpiceBasePage implements Reque
     List<Station> topStations = CollectionUtils.slice(allStations, 0, MAX_NUMBER_OF_TOP_STATIONS);
     List<Station> moreStations = CollectionUtils.slice(allStations, 0, MAX_NUMBER_OF_MORE_STATIONS);
 
-    Collections.sort(topStations, new Station.NameComparator());
-    Collections.sort(moreStations, new Station.NameComparator());
-    Collections.sort(allStations, new Station.NameComparator());
-
     expander.add(topStations, getString(R.string.show_top_stations));
     expander.add(moreStations, getString(R.string.show_more_stations));
     expander.add(allStations, getString(R.string.show_all_stations));

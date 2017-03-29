@@ -17,7 +17,7 @@ public class StationTests extends TtfRobolectricTestCase {
 
   @Test
   public void getTagNames_withNull_returnsEmptyList() {
-    final TestStation station = new TestStation();
+    final Station station = new Station();
     station.setTagNames(null);
 
     final List<String> tagNames = station.getTagNames();
@@ -27,7 +27,7 @@ public class StationTests extends TtfRobolectricTestCase {
 
   @Test
   public void getTagNames_withEmptyString_returnsEmptyList() {
-    final TestStation station = new TestStation();
+    final Station station = new Station();
     station.setTagNames("");
 
     final List<String> tagNames = station.getTagNames();
@@ -37,7 +37,7 @@ public class StationTests extends TtfRobolectricTestCase {
 
   @Test
   public void getTagNames_withCommaSeparatedNames_returnsList() {
-    final TestStation station = new TestStation();
+    final Station station = new Station();
     station.setTagNames("Jazz, Blues, , Hard rock,");
 
     final List<String> tagNames = station.getTagNames();
@@ -48,11 +48,14 @@ public class StationTests extends TtfRobolectricTestCase {
     assertEquals(tagNames.get(2), "Hard rock");
   }
 
-  public class TestStation extends Station {
+  @Test
+  public void makeSubtitle_returns() {
+    final Station station = new Station();
+    station.setLanguage("English");
+    station.setCountry("United Kingdom");
 
-    public void setTagNames(String tagNames) {
-      this._tags = tagNames;
-      this.tags = null;
-    }
+    final String subtitle = station.makeSubtitle("CL");
+
+    assertEquals("United Kingdom, English", subtitle);
   }
 }

@@ -7,6 +7,8 @@
 
 package ch.indr.threethreefive.data.network.radioBrowser.model;
 
+import android.support.annotation.Nullable;
+
 import com.google.api.client.util.Key;
 
 import java.text.DateFormat;
@@ -42,9 +44,11 @@ public class Station {
 
   @Key private String language;
 
-  @Key private String votes;
+  @Key("votes")
+  private int positiveVotes;
 
-  @Key private String negativevotes;
+  @Key("negativevotes")
+  private int negativeVotes;
 
   @Key private String codec;
 
@@ -52,9 +56,11 @@ public class Station {
 
   @Key private String lastchangetime;
 
-  @Key private String clickcount;
+  @Key("clickcount")
+  private int clickCount;
 
-  @Key private String clicktrend;
+  @Key("clicktrend")
+  private int clickTrend;
 
   protected List<String> tags = null;
 
@@ -108,20 +114,41 @@ public class Station {
     return tags;
   }
 
+  public void setTagNames(final @Nullable String tagNames) {
+    this._tags = tagNames;
+    this.tags = null;
+  }
+
   public String getCountry() {
     return country;
+  }
+
+  public void setCountry(final @Nullable String country) {
+    this.country = country;
   }
 
   public String getLanguage() {
     return language;
   }
 
+  public void setLanguage(final @Nullable String language) {
+    this.language = language;
+  }
+
   public int getPositiveVotes() {
-    return votes == null ? 0 : Integer.parseInt(votes);
+    return positiveVotes;
+  }
+
+  public void setPositiveVotes(final int positiveVotes) {
+    this.positiveVotes = positiveVotes;
   }
 
   public int getNegativeVotes() {
-    return negativevotes == null ? 0 : Integer.parseInt(negativevotes);
+    return negativeVotes;
+  }
+
+  public void setNegativeVotes(final int negativeVotes) {
+    this.negativeVotes = negativeVotes;
   }
 
   public int getSummedVotes() {
@@ -141,11 +168,19 @@ public class Station {
   }
 
   public int getClickCount() {
-    return clickcount == null ? 0 : Integer.parseInt(clickcount);
+    return clickCount;
+  }
+
+  public void setClickCount(final int clickCount) {
+    this.clickCount = clickCount;
   }
 
   public int getClickTrend() {
-    return clicktrend == null ? 0 : Integer.parseInt(clicktrend);
+    return clickTrend;
+  }
+
+  public void setClickTrend(final int clickTrend) {
+    this.clickTrend = clickTrend;
   }
 
   @Override public boolean equals(Object o) {
@@ -166,10 +201,10 @@ public class Station {
     return result;
   }
 
-  public String makeSubtitle(String props) {
+  public String makeSubtitle(String format) {
     List<String> result = new ArrayList<>();
 
-    for (char prop : props.toCharArray()) {
+    for (char prop : format.toCharArray()) {
       String value = null;
       switch (prop) {
         case 'C': // Country
@@ -199,6 +234,7 @@ public class Station {
       }
     }
 
+    // return getClickTrend() + ", " + getClickCount() + ", " + getSummedVotes();
     return StringUtils.join(result, ", ");
   }
 
@@ -239,7 +275,20 @@ public class Station {
     }
   }
 
+  public static class PopularityComparator extends NameComparator {
+    @Override public int compare(Station station1, Station station2) {
+      int result = getPopularityValue(station2) - getPopularityValue(station1);
+      if (result != 0) return result;
+
+      return super.compare(station1, station2);
+    }
+
+    private int getPopularityValue(Station station) {
+      return station.getSummedVotes() + station.getClickTrend();
+    }
+  }
+
   public static Comparator<Station> getDefaultStationListComparator() {
-    return new ClickTrendAndCountComparator();
+    return new PopularityComparator();
   }
 }
