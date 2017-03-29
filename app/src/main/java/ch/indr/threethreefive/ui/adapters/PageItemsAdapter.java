@@ -20,6 +20,8 @@ import android.widget.HorizontalScrollView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 
@@ -27,6 +29,9 @@ import ch.indr.threethreefive.R;
 import ch.indr.threethreefive.libs.PageItem;
 import ch.indr.threethreefive.libs.Preferences;
 import ch.indr.threethreefive.ui.utils.OnTouchClickListener;
+import rx.Subscription;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 
 import static android.view.View.GONE;
 
@@ -39,6 +44,7 @@ public class PageItemsAdapter extends ArrayAdapter<PageItem> implements SharedPr
   private static final int highlightColor = Color.argb(0x1f, 0, 0, 0);
 
   private final Preferences preferences;
+  private final HashMap<View, List<Subscription>> subscriptions;
   private float textSizeTitle;
   private float textSizeSubtitle;
   private HashSet<TextView> titles = new HashSet<>();
@@ -51,15 +57,19 @@ public class PageItemsAdapter extends ArrayAdapter<PageItem> implements SharedPr
 
     this.textSizeTitle = preferences.textSize().get();
     this.textSizeSubtitle = this.textSizeTitle / 3 * 2;
+
+    this.subscriptions = new HashMap<View, List<Subscription>>();
   }
 
   @Override @NonNull public View getView(int position, View convertView, @NonNull ViewGroup parent) {
     // Get the data item for this position
     PageItem pageItem = getItem(position);
+    List<Subscription> subscriptions;
 
     // Check if an existing view is being reused, otherwise inflate the view
     if (convertView == null) {
       convertView = LayoutInflater.from(getContext()).inflate(R.layout.list_view_item, parent, false);
+      this.subscriptions.put(convertView, new ArrayList<>());
     }
 
     // Lookup views for data population and touch listening
@@ -76,16 +86,35 @@ public class PageItemsAdapter extends ArrayAdapter<PageItem> implements SharedPr
     textViewTitle.setTextSize(textSizeTitle);
     textViewSubtitle.setTextSize(textSizeSubtitle);
 
+    // Unsubscribe in case this view is reused
+    subscriptions = this.subscriptions.get(convertView);
+    for (Subscription each : subscriptions) {
+      if (!each.isUnsubscribed()) {
+        each.unsubscribe();
+      }
+    }
+    subscriptions.clear();
+
+    // Subscribe to page items observables
     if (pageItem != null) {
-      // This may be dangerous:
-      // This subscription will hold a reference to the TextView and the PageItem.
-      // PageItems are released when a Page is destroyed, so we should be fine.
-      pageItem.title().subscribe(textViewTitle::setText);
-      pageItem.subtitle().subscribe(text -> {
-        textViewSubtitle.setVisibility(text == null ? GONE : View.VISIBLE);
-        textViewSubtitle.setText(text);
-      });
-      pageItem.description().subscribe(textViewTitle::setContentDescription);
+      subscriptions.add(pageItem.title()
+          .subscribeOn(Schedulers.immediate())
+          .unsubscribeOn(Schedulers.immediate())
+          .observeOn(AndroidSchedulers.mainThread())
+          .subscribe(textViewTitle::setText));
+      subscriptions.add(pageItem.subtitle()
+          .subscribeOn(Schedulers.immediate())
+          .unsubscribeOn(Schedulers.immediate())
+          .observeOn(AndroidSchedulers.mainThread())
+          .subscribe(text -> {
+            textViewSubtitle.setVisibility(text == null ? GONE : View.VISIBLE);
+            textViewSubtitle.setText(text);
+          }));
+      subscriptions.add(pageItem.description()
+          .subscribeOn(Schedulers.immediate())
+          .unsubscribeOn(Schedulers.immediate())
+          .observeOn(AndroidSchedulers.mainThread())
+          .subscribe(textViewTitle::setContentDescription));
     }
 
     // Attach touch listeners to perform a list item click and visual indicator on focus, tap
