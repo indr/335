@@ -58,7 +58,7 @@ public class PreferencesImpl implements Preferences {
 
 class TextSizePreference extends FloatPreference {
 
-  private final float MIN_VALUE = 30;
+  private final float MIN_VALUE = 20;
 
   TextSizePreference(@NonNull SharedPreferences sharedPreferences, @NonNull String key) {
     super(sharedPreferences, key, 60);
