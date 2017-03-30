@@ -34,7 +34,6 @@ import ch.indr.threethreefive.libs.preferences.IntPreferenceType;
 import ch.indr.threethreefive.libs.qualifiers.ApplicationContext;
 import ch.indr.threethreefive.libs.qualifiers.AutoRepeatModePreference;
 import ch.indr.threethreefive.pages.RootPageResolver;
-import ch.indr.threethreefive.data.db.playlist.PlaylistManager;
 import ch.indr.threethreefive.services.PlaybackAnnouncer;
 import ch.indr.threethreefive.services.PlaybackAnnouncerImpl;
 import ch.indr.threethreefive.services.PlaybackClient;
@@ -142,12 +141,6 @@ public class AppModule {
   @Singleton
   PlaybackClient providePlaybackClient() {
     return new PlaybackClientImpl(application);
-  }
-
-  @Provides
-  @Singleton
-  PlaylistManager providePlaylistManager() {
-    return new PlaylistManager(application);
   }
 
   @Provides
