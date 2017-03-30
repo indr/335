@@ -10,6 +10,8 @@ package ch.indr.threethreefive.data.network.radioBrowser;
 import android.support.annotation.NonNull;
 
 import com.google.api.client.http.HttpRequest;
+import com.google.api.client.http.UrlEncodedContent;
+import com.octo.android.robospice.persistence.DurationInMillis;
 
 import java.io.IOException;
 
@@ -25,7 +27,11 @@ public class PlayableStationUrlRequest extends RadioBrowserInfoRequest<PlayableS
     this.stationId = stationId;
   }
 
+  @Override public long getCacheExpiryDuration() {
+    return DurationInMillis.ALWAYS_EXPIRED;
+  }
+
   @NonNull @Override protected HttpRequest buildHttpRequest() throws IOException {
-    return getHttpRequestFactory().buildGetRequest(makeUrlV2("/url/" + stationId));
+    return getHttpRequestFactory().buildPostRequest(makeUrlV2("/url/" + stationId), new UrlEncodedContent(new Object()));
   }
 }

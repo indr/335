@@ -17,11 +17,11 @@ import com.crashlytics.android.answers.CustomEvent;
 import com.octo.android.robospice.persistence.exception.SpiceException;
 import com.octo.android.robospice.request.listener.RequestListener;
 
+import ch.indr.threethreefive.data.network.ApiClient;
+import ch.indr.threethreefive.data.network.radioBrowser.model.PlayableStationUrl;
 import ch.indr.threethreefive.libs.MetadataKeys;
 import ch.indr.threethreefive.libs.net.RobospiceManagerImpl;
 import ch.indr.threethreefive.libs.utils.StringUtils;
-import ch.indr.threethreefive.data.network.radioBrowser.PlayableStationUrlRequest;
-import ch.indr.threethreefive.data.network.radioBrowser.model.PlayableStationUrl;
 import timber.log.Timber;
 
 public class PlaybackAnswers {
@@ -50,7 +50,7 @@ public class PlaybackAnswers {
 
     final RobospiceManagerImpl robospiceManager = new RobospiceManagerImpl();
     robospiceManager.start(context);
-    robospiceManager.execute(new PlayableStationUrlRequest(radioId), new RequestListener<PlayableStationUrl>() {
+    new ApiClient(robospiceManager).countStationClick(radioId, new RequestListener<PlayableStationUrl>() {
       @Override public void onRequestFailure(SpiceException spiceException) {
         Timber.e(spiceException, "onRequestFailure %s", this.toString());
         robospiceManager.shouldStop();

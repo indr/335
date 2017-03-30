@@ -67,7 +67,7 @@ public class TrendingPageTests extends TtfRobolectricTestCase {
   }
 
   @Test
-  public void onRequestSuccess_with15Stations_show15Stations() {
+  public void onRequestSuccess_with15Stations_shows15Stations() {
     final TrendingPage page = createPage();
 
     page.onRequestSuccess(Fake.stations(15));
@@ -77,25 +77,23 @@ public class TrendingPageTests extends TtfRobolectricTestCase {
   }
 
   @Test
-  public void onRequestSuccess_with50Stations_shows15StationsAndShowAll() {
+  public void onRequestSuccess_with50Stations_shows50Stations() {
     final TrendingPage page = createPage();
 
     page.onRequestSuccess(Fake.stations(50));
 
     final List<PageItem> pageItems = page.getPageItems();
-    assertEquals(1 + 15 + 1, pageItems.size());
-    assertEquals(getString(R.string.show_all_stations), pageItems.get(pageItems.size() - 1).getTitle());
+    assertEquals(1 + 50, pageItems.size());
   }
 
   @Test
-  public void onRequestSuccess_with51Stations_shows15StationsAndShowMore() {
+  public void onRequestSuccess_with51Stations_shows51Stations() {
     final TrendingPage page = createPage();
 
     page.onRequestSuccess(Fake.stations(51));
 
     final List<PageItem> pageItems = page.getPageItems();
-    assertEquals(1 + 15 + 1, pageItems.size());
-    assertEquals(getString(R.string.show_more_stations), pageItems.get(pageItems.size() - 1).getTitle());
+    assertEquals(1 + 51, pageItems.size());
   }
 
   @NonNull private TrendingPage createPage() {

@@ -18,6 +18,7 @@ import java.util.List;
 
 import ch.indr.threethreefive.data.network.radioBrowser.CountriesRequest;
 import ch.indr.threethreefive.data.network.radioBrowser.LanguagesRequest;
+import ch.indr.threethreefive.data.network.radioBrowser.PlayableStationUrlRequest;
 import ch.indr.threethreefive.data.network.radioBrowser.StationRequest;
 import ch.indr.threethreefive.data.network.radioBrowser.StationsRequest;
 import ch.indr.threethreefive.data.network.radioBrowser.StationsSearchRequest;
@@ -27,6 +28,7 @@ import ch.indr.threethreefive.data.network.radioBrowser.model.Genre;
 import ch.indr.threethreefive.data.network.radioBrowser.model.GenreMaps;
 import ch.indr.threethreefive.data.network.radioBrowser.model.GenreNames;
 import ch.indr.threethreefive.data.network.radioBrowser.model.Language;
+import ch.indr.threethreefive.data.network.radioBrowser.model.PlayableStationUrl;
 import ch.indr.threethreefive.data.network.radioBrowser.model.Station;
 import ch.indr.threethreefive.data.network.radioBrowser.model.Tag;
 import ch.indr.threethreefive.data.network.radioBrowser.transformers.StationsToGenreTransformer;
@@ -46,6 +48,10 @@ public class ApiClient {
   public ApiClient(@NonNull Context context) {
     GenreNames.load(context.getResources());
     GenreMaps.load(context.getResources());
+  }
+
+  public ApiClient(@NonNull RobospiceManager robospiceManager) {
+    this.robospiceManager = robospiceManager;
   }
 
   public void setRobospiceManager(@NonNull RobospiceManager robospiceManager) {
@@ -119,5 +125,10 @@ public class ApiClient {
         .order("clicktrend", ORDER_DESC)
         .limit(limit);
     robospiceManager.execute(request, Transformers.ArrayToList(listener));
+  }
+
+  public void countStationClick(final @NonNull String stationId, RequestListener<PlayableStationUrl> listener) {
+    final PlayableStationUrlRequest request = new PlayableStationUrlRequest(stationId);
+    robospiceManager.execute(request, listener);
   }
 }
