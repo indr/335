@@ -90,6 +90,14 @@ public class Station {
     return name;
   }
 
+  public String getTitle() {
+    return name;
+  }
+
+  public String getSubtitle() {
+    return null;
+  }
+
   public String getUrl() {
     return url;
   }

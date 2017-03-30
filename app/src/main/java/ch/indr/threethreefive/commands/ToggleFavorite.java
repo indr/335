@@ -18,7 +18,8 @@ public class ToggleFavorite extends PageCommand {
   public ToggleFavorite(@NonNull FavoritesStore favoritesStore, @NonNull PageLink pageLink) {
     super("Add to Favorites");
 
-    this.favorite = new Favorite(0, pageLink.getTitle(), pageLink.getUri().toString(), null);
+    this.favorite = new Favorite(0, pageLink.getTitle(), pageLink.getSubtitle(),
+        pageLink.getDescription(), pageLink.getUri().toString(), null);
 
     this.isFavorite.onNext(favoritesStore.isFavorite(pageLink));
 

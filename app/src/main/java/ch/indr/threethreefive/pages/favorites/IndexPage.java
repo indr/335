@@ -45,7 +45,7 @@ public class IndexPage extends Page {
     if (favorites.size() == 0) {
       builder.addText("No favorites");
     } else for (Favorite favorite : favorites) {
-      builder.addLink(favorite.getPageUri(), favorite.getTitle());
+      builder.addLink(favorite.getPageUri(), favorite.getTitle(), favorite.getSubtitle(), favorite.getDescription());
     }
 
     setPageItems(builder);

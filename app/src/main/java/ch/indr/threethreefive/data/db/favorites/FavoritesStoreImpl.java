@@ -90,6 +90,8 @@ public class FavoritesStoreImpl implements FavoritesStore {
           result.add(new Favorite(
               cursor.getLong(cursor.getColumnIndexOrThrow(FavoritesContract.FavoritesEntry._ID)),
               cursor.getString(cursor.getColumnIndexOrThrow(FavoritesContract.FavoritesEntry.COLUMN_NAME_TITLE)),
+              cursor.getString(cursor.getColumnIndexOrThrow(FavoritesContract.FavoritesEntry.COLUMN_NAME_SUBTITLE)),
+              cursor.getString(cursor.getColumnIndexOrThrow(FavoritesContract.FavoritesEntry.COLUMN_NAME_DESCRIPTION)),
               cursor.getString(cursor.getColumnIndexOrThrow(FavoritesContract.FavoritesEntry.COLUMN_NAME_PAGE_URI)),
               cursor.getString(cursor.getColumnIndexOrThrow(FavoritesContract.FavoritesEntry.COLUMN_NAME_MEDIA_URI))
           ));

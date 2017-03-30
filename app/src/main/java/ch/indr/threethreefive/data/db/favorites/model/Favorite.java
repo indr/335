@@ -11,14 +11,21 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
 public class Favorite {
-  private long id;
-  private @NonNull String title;
-  private @NonNull String pageUri;
-  private @Nullable String mediaUri;
 
-  public Favorite(long id, @NonNull String title, @NonNull String pageUri, @Nullable String mediaUri) {
+  private long id;
+  private final String title;
+  private final String subtitle;
+  private final String description;
+  private final String pageUri;
+  private final String mediaUri;
+
+  public Favorite(final long id, final @NonNull String title, final @Nullable String subtitle,
+                  final @NonNull String description, final @NonNull String pageUri,
+                  final @Nullable String mediaUri) {
     this.id = id;
     this.title = title;
+    this.subtitle = subtitle;
+    this.description = description;
     this.pageUri = pageUri;
     this.mediaUri = mediaUri;
   }
@@ -29,6 +36,14 @@ public class Favorite {
 
   @NonNull public String getTitle() {
     return title;
+  }
+
+  @Nullable public String getSubtitle() {
+    return subtitle;
+  }
+
+  @NonNull public String getDescription() {
+    return description;
   }
 
   @NonNull public String getPageUri() {
