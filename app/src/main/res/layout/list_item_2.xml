@@ -5,11 +5,21 @@
   ~ the LICENSE file that was distributed with this source code.
   -->
 
+<!--
+  ~ Android built-in list item layout with title and subtitle:
+  ~ https://github.com/android/platform_frameworks_base/blob/master/core/res/res/layout/simple_list_item_2.xml
+-->
 <HorizontalScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/scrollView1"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:paddingBottom="@dimen/list_item_padding_bottom"
+    android:paddingEnd="?android:attr/listPreferredItemPaddingEnd"
+    android:paddingLeft="?android:attr/listPreferredItemPaddingLeft"
+    android:paddingRight="?android:attr/listPreferredItemPaddingRight"
+    android:paddingStart="?android:attr/listPreferredItemPaddingStart"
+    android:paddingTop="@dimen/list_item_padding_top"
     android:scrollbars="none">
 
     <RelativeLayout
@@ -21,12 +31,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:lines="1"
-            android:paddingBottom="@dimen/list_item_padding_bottom"
-            android:paddingEnd="?android:attr/listPreferredItemPaddingEnd"
-            android:paddingLeft="?android:attr/listPreferredItemPaddingLeft"
-            android:paddingRight="?android:attr/listPreferredItemPaddingRight"
-            android:paddingStart="?android:attr/listPreferredItemPaddingStart"
-            android:paddingTop="@dimen/list_item_padding_top"
             android:text="Title"
             android:textAppearance="?android:attr/textAppearanceListItem"
             android:textSize="60sp"/>
@@ -35,17 +39,14 @@
             android:id="@+id/textViewSubtitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/textViewTitle"
+            android:layout_alignStart="@+id/textViewTitle"
             android:layout_below="@+id/textViewTitle"
-            android:layout_marginTop="@dimen/text_view_subtitle_margin_top"
             android:lines="1"
-            android:paddingBottom="@dimen/list_item_padding_bottom"
-            android:paddingEnd="?android:attr/listPreferredItemPaddingEnd"
-            android:paddingLeft="?android:attr/listPreferredItemPaddingLeft"
-            android:paddingRight="?android:attr/listPreferredItemPaddingRight"
-            android:paddingStart="?android:attr/listPreferredItemPaddingStart"
-            android:paddingTop="@dimen/list_item_padding_top"
             android:text="Subtitle"
             android:textAppearance="?android:attr/textAppearanceListItemSmall"
             android:textSize="40sp"/>
+
     </RelativeLayout>
+
 </HorizontalScrollView>
