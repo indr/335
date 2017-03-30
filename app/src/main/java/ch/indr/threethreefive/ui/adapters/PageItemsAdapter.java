@@ -31,9 +31,6 @@ import ch.indr.threethreefive.libs.Preferences;
 import ch.indr.threethreefive.ui.utils.OnTouchClickListener;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
-import rx.schedulers.Schedulers;
-
-import static android.view.View.GONE;
 
 /**
  * https://github.com/codepath/android_guides/wiki/Using-an-ArrayAdapter-with-ListView#defining-the-adapter
@@ -97,24 +94,26 @@ public class PageItemsAdapter extends ArrayAdapter<PageItem> implements SharedPr
 
     // Subscribe to page items observables
     if (pageItem != null) {
+      textViewTitle.setText(pageItem.getTitle());
+      textViewSubtitle.setVisibility(pageItem.getSubtitle() == null ? View.GONE : View.VISIBLE);
+      textViewSubtitle.setText(pageItem.getSubtitle());
+      convertView.setContentDescription(pageItem.getDescription());
+
       subscriptions.add(pageItem.title()
-          .subscribeOn(Schedulers.immediate())
-          .unsubscribeOn(Schedulers.immediate())
+          .skip(1)
           .observeOn(AndroidSchedulers.mainThread())
           .subscribe(textViewTitle::setText));
       subscriptions.add(pageItem.subtitle()
-          .subscribeOn(Schedulers.immediate())
-          .unsubscribeOn(Schedulers.immediate())
+          .skip(1)
           .observeOn(AndroidSchedulers.mainThread())
           .subscribe(text -> {
-            textViewSubtitle.setVisibility(text == null ? GONE : View.VISIBLE);
+            textViewSubtitle.setVisibility(text == null ? View.GONE : View.VISIBLE);
             textViewSubtitle.setText(text);
           }));
       subscriptions.add(pageItem.description()
-          .subscribeOn(Schedulers.immediate())
-          .unsubscribeOn(Schedulers.immediate())
+          .skip(1)
           .observeOn(AndroidSchedulers.mainThread())
-          .subscribe(textViewTitle::setContentDescription));
+          .subscribe(convertView::setContentDescription));
     }
 
     // Attach touch listeners to perform a list item click and visual indicator on focus, tap
