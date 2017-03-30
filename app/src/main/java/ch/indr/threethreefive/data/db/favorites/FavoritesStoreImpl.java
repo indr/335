@@ -33,6 +33,8 @@ public class FavoritesStoreImpl implements FavoritesStore {
     // Create a new map of values, where column names are the keys
     ContentValues values = new ContentValues();
     values.put(FavoritesContract.FavoritesEntry.COLUMN_NAME_TITLE, favorite.getTitle());
+    values.put(FavoritesContract.FavoritesEntry.COLUMN_NAME_SUBTITLE, favorite.getSubtitle());
+    values.put(FavoritesContract.FavoritesEntry.COLUMN_NAME_DESCRIPTION, favorite.getDescription());
     values.put(FavoritesContract.FavoritesEntry.COLUMN_NAME_PAGE_URI, favorite.getPageUri());
     values.put(FavoritesContract.FavoritesEntry.COLUMN_NAME_MEDIA_URI, favorite.getMediaUri());
 
@@ -75,6 +77,8 @@ public class FavoritesStoreImpl implements FavoritesStore {
     String[] projection = {
         FavoritesContract.FavoritesEntry._ID,
         FavoritesContract.FavoritesEntry.COLUMN_NAME_TITLE,
+        FavoritesContract.FavoritesEntry.COLUMN_NAME_SUBTITLE,
+        FavoritesContract.FavoritesEntry.COLUMN_NAME_DESCRIPTION,
         FavoritesContract.FavoritesEntry.COLUMN_NAME_PAGE_URI,
         FavoritesContract.FavoritesEntry.COLUMN_NAME_MEDIA_URI
     };

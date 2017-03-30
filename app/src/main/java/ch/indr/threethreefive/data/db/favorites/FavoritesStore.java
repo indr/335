@@ -16,13 +16,13 @@ import ch.indr.threethreefive.libs.PageLink;
 
 public interface FavoritesStore {
 
-  boolean isFavorite(@NonNull PageLink pageLink);
-
-  boolean isFavorite(@NonNull String pageUri);
-
   long add(@NonNull Favorite favorite);
+
+  @NonNull List<Favorite> findAll();
 
   void remove(@NonNull String pageUri);
 
-  @NonNull List<Favorite> findAll();
+  boolean isFavorite(@NonNull PageLink pageLink);
+
+  boolean isFavorite(@NonNull String pageUri);
 }
