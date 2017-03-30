@@ -12,9 +12,9 @@ import android.support.annotation.NonNull;
 
 import java.util.List;
 
-import ch.indr.threethreefive.libs.MediaItem;
 import ch.indr.threethreefive.data.db.playlist.model.Playlist;
 import ch.indr.threethreefive.data.db.playlist.model.PlaylistItem;
+import ch.indr.threethreefive.libs.MediaItem;
 
 public class PlaylistManager {
 
@@ -31,7 +31,7 @@ public class PlaylistManager {
   }
 
   public void addToPlaylist(@NonNull MediaItem mediaItem) {
-    PlaylistItem playlistItem = playlistsDb.insert(mediaItem.getName(), mediaItem.getPageUri(), mediaItem.getMediaUri());
+    PlaylistItem playlistItem = playlistsDb.insert(mediaItem.getTitle(), mediaItem.getPageUri(), mediaItem.getMediaUri());
     playlist.add(playlistItem);
   }
 

@@ -27,8 +27,8 @@ import ch.indr.threethreefive.commands.PlayMedia;
 import ch.indr.threethreefive.libs.Environment;
 import ch.indr.threethreefive.libs.MediaItem;
 import ch.indr.threethreefive.libs.PageItemsBuilder;
-import ch.indr.threethreefive.libs.utils.StringUtils;
 import ch.indr.threethreefive.libs.pages.Page;
+import ch.indr.threethreefive.libs.utils.StringUtils;
 import ch.indr.threethreefive.services.PlaybackClient;
 
 import static android.support.v4.media.MediaMetadataCompat.METADATA_KEY_ALBUM;
@@ -185,14 +185,14 @@ public class QueueItemPage extends Page {
 
   private class RemoveQueueItem extends AddToPlaylist {
 
-    private final CharSequence mediaItemTitle;
+    private final String mediaItemTitle;
 
     RemoveQueueItem(@NonNull MediaItem mediaItem) {
       super(mediaItem);
 
       setTitle("Remove from Playlist");
       setDescription("Remove from Playlist");
-      this.mediaItemTitle = mediaItem.getName();
+      this.mediaItemTitle = mediaItem.getTitle();
     }
 
     @Override public void execute(@NonNull Environment environment) {

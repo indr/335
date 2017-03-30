@@ -32,7 +32,7 @@ public class AddToPlaylist extends PageCommand {
   protected List<MediaSessionCompat.QueueItem> addToQueue(@NonNull Environment environment) {
     final List<MediaSessionCompat.QueueItem> queueItems = environment.queueManager().addToQueue(mediaItems);
 
-    String toast = mediaItems.size() == 1 ? "Added to Playlist " + mediaItems.get(0).getName() : "Added to Playlist: " + mediaItems.size() + " Songs";
+    String toast = mediaItems.size() == 1 ? "Added to Playlist " + mediaItems.get(0).getTitle() : "Added to Playlist: " + mediaItems.size() + " Songs";
     environment.toastManager().toast(toast);
     environment.speaker().command().playlistAdded();
 

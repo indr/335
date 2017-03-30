@@ -20,7 +20,7 @@ public class PlaylistItem {
     @Deprecated
     public PlaylistItem(MediaItem mediaItem) {
         this.uuid = UUID.randomUUID().toString();
-        this.name = mediaItem.getName();
+        this.name = mediaItem.getTitle();
         this.contentUrl = mediaItem.getPageUri();
         this.mediaUrl = mediaItem.getMediaUri();
     }
