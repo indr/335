@@ -58,16 +58,14 @@ public class PreferencesImpl implements Preferences {
 
 class TextSizePreference extends FloatPreference {
 
-  private final float MIN_VALUE = 20;
+  private final float MIN_VALUE = 18;
 
   TextSizePreference(@NonNull SharedPreferences sharedPreferences, @NonNull String key) {
     super(sharedPreferences, key, 60);
   }
 
   @Override public void set(float value) {
-    if (value < MIN_VALUE) {
-      return;
-    }
+    value = Math.max(value, MIN_VALUE);
     super.set(value);
   }
 

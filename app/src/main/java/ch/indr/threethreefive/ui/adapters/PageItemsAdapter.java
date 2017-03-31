@@ -44,6 +44,7 @@ public class PageItemsAdapter extends ArrayAdapter<PageItem> implements SharedPr
   private final HashMap<View, List<Subscription>> subscriptions;
   private float textSizeTitle;
   private float textSizeSubtitle;
+  private final float textSizeSubTitleFactor = 14f / 18f;
   private HashSet<TextView> titles = new HashSet<>();
   private HashSet<TextView> subtitles = new HashSet<>();
 
@@ -51,11 +52,10 @@ public class PageItemsAdapter extends ArrayAdapter<PageItem> implements SharedPr
     super(context, 0, pageItems);
 
     this.preferences = preferences;
-
     this.textSizeTitle = preferences.textSize().get();
-    this.textSizeSubtitle = this.textSizeTitle / 3 * 2;
+    this.textSizeSubtitle = this.textSizeTitle * textSizeSubTitleFactor;
 
-    this.subscriptions = new HashMap<View, List<Subscription>>();
+    this.subscriptions = new HashMap<>();
   }
 
   @Override @NonNull public View getView(int position, View convertView, @NonNull ViewGroup parent) {
@@ -129,7 +129,7 @@ public class PageItemsAdapter extends ArrayAdapter<PageItem> implements SharedPr
 
   @Override public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
     this.textSizeTitle = preferences.textSize().get();
-    this.textSizeSubtitle = this.textSizeTitle / 3 * 2;
+    this.textSizeSubtitle = this.textSizeTitle * textSizeSubTitleFactor;
     for (TextView textView : titles) {
       textView.setTextSize(textSizeTitle);
     }

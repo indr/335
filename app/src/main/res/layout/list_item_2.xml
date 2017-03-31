@@ -14,17 +14,17 @@
     android:id="@+id/scrollView1"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:paddingBottom="@dimen/list_item_padding_bottom"
-    android:paddingEnd="?android:attr/listPreferredItemPaddingEnd"
-    android:paddingLeft="?android:attr/listPreferredItemPaddingLeft"
-    android:paddingRight="?android:attr/listPreferredItemPaddingRight"
-    android:paddingStart="?android:attr/listPreferredItemPaddingStart"
-    android:paddingTop="@dimen/list_item_padding_top"
     android:scrollbars="none">
 
     <RelativeLayout
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:paddingBottom="@dimen/list_item_padding_bottom"
+        android:paddingEnd="?android:attr/listPreferredItemPaddingEnd"
+        android:paddingLeft="?android:attr/listPreferredItemPaddingLeft"
+        android:paddingRight="?android:attr/listPreferredItemPaddingRight"
+        android:paddingStart="?android:attr/listPreferredItemPaddingStart"
+        android:paddingTop="@dimen/list_item_padding_top">
 
         <TextView
             android:id="@+id/textViewTitle"
@@ -33,7 +33,8 @@
             android:lines="1"
             android:text="Title"
             android:textAppearance="?android:attr/textAppearanceListItem"
-            android:textSize="60sp"/>
+            android:textSize="54sp"
+            />
 
         <TextView
             android:id="@+id/textViewSubtitle"
@@ -45,7 +46,8 @@
             android:lines="1"
             android:text="Subtitle"
             android:textAppearance="?android:attr/textAppearanceListItemSmall"
-            android:textSize="40sp"/>
+            android:textSize="42sp"
+            />
 
     </RelativeLayout>
 

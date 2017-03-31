@@ -269,7 +269,7 @@ public class ListGuideActivity extends BaseListActivity<ListGuideViewModel> impl
 
   private void setTextSize(final float textSize) {
     if (toolbarTitle != null) {
-      toolbarTitle.setTextSize(textSize);
+      toolbarTitle.setTextSize(textSize * (22f / 18f));
     }
 
     if (buttonIncFontSize != null) {
