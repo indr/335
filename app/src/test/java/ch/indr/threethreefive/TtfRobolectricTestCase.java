@@ -20,11 +20,14 @@ import org.robolectric.RuntimeEnvironment;
 import org.robolectric.annotation.Config;
 import org.robolectric.shadows.multidex.ShadowMultiDex;
 
+import ch.indr.threethreefive.data.db.music.MusicStore;
 import ch.indr.threethreefive.libs.Environment;
 import rx.Scheduler;
 import rx.android.plugins.RxAndroidPlugins;
 import rx.android.plugins.RxAndroidSchedulersHook;
 import rx.schedulers.Schedulers;
+
+import static org.mockito.Mockito.mock;
 
 @RunWith(TtfRobolectricGradleTestRunner.class)
 @Config(constants = BuildConfig.class,
@@ -34,6 +37,8 @@ public abstract class TtfRobolectricTestCase extends TestCase {
 
   private TestTtfApplication application;
   private Environment environment;
+
+  protected MusicStore musicStore = mock(MusicStore.class);
 
   @Before
   @Override public void setUp() throws Exception {
@@ -47,6 +52,7 @@ public abstract class TtfRobolectricTestCase extends TestCase {
 
     AppComponent component = application().component();
     environment = component.environment().toBuilder()
+        .musicStore(musicStore)
         .build();
   }
 
@@ -78,5 +84,9 @@ public abstract class TtfRobolectricTestCase extends TestCase {
 
   protected @Nullable String getString(final int resourceId) {
     return context().getString(resourceId);
+  }
+
+  protected @Nullable String getString(final int resourceId, Object... formatArgs) {
+    return context().getString(resourceId, formatArgs);
   }
 }

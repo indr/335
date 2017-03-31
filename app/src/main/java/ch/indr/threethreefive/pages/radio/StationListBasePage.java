@@ -38,7 +38,7 @@ public abstract class StationListBasePage extends SpiceBasePage implements Reque
 
   @Override public void onRequestSuccess(List<Station> response) {
     if (response == null) {
-      handle(R.string.no_stations_found_error);
+      handle(getString(R.string.no_stations_found_error));
       return;
     }
 

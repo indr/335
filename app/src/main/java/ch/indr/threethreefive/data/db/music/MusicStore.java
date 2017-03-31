@@ -14,28 +14,35 @@ import android.net.Uri;
 import android.provider.MediaStore;
 import android.provider.MediaStore.Audio;
 import android.provider.MediaStore.Audio.Media;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+
+import ch.indr.threethreefive.data.db.music.model.Album;
+import ch.indr.threethreefive.data.db.music.model.Artist;
+import ch.indr.threethreefive.data.db.music.model.Genre;
+import ch.indr.threethreefive.data.db.music.model.Song;
 
 public class MusicStore {
 
   private final Context context;
   private HashMap<String, String> albumArts;
 
-  public MusicStore(Context context) {
+  public MusicStore(final @NonNull Context context) {
     this.context = context;
   }
 
-  public Artist getArtistById(String artistId) {
+  @Nullable public Artist getArtistById(String artistId) {
     ArrayList<Artist> artists = queryArtists("_id=" + artistId);
     if (artists.size() < 1) return null;
 
     return artists.get(0);
   }
 
-  public ArrayList<Artist> queryArtists(String selection) {
+  @NonNull public ArrayList<Artist> queryArtists(String selection) {
     ArrayList<Artist> result = new ArrayList<>();
     Uri uri = Audio.Artists.EXTERNAL_CONTENT_URI;
     Cursor cursor = getContentResolver().query(uri,
@@ -59,18 +66,18 @@ public class MusicStore {
     return result;
   }
 
-  public ArrayList<Album> findAlbumsByArtistId(String artistId) {
+  @NonNull public ArrayList<Album> findAlbumsByArtistId(String artistId) {
     return queryAlbums("artist_id=" + artistId);
   }
 
-  public Album getAlbumById(String albumId) {
+  @Nullable public Album getAlbumById(String albumId) {
     ArrayList<Album> albums = queryAlbums("_id=" + albumId);
     if (albums.size() < 1) return null;
 
     return albums.get(0);
   }
 
-  public ArrayList<Album> queryAlbums(String selection) {
+  @NonNull public ArrayList<Album> queryAlbums(String selection) {
     ArrayList<Album> albums = new ArrayList<>();
 
     Uri uri = Audio.Albums.EXTERNAL_CONTENT_URI;
@@ -95,22 +102,22 @@ public class MusicStore {
     return albums;
   }
 
-  public Song getSongById(String songId) {
+  @Nullable public Song getSongById(String songId) {
     ArrayList<Song> songs = querySongs("_id=" + songId, null);
     if (songs.size() < 1) return null;
 
     return songs.get(0);
   }
 
-  public ArrayList<Song> getSongsByAlbumId(String albumId) {
+  @NonNull public ArrayList<Song> getSongsByAlbumId(String albumId) {
     return querySongs("album_id=" + albumId, null);
   }
 
-  public ArrayList<Song> getSongsByArtistId(String artistId) {
+  @NonNull public ArrayList<Song> getSongsByArtistId(String artistId) {
     return querySongs("artist_id=" + artistId, "album, track, title");
   }
 
-  public ArrayList<Song> querySongs(String selection, String sortOrder) {
+  @NonNull public ArrayList<Song> querySongs(String selection, String sortOrder) {
     sortOrder = sortOrder != null ? sortOrder : "track, title";
     ArrayList<Song> songs = new ArrayList<>();
 
@@ -140,7 +147,7 @@ public class MusicStore {
     return songs;
   }
 
-  public List<Genre> queryGenres() {
+  @NonNull public List<Genre> queryGenres() {
     List<Genre> genres = new ArrayList<>();
 
     Uri uri = Audio.Genres.EXTERNAL_CONTENT_URI;
@@ -162,7 +169,7 @@ public class MusicStore {
     return genres;
   }
 
-  public List<Song> getSongsByGenreId(long genreId) {
+  @NonNull public List<Song> getSongsByGenreId(long genreId) {
     ArrayList<Song> songs = new ArrayList<>();
 
     Uri uri = Audio.Genres.Members.getContentUri("external", genreId);
@@ -199,7 +206,7 @@ public class MusicStore {
     return songs;
   }
 
-  private String getAlbumArtByAlbumId(String albumId) {
+  @Nullable private String getAlbumArtByAlbumId(String albumId) {
     if (this.albumArts == null) {
       this.albumArts = new HashMap<>();
       Uri uri = Audio.Albums.EXTERNAL_CONTENT_URI;
@@ -225,160 +232,4 @@ public class MusicStore {
   private ContentResolver getContentResolver() {
     return this.context.getContentResolver();
   }
-
-  private String sanitize(String value) {
-    if (value == null) return null;
-    if (value.equals("<unknown>")) return "Unknown";
-    if (value.contains("_") && !value.contains(" ")) {
-      value = value.replaceAll("_", " ");
-    }
-
-    return value;
-  }
-
-  public class Artist {
-    private final String id;
-    private final String name;
-    private final int numberOfAlbums;
-    private final int numberOfTracks;
-
-    public Artist(String id, String name, int numberOfAlbums, int numberOfTracks) {
-      this.id = id;
-      this.name = sanitize(name);
-      this.numberOfAlbums = numberOfAlbums;
-      this.numberOfTracks = numberOfTracks;
-    }
-
-    public String getId() {
-      return id;
-    }
-
-    public String getName() {
-      return name;
-    }
-
-    public int getNumberOfAlbums() {
-      return numberOfAlbums;
-    }
-
-    public int getNumberOfTracks() {
-      return numberOfTracks;
-    }
-  }
-
-  public class Album {
-    private final String id;
-    private final String name;
-    private final String artist;
-    private final String artistId;
-    private final int numberOfTracks;
-
-    public Album(String id, String name, String artist, String artistId, int numberOfTracks) {
-      this.id = id;
-      this.name = sanitize(name);
-      this.artist = sanitize(artist);
-      this.artistId = artistId;
-      this.numberOfTracks = numberOfTracks;
-    }
-
-    public String getId() {
-      return id;
-    }
-
-    public String getName() {
-      return name;
-    }
-
-    public String getArtist() {
-      return artist;
-    }
-
-    public String getArtistId() {
-      return artistId;
-    }
-
-    public int getNumberOfTracks() {
-      return numberOfTracks;
-    }
-  }
-
-  public class Song {
-    private final String id;
-    private final String name;
-    private final String artist;
-    private final String artistId;
-    private final String album;
-    private final String albumId;
-    private final String data;
-    private final long duration;
-    private final String albumArt;
-
-    public Song(String id, String name, String artist, String artistId, String album, String albumId, String data, long duration, String albumArt) {
-      this.id = id;
-      this.name = sanitize(name);
-      this.artist = sanitize(artist);
-      this.artistId = artistId;
-      this.album = sanitize(album);
-      this.albumId = albumId;
-      this.data = data;
-      this.duration = duration;
-      this.albumArt = albumArt;
-    }
-
-    public String getId() {
-      return id;
-    }
-
-    public String getName() {
-      return name;
-    }
-
-    public String getArtist() {
-      return artist;
-    }
-
-    public String getAlbum() {
-      return album;
-    }
-
-    public String getArtistId() {
-      return artistId;
-    }
-
-    public String getAlbumId() {
-      return albumId;
-    }
-
-    public String getData() {
-      return data;
-    }
-
-    public long getDuration() {
-      return duration;
-    }
-
-    public String getAlbumArt() {
-      return albumArt;
-    }
-  }
-
-  public class Genre {
-    private final String id;
-    private final String name;
-
-    public Genre(long id, String name) {
-      this.id = String.valueOf(id);
-      this.name = sanitize(name);
-    }
-
-    public String getId() {
-      return id;
-    }
-
-    public String getName() {
-      return name;
-    }
-  }
 }
-
-

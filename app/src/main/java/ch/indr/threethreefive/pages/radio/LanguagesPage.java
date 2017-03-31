@@ -44,7 +44,7 @@ public class LanguagesPage extends SpiceBasePage implements RequestListener<Lang
 
   @Override public void onRequestSuccess(Language[] languages) {
     if (languages == null) {
-      handle(R.string.no_languages_found_error);
+      handle(getString(R.string.no_languages_found_error));
       return;
     }
 

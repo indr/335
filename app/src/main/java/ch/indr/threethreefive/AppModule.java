@@ -21,9 +21,10 @@ import com.example.android.uamp.playback.QueueManagerImpl;
 
 import javax.inject.Singleton;
 
-import ch.indr.threethreefive.data.network.ApiClient;
 import ch.indr.threethreefive.data.db.favorites.FavoritesStore;
 import ch.indr.threethreefive.data.db.favorites.FavoritesStoreImpl;
+import ch.indr.threethreefive.data.db.music.MusicStore;
+import ch.indr.threethreefive.data.network.ApiClient;
 import ch.indr.threethreefive.libs.Build;
 import ch.indr.threethreefive.libs.Environment;
 import ch.indr.threethreefive.libs.Preferences;
@@ -60,6 +61,7 @@ public class AppModule {
   @Singleton
   Environment provideEnvironment(
       final @NonNull FavoritesStore favoritesStore,
+      final @NonNull MusicStore musicStore,
       final @NonNull PlaybackClient playbackClient,
       final @NonNull QueueManager queueManager,
       final @NonNull SharedPreferences sharedPreferences,
@@ -68,6 +70,7 @@ public class AppModule {
       final @NonNull ToastManager toastManager) {
     return Environment.builder()
         .favoritesStore(favoritesStore)
+        .musicStore(musicStore)
         .playbackClient(playbackClient)
         .queueManager(queueManager)
         .sharedPreferences(sharedPreferences)
@@ -112,6 +115,12 @@ public class AppModule {
   @Singleton
   FavoritesStore provideFavoritesStore() {
     return new FavoritesStoreImpl(application);
+  }
+
+  @Provides
+  @Singleton
+  MusicStore provideMusicStore(final @ApplicationContext @NonNull Context context) {
+    return new MusicStore(context);
   }
 
   @Provides

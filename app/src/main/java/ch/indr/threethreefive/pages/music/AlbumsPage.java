@@ -15,9 +15,10 @@ import android.support.annotation.NonNull;
 import java.util.List;
 
 import ch.indr.threethreefive.R;
+import ch.indr.threethreefive.data.db.music.MusicStore;
+import ch.indr.threethreefive.data.db.music.model.Album;
 import ch.indr.threethreefive.libs.Environment;
 import ch.indr.threethreefive.libs.PageItemsBuilder;
-import ch.indr.threethreefive.data.db.music.MusicStore;
 import ch.indr.threethreefive.libs.pages.Page;
 
 import static ch.indr.threethreefive.libs.PageUris.musicAlbum;
@@ -33,24 +34,29 @@ public class AlbumsPage extends Page {
 
     setTitle("Albums");
 
-    final PageItemsBuilder builder = pageItemsBuilder();
     final MusicStore musicStore = new MusicStore(getContext());
 
-    final List<MusicStore.Album> albums = musicStore.queryAlbums(null);
-    for (MusicStore.Album album : albums) {
+    final List<Album> albums = musicStore.queryAlbums(null);
+    if (albums.size() == 0) {
+      handle(getString(R.string.no_albums_found));
+      return;
+    }
+
+    final PageItemsBuilder builder = pageItemsBuilder();
+    for (Album album : albums) {
       builder.addLink(musicAlbum(album.getId()), album.getName(), makeSubtitle(album), makeDescription(album));
     }
 
     setPageItems(builder);
   }
 
-  private String makeDescription(MusicStore.Album album) {
+  private String makeDescription(Album album) {
     final int numberOfTracks = album.getNumberOfTracks();
     return album.getName() + " by " + album.getArtist() + ", "
         + getResources().getQuantityString(R.plurals.music_tracks, numberOfTracks, numberOfTracks);
   }
 
-  private String makeSubtitle(MusicStore.Album album) {
+  private String makeSubtitle(Album album) {
     final int numberOfTracks = album.getNumberOfTracks();
     return album.getArtist() + ", "
         + getResources().getQuantityString(R.plurals.music_tracks, numberOfTracks, numberOfTracks);

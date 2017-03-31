@@ -53,7 +53,7 @@ public class CountriesPage extends SpiceBasePage implements RequestListener<Coun
 
   @Override public void onRequestSuccess(Country[] response) {
     if (response == null) {
-      handle(R.string.no_countries_found_error);
+      handle(getString(R.string.no_countries_found_error));
       return;
     }
 

@@ -15,6 +15,7 @@ import android.support.annotation.NonNull;
 import ch.indr.threethreefive.R;
 import ch.indr.threethreefive.libs.Environment;
 import ch.indr.threethreefive.libs.PageItemsBuilder;
+import ch.indr.threethreefive.libs.PageUris;
 import ch.indr.threethreefive.libs.pages.Page;
 
 public class IndexPage extends Page {
@@ -30,10 +31,10 @@ public class IndexPage extends Page {
 
     final PageItemsBuilder builder = pageItemsBuilder();
 
-    builder.addLink("/music/artists", "Artists");
-    builder.addLink("/music/albums", "Albums");
-    builder.addLink("/music/genres", "Genres");
-    builder.addLink("/music/songs", "Songs");
+    builder.addLink(PageUris.musicArtists(), "Artists");
+    builder.addLink(PageUris.musicAlbums(), "Albums");
+    builder.addLink(PageUris.musicGenres(), "Genres");
+    builder.addLink(PageUris.musicSongs(), "Songs");
 
     setPageItems(builder);
   }

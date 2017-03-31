@@ -17,6 +17,7 @@ import com.example.android.uamp.playback.QueueManager;
 
 import auto.parcel.AutoParcel;
 import ch.indr.threethreefive.data.db.favorites.FavoritesStore;
+import ch.indr.threethreefive.data.db.music.MusicStore;
 import ch.indr.threethreefive.services.PlaybackClient;
 import ch.indr.threethreefive.services.Speaker;
 import ch.indr.threethreefive.services.ToastManager;
@@ -29,6 +30,8 @@ public abstract class Environment implements Parcelable {
   }
 
   public abstract FavoritesStore favoritesStore();
+
+  public abstract MusicStore musicStore();
 
   public abstract PlaybackClient playbackClient();
 
@@ -54,6 +57,8 @@ public abstract class Environment implements Parcelable {
   @AutoParcel.Builder
   public abstract static class Builder {
     public abstract Builder favoritesStore(FavoritesStore __);
+
+    public abstract Builder musicStore(MusicStore __);
 
     public abstract Builder playbackClient(PlaybackClient __);
 

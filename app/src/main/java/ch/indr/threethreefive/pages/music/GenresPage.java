@@ -14,9 +14,11 @@ import android.support.annotation.NonNull;
 
 import java.util.List;
 
+import ch.indr.threethreefive.R;
+import ch.indr.threethreefive.data.db.music.MusicStore;
+import ch.indr.threethreefive.data.db.music.model.Genre;
 import ch.indr.threethreefive.libs.Environment;
 import ch.indr.threethreefive.libs.PageItemsBuilder;
-import ch.indr.threethreefive.data.db.music.MusicStore;
 import ch.indr.threethreefive.libs.pages.Page;
 
 import static ch.indr.threethreefive.libs.PageUris.musicGenre;
@@ -32,11 +34,16 @@ public class GenresPage extends Page {
 
     setTitle("Genres");
 
-    final PageItemsBuilder builder = pageItemsBuilder();
     final MusicStore musicStore = new MusicStore(getContext());
 
-    final List<MusicStore.Genre> genres = musicStore.queryGenres();
-    for (MusicStore.Genre genre : genres) {
+    final List<Genre> genres = musicStore.queryGenres();
+    if (genres.size() == 0) {
+      handle(getString(R.string.no_genres_found));
+      return;
+    }
+
+    final PageItemsBuilder builder = pageItemsBuilder();
+    for (Genre genre : genres) {
       builder.addLink(musicGenre(genre.getId()), genre.getName());
     }
 

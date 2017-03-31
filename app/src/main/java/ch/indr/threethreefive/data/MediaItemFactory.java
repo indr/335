@@ -13,7 +13,7 @@ import android.support.v4.media.MediaMetadataCompat;
 import java.util.ArrayList;
 import java.util.List;
 
-import ch.indr.threethreefive.data.db.music.MusicStore;
+import ch.indr.threethreefive.data.db.music.model.Song;
 import ch.indr.threethreefive.data.network.radioBrowser.model.Station;
 import ch.indr.threethreefive.libs.MediaItem;
 
@@ -37,15 +37,15 @@ import static ch.indr.threethreefive.libs.PageUris.radioStation;
 
 public class MediaItemFactory {
 
-  public static List<MediaItem> make(final @NonNull List<MusicStore.Song> songs) {
+  public static List<MediaItem> make(final @NonNull List<Song> songs) {
     List<MediaItem> mediaItems = new ArrayList<>();
-    for (MusicStore.Song song : songs) {
+    for (Song song : songs) {
       mediaItems.add(make(song));
     }
     return mediaItems;
   }
 
-  public static MediaItem make(final @NonNull MusicStore.Song song) {
+  public static MediaItem make(final @NonNull Song song) {
     final String pageUri = musicSong(song.getId()).toString();
     final String mediaUri = song.getData();
 

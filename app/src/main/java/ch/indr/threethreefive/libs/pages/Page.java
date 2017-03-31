@@ -26,7 +26,6 @@ import ch.indr.threethreefive.libs.PageCommand;
 import ch.indr.threethreefive.libs.PageItem;
 import ch.indr.threethreefive.libs.PageItemsBuilder;
 import ch.indr.threethreefive.libs.PageLink;
-import ch.indr.threethreefive.libs.utils.ObjectUtils;
 import rx.Observable;
 import rx.subjects.BehaviorSubject;
 import rx.subjects.PublishSubject;
@@ -245,16 +244,12 @@ public abstract class Page implements PageType {
   }
 
   protected void handle(Exception e) {
-    setError(e);
+    handle(e.getMessage());
     e.printStackTrace();
   }
 
   protected void handle(String message) {
-    setError("Error: " + message);
-  }
-
-  protected void handle(int resId) {
-    setError(getString(resId));
+    setError(message);
   }
 
   protected String getUriParam(@NonNull String key) {
@@ -287,14 +282,6 @@ public abstract class Page implements PageType {
       }
       pageItemIdx.onNext(newItemIdx);
     }
-  }
-
-  protected void setLoading() {
-    pageItems.onNext(null);
-  }
-
-  private void setError(final @NonNull Exception error) {
-    setError(error.getMessage());
   }
 
   private void setError(final String message) {

@@ -53,7 +53,7 @@ public class LanguagePage extends SpiceBasePage implements RequestListener<List<
 
   @Override public void onRequestSuccess(List<Station> response) {
     if (response == null) {
-      handle(R.string.no_stations_found_error);
+      handle(getString(R.string.no_stations_found_error));
       return;
     }
 

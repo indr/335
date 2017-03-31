@@ -26,16 +26,32 @@ public abstract class PageUris {
     return build("/music/albums").appendPath(albumId).build();
   }
 
+  @NonNull public static Uri musicAlbums() {
+    return build("/music/albums").build();
+  }
+
   @NonNull public static Uri musicArtist(final @NonNull String artistId) {
     return build("/music/artists/").appendPath(artistId).build();
+  }
+
+  @NonNull public static Uri musicArtists() {
+    return build("/music/artists").build();
   }
 
   @NonNull public static Uri musicGenre(final @NonNull String genreId) {
     return build("/music/genres/").appendPath(genreId).build();
   }
 
+  @NonNull public static Uri musicGenres() {
+    return build("/music/genres").build();
+  }
+
   @NonNull public static Uri musicSong(final @NonNull String songId) {
     return build("/music/songs/").appendPath(songId).build();
+  }
+
+  @NonNull public static Uri musicSongs() {
+    return build("/music/songs").build();
   }
 
   @NonNull public static Uri nowPlaying() {

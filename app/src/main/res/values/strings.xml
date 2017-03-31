@@ -86,10 +86,18 @@
     <string name="trending">Trending</string>
     <string name="no_stations_found">No stations found</string>
     <string name="no_stations_found_error">Error: No stations found</string>
+    <string name="station_not_found_error">Error: Radio station %s not found</string>
     <string name="show_top_stations">Show top Stations</string>
     <string name="show_more_stations">Show more stations</string>
     <string name="show_all_stations">Show all stations</string>
 
-    <string name="station_not_found_error">Could not find radio station %s</string>
+    <string name="no_albums_found">No albums found</string>
+    <string name="album_not_found_error">Error: Album %s not found</string>
+
+    <string name="no_artists_found">No artists found</string>
+    <string name="artist_not_found_error">Error: Album %s not found</string>
+
+    <string name="no_songs_found">No songs found</string>
+    <string name="song_not_found_error">Error: Song %s not found</string>
 
 </resources>

@@ -15,10 +15,11 @@ import android.support.annotation.NonNull;
 import java.util.List;
 
 import ch.indr.threethreefive.R;
+import ch.indr.threethreefive.data.db.music.MusicStore;
+import ch.indr.threethreefive.data.db.music.model.Artist;
 import ch.indr.threethreefive.libs.Environment;
 import ch.indr.threethreefive.libs.PageItemsBuilder;
 import ch.indr.threethreefive.libs.PageUris;
-import ch.indr.threethreefive.data.db.music.MusicStore;
 import ch.indr.threethreefive.libs.pages.Page;
 
 public class ArtistsPage extends Page {
@@ -32,22 +33,27 @@ public class ArtistsPage extends Page {
 
     setTitle("Artists");
 
-    final PageItemsBuilder builder = pageItemsBuilder();
     final MusicStore musicStore = new MusicStore(getContext());
 
-    final List<MusicStore.Artist> artists = musicStore.queryArtists(null);
-    for (MusicStore.Artist artist : artists) {
+    final List<Artist> artists = musicStore.queryArtists(null);
+    if (artists.size() == 0) {
+      handle(getString(R.string.no_artists_found));
+      return;
+    }
+
+    final PageItemsBuilder builder = pageItemsBuilder();
+    for (Artist artist : artists) {
       builder.addLink(PageUris.musicArtist(artist.getId()), artist.getName(), makeSubtitle(artist), makeDescription(artist));
     }
 
     setPageItems(builder);
   }
 
-  private String makeDescription(MusicStore.Artist artist) {
+  private String makeDescription(Artist artist) {
     return artist.getName() + ", " + makeSubtitle(artist);
   }
 
-  private String makeSubtitle(MusicStore.Artist artist) {
+  private String makeSubtitle(Artist artist) {
     return getResources().getQuantityString(R.plurals.music_albums, artist.getNumberOfAlbums(), artist.getNumberOfAlbums()) +
         ", " +
         getResources().getQuantityString(R.plurals.music_tracks, artist.getNumberOfTracks(), artist.getNumberOfTracks());

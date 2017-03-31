@@ -14,16 +14,18 @@ import android.support.annotation.NonNull;
 
 import java.util.List;
 
+import ch.indr.threethreefive.R;
 import ch.indr.threethreefive.commands.AddToPlaylist;
 import ch.indr.threethreefive.commands.PlayMedias;
+import ch.indr.threethreefive.data.db.music.MusicStore;
+import ch.indr.threethreefive.data.db.music.model.Song;
 import ch.indr.threethreefive.libs.Environment;
 import ch.indr.threethreefive.libs.MediaItem;
 import ch.indr.threethreefive.libs.PageItemsBuilder;
-import ch.indr.threethreefive.data.db.music.MusicStore;
 import ch.indr.threethreefive.libs.pages.Page;
 
-import static ch.indr.threethreefive.libs.PageUris.musicSong;
 import static ch.indr.threethreefive.data.MediaItemFactory.make;
+import static ch.indr.threethreefive.libs.PageUris.musicSong;
 
 public class GenrePage extends Page {
 
@@ -37,16 +39,20 @@ public class GenrePage extends Page {
     final long genreId = Long.parseLong(uri.getLastPathSegment());
     final MusicStore musicStore = new MusicStore(getContext());
 
-    final PageItemsBuilder builder = pageItemsBuilder();
 
-    final List<MusicStore.Song> songs = musicStore.getSongsByGenreId(genreId);
+    final List<Song> songs = musicStore.getSongsByGenreId(genreId);
+    if (songs.size() == 0) {
+      handle(getString(R.string.no_songs_found));
+      return;
+    }
     final List<MediaItem> mediaItems = make(songs);
 
+    final PageItemsBuilder builder = pageItemsBuilder();
     builder.add(new PlayMedias("Play all Songs", mediaItems));
     builder.add(new AddToPlaylist("Add all Songs to Playlist", mediaItems));
     builder.addToggleFavorite(getCurrentPageLink());
 
-    for (MusicStore.Song song : songs) {
+    for (Song song : songs) {
       builder.addLink(musicSong(song.getId()),
           song.getName(), makeSubtitle(song), makeDescription(song));
     }
@@ -54,11 +60,11 @@ public class GenrePage extends Page {
     setPageItems(builder);
   }
 
-  private String makeDescription(MusicStore.Song song) {
+  private String makeDescription(Song song) {
     return song.getName() + " by " + song.getArtist();
   }
 
-  private String makeSubtitle(MusicStore.Song song) {
+  private String makeSubtitle(Song song) {
     return song.getArtist();
   }
 }
