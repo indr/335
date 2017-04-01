@@ -312,13 +312,13 @@ public class ListPlaybackFragment extends BaseFragment<ListPlaybackFragmentViewM
       textViewTitle.setTextSize(textSize);
     }
     if (textViewDummy != null) {
-      textViewDummy.setTextSize(textSize);
+      textViewDummy.setTextSize(Math.max(34, textSize));
     }
     if (textViewSeekStart != null) {
-      textViewSeekStart.setTextSize(textSize * 0.5f);
+      textViewSeekStart.setTextSize(textSize * (14f / 18f));
     }
     if (textViewSeekEnd != null) {
-      textViewSeekEnd.setTextSize(textSize * 0.5f);
+      textViewSeekEnd.setTextSize(textSize * (14f / 18f));
     }
   }
 
