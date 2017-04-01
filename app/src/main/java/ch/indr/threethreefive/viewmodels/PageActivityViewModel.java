@@ -19,6 +19,7 @@ import com.crashlytics.android.answers.ContentViewEvent;
 import java.util.List;
 import java.util.Stack;
 
+import ch.indr.threethreefive.BuildConfig;
 import ch.indr.threethreefive.libs.ActivityLifecycleType;
 import ch.indr.threethreefive.libs.ActivityViewModel;
 import ch.indr.threethreefive.libs.Environment;
@@ -26,9 +27,9 @@ import ch.indr.threethreefive.libs.PageCommand;
 import ch.indr.threethreefive.libs.PageItem;
 import ch.indr.threethreefive.libs.PageLink;
 import ch.indr.threethreefive.libs.PageManager;
-import ch.indr.threethreefive.libs.utils.ObjectUtils;
 import ch.indr.threethreefive.libs.pages.Page;
 import ch.indr.threethreefive.libs.pages.PageRequest;
+import ch.indr.threethreefive.libs.utils.ObjectUtils;
 import rx.Observable;
 import rx.subjects.BehaviorSubject;
 import rx.subjects.PublishSubject;
@@ -82,10 +83,12 @@ public abstract class PageActivityViewModel<ViewType extends ActivityLifecycleTy
       final String contentId = pageUri == null ? "" : pageUri.toString().replace("//ch.indr.threethreefive", "");
       Timber.d("reportPageView content id %s, %s", contentId, this.toString());
 
-      Answers.getInstance().logContentView(new ContentViewEvent()
-          .putContentId(contentId)
-          .putContentName(page.getTitle())
-          .putContentType(page.getClass().getName().replace("ch.indr.threethreefive.", "")));
+      if (BuildConfig.ANSWERS) {
+        Answers.getInstance().logContentView(new ContentViewEvent()
+            .putContentId(contentId)
+            .putContentName(page.getTitle())
+            .putContentType(page.getClass().getName().replace("ch.indr.threethreefive.", "")));
+      }
     } catch (Exception ex) {
       Timber.e(ex, "Error logging content view event");
     }

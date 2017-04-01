@@ -17,6 +17,7 @@ import com.crashlytics.android.answers.CustomEvent;
 import com.octo.android.robospice.persistence.exception.SpiceException;
 import com.octo.android.robospice.request.listener.RequestListener;
 
+import ch.indr.threethreefive.BuildConfig;
 import ch.indr.threethreefive.data.network.ApiClient;
 import ch.indr.threethreefive.data.network.radioBrowser.model.PlayableStationUrl;
 import ch.indr.threethreefive.libs.MetadataKeys;
@@ -44,9 +45,12 @@ public class PlaybackAnswers {
     }
 
     final MediaDescriptionCompat description = mediaMetadata.getDescription();
-    Answers.getInstance().logCustom(new CustomEvent("Playback Connecting")
-        .putCustomAttribute("radioId", radioId)
-        .putCustomAttribute("title", StringUtils.getString(description.getTitle())));
+
+    if (BuildConfig.ANSWERS) {
+      Answers.getInstance().logCustom(new CustomEvent("Playback Connecting")
+          .putCustomAttribute("radioId", radioId)
+          .putCustomAttribute("title", StringUtils.getString(description.getTitle())));
+    }
 
     final RobospiceManagerImpl robospiceManager = new RobospiceManagerImpl();
     robospiceManager.start(context);
