@@ -6,7 +6,7 @@
   ~ the LICENSE file that was distributed with this source code.
   -->
 
-<RelativeLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/toolbar"
     android:layout_width="match_parent"
@@ -14,50 +14,42 @@
     android:background="@color/colorPrimary"
     android:elevation="4dp"
     android:minHeight="?attr/actionBarSize"
+    android:orientation="horizontal"
+    android:paddingBottom="12dp"
+    android:paddingEnd="?android:attr/listPreferredItemPaddingEnd"
+    android:paddingLeft="?android:attr/listPreferredItemPaddingLeft"
+    android:paddingRight="?android:attr/listPreferredItemPaddingRight"
+    android:paddingStart="?android:attr/listPreferredItemPaddingStart"
+    android:paddingTop="12dp"
     android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
 
-    <LinearLayout
+    <ImageButton
+        android:id="@+id/toolbarButtonUp"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="start|center_vertical"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:contentDescription="@string/abc_action_bar_up_description"
+        android:paddingBottom="6dp"
+        android:paddingTop="6dp"
+        android:scaleType="fitCenter"
+        android:src="@drawable/ic_arrow_back_white_48dp"/>
+
+    <HorizontalScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_centerVertical="true"
-        android:paddingBottom="12dp"
-        android:paddingTop="12dp">
+        android:layout_gravity="center_vertical"
+        android:scrollbars="none">
 
-        <ImageButton
-            android:id="@+id/toolbarButtonUp"
+        <TextView
+            android:id="@+id/toolbarTitle"
+            style="@style/TextAppearance.AppCompat.Widget.ActionBar.Title"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_gravity="left"
-            android:layout_marginLeft="?android:attr/listPreferredItemPaddingLeft"
-            android:layout_marginStart="?android:attr/listPreferredItemPaddingStart"
-            android:background="?attr/selectableItemBackground"
-            android:contentDescription="@string/abc_action_bar_up_description"
-            android:paddingBottom="6dp"
-            android:paddingTop="6dp"
-            android:scaleType="centerInside"
-            android:src="@drawable/ic_arrow_back_white_48dp"/>
-
-        <HorizontalScrollView
-            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:scrollbars="none">
+            android:layout_gravity="start|center_vertical"
+            android:lines="1"
+            android:text="@string/app_name"/>
 
-            <TextView
-                android:id="@+id/toolbarTitle"
-                style="@style/TextAppearance.AppCompat.Widget.ActionBar.Title"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:lines="1"
-                android:paddingEnd="?android:attr/listPreferredItemPaddingEnd"
-                android:paddingLeft="?android:attr/listPreferredItemPaddingLeft"
-                android:paddingRight="?android:attr/listPreferredItemPaddingRight"
-                android:paddingStart="?android:attr/listPreferredItemPaddingStart"
-                android:text="@string/app_name"/>
+    </HorizontalScrollView>
 
-        </HorizontalScrollView>
-
-    </LinearLayout>
-
-</RelativeLayout>
+</LinearLayout>

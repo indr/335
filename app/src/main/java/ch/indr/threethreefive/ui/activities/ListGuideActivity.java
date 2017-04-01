@@ -272,6 +272,15 @@ public class ListGuideActivity extends BaseListActivity<ListGuideViewModel> impl
       toolbarTitle.setTextSize(textSize * (22f / 18f));
     }
 
+    if (toolbarButtonUp != null) {
+      // It's a kind of magic numbers!
+      final int left = Math.min(-8, (int) textSize - 44);
+      final int right = Math.min(8, (int) textSize - 24);
+      final LinearLayout.LayoutParams layoutParams = (LinearLayout.LayoutParams) toolbarButtonUp.getLayoutParams();
+      layoutParams.setMargins(left, layoutParams.topMargin, right, layoutParams.bottomMargin);
+      toolbarButtonUp.setLayoutParams(layoutParams);
+    }
+
     if (buttonIncFontSize != null) {
       final ViewGroup.LayoutParams layoutParams = buttonIncFontSize.getLayoutParams();
       layoutParams.height = Math.max(128, Math.round(textSize * 2.5f));
