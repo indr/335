@@ -1,5 +1,6 @@
-<?xml version="1.0" encoding="utf-8"?><!--
-  ~ Copyright (c) 2016 Reto Inderbitzin (mail@indr.ch)
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2017 Reto Inderbitzin (mail@indr.ch)
   ~
   ~ For the full copyright and license information, please view
   ~ the LICENSE file that was distributed with this source code.
@@ -14,58 +15,9 @@
     android:orientation="vertical"
     tools:context=".ui.activities.ListGuideActivity">
 
-    <RelativeLayout
+    <include
         android:id="@+id/toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/colorPrimary"
-        android:elevation="4dp"
-        android:minHeight="?attr/actionBarSize"
-        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:paddingBottom="12dp"
-            android:paddingTop="12dp">
-
-            <ImageButton
-                android:id="@+id/toolbarButtonUp"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_gravity="left"
-                android:layout_marginLeft="?android:attr/listPreferredItemPaddingLeft"
-                android:layout_marginStart="?android:attr/listPreferredItemPaddingStart"
-                android:background="?attr/selectableItemBackground"
-                android:contentDescription="@string/abc_action_bar_up_description"
-                android:paddingBottom="6dp"
-                android:paddingTop="6dp"
-                android:scaleType="centerInside"
-                android:src="@drawable/ic_arrow_back_white_48dp"/>
-
-            <HorizontalScrollView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:scrollbars="none">
-
-                <TextView
-                    android:id="@+id/toolbarTitle"
-                    style="@style/TextAppearance.AppCompat.Widget.ActionBar.Title"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:lines="1"
-                    android:paddingEnd="?android:attr/listPreferredItemPaddingEnd"
-                    android:paddingLeft="?android:attr/listPreferredItemPaddingLeft"
-                    android:paddingRight="?android:attr/listPreferredItemPaddingRight"
-                    android:paddingStart="?android:attr/listPreferredItemPaddingStart"
-                    android:text="@string/app_name"/>
-            </HorizontalScrollView>
-        </LinearLayout>
-    </RelativeLayout>
-
+        layout="@layout/custom_toolbar"/>
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -93,8 +45,8 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:indeterminate="true"/>
-        </FrameLayout>
 
+        </FrameLayout>
 
         <fragment
             android:id="@+id/fragmentToast"
@@ -105,7 +57,6 @@
             tools:layout="@layout/fragment_toast"/>
 
     </RelativeLayout>
-
 
     <fragment
         android:id="@+id/fragmentPlayback"
@@ -142,5 +93,7 @@
             android:scaleType="centerInside"
             android:src="@drawable/ic_remove_black_48dp"
             android:theme="@style/ButtonPrimary"/>
+
     </LinearLayout>
+
 </RelativeLayout>
