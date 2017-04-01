@@ -38,7 +38,6 @@ public class FavoritesStoreImplTest extends TtfRobolectricTestCase {
     assertEquals(id, actual.getId());
     assertEquals(expected.getTitle(), actual.getTitle());
     assertEquals(expected.getDescription(), actual.getDescription());
-    assertEquals(expected.getMediaUri(), actual.getMediaUri());
     assertEquals(expected.getPageUri(), actual.getPageUri());
     assertEquals(expected.getSubtitle(), actual.getSubtitle());
   }
@@ -60,6 +59,6 @@ public class FavoritesStoreImplTest extends TtfRobolectricTestCase {
   }
 
   @NonNull private Favorite makeFavorite(final @NonNull String title) {
-    return new Favorite(0, title, "Subtitle", "Description", "PageUri", "MediaUri");
+    return new Favorite(0, title, "Subtitle", "Description", "PageUri");
   }
 }
