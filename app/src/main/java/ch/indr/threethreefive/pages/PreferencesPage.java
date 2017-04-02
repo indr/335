@@ -19,6 +19,7 @@ import ch.indr.threethreefive.libs.Environment;
 import ch.indr.threethreefive.libs.PageCommand;
 import ch.indr.threethreefive.libs.PageItemsBuilder;
 import ch.indr.threethreefive.libs.pages.Page;
+import ch.indr.threethreefive.services.AccessibilityServices;
 import ch.indr.threethreefive.services.Speaker;
 import ch.indr.threethreefive.services.UiModeManager;
 
@@ -47,9 +48,18 @@ public class PreferencesPage extends Page {
     if (build.isDebug()) {
       builder.add(new ResetAppLaunchCounter());
       builder.add(new ResetButtonUiLaunchCounter());
+      addAccessibilityServiceStatusInfos(builder);
     }
 
     setPageItems(builder);
+  }
+
+  private void addAccessibilityServiceStatusInfos(PageItemsBuilder builder) {
+    final AccessibilityServices accessibilityServices = AccessibilityServices.newInstance(getContext());
+
+    builder.addText("Accessibility.isEnabled: " + accessibilityServices.isEnabled());
+    builder.addText("Accessibility.isSpokenFeedbackEnabled: " + accessibilityServices.isSpokenFeedbackEnabled());
+    builder.addText("Accessibility.isTouchExplorationEnabled: " + accessibilityServices.isTouchExplorationEnabled());
   }
 
   private void addReplayInterfaceInstructionsItem(PageItemsBuilder builder) {
