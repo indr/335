@@ -74,10 +74,16 @@ public class ButtonGuideActivity extends BaseActivity<ButtonGuideViewModel> {
     initActionBar();
     initButtons();
 
-    viewModel.activityTitle()
-        .compose(bindToLifecycle())
-        .compose(observeForUI())
-        .subscribe(this::setTitle);
+    // If accessibility service spoken feedback is enabled, the title will
+    // be spoken. This utterance interferes with the welcome/intro speech
+    // and navigation utterances.
+    // Therefore: We set activity title to null and don't observe the
+    // view models activity title observable.
+    setTitle(null);
+    // viewModel.activityTitle()
+    //     .compose(bindToLifecycle())
+    //     .compose(observeForUI())
+    //     .subscribe(this::setTitle);
 
     viewModel.activityTitle()
         .compose(bindToLifecycle())

@@ -69,7 +69,7 @@ public class PreferencesPage extends Page {
   }
 
   private void replayInterfaceInstructions(Environment environment) {
-    speaker.instructions().replay();
+    speaker.instructions().replayUsage();
   }
 
   private void addSwitchUiItem(PageItemsBuilder builder) {

@@ -27,7 +27,7 @@
         <activity
             android:name=".ui.activities.ButtonGuideActivity"
             android:launchMode="singleTask"
-            android:theme="@style/AppTheme"/>
+            android:theme="@style/AppTheme.NoTitleBar"/>
         <activity
             android:name=".ui.activities.ListGuideActivity"
             android:launchMode="singleTask"

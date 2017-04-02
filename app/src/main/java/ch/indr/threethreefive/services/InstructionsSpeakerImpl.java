@@ -22,12 +22,17 @@ public class InstructionsSpeakerImpl implements InstructionsSpeaker {
     this.resources = resources;
   }
 
-  @Override public void play() {
+  @Override public void playAccessibilityServicesDetected() {
+    speak(R.string.speech_accessibility_services_detected, true);
+    speak(R.string.speech_interface_instructions_end_with_home_screen);
+  }
+
+  @Override public void playUsage() {
     speak(R.string.speech_interface_instructions, true);
     speak(R.string.speech_interface_instructions_end_with_home_screen);
   }
 
-  @Override public void replay() {
+  @Override public void replayUsage() {
     speak(R.string.speech_interface_instructions, true);
     speak(R.string.speech_interface_instructions_end_with_preference_screen);
   }

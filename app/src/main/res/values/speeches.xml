@@ -30,6 +30,19 @@ to thousands of online radio stations,\n\
 as well as media on your device.\n\
 ]]></string>
 
+    <string name="speech_accessibility_services_detected"><![CDATA[
+Welcome\n\
+to the three three five button interface navigation screen.\n\
+\n\
+We have detected you are using touch exploration or spoken feedback accessibility assistance.\n\
+\n\
+The three three five button interface navigation screen is designed to be fast and easy and not
+used with accessibility assistance services.\n\
+\n\
+Press and hold both volume keys and the same time to disable or enable your assistance services.\n\
+\n\
+]]></string>
+
     <string name="speech_ui_selection"><![CDATA[
 Please select an interface:\n\
 Press on the right side\n\

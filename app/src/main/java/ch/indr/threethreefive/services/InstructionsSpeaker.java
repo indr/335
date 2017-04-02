@@ -9,7 +9,9 @@ package ch.indr.threethreefive.services;
 
 public interface InstructionsSpeaker {
 
-  void play();
+  void playAccessibilityServicesDetected();
 
-  void replay();
+  void playUsage();
+
+  void replayUsage();
 }

@@ -16,10 +16,11 @@ import android.view.View;
 import ch.indr.threethreefive.libs.Environment;
 import ch.indr.threethreefive.libs.PageItem;
 import ch.indr.threethreefive.libs.PageLink;
+import ch.indr.threethreefive.libs.pages.Page;
 import ch.indr.threethreefive.libs.preferences.IntPreferenceType;
 import ch.indr.threethreefive.libs.utils.ObjectUtils;
 import ch.indr.threethreefive.libs.utils.UriUtils;
-import ch.indr.threethreefive.libs.pages.Page;
+import ch.indr.threethreefive.services.AccessibilityServices;
 import ch.indr.threethreefive.services.Speaker;
 import ch.indr.threethreefive.ui.activities.ButtonGuideActivity;
 import ch.indr.threethreefive.viewmodels.inputs.ButtonGuideViewModelInputs;
@@ -56,10 +57,7 @@ public class ButtonGuideViewModel extends PageActivityViewModel<ButtonGuideActiv
     super.onCreate(context, savedInstanceState);
 
     speaker.start();
-    if (uiModelaunchCounter.get() <= 1) {
-      speaker.instructions().play();
-      ignoreNextTitle = true;
-    }
+    speakInstructions(context);
 
     // Selected page item
     page.switchMap(Page::pageItem)
@@ -105,6 +103,22 @@ public class ButtonGuideViewModel extends PageActivityViewModel<ButtonGuideActiv
         .switchMap(pageItem -> pageItem.description().first())
         .compose(bindToLifecycle())
         .subscribe(this::speakTitle);
+  }
+
+  private void speakInstructions(final @NonNull Context context) {
+    Timber.d("speakInstructions %s", this.toString());
+
+    final AccessibilityServices accessibilityServices = AccessibilityServices.newInstance(context);
+    final boolean accessibilitiesEnabled = accessibilityServices.isTouchExplorationEnabled() || accessibilityServices.isSpokenFeedbackEnabled();
+    Timber.d("Accessibilities enabled %s, %s", accessibilitiesEnabled, this.toString());
+
+    if (uiModelaunchCounter.get() <= 1) {
+      speaker.instructions().playUsage();
+      ignoreNextTitle = true;
+    } else if (accessibilitiesEnabled) {
+      speaker.instructions().playAccessibilityServicesDetected();
+      ignoreNextTitle = true;
+    }
   }
 
   private void speakTitle(String title) {
