@@ -1,3 +1,10 @@
+/*
+ * Copyright (c) 2017 Reto Inderbitzin (mail@indr.ch)
+ *
+ * For the full copyright and license information, please view
+ * the LICENSE file that was distributed with this source code.
+ */
+
 package ch.indr.threethreefive.commands;
 
 import android.support.annotation.NonNull;
@@ -19,9 +26,9 @@ public class ToggleFavorite extends PageCommand {
     super("Add to Favorites");
 
     this.favorite = new Favorite(0, pageLink.getTitle(), pageLink.getSubtitle(),
-        pageLink.getDescription(), pageLink.getUri().toString());
+        pageLink.getDescription(), pageLink.getUri());
 
-    this.isFavorite.onNext(favoritesStore.isFavorite(pageLink));
+    this.isFavorite.onNext(favoritesStore.isFavorite(pageLink.getUri()));
 
     this.isFavorite
         .map(v -> v ? "Remove from Favorites" : "Add to Favorites")

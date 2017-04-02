@@ -11,6 +11,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
@@ -18,7 +19,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import ch.indr.threethreefive.data.db.favorites.model.Favorite;
-import ch.indr.threethreefive.libs.PageLink;
 
 public class FavoritesStoreImpl implements FavoritesStore {
   private final Context context;
@@ -35,7 +35,7 @@ public class FavoritesStoreImpl implements FavoritesStore {
     values.put(FavoritesContract.FavoritesEntry.COLUMN_NAME_TITLE, favorite.getTitle());
     values.put(FavoritesContract.FavoritesEntry.COLUMN_NAME_SUBTITLE, favorite.getSubtitle());
     values.put(FavoritesContract.FavoritesEntry.COLUMN_NAME_DESCRIPTION, favorite.getDescription());
-    values.put(FavoritesContract.FavoritesEntry.COLUMN_NAME_PAGE_URI, favorite.getPageUri());
+    values.put(FavoritesContract.FavoritesEntry.COLUMN_NAME_PAGE_URI, favorite.getPageUri().toString());
 
     return db.insert(FavoritesContract.FavoritesEntry.TABLE_NAME, null, values);
   }
@@ -44,19 +44,15 @@ public class FavoritesStoreImpl implements FavoritesStore {
     return read(null, null);
   }
 
-  public boolean isFavorite(final @NonNull PageLink pageLink) {
-    return isFavorite(pageLink.getUri().toString());
+  public boolean isFavorite(final @NonNull Uri pageUri) {
+    return findByPageUri(pageUri.toString()).size() > 0;
   }
 
-  public boolean isFavorite(final @NonNull String pageUri) {
-    return findByPageUri(pageUri).size() > 0;
-  }
-
-  public void remove(final @NonNull String pageUri) {
+  public void remove(final @NonNull Uri pageUri) {
     // Define 'where' part of query.
     String selection = FavoritesContract.FavoritesEntry.COLUMN_NAME_PAGE_URI + " = ?";
     // Specify arguments in placeholder order.
-    String[] selectionArgs = {pageUri};
+    String[] selectionArgs = {pageUri.toString()};
 
     delete(selection, selectionArgs);
   }
@@ -94,7 +90,7 @@ public class FavoritesStoreImpl implements FavoritesStore {
               cursor.getString(cursor.getColumnIndexOrThrow(FavoritesContract.FavoritesEntry.COLUMN_NAME_TITLE)),
               cursor.getString(cursor.getColumnIndexOrThrow(FavoritesContract.FavoritesEntry.COLUMN_NAME_SUBTITLE)),
               cursor.getString(cursor.getColumnIndexOrThrow(FavoritesContract.FavoritesEntry.COLUMN_NAME_DESCRIPTION)),
-              cursor.getString(cursor.getColumnIndexOrThrow(FavoritesContract.FavoritesEntry.COLUMN_NAME_PAGE_URI))
+              Uri.parse(cursor.getString(cursor.getColumnIndexOrThrow(FavoritesContract.FavoritesEntry.COLUMN_NAME_PAGE_URI)))
           ));
         } while (cursor.moveToNext());
       }

@@ -15,9 +15,8 @@ import rx.Observable;
 import rx.subjects.BehaviorSubject;
 
 public class PageLink extends PageItem {
-
-  public static final PageLink HomePage = new PageLink(Uri.parse("/"), "Home");
-  public static final PageLink NowPlaying = new PageLink(Uri.parse("/now-playing"), "Now Playing");
+  public static final PageLink HomePage = new PageLink(PageUris.home(), "Home");
+  public static final PageLink NowPlaying = new PageLink(PageUris.nowPlaying(), "Now Playing");
 
   private BehaviorSubject<Uri> uri = BehaviorSubject.create();
 

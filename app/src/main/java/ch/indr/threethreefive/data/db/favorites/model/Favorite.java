@@ -7,6 +7,7 @@
 
 package ch.indr.threethreefive.data.db.favorites.model;
 
+import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
@@ -15,10 +16,10 @@ public class Favorite {
   private final String title;
   private final String subtitle;
   private final String description;
-  private final String pageUri;
+  private final Uri pageUri;
 
   public Favorite(final long id, final @NonNull String title, final @Nullable String subtitle,
-                  final @NonNull String description, final @NonNull String pageUri) {
+                  final @NonNull String description, final @NonNull Uri pageUri) {
     this.id = id;
     this.title = title;
     this.subtitle = subtitle;
@@ -42,7 +43,7 @@ public class Favorite {
     return description;
   }
 
-  @NonNull public String getPageUri() {
+  @NonNull public Uri getPageUri() {
     return pageUri;
   }
 }

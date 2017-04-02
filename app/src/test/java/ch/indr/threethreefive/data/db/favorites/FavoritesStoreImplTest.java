@@ -15,9 +15,9 @@ import java.util.List;
 
 import ch.indr.threethreefive.TtfRobolectricTestCase;
 import ch.indr.threethreefive.data.db.favorites.model.Favorite;
+import ch.indr.threethreefive.libs.PageUris;
 
 public class FavoritesStoreImplTest extends TtfRobolectricTestCase {
-
   @Test
   public void add_returnsId() throws Exception {
     final FavoritesStoreImpl favoritesStore = getFavoritesStore();
@@ -59,6 +59,6 @@ public class FavoritesStoreImplTest extends TtfRobolectricTestCase {
   }
 
   @NonNull private Favorite makeFavorite(final @NonNull String title) {
-    return new Favorite(0, title, "Subtitle", "Description", "PageUri");
+    return new Favorite(0, title, "Subtitle", "Description", PageUris.favorites());
   }
 }

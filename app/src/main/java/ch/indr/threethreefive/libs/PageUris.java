@@ -11,11 +11,14 @@ import android.net.Uri;
 import android.support.annotation.NonNull;
 
 public abstract class PageUris {
-
   public static final String AUTHORITY = "ch.indr.threethreefive";
 
   @NonNull public static Uri favorites() {
     return build("/favorites").build();
+  }
+
+  @NonNull public static Uri home() {
+    return build("/").build();
   }
 
   @NonNull public static Uri music() {
@@ -112,6 +115,10 @@ public abstract class PageUris {
 
   @NonNull public static Uri playlist() {
     return build("/playlist").build();
+  }
+
+  @NonNull public static Uri playlistItem(long queueId) {
+    return build("/playlist").appendPath(String.valueOf(queueId)).build();
   }
 
   @NonNull public static Uri preferences() {

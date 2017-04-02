@@ -11,7 +11,6 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
 public abstract class PageCommand extends PageItem {
-
   protected PageCommand(final @NonNull String title) {
     super(title);
   }

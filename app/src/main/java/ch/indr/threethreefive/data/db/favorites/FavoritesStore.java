@@ -7,21 +7,19 @@
 
 package ch.indr.threethreefive.data.db.favorites;
 
+import android.net.Uri;
 import android.support.annotation.NonNull;
 
 import java.util.List;
 
 import ch.indr.threethreefive.data.db.favorites.model.Favorite;
-import ch.indr.threethreefive.libs.PageLink;
 
 public interface FavoritesStore {
   long add(final @NonNull Favorite favorite);
 
   @NonNull List<Favorite> findAll();
 
-  void remove(final @NonNull String pageUri);
+  void remove(final @NonNull Uri pageUri);
 
-  boolean isFavorite(final @NonNull PageLink pageLink);
-
-  boolean isFavorite(final @NonNull String pageUri);
+  boolean isFavorite(final @NonNull Uri pageUri);
 }

@@ -24,9 +24,9 @@ import ch.indr.threethreefive.libs.Environment;
 import ch.indr.threethreefive.libs.PageItemsBuilder;
 import ch.indr.threethreefive.libs.PageLink;
 import ch.indr.threethreefive.libs.PageUris;
+import ch.indr.threethreefive.libs.pages.Page;
 import ch.indr.threethreefive.libs.utils.MediaDescriptionUtils;
 import ch.indr.threethreefive.libs.utils.PlaybackStateUtils;
-import ch.indr.threethreefive.libs.pages.Page;
 import ch.indr.threethreefive.services.PlaybackClient;
 import ch.indr.threethreefive.services.UiModeManager;
 
@@ -34,7 +34,6 @@ import static android.support.v4.media.session.PlaybackStateCompat.STATE_PLAYING
 import static ch.indr.threethreefive.libs.rx.transformers.Transfomers.observeForUI;
 
 public class HomePage extends Page {
-
   protected @Inject PlaybackClient playbackClient;
   protected @Inject QueueManager queueManager;
   protected @Inject UiModeManager uiModeManager;
@@ -118,10 +117,10 @@ public class HomePage extends Page {
       final String playbackState = PlaybackStateUtils.toString(stateAndQueueItem.first);
 
       String title = "Playback state: " + playbackState;
-      Uri uri = PageLink.HomePage.getUri();
+      Uri uri = PageUris.home();
       if (queueItem != null) {
         title = playbackState + ": " + MediaDescriptionUtils.fullTitle(queueItem.getDescription());
-        uri = Uri.parse("/playlist/" + queueItem.getQueueId());
+        uri = PageUris.playlistItem(queueItem.getQueueId());
       }
 
       setTitle(title);
