@@ -17,9 +17,10 @@ import timber.log.Timber;
 import static ch.indr.threethreefive.libs.PageUris.AUTHORITY;
 
 public class PlaylistPageResolver extends PageResolver {
+  // API levels below 18 don't match paths with a leading slash
+  private static final String BASE_PATH = "playlist";
 
   private static final UriMatcher uriMatcher = new UriMatcher(UriMatcher.NO_MATCH);
-  private static final String BASE_PATH = "/playlist";
 
   private static final int INDEX = 1;
   private static final int ITEM_ID = INDEX + 1;

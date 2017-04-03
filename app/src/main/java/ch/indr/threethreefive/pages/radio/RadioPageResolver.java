@@ -21,9 +21,10 @@ import timber.log.Timber;
 import static ch.indr.threethreefive.libs.PageUris.AUTHORITY;
 
 public class RadioPageResolver extends PageResolver {
+  // API levels below 18 don't match paths with a leading slash
+  private static final String BASE_PATH = "radio";
 
   private static final UriMatcher uriMatcher = new UriMatcher(UriMatcher.NO_MATCH);
-  private static final String base_path = "/radio";
 
   private static final int INDEX = 1;
   private static final int LANGUAGES = INDEX + 1;
@@ -37,18 +38,18 @@ public class RadioPageResolver extends PageResolver {
   private static final List<UrlPattern> urlPatterns = new ArrayList<>();
 
   static {
-    uriMatcher.addURI(AUTHORITY, base_path, INDEX);
+    uriMatcher.addURI(AUTHORITY, BASE_PATH, INDEX);
     addPattern("/countries", CountriesPage.class);
     addPattern("/countries/([^/]+)/genres", CountryGenresPage.class, new String[]{"countryId"});
     addPattern("/countries/([^/]+)/genres/([^/]+)", CountryGenrePage.class, new String[]{"countryId", "genreId"});
     addPattern("/countries/([^/]+)/stations", CountryStationsPage.class, new String[]{"countryId"});
-    uriMatcher.addURI(AUTHORITY, base_path + "/languages", LANGUAGES);
-    uriMatcher.addURI(AUTHORITY, base_path + "/languages/*", LANGUAGE_NAME);
-    uriMatcher.addURI(AUTHORITY, base_path + "/genres", GENRES);
-    uriMatcher.addURI(AUTHORITY, base_path + "/genres/*", GENRE_ID);
-    uriMatcher.addURI(AUTHORITY, base_path + "/stations/*", STATION_ID);
-    uriMatcher.addURI(AUTHORITY, base_path + "/stations/*/genres", STATION_ID_GENRES);
-    uriMatcher.addURI(AUTHORITY, base_path + "/trending", TRENDING_ID);
+    uriMatcher.addURI(AUTHORITY, BASE_PATH + "/languages", LANGUAGES);
+    uriMatcher.addURI(AUTHORITY, BASE_PATH + "/languages/*", LANGUAGE_NAME);
+    uriMatcher.addURI(AUTHORITY, BASE_PATH + "/genres", GENRES);
+    uriMatcher.addURI(AUTHORITY, BASE_PATH + "/genres/*", GENRE_ID);
+    uriMatcher.addURI(AUTHORITY, BASE_PATH + "/stations/*", STATION_ID);
+    uriMatcher.addURI(AUTHORITY, BASE_PATH + "/stations/*/genres", STATION_ID_GENRES);
+    uriMatcher.addURI(AUTHORITY, BASE_PATH + "/trending", TRENDING_ID);
   }
 
   private static void addPattern(String path, Class<? extends Page> pageClass) {
@@ -56,7 +57,7 @@ public class RadioPageResolver extends PageResolver {
   }
 
   private static void addPattern(String path, Class<? extends Page> pageClass, String[] keys) {
-    urlPatterns.add(new UrlPattern("^" + base_path + path + "$", pageClass, keys));
+    urlPatterns.add(new UrlPattern("^/" + BASE_PATH + path + "$", pageClass, keys));
   }
 
   public PageMeta resolve(Uri uri) {

@@ -48,8 +48,9 @@ public abstract class PageResolver {
   public abstract PageMeta resolve(Uri uri) throws PageNotFoundException;
 
   protected PageMeta resolvePatterns(List<UrlPattern> patterns, Uri uri) {
+    final String path = uri.getPath();
     for (UrlPattern urlPattern : patterns) {
-      final Matcher matcher = urlPattern.getPattern().matcher(uri.getPath());
+      final Matcher matcher = urlPattern.getPattern().matcher(path);
       if (matcher.matches()) {
         final MatchResult matchResult = matcher.toMatchResult();
         if (matchResult != null) {
