@@ -19,6 +19,7 @@ import ch.indr.threethreefive.R;
 import ch.indr.threethreefive.libs.ActivityViewModel;
 import ch.indr.threethreefive.libs.Environment;
 import ch.indr.threethreefive.libs.preferences.IntPreferenceType;
+import ch.indr.threethreefive.services.AccessibilityServices;
 import ch.indr.threethreefive.services.Speaker;
 import ch.indr.threethreefive.ui.activities.StartActivity;
 import rx.Observable;
@@ -30,9 +31,10 @@ public class StartViewModel extends ActivityViewModel<StartActivity> {
   private final IntPreferenceType appLaunchCount;
   private String welcomeUtteranceId;
 
+  private BehaviorSubject<String> showAccessibilityWarning = BehaviorSubject.create();
   private BehaviorSubject<Integer> showTextToSpeechError = BehaviorSubject.create();
+  private BehaviorSubject<Object> showWelcome = BehaviorSubject.create();
   private BehaviorSubject<Object> startUiSelection = BehaviorSubject.create();
-  private BehaviorSubject<Object> utteranceWelcomeStart = BehaviorSubject.create();
 
   protected @Inject Speaker speaker;
 
@@ -45,6 +47,17 @@ public class StartViewModel extends ActivityViewModel<StartActivity> {
 
   @Override protected void onCreate(@NonNull Context context, @Nullable Bundle savedInstanceState) {
     super.onCreate(context, savedInstanceState);
+
+    final AccessibilityServices accessibilityServices = AccessibilityServices.newInstance(context);
+
+    if (accessibilityServices.isEnabled()) {
+      if (accessibilityServices.isTouchExplorationEnabled()) {
+        showAccessibilityWarning.onNext("touchExplorationEnabled");
+      }
+      if (accessibilityServices.isSpokenFeedbackEnabled()) {
+        showAccessibilityWarning.onNext("spokenFeedbackEnabled");
+      }
+    }
 
     speaker.status()
         .filter(status -> status != TextToSpeech.SUCCESS)
@@ -59,17 +72,13 @@ public class StartViewModel extends ActivityViewModel<StartActivity> {
     speaker.utteranceStart()
         .filter(utteranceId -> utteranceId.equals(welcomeUtteranceId))
         .compose(bindToLifecycle())
-        .subscribe(utteranceWelcomeStart);
+        .subscribe(showWelcome);
 
     speaker.utteranceDone()
         .filter(utteranceId -> utteranceId.equals(welcomeUtteranceId))
+        .takeUntil(showAccessibilityWarning)
         .compose(bindToLifecycle())
         .subscribe(startUiSelection);
-
-    speaker.utteranceDone()
-        .filter(utteranceId -> utteranceId.equals(welcomeUtteranceId))
-        .compose(bindToLifecycle())
-        .subscribe(__ -> this.appLaunchCount.increment());
 
     speaker.utteranceError()
         .filter(utteranceId -> utteranceId.equals(welcomeUtteranceId))
@@ -78,16 +87,20 @@ public class StartViewModel extends ActivityViewModel<StartActivity> {
         .subscribe(showTextToSpeechError);
   }
 
+  public Observable<String> showAccessibilityWarning() {
+    return showAccessibilityWarning;
+  }
+
   public Observable<Integer> showTextToSpeechError() {
     return showTextToSpeechError;
   }
 
-  public Observable<Object> startUiSelection() {
-    return startUiSelection;
+  public Observable<Object> showWelcome() {
+    return showWelcome;
   }
 
-  public Observable<Object> utteranceWelcomeStart() {
-    return utteranceWelcomeStart;
+  public Observable<Object> startUiSelection() {
+    return startUiSelection;
   }
 
   private void speakWelcome(Object __) {

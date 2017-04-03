@@ -51,6 +51,11 @@
         <item quantity="other">%d songs</item>
     </plurals>
 
+    <string name="start_accessibility_warning">You are using accessibility assistance. 3-3-5 is designed to provide a faster and smoother experience than these services can provide. Disable your touch exploration or spoken feedback services during the usage of 3-3-5.</string>
+    <string name="start_tts_error">Text-to-Speech could not be loaded.</string>
+    <string name="start_welcome_to">Welcome to 335</string>
+    <string name="start_loading">Loading...</string>
+
     <!-- uamp.xml -->
     <string name="favorite">Favorite</string>
     <string name="error_no_metadata">Unable to retrieve metadata.</string>

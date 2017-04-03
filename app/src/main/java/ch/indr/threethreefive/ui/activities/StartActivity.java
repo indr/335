@@ -45,18 +45,24 @@ public class StartActivity extends BaseActivity<StartViewModel> {
     setContentView(R.layout.activity_start);
     ButterKnife.bind(this);
 
-    textViewStatus.setText("Loading...");
+    textViewStatus.setText(R.string.start_loading);
     buttonContinue.setVisibility(View.GONE);
+
+    viewModel.showAccessibilityWarning()
+        .compose(bindToLifecycle())
+        .compose(observeForUI())
+        .subscribe(this::showAccessibilityWarning);
 
     viewModel.showTextToSpeechError()
         .compose(bindToLifecycle())
         .compose(observeForUI())
         .subscribe(this::showTextToSpeechError);
 
-    viewModel.utteranceWelcomeStart()
+    viewModel.showWelcome()
+        .takeUntil(viewModel.showAccessibilityWarning())
         .compose(bindToLifecycle())
         .compose(observeForUI())
-        .subscribe(this::welcomeUser);
+        .subscribe(this::showWelcome);
 
     viewModel.startUiSelection()
         .compose(bindToLifecycle())
@@ -64,18 +70,24 @@ public class StartActivity extends BaseActivity<StartViewModel> {
         .subscribe(this::showUiModeSelection);
   }
 
-  private void showTextToSpeechError(int status) {
-    Timber.d("showTextToSpeechError %s", this.toString());
+  private void showAccessibilityWarning(final String cause) {
+    Timber.d("showAccessibilityWarning %s, %s", cause, this.toString());
 
-    // TODO: Show text according to status
-    textViewStatus.setText("Text-to-Speech could not be loaded: " + status);
+    textViewStatus.setText(R.string.start_accessibility_warning);
     buttonContinue.setVisibility(View.VISIBLE);
   }
 
-  private void welcomeUser(Object __) {
-    Timber.d("welcomeUser %s", this.toString());
+  private void showTextToSpeechError(final int status) {
+    Timber.d("showTextToSpeechError %d, %s", status, this.toString());
 
-    textViewStatus.setText("Welcome to 335");
+    textViewStatus.setText(R.string.start_tts_error);
+    buttonContinue.setVisibility(View.VISIBLE);
+  }
+
+  private void showWelcome(Object __) {
+    Timber.d("showWelcome %s", this.toString());
+
+    textViewStatus.setText(R.string.start_welcome_to);
   }
 
   private void showUiModeSelection(Object __) {

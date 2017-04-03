@@ -159,7 +159,7 @@ public class ListGuideActivity extends BaseListActivity<ListGuideViewModel> impl
    */
   private void updateUpButton(boolean canGoUp) {
     if (toolbarButtonUp != null) {
-      toolbarButtonUp.setVisibility(canGoUp ? View.VISIBLE : View.VISIBLE);
+      toolbarButtonUp.setVisibility(canGoUp ? View.VISIBLE : View.GONE);
     }
   }
 
