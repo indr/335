@@ -38,7 +38,7 @@ public class StartActivity extends BaseActivity<StartViewModel> {
 
   @Override protected void onCreate(Bundle savedInstanceState) {
     // Make sure this is before calling super.onCreate
-    setTheme(R.style.AppTheme_NoTitleBar);
+    setTheme(R.style.AppTheme_NoActionBar);
     super.onCreate(savedInstanceState);
 
     ((ThreeThreeFiveApp) getApplication()).component().inject(this);

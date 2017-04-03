@@ -27,11 +27,11 @@
         <activity
             android:name=".ui.activities.ButtonGuideActivity"
             android:launchMode="singleTask"
-            android:theme="@style/AppTheme.NoTitleBar"/>
+            android:theme="@style/AppTheme.NoActionBar"/>
         <activity
             android:name=".ui.activities.ListGuideActivity"
             android:launchMode="singleTask"
-            android:theme="@style/AppTheme.NoTitleBar"/>
+            android:theme="@style/AppTheme.NoActionBar"/>
         <activity android:name=".ui.activities.NowPlayingProxyActivity"/>
         <activity
             android:name=".ui.activities.UiSelectionActivity"
