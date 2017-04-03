@@ -23,7 +23,7 @@ public class AccessibilityServices {
     return new AccessibilityServices(accessibilityManager);
   }
 
-  @VisibleForTesting private AccessibilityServices(final @NonNull AccessibilityManager accessibilityManager) {
+  @VisibleForTesting AccessibilityServices(final @NonNull AccessibilityManager accessibilityManager) {
     this.accessibilityManager = accessibilityManager;
   }
 
@@ -37,6 +37,6 @@ public class AccessibilityServices {
 
   public boolean isSpokenFeedbackEnabled() {
     final List<AccessibilityServiceInfo> enabledServices = accessibilityManager.getEnabledAccessibilityServiceList(AccessibilityServiceInfo.FEEDBACK_SPOKEN);
-    return !enabledServices.isEmpty();
+    return enabledServices != null && !enabledServices.isEmpty();
   }
 }
