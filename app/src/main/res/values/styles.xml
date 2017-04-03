@@ -1,12 +1,16 @@
 <resources>
 
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="AppThemeBase" parent="Theme.AppCompat.Light.DarkActionBar">
         <item name="windowNoTitle">false</item>
         <item name="windowActionBar">true</item>
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+
         <item name="android:seekBarStyle">@style/SeekBarAppTheme</item>
+    </style>
+
+    <style name="AppTheme" parent="AppThemeBase">
     </style>
 
     <style name="AppTheme.NoActionBar" parent="AppTheme">
@@ -14,11 +18,8 @@
         <item name="windowNoTitle">true</item>
     </style>
 
-    <style name="SplashScreenTheme" parent="@android:style/Theme.DeviceDefault.Light.NoActionBar">
+    <style name="AppTheme.SplashScreen" parent="AppTheme.NoActionBar">
         <item name="android:windowBackground">@drawable/splash_background</item>
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
     </style>
 
     <style name="SeekBarAppTheme" parent="android:Widget.SeekBar">
