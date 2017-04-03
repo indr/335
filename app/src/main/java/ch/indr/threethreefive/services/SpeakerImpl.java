@@ -267,11 +267,11 @@ public class SpeakerImpl implements Speaker {
 
       if (res != TextToSpeech.SUCCESS) {
         status.onNext(res);
-        Timber.d("TextToSpeech initializiation failed, status=%d, %s", res, this.toString());
+        Timber.d("TextToSpeech initialization failed, status=%d, %s", res, this.toString());
         return;
       }
 
-      Locale locale = Locale.US;
+      Locale locale = Locale.ENGLISH;
       res = textToSpeech.setLanguage(locale);
       if (res == TextToSpeech.LANG_MISSING_DATA || res == TextToSpeech.LANG_NOT_SUPPORTED) {
         Timber.d("Locale " + locale.toString() + " is not supported, status=%d, %s", res, this.toString());
