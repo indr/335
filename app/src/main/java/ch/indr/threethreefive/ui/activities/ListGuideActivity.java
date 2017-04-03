@@ -9,6 +9,7 @@ package ch.indr.threethreefive.ui.activities;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Point;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -158,7 +159,7 @@ public class ListGuideActivity extends BaseListActivity<ListGuideViewModel> impl
    */
   private void updateUpButton(boolean canGoUp) {
     if (toolbarButtonUp != null) {
-      toolbarButtonUp.setVisibility(canGoUp ? View.VISIBLE : View.GONE);
+      toolbarButtonUp.setVisibility(canGoUp ? View.VISIBLE : View.VISIBLE);
     }
   }
 
@@ -272,29 +273,36 @@ public class ListGuideActivity extends BaseListActivity<ListGuideViewModel> impl
       toolbarTitle.setTextSize(textSize * (22f / 18f));
     }
 
-    if (toolbarButtonUp != null) {
-      // It's a kind of magic numbers!
-      final int left = Math.min(-8, (int) textSize - 44);
-      final int right = Math.min(8, (int) textSize - 24);
-      final LinearLayout.LayoutParams layoutParams = (LinearLayout.LayoutParams) toolbarButtonUp.getLayoutParams();
-      layoutParams.setMargins(left, layoutParams.topMargin, right, layoutParams.bottomMargin);
-      toolbarButtonUp.setLayoutParams(layoutParams);
-    }
+    // Doesn't work on low resolution screens...
+//    if (toolbarButtonUp != null) {
+//      // It's a kind of magic numbers!
+//      final int left = Math.min(-8, (int) textSize - 44);
+//      final int right = Math.min(8, (int) textSize - 24);
+//      final LinearLayout.LayoutParams layoutParams = (LinearLayout.LayoutParams) toolbarButtonUp.getLayoutParams();
+//      layoutParams.setMargins(left, layoutParams.topMargin, right, layoutParams.bottomMargin);
+//      toolbarButtonUp.setLayoutParams(layoutParams);
+//    }
 
-    if (buttonIncFontSize != null) {
-      final ViewGroup.LayoutParams layoutParams = buttonIncFontSize.getLayoutParams();
-      layoutParams.height = Math.max(128, Math.round(textSize * 2.5f));
-      //noinspection SuspiciousNameCombination
-      layoutParams.width = layoutParams.height;
-      buttonIncFontSize.setLayoutParams(layoutParams);
-    }
+    if (buttonIncFontSize != null && buttonDecFontSize != null) {
+      Point size = new Point();
+      getWindowManager().getDefaultDisplay().getSize(size);
+      final int maxButtonSize = Math.min(size.x, size.y) / 3;
+      final int minButtonSize = Math.min(size.x, size.y) / 4;
+      final int buttonSize = Math.min(maxButtonSize, Math.max(minButtonSize, Math.round(textSize * 2.5f)));
 
-    if (buttonDecFontSize != null) {
-      final ViewGroup.LayoutParams layoutParams = buttonDecFontSize.getLayoutParams();
-      layoutParams.height = Math.max(128, Math.round(textSize * 2.5f));
-      //noinspection SuspiciousNameCombination
-      layoutParams.width = layoutParams.height;
-      buttonDecFontSize.setLayoutParams(layoutParams);
+      if (buttonIncFontSize != null) {
+        final ViewGroup.LayoutParams layoutParams = buttonIncFontSize.getLayoutParams();
+        layoutParams.height = buttonSize;
+        layoutParams.width = buttonSize;
+        buttonIncFontSize.setLayoutParams(layoutParams);
+      }
+
+      if (buttonDecFontSize != null) {
+        final ViewGroup.LayoutParams layoutParams = buttonDecFontSize.getLayoutParams();
+        layoutParams.height = buttonSize;
+        layoutParams.width = buttonSize;
+        buttonDecFontSize.setLayoutParams(layoutParams);
+      }
     }
   }
 
