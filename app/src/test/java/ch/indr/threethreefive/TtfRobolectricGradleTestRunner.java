@@ -17,7 +17,8 @@ import rx.schedulers.Schedulers;
 
 public class TtfRobolectricGradleTestRunner extends RobolectricTestRunner {
 
-  public static final int DEFAULT_SDK = 21;
+  public static final int DEFAULT_SDK = 16;
+  // public static final int DEFAULT_SDK = 21;
 
   public TtfRobolectricGradleTestRunner(Class<?> testClass) throws InitializationError {
     super(testClass);
