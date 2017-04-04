@@ -57,7 +57,7 @@ public abstract class PageItem {
   }
 
   public final @Nullable String getDescription() {
-    return getTitle();
+    return description.getValue();
   }
 
   protected void setDescription(final @Nullable String description) {
