@@ -11,7 +11,8 @@
 -->
 <HorizontalScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/scrollView1"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/scrollView"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:scrollbars="none">
@@ -19,6 +20,7 @@
     <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:importantForAccessibility="noHideDescendants"
         android:paddingBottom="@dimen/list_item_padding_bottom"
         android:paddingEnd="?android:attr/listPreferredItemPaddingEnd"
         android:paddingLeft="?android:attr/listPreferredItemPaddingLeft"
@@ -31,10 +33,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:lines="1"
-            android:text="Title"
             android:textAppearance="?android:attr/textAppearanceListItem"
             android:textSize="54sp"
-            />
+            tools:text="Title"/>
 
         <TextView
             android:id="@+id/textViewSubtitle"
@@ -44,10 +45,9 @@
             android:layout_alignStart="@+id/textViewTitle"
             android:layout_below="@+id/textViewTitle"
             android:lines="1"
-            android:text="Subtitle"
             android:textAppearance="?android:attr/textAppearanceListItemSmall"
             android:textSize="42sp"
-            />
+            tools:text="Subtitle"/>
 
     </RelativeLayout>
 

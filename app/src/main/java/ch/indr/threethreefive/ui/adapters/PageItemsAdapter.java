@@ -72,7 +72,7 @@ public class PageItemsAdapter extends ArrayAdapter<PageItem> implements SharedPr
     // Lookup views for data population and touch listening
     TextView textViewTitle = (TextView) convertView.findViewById(R.id.textViewTitle);
     TextView textViewSubtitle = (TextView) convertView.findViewById(R.id.textViewSubtitle);
-    HorizontalScrollView scrollView = (HorizontalScrollView) convertView.findViewById(R.id.scrollView1);
+    HorizontalScrollView scrollView = (HorizontalScrollView) convertView.findViewById(R.id.scrollView);
     scrollView.scrollTo(0, 0);
 
     // Put TextViews in HashSet so we can update the appearance later
