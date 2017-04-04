@@ -14,7 +14,6 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.ActionBar;
 import android.util.Pair;
 import android.view.View;
-import android.view.animation.AlphaAnimation;
 import android.widget.Button;
 import android.widget.FrameLayout;
 
@@ -43,8 +42,6 @@ import static ch.indr.threethreefive.libs.rx.transformers.Transfomers.takeWhen;
 @RequiresActivityViewModel(ButtonGuideViewModel.class)
 public class ButtonGuideActivity extends BaseActivity<ButtonGuideViewModel> {
 
-  public boolean PROGRESSBAR = false;
-
   protected @Inject PlaybackAnnouncer playbackAnnouncer;
   protected @Inject Speaker speaker;
   protected @Inject ToastManager toastManager;
@@ -52,17 +49,6 @@ public class ButtonGuideActivity extends BaseActivity<ButtonGuideViewModel> {
 
   protected @Bind(R.id.buttonEnter) Button buttonEnter;
   protected @Bind(R.id.progressBarHolder) FrameLayout progressBarHolder;
-
-  private final AlphaAnimation inAnimation;
-  private final AlphaAnimation outAnimation;
-
-  public ButtonGuideActivity() {
-    this.inAnimation = new AlphaAnimation(0f, 1f);
-    this.inAnimation.setDuration(200);
-
-    this.outAnimation = new AlphaAnimation(1f, 0f);
-    this.outAnimation.setDuration(200);
-  }
 
   @Override protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
@@ -99,12 +85,6 @@ public class ButtonGuideActivity extends BaseActivity<ButtonGuideViewModel> {
         .compose(bindToLifecycle())
         .compose(observeForUI())
         .subscribe(this::updateUpButton);
-
-    viewModel.pageItem()
-        .compose(bindToLifecycle())
-        .compose(observeForUI())
-        .map(pageItem -> pageItem == null)
-        .subscribe(this::setProgressBar);
 
     viewModel.showPage()
         .compose(bindToLifecycle())
@@ -148,32 +128,6 @@ public class ButtonGuideActivity extends BaseActivity<ButtonGuideViewModel> {
     super.onPause();
 
     playbackAnnouncer.stop();
-  }
-
-  private void setProgressBar(boolean isVisible) {
-    if (PROGRESSBAR && isVisible) {
-      showProgressBar();
-    } else {
-      hideProgressBar();
-    }
-  }
-
-  private void showProgressBar() {
-    if (progressBarHolder == null || progressBarHolder.getVisibility() != View.GONE) return;
-
-    progressBarHolder.setAnimation(inAnimation);
-    progressBarHolder.setVisibility(View.VISIBLE);
-    buttonEnter.setAnimation(outAnimation);
-    buttonEnter.setVisibility(View.GONE);
-  }
-
-  private void hideProgressBar() {
-    if (progressBarHolder == null || progressBarHolder.getVisibility() != View.VISIBLE) return;
-
-    progressBarHolder.setAnimation(outAnimation);
-    progressBarHolder.setVisibility(View.GONE);
-    buttonEnter.setAnimation(inAnimation);
-    buttonEnter.setVisibility(View.VISIBLE);
   }
 
   /**
