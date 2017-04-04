@@ -21,6 +21,8 @@
     <string name="button_fastForward_description">Seek 10 seconds forward</string>
     <string name="button_skipToNext_description">Skip to next track</string>
 
+    <string name="loading_please_wait">Loading, please wait</string>
+
     <string name="mainmenu_music_title">Music</string>
     <string name="mainmenu_music_subtitle">On your device</string>
     <string name="mainmenu_music_description">Music on your device</string>

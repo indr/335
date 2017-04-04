@@ -166,28 +166,14 @@ public class ListGuideActivity extends BaseListActivity<ListGuideViewModel> impl
   /**
    * Update the visible page items and manages the state of the progress bar.
    */
-  private void updatePageItems(List<PageItem> pageItems) {
+  private void updatePageItems(@Nullable List<PageItem> pageItems) {
     Timber.d("Updating page items %s", pageItems == null ? "null" : pageItems.size());
 
-    setProgressBar(pageItems == null);
-
-    if (pageItems == null) pageItems = new ArrayList<>();
-
-    if (this.pageItemsAdapter != null) {
-      environment().sharedPreferences().unregisterOnSharedPreferenceChangeListener(this.pageItemsAdapter);
-    }
-    this.pageItemsAdapter = new PageItemsAdapter(this, pageItems, environment().preferences());
-    environment().preferences().registerOnSharedPreferenceChangeListener(this.pageItemsAdapter);
-    setListAdapter(this.pageItemsAdapter);
-
-
-    final Pair<Integer, Integer> firstVisibleItem = viewModel.getFirstVisibleItem();
-    if (firstVisibleItem != null) {
-      listView.setSelectionFromTop(firstVisibleItem.first, firstVisibleItem.second);
-    }
+    updateProgressBar(pageItems == null);
+    updateListView(pageItems);
   }
 
-  private void setProgressBar(boolean isVisible) {
+  private void updateProgressBar(boolean isVisible) {
     if (isVisible) {
       showProgressBar();
     } else {
@@ -211,6 +197,25 @@ public class ListGuideActivity extends BaseListActivity<ListGuideViewModel> impl
     outAnimation.setDuration(200);
     progressBarHolder.setAnimation(outAnimation);
     progressBarHolder.setVisibility(View.GONE);
+  }
+
+  private void updateListView(@Nullable List<PageItem> pageItems) {
+    listView.setVisibility(pageItems == null ? View.GONE : View.VISIBLE);
+
+    if (pageItems == null) pageItems = new ArrayList<>();
+
+    if (this.pageItemsAdapter != null) {
+      environment().sharedPreferences().unregisterOnSharedPreferenceChangeListener(this.pageItemsAdapter);
+    }
+    this.pageItemsAdapter = new PageItemsAdapter(this, pageItems, environment().preferences());
+    environment().preferences().registerOnSharedPreferenceChangeListener(this.pageItemsAdapter);
+    setListAdapter(this.pageItemsAdapter);
+
+
+    final Pair<Integer, Integer> firstVisibleItem = viewModel.getFirstVisibleItem();
+    if (firstVisibleItem != null) {
+      listView.setSelectionFromTop(firstVisibleItem.first, firstVisibleItem.second);
+    }
   }
 
   @Override
