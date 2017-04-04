@@ -19,6 +19,7 @@
     tools:context="ch.indr.threethreefive.ui.activities.AccessibilityNoticeActivity">
 
     <TextView
+        android:id="@+id/textView1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/start_accessibility_warning"
@@ -27,9 +28,9 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Tab to continue"
+        android:layout_marginTop="16dp"
+        android:text="@string/tab_to_continue"
         android:textAlignment="center"
-        android:textAppearance="@android:style/TextAppearance.Large"
-        />
+        android:textAppearance="@android:style/TextAppearance.Large"/>
 
 </LinearLayout>
