@@ -7,6 +7,7 @@
 
 package ch.indr.threethreefive.ui.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -17,8 +18,10 @@ import javax.inject.Inject;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import ch.indr.threethreefive.BuildConfig;
 import ch.indr.threethreefive.R;
 import ch.indr.threethreefive.ThreeThreeFiveApp;
+import ch.indr.threethreefive.services.AccessibilityServices;
 import ch.indr.threethreefive.services.Speaker;
 import ch.indr.threethreefive.services.UiModeManager;
 
@@ -51,8 +54,19 @@ public class UiSelectionActivity extends AppCompatActivity implements View.OnLon
 
   @OnClick(R.id.buttonButtonView)
   public void buttonButtonViewOnClick() {
-    uiModeManager.launchButtonsUi(this);
-    finish();
+    if (isAccessibilityServicesEnabled()) {
+      Intent intent = new Intent(this, AccessibilityNoticeActivity.class);
+      this.startActivity(intent);
+    } else {
+      uiModeManager.launchButtonsUi(this);
+      finish();
+    }
+  }
+
+  private boolean isAccessibilityServicesEnabled() {
+    final AccessibilityServices accessibilityServices = AccessibilityServices.newInstance(this);
+    if (BuildConfig.DEBUG) return true;
+    return accessibilityServices.isSpokenFeedbackEnabled() || accessibilityServices.isTouchExplorationEnabled();
   }
 
   @OnClick(R.id.buttonListView)

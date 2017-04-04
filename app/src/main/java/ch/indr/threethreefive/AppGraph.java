@@ -12,6 +12,7 @@ import ch.indr.threethreefive.libs.pages.SpiceBasePage;
 import ch.indr.threethreefive.pages.HomePage;
 import ch.indr.threethreefive.pages.PreferencesPage;
 import ch.indr.threethreefive.pages.radio.StationPage;
+import ch.indr.threethreefive.ui.activities.AccessibilityNoticeActivity;
 import ch.indr.threethreefive.ui.activities.ButtonGuideActivity;
 import ch.indr.threethreefive.ui.activities.ListGuideActivity;
 import ch.indr.threethreefive.ui.activities.NowPlayingProxyActivity;
@@ -20,10 +21,11 @@ import ch.indr.threethreefive.ui.activities.UiSelectionActivity;
 import ch.indr.threethreefive.ui.fragments.ButtonPlaybackFragment;
 
 public interface AppGraph {
-
   Environment environment();
 
   void inject(ThreeThreeFiveApp __);
+
+  void inject(AccessibilityNoticeActivity __);
 
   void inject(ButtonGuideActivity __);
 
@@ -44,5 +46,4 @@ public interface AppGraph {
   void inject(StationPage __);
 
   void inject(UiSelectionActivity __);
-
 }

@@ -48,18 +48,12 @@ public class StartActivity extends BaseActivity<StartViewModel> {
     textViewStatus.setText(R.string.start_loading);
     buttonContinue.setVisibility(View.GONE);
 
-    viewModel.showAccessibilityWarning()
-        .compose(bindToLifecycle())
-        .compose(observeForUI())
-        .subscribe(this::showAccessibilityWarning);
-
     viewModel.showTextToSpeechError()
         .compose(bindToLifecycle())
         .compose(observeForUI())
         .subscribe(this::showTextToSpeechError);
 
     viewModel.showWelcome()
-        .takeUntil(viewModel.showAccessibilityWarning())
         .compose(bindToLifecycle())
         .compose(observeForUI())
         .subscribe(this::showWelcome);
@@ -68,13 +62,6 @@ public class StartActivity extends BaseActivity<StartViewModel> {
         .compose(bindToLifecycle())
         .compose(observeForUI())
         .subscribe(this::showUiModeSelection);
-  }
-
-  private void showAccessibilityWarning(final String cause) {
-    Timber.d("showAccessibilityWarning %s, %s", cause, this.toString());
-
-    textViewStatus.setText(R.string.start_accessibility_warning);
-    buttonContinue.setVisibility(View.VISIBLE);
   }
 
   private void showTextToSpeechError(final int status) {
