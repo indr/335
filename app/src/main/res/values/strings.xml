@@ -120,5 +120,7 @@ Speech synthesizing is required for the button interface.\n\
     <string name="song_not_found_error">Error: Song %s not found</string>
 
     <string name="continue_">Continue</string>
+    <string name="increase_font_size">Increase font size</string>
+    <string name="decrease_font_size">Decrease font size</string>
 
 </resources>

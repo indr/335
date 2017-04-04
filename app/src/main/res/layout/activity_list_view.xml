@@ -75,25 +75,28 @@
         android:layout_alignParentRight="true"
         android:layout_below="@+id/toolbar"
         android:layout_margin="8dp"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:paddingTop="16dp">
 
-        <ImageButton
-            android:id="@+id/buttonIncFontSize"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:contentDescription="Increase font size"
-            android:scaleType="centerInside"
-            android:src="@drawable/ic_add_black_48dp"
-            android:theme="@style/ButtonPrimary"/>
-
-        <ImageButton
+        <android.support.design.widget.FloatingActionButton
             android:id="@+id/buttonDecFontSize"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:contentDescription="Decrease font size"
-            android:scaleType="centerInside"
-            android:src="@drawable/ic_remove_black_48dp"
-            android:theme="@style/ButtonPrimary"/>
+            android:layout_gravity="bottom"
+            android:layout_margin="16dp"
+            android:clickable="true"
+            android:contentDescription="@string/decrease_font_size"
+            android:src="@drawable/ic_remove_white_48dp"/>
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/buttonIncFontSize"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:layout_margin="16dp"
+            android:clickable="true"
+            android:contentDescription="@string/increase_font_size"
+            android:src="@drawable/ic_add_white_48dp"/>
 
     </LinearLayout>
 

@@ -9,13 +9,11 @@ package ch.indr.threethreefive.ui.activities;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Point;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.Pair;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.animation.AlphaAnimation;
 import android.widget.AbsListView;
 import android.widget.FrameLayout;
@@ -59,8 +57,6 @@ public class ListGuideActivity extends BaseListActivity<ListGuideViewModel> impl
   protected @Inject ToastManager toastManager;
   protected @Inject UiModeManager uiModeManager;
 
-  protected @Bind(R.id.buttonIncFontSize) ImageButton buttonIncFontSize;
-  protected @Bind(R.id.buttonDecFontSize) ImageButton buttonDecFontSize;
   protected @Bind(R.id.layoutChangeFontSize) LinearLayout layoutChangeFontSize;
   protected @Bind(R.id.list) ListView listView;
   protected @Bind(R.id.progressBarHolder) FrameLayout progressBarHolder;
@@ -287,28 +283,6 @@ public class ListGuideActivity extends BaseListActivity<ListGuideViewModel> impl
 //      layoutParams.setMargins(left, layoutParams.topMargin, right, layoutParams.bottomMargin);
 //      toolbarButtonUp.setLayoutParams(layoutParams);
 //    }
-
-    if (buttonIncFontSize != null && buttonDecFontSize != null) {
-      Point size = new Point();
-      getWindowManager().getDefaultDisplay().getSize(size);
-      final int maxButtonSize = Math.min(size.x, size.y) / 3;
-      final int minButtonSize = Math.min(size.x, size.y) / 4;
-      final int buttonSize = Math.min(maxButtonSize, Math.max(minButtonSize, Math.round(textSize * 2.5f)));
-
-      if (buttonIncFontSize != null) {
-        final ViewGroup.LayoutParams layoutParams = buttonIncFontSize.getLayoutParams();
-        layoutParams.height = buttonSize;
-        layoutParams.width = buttonSize;
-        buttonIncFontSize.setLayoutParams(layoutParams);
-      }
-
-      if (buttonDecFontSize != null) {
-        final ViewGroup.LayoutParams layoutParams = buttonDecFontSize.getLayoutParams();
-        layoutParams.height = buttonSize;
-        layoutParams.width = buttonSize;
-        buttonDecFontSize.setLayoutParams(layoutParams);
-      }
-    }
   }
 
   @Override public void onScrollStateChanged(AbsListView absListView, int scrollState) {
