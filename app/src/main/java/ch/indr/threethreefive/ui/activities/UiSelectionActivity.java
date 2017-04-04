@@ -24,6 +24,7 @@ import ch.indr.threethreefive.ThreeThreeFiveApp;
 import ch.indr.threethreefive.services.AccessibilityServices;
 import ch.indr.threethreefive.services.Speaker;
 import ch.indr.threethreefive.services.UiModeManager;
+import ch.indr.threethreefive.ui.IntentKey;
 
 public class UiSelectionActivity extends AppCompatActivity implements View.OnLongClickListener {
 
@@ -56,6 +57,8 @@ public class UiSelectionActivity extends AppCompatActivity implements View.OnLon
   public void buttonButtonViewOnClick() {
     if (isAccessibilityServicesEnabled()) {
       Intent intent = new Intent(this, AccessibilityNoticeActivity.class);
+      intent.putExtra(IntentKey.ACCESSIBILITY_NOTICE, R.string.start_accessibility_warning);
+      intent.putExtra(IntentKey.NEXT_ACTIVITY, ButtonGuideActivity.class.getSimpleName());
       this.startActivity(intent);
     } else {
       uiModeManager.launchButtonsUi(this);

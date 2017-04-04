@@ -14,6 +14,8 @@ public final class IntentKey {
 
   public static final String ACCESSIBILITY_NOTICE = "ch.indr.threethreefive.intent_accessibility_notice";
 
+  public static final String NEXT_ACTIVITY = "ch.indr.threethreefive.intent_next_activity";
+
   private IntentKey() {
   }
 }

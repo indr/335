@@ -6,7 +6,7 @@
   ~ the LICENSE file that was distributed with this source code.
   -->
 
-<LinearLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -18,19 +18,29 @@
     android:orientation="vertical"
     tools:context="ch.indr.threethreefive.ui.activities.AccessibilityNoticeActivity">
 
-    <TextView
-        android:id="@+id/textView1"
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/button1"
+        android:layout_alignParentTop="true"
+        android:scrollbars="vertical">
+
+        <TextView
+            android:id="@+id/textView1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/start_accessibility_warning"
+            android:textAppearance="@android:style/TextAppearance.DeviceDefault.Large"/>
+
+    </ScrollView>
+
+    <Button
+        android:id="@+id/button1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/start_accessibility_warning"
-        android:textAppearance="@android:style/TextAppearance.DeviceDefault.Large"/>
+        android:layout_alignParentBottom="true"
+        android:minHeight="120dp"
+        android:text="@string/continue_"
+        android:theme="@style/ButtonSecondary1Light"/>
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="@string/tab_to_continue"
-        android:textAlignment="center"
-        android:textAppearance="@android:style/TextAppearance.Large"/>
-
-</LinearLayout>
+</RelativeLayout>

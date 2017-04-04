@@ -7,6 +7,7 @@
 
 package ch.indr.threethreefive.ui.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.widget.TextView;
@@ -42,16 +43,36 @@ public class AccessibilityNoticeActivity extends BaseActivity<AccessibilityNotic
         .defaultIfEmpty(R.string.start_accessibility_warning)
         .compose(bindToLifecycle())
         .compose(observeForUI())
-        .subscribe(this::updateNotice);
+        .subscribe(resourceId -> textView.setText(resourceId));
+
+    viewModel.launchButtonsUi()
+        .compose(bindToLifecycle())
+        .compose(observeForUI())
+        .subscribe(__ -> {
+          this.uiModeManager.launchButtonsUi(this);
+          this.finish();
+        });
+
+    viewModel.launchListUi()
+        .compose(bindToLifecycle())
+        .compose(observeForUI())
+        .subscribe(__ -> {
+          this.uiModeManager.launchListUi(this);
+          this.finish();
+        });
+
+    viewModel.launchUiSelection()
+        .compose(bindToLifecycle())
+        .compose(observeForUI())
+        .subscribe(__ -> {
+          Intent intent = new Intent(this, UiSelectionActivity.class);
+          startActivity(intent);
+          this.finish();
+        });
   }
 
-  @OnClick(android.R.id.content)
-  public void contentOnClick() {
-    uiModeManager.launchButtonsUi(this);
-    finish();
-  }
-
-  private void updateNotice(final int resourceId) {
-    textView.setText(resourceId);
+  @OnClick(R.id.button1)
+  public void buttonOnClick() {
+    viewModel.continueClicked();
   }
 }
