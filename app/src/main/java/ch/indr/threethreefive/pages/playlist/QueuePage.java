@@ -69,7 +69,7 @@ public class QueuePage extends Page {
         title = "Unnamed";
       }
       long queueItemId = each.getQueueId();
-      // TODO: Add subtitle and content description
+      // TODO: Add subtitle, content description and thumbnail
       builder.addLink(PageUris.playlistItem(queueItemId), title.toString());
     }
 

@@ -57,7 +57,8 @@ public class TrendingPage extends StationListBasePage {
       builder.addLink(PageUris.radioStation(station.getId()),
           station.getName(),
           station.makeSubtitle("CLG"),
-          station.makeDescription("CLG"));
+          station.makeDescription("CLG"),
+          station.getLogoUri());
     }
   }
 

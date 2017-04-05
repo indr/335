@@ -61,8 +61,8 @@ public class GenrePage extends StationListBasePage {
       builder.addLink(PageUris.radioStation(station.getId()),
           station.getName(),
           station.makeSubtitle("LG"),
-          station.makeDescription("LG")
-      );
+          station.makeDescription("LG"),
+          station.getLogoUri());
     }
   }
 }
