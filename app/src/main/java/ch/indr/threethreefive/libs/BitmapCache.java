@@ -19,6 +19,9 @@ import rx.Observable;
 import rx.subjects.BehaviorSubject;
 import timber.log.Timber;
 
+import static com.example.android.uamp.AlbumArtCache.BIG_BITMAP_INDEX;
+import static com.example.android.uamp.AlbumArtCache.ICON_BITMAP_INDEX;
+
 public final class BitmapCache {
 
   private final AlbumArtCache albumArtCache;
@@ -33,31 +36,40 @@ public final class BitmapCache {
     return instance;
   }
 
-  public @NonNull Observable<Bitmap> getIconImage(final @Nullable Uri iconUri) {
-    BehaviorSubject<Bitmap> bitmap = BehaviorSubject.create();
-    if (UriUtils.isEmpty(iconUri)) {
-      bitmap.onNext(null);
-      return bitmap;
+  public @NonNull Observable<Bitmap> getIconImage(final @Nullable Uri imageUri) {
+    return getImages(imageUri)
+        .map(bitmaps -> bitmaps == null ? null : bitmaps[ICON_BITMAP_INDEX]);
+  }
+
+  public @NonNull Observable<Bitmap> getTitleImage(final @Nullable Uri imageUri) {
+    return getImages(imageUri)
+        .map(bitmaps -> bitmaps == null ? null : bitmaps[BIG_BITMAP_INDEX]);
+  }
+
+  private @NonNull Observable<Bitmap[]> getImages(final @Nullable Uri imageUri) {
+    BehaviorSubject<Bitmap[]> observable = BehaviorSubject.create();
+    if (UriUtils.isEmpty(imageUri)) {
+      observable.onNext(null);
+      return observable;
     }
 
-    final Bitmap iconImage = albumArtCache.getIconImage(UriUtils.getString(iconUri));
-    if (iconImage != null) {
-      Timber.d("Bitmap from cache: %s", iconUri);
-      bitmap.onNext(iconImage);
+    final Bitmap[] bitmaps = albumArtCache.getCachedImages(UriUtils.getString(imageUri));
+    if (bitmaps != null) {
+      Timber.d("Bitmap from cache: %s", imageUri);
+      observable.onNext(bitmaps);
     } else {
-      Timber.d("Bitmap not in cache: %s", iconUri);
-      albumArtCache.fetch(UriUtils.getString(iconUri), new AlbumArtCache.FetchListener() {
+      Timber.d("Bitmap not in cache: %s", imageUri);
+      albumArtCache.fetch(UriUtils.getString(imageUri), new AlbumArtCache.FetchListener() {
         @Override public void onError(String artUrl, Throwable e) {
           super.onError(artUrl, e);
-          bitmap.onNext(null);
+          observable.onNext(null);
         }
 
         @Override public void onFetched(String artUrl, Bitmap bigImage, Bitmap iconImage) {
-          bitmap.onNext(iconImage);
+          observable.onNext(new Bitmap[]{iconImage, bigImage});
         }
       });
     }
-
-    return bitmap;
+    return observable;
   }
 }

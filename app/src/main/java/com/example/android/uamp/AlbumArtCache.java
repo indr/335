@@ -46,8 +46,8 @@ public final class AlbumArtCache {
   private static final int MAX_ART_WIDTH_ICON = 128;  // pixels
   private static final int MAX_ART_HEIGHT_ICON = 128;  // pixels
 
-  private static final int BIG_BITMAP_INDEX = 0;
-  private static final int ICON_BITMAP_INDEX = 1;
+  public static final int BIG_BITMAP_INDEX = 0;
+  public static final int ICON_BITMAP_INDEX = 1;
 
   private final LruCache<String, Bitmap[]> mCache;
 
@@ -70,6 +70,10 @@ public final class AlbumArtCache {
             + value[ICON_BITMAP_INDEX].getByteCount();
       }
     };
+  }
+
+  public Bitmap[] getCachedImages(String artUrl) {
+    return mCache.get(artUrl);
   }
 
   public Bitmap getBigImage(String artUrl) {
