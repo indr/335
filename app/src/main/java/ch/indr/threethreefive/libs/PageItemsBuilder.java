@@ -51,8 +51,16 @@ public class PageItemsBuilder {
     return this;
   }
 
-  public PageItemsBuilder addLink(final @NonNull Uri uri, final @NonNull String title, final @Nullable String subtitle, final @NonNull String description) {
+  public PageItemsBuilder addLink(final @NonNull Uri uri, final @NonNull String title,
+                                  final @Nullable String subtitle, final @NonNull String description) {
     items.add(new PageLink(uri, title, subtitle, description));
+    return this;
+  }
+
+  public PageItemsBuilder addLink(final @NonNull Uri uri, final @NonNull String title,
+                                  final @Nullable String subtitle, final @NonNull String description,
+                                  final @Nullable String iconUri) {
+    items.add(new PageLink(uri, title, subtitle, description, iconUri));
     return this;
   }
 

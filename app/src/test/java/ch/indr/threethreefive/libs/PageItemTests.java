@@ -21,50 +21,56 @@ public class PageItemTests extends TtfRobolectricTestCase {
   public void createWithTitle() {
     final TestPageItem pageItem = new TestPageItem("Title");
 
-    final TestSubscriber<String> title = new TestSubscriber<>();
-    pageItem.title().subscribe(title);
-    final TestSubscriber<String> subtitle = new TestSubscriber<>();
-    pageItem.subtitle().subscribe(subtitle);
-    final TestSubscriber<String> description = new TestSubscriber<>();
-    pageItem.description().subscribe(description);
-
-    assertEquals("Title", pageItem.getTitle());
-    assertEquals(null, pageItem.getSubtitle());
-    assertEquals("Title", pageItem.getDescription());
-
-    title.assertValue("Title");
-    subtitle.assertValue(null);
-    description.assertValue("Title");
+    assertPageItem(pageItem, "Title", null, "Title", null);
   }
 
   @Test
   public void createWithTitleSubtitleAndDescription() {
     final TestPageItem pageItem = new TestPageItem("Title", "Subtitle", "Description");
 
+    assertPageItem(pageItem, "Title", "Subtitle", "Description", null);
+  }
+
+  @Test
+  public void createWithTitleSubTitleDescriptionAndIconUri() {
+    final TestPageItem pageItem = new TestPageItem("Title", "Subtitle", "Description", "IconUri");
+
+    assertPageItem(pageItem, "Title", "Subtitle", "Description", "IconUri");
+  }
+
+  private void assertPageItem(TestPageItem pageItem, String pTitle, String pSubtitle, String pDescription, String pIconUri) {
     final TestSubscriber<String> title = new TestSubscriber<>();
     pageItem.title().subscribe(title);
     final TestSubscriber<String> subtitle = new TestSubscriber<>();
     pageItem.subtitle().subscribe(subtitle);
     final TestSubscriber<String> description = new TestSubscriber<>();
     pageItem.description().subscribe(description);
+    final TestSubscriber<String> iconUri = new TestSubscriber<>();
+    pageItem.iconUri().subscribe(iconUri);
 
-    assertEquals("Title", pageItem.getTitle());
-    assertEquals("Subtitle", pageItem.getSubtitle());
-    assertEquals("Description", pageItem.getDescription());
+    assertEquals(pTitle, pageItem.getTitle());
+    assertEquals(pSubtitle, pageItem.getSubtitle());
+    assertEquals(pDescription, pageItem.getDescription());
+    assertEquals(pIconUri, pageItem.getIconUri());
 
-    title.assertValue("Title");
-    subtitle.assertValue("Subtitle");
-    description.assertValue("Description");
+    title.assertValue(pTitle);
+    subtitle.assertValue(pSubtitle);
+    description.assertValue(pDescription);
+    iconUri.assertValue(pIconUri);
   }
 }
 
 class TestPageItem extends PageItem {
 
-  protected TestPageItem(@NonNull String title) {
+  protected TestPageItem(final @NonNull String title) {
     super(title);
   }
 
   protected TestPageItem(final @NonNull String title, final @Nullable String subtitle, final @NonNull String description) {
     super(title, subtitle, description);
+  }
+
+  public TestPageItem(final @NonNull String title, final @Nullable String subtitle, final @NonNull String description, final @Nullable String iconUri) {
+    super(title, subtitle, description, iconUri);
   }
 }

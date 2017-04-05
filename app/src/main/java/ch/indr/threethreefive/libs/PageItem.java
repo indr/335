@@ -19,17 +19,22 @@ public abstract class PageItem {
   protected BehaviorSubject<String> title = BehaviorSubject.create();
   protected BehaviorSubject<String> subtitle = BehaviorSubject.create();
   protected BehaviorSubject<String> description = BehaviorSubject.create();
+  protected BehaviorSubject<String> iconUri = BehaviorSubject.create();
 
   protected PageItem(final @NonNull String title) {
-    this.title.onNext(title);
-    this.subtitle.onNext(null);
-    this.description.onNext(title);
+    this(title, null, title);
   }
 
   protected PageItem(final @NonNull String title, final @Nullable String subtitle, final @NonNull String description) {
+    this(title, subtitle, description, null);
+  }
+
+  protected PageItem(final @NonNull String title, final @Nullable String subtitle, final @NonNull String description, final @Nullable String iconUri) {
     this.title.onNext(title);
     this.subtitle.onNext(StringUtils.isEmpty(subtitle) ? null : subtitle);
     this.description.onNext(description);
+    this.iconUri.onNext(iconUri);
+
   }
 
   public final @NonNull String getTitle() {
@@ -66,5 +71,13 @@ public abstract class PageItem {
 
   public final @NonNull Observable<String> description() {
     return description;
+  }
+
+  public final @Nullable String getIconUri() {
+    return iconUri.getValue();
+  }
+
+  public final @NonNull Observable<String> iconUri() {
+    return iconUri;
   }
 }
