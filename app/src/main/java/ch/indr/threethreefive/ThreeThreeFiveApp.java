@@ -29,7 +29,9 @@ public class ThreeThreeFiveApp extends MultiDexApplication {
       Timber.plant(new Timber.DebugTree());
     }
 
-    AndroidNetworking.initialize(getApplicationContext());
+    if (!isInUnitTests()) {
+      AndroidNetworking.initialize(getApplicationContext());
+    }
 
     component = DaggerAppComponent.builder()
         .appModule(getAppModule())

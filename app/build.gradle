@@ -40,6 +40,9 @@ android {
         targetCompatibility 1.8
         sourceCompatibility 1.8
     }
+    lintOptions {
+        lintConfig rootProject.file('gradle/lint.xml')
+    }
 }
 
 configurations {
@@ -69,6 +72,7 @@ dependencies {
     apt 'com.google.dagger:dagger-compiler:2.4'
     compile 'com.jakewharton:butterknife:7.0.1'
     compile 'com.jakewharton.timber:timber:3.0.1'
+    compile 'com.amitshekhar.android:android-networking:1.0.0'
     compile 'com.amitshekhar.android:rx-android-networking:1.0.0'
     compile 'com.octo.android.robospice:robospice:1.4.14'
     compile 'com.octo.android.robospice:robospice-google-http-client:1.4.14'
