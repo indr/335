@@ -47,7 +47,7 @@ public final class BitmapCache {
     } else {
       Timber.d("Bitmap not in cache: %s", iconUri);
       albumArtCache.fetch(UriUtils.getString(iconUri), new AlbumArtCache.FetchListener() {
-        @Override public void onError(String artUrl, Exception e) {
+        @Override public void onError(String artUrl, Throwable e) {
           super.onError(artUrl, e);
           bitmap.onNext(null);
         }

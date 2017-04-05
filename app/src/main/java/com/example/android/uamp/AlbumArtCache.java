@@ -20,8 +20,14 @@ import android.graphics.Bitmap;
 import android.os.AsyncTask;
 import android.util.LruCache;
 
+import com.androidnetworking.common.Priority;
+import com.rxandroidnetworking.RxAndroidNetworking;
+
 import ch.indr.threethreefive.libs.BitmapHelper;
 import ch.indr.threethreefive.libs.utils.ObjectUtils;
+import rx.Observer;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 import timber.log.Timber;
 
 /**
@@ -77,6 +83,62 @@ public final class AlbumArtCache {
   }
 
   public void fetch(final String artUrl, final FetchListener listener) {
+    Bitmap[] bitmap = mCache.get(artUrl);
+    if (bitmap != null) {
+      listener.onFetched(artUrl, bitmap[BIG_BITMAP_INDEX], bitmap[ICON_BITMAP_INDEX]);
+      return;
+    }
+
+    if (artUrl.startsWith("/")) {
+      fetchFromFile(artUrl, listener);
+      return;
+    }
+
+    RxAndroidNetworking.get(artUrl)
+        .setTag("albumArtRequestTag")
+        .setPriority(Priority.MEDIUM)
+        .setBitmapMaxHeight(MAX_ART_HEIGHT)
+        .setBitmapMaxWidth(MAX_ART_WIDTH)
+        .setBitmapConfig(Bitmap.Config.ARGB_8888)
+        .build()
+        .getBitmapObservable()
+        .subscribeOn(Schedulers.io())
+        .observeOn(Schedulers.computation())
+        .map(big -> {
+          if (big == null) return null;
+          Bitmap icon = BitmapHelper.scaleBitmap(big, MAX_ART_WIDTH_ICON, MAX_ART_HEIGHT_ICON);
+          if (icon == null) return null;
+          return new Bitmap[]{big, icon};
+        })
+        .map(bitmaps -> {
+          if (bitmaps != null) {
+            mCache.put(artUrl, bitmaps);
+          }
+          return bitmaps;
+        })
+        .observeOn(AndroidSchedulers.mainThread())
+        .subscribe(new Observer<Bitmap[]>() {
+          @Override public void onCompleted() {
+            Timber.d("onCompleted %s", this.toString());
+          }
+
+          @Override public void onError(Throwable e) {
+            Timber.e(e, "Error fetching bitmap");
+            listener.onError(artUrl, e);
+          }
+
+          @Override public void onNext(Bitmap[] bitmap) {
+            Timber.d("Fetched bitmaps");
+            if (bitmap != null) {
+              listener.onFetched(artUrl, bitmap[BIG_BITMAP_INDEX], bitmap[ICON_BITMAP_INDEX]);
+            } else {
+              listener.onFetched(artUrl, null, null);
+            }
+          }
+        });
+  }
+
+  public void fetchFromFile(final String artUrl, final FetchListener listener) {
     // WARNING: for the sake of simplicity, simultaneous multi-thread fetch requests
     // are not handled properly: they may cause redundant costly operations, like HTTP
     // requests and bitmap rescales. For production-level apps, we recommend you use
@@ -130,7 +192,7 @@ public final class AlbumArtCache {
   public static abstract class FetchListener {
     public abstract void onFetched(String artUrl, Bitmap bigImage, Bitmap iconImage);
 
-    public void onError(String artUrl, Exception e) {
+    public void onError(String artUrl, Throwable e) {
       Timber.e(e, "AlbumArtFetchListener: error while downloading " + artUrl);
     }
   }

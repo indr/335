@@ -5,6 +5,7 @@ import android.support.annotation.NonNull;
 import android.support.multidex.MultiDex;
 import android.support.multidex.MultiDexApplication;
 
+import com.androidnetworking.AndroidNetworking;
 import com.crashlytics.android.Crashlytics;
 
 import io.fabric.sdk.android.Fabric;
@@ -27,6 +28,8 @@ public class ThreeThreeFiveApp extends MultiDexApplication {
     if (BuildConfig.DEBUG) {
       Timber.plant(new Timber.DebugTree());
     }
+
+    AndroidNetworking.initialize(getApplicationContext());
 
     component = DaggerAppComponent.builder()
         .appModule(getAppModule())
