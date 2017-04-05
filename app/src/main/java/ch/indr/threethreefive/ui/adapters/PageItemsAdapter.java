@@ -9,7 +9,6 @@ package ch.indr.threethreefive.ui.adapters;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
@@ -22,21 +21,22 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.example.android.uamp.AlbumArtCache;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 
 import ch.indr.threethreefive.R;
+import ch.indr.threethreefive.libs.BitmapCache;
 import ch.indr.threethreefive.libs.PageItem;
 import ch.indr.threethreefive.libs.Preferences;
+import ch.indr.threethreefive.libs.utils.ObjectUtils;
 import ch.indr.threethreefive.libs.utils.StringUtils;
 import ch.indr.threethreefive.ui.utils.OnTouchClickListener;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
-import timber.log.Timber;
+
+import static ch.indr.threethreefive.libs.rx.transformers.Transfomers.observeForUI;
 
 /**
  * https://github.com/codepath/android_guides/wiki/Using-an-ArrayAdapter-with-ListView#defining-the-adapter
@@ -48,6 +48,7 @@ public class PageItemsAdapter extends ArrayAdapter<PageItem> implements SharedPr
 
   private final Preferences preferences;
   private final HashMap<View, List<Subscription>> subscriptions;
+  private final BitmapCache bitmapCache;
   private float textSizeTitle;
   private float textSizeSubtitle;
   private final float textSizeSubTitleFactor = 14f / 18f;
@@ -62,6 +63,8 @@ public class PageItemsAdapter extends ArrayAdapter<PageItem> implements SharedPr
     this.textSizeSubtitle = this.textSizeTitle * textSizeSubTitleFactor;
 
     this.subscriptions = new HashMap<>();
+
+    this.bitmapCache = BitmapCache.getInstance();
   }
 
   @Override @NonNull public View getView(int position, View convertView, @NonNull ViewGroup parent) {
@@ -100,29 +103,26 @@ public class PageItemsAdapter extends ArrayAdapter<PageItem> implements SharedPr
     }
     subscriptions.clear();
 
-    // Subscribe to page items observables
     if (pageItem != null) {
       final String iconUri = pageItem.getIconUri();
-      Bitmap iconImage = null;
-      if (StringUtils.isNotEmpty(iconUri)) {
-        iconImage = AlbumArtCache.getInstance().getIconImage(iconUri);
-        AlbumArtCache.getInstance().fetch(iconUri, new AlbumArtCache.FetchListener() {
-          @Override public void onFetched(String artUrl, Bitmap bigImage, Bitmap iconImage) {
-            Timber.d("onFetched %s", artUrl);
-          }
-        });
-      }
-      if (iconImage == null) {
+      if (StringUtils.isEmpty(iconUri)) {
         imageView.setVisibility(View.GONE);
       } else {
+        imageView.setImageResource(R.drawable.ic_default_art);
         imageView.setVisibility(View.VISIBLE);
-        imageView.setImageBitmap(iconImage);
+
+        subscriptions.add(bitmapCache.getIconImage(iconUri)
+            .take(1)
+            .filter(ObjectUtils::isNotNull)
+            .compose(observeForUI())
+            .subscribe(imageView::setImageBitmap));
       }
       textViewTitle.setText(pageItem.getTitle());
       textViewSubtitle.setVisibility(pageItem.getSubtitle() == null ? View.GONE : View.VISIBLE);
       textViewSubtitle.setText(pageItem.getSubtitle());
       convertView.setContentDescription(pageItem.getDescription());
 
+      // Subscribe to page items observables
       subscriptions.add(pageItem.title()
           .skip(1)
           .observeOn(AndroidSchedulers.mainThread())

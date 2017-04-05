@@ -21,6 +21,7 @@ import android.os.AsyncTask;
 import android.util.LruCache;
 
 import ch.indr.threethreefive.libs.BitmapHelper;
+import ch.indr.threethreefive.libs.utils.ObjectUtils;
 import timber.log.Timber;
 
 /**
@@ -55,6 +56,7 @@ public final class AlbumArtCache {
     // Integer.MAX_VALUE:
     int maxSize = Math.min(MAX_ALBUM_ART_CACHE_SIZE,
         (int) (Math.min(Integer.MAX_VALUE, Runtime.getRuntime().maxMemory() / 4)));
+    Timber.d("Creating LruCache with max size %d", maxSize);
     mCache = new LruCache<String, Bitmap[]>(maxSize) {
       @Override
       protected int sizeOf(String key, Bitmap[] value) {
@@ -92,19 +94,24 @@ public final class AlbumArtCache {
       protected Bitmap[] doInBackground(Void[] objects) {
         Bitmap[] bitmaps;
         try {
+          Timber.d("doInBackground: fetchAndRescaleBitmap %s", artUrl);
           Bitmap bitmap = BitmapHelper.fetchAndRescaleBitmap(artUrl,
               MAX_ART_WIDTH, MAX_ART_HEIGHT);
+          Timber.d("doInBackground: fetched bitmap %s", ObjectUtils.toString(bitmap));
           if (bitmap == null) return null;
+          Timber.d("doInBackground: scaleBitmap %s", artUrl);
           Bitmap icon = BitmapHelper.scaleBitmap(bitmap,
               MAX_ART_WIDTH_ICON, MAX_ART_HEIGHT_ICON);
           if (icon == null) return null;
           bitmaps = new Bitmap[]{bitmap, icon};
           mCache.put(artUrl, bitmaps);
+          int maxSize = mCache.maxSize();
+          Timber.d("doInBackground: put bitmap in cache, new cache size=%d (%.2f)",
+              mCache.size(), 100 * (float) mCache.size() / maxSize);
         } catch (Exception e) {
           Timber.e(e, "Error fetching bitmap in background");
           return null;
         }
-        Timber.d("doInBackground: putting bitmap in cache. cache size=%d", mCache.size());
         return bitmaps;
       }
 
