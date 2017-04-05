@@ -82,7 +82,8 @@ public class LanguagePage extends SpiceBasePage implements RequestListener<List<
           station.getName(),
           station.makeSubtitle("CG"),
           station.makeDescription("CG"),
-          station.getLogoUri());
+          station.getLogoUri(),
+          R.drawable.ic_radio_grey600_36dp);
     }
   }
 

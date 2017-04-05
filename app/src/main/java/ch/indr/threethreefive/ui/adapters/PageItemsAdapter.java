@@ -105,17 +105,20 @@ public class PageItemsAdapter extends ArrayAdapter<PageItem> implements SharedPr
 
     if (pageItem != null) {
       final String iconUri = pageItem.getIconUri();
-      if (StringUtils.isEmpty(iconUri)) {
+      final int defaultIconResId = pageItem.getDefaultIconResId();
+      if (defaultIconResId <= 0 && StringUtils.isEmpty(iconUri)) {
         imageView.setVisibility(View.GONE);
       } else {
-        imageView.setImageResource(R.drawable.ic_radio_grey600_36dp);
+        imageView.setImageResource(defaultIconResId);
         imageView.setVisibility(View.VISIBLE);
 
-        subscriptions.add(bitmapCache.getIconImage(iconUri)
-            .take(1)
-            .filter(ObjectUtils::isNotNull)
-            .compose(observeForUI())
-            .subscribe(imageView::setImageBitmap));
+        if (StringUtils.isNotEmpty(iconUri)) {
+          subscriptions.add(bitmapCache.getIconImage(iconUri)
+              .take(1)
+              .filter(ObjectUtils::isNotNull)
+              .compose(observeForUI())
+              .subscribe(imageView::setImageBitmap));
+        }
       }
       textViewTitle.setText(pageItem.getTitle());
       textViewSubtitle.setVisibility(pageItem.getSubtitle() == null ? View.GONE : View.VISIBLE);

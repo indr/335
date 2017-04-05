@@ -32,8 +32,9 @@ public class PageLink extends PageItem {
   }
 
   public PageLink(final @NonNull Uri uri, final @NonNull String title, final @Nullable String subtitle,
-                  final @NonNull String description, final @Nullable String iconUri) {
-    super(title, subtitle, description, iconUri);
+                  final @NonNull String description, final @Nullable String iconUri,
+                  final int defaultIconResId) {
+    super(title, subtitle, description, iconUri, defaultIconResId);
     setUri(uri);
   }
 

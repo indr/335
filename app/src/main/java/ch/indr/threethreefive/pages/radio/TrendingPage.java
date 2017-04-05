@@ -58,7 +58,8 @@ public class TrendingPage extends StationListBasePage {
           station.getName(),
           station.makeSubtitle("CLG"),
           station.makeDescription("CLG"),
-          station.getLogoUri());
+          station.getLogoUri(),
+          R.drawable.ic_radio_grey600_36dp);
     }
   }
 

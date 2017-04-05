@@ -16,6 +16,8 @@ import rx.subjects.BehaviorSubject;
 
 public abstract class PageItem {
 
+  private final int defaultIconResId;
+
   protected BehaviorSubject<String> title = BehaviorSubject.create();
   protected BehaviorSubject<String> subtitle = BehaviorSubject.create();
   protected BehaviorSubject<String> description = BehaviorSubject.create();
@@ -25,16 +27,19 @@ public abstract class PageItem {
     this(title, null, title);
   }
 
-  protected PageItem(final @NonNull String title, final @Nullable String subtitle, final @NonNull String description) {
-    this(title, subtitle, description, null);
+  protected PageItem(final @NonNull String title, final @Nullable String subtitle,
+                     final @NonNull String description) {
+    this(title, subtitle, description, null, 0);
   }
 
-  protected PageItem(final @NonNull String title, final @Nullable String subtitle, final @NonNull String description, final @Nullable String iconUri) {
+  protected PageItem(final @NonNull String title, final @Nullable String subtitle,
+                     final @NonNull String description, final @Nullable String iconUri,
+                     final int defaultIconResId) {
     this.title.onNext(title);
     this.subtitle.onNext(StringUtils.isEmpty(subtitle) ? null : subtitle);
     this.description.onNext(description);
     this.iconUri.onNext(iconUri);
-
+    this.defaultIconResId = defaultIconResId;
   }
 
   public final @NonNull String getTitle() {
@@ -79,5 +84,9 @@ public abstract class PageItem {
 
   public final @NonNull Observable<String> iconUri() {
     return iconUri;
+  }
+
+  public final int getDefaultIconResId() {
+    return this.defaultIconResId;
   }
 }

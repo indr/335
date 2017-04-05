@@ -21,24 +21,25 @@ public class PageItemTests extends TtfRobolectricTestCase {
   public void createWithTitle() {
     final TestPageItem pageItem = new TestPageItem("Title");
 
-    assertPageItem(pageItem, "Title", null, "Title", null);
+    assertPageItem(pageItem, "Title", null, "Title", null, 0);
   }
 
   @Test
   public void createWithTitleSubtitleAndDescription() {
     final TestPageItem pageItem = new TestPageItem("Title", "Subtitle", "Description");
 
-    assertPageItem(pageItem, "Title", "Subtitle", "Description", null);
+    assertPageItem(pageItem, "Title", "Subtitle", "Description", null, 0);
   }
 
   @Test
   public void createWithTitleSubTitleDescriptionAndIconUri() {
-    final TestPageItem pageItem = new TestPageItem("Title", "Subtitle", "Description", "IconUri");
+    final TestPageItem pageItem = new TestPageItem("Title", "Subtitle", "Description", "IconUri", 99);
 
-    assertPageItem(pageItem, "Title", "Subtitle", "Description", "IconUri");
+    assertPageItem(pageItem, "Title", "Subtitle", "Description", "IconUri", 99);
   }
 
-  private void assertPageItem(TestPageItem pageItem, String pTitle, String pSubtitle, String pDescription, String pIconUri) {
+  private void assertPageItem(TestPageItem pageItem, String pTitle, String pSubtitle, String pDescription,
+                              String pIconUri, int pDefaultIconResId) {
     final TestSubscriber<String> title = new TestSubscriber<>();
     pageItem.title().subscribe(title);
     final TestSubscriber<String> subtitle = new TestSubscriber<>();
@@ -52,6 +53,7 @@ public class PageItemTests extends TtfRobolectricTestCase {
     assertEquals(pSubtitle, pageItem.getSubtitle());
     assertEquals(pDescription, pageItem.getDescription());
     assertEquals(pIconUri, pageItem.getIconUri());
+    assertEquals(pDefaultIconResId, pageItem.getDefaultIconResId());
 
     title.assertValue(pTitle);
     subtitle.assertValue(pSubtitle);
@@ -66,11 +68,14 @@ class TestPageItem extends PageItem {
     super(title);
   }
 
-  protected TestPageItem(final @NonNull String title, final @Nullable String subtitle, final @NonNull String description) {
+  protected TestPageItem(final @NonNull String title, final @Nullable String subtitle,
+                         final @NonNull String description) {
     super(title, subtitle, description);
   }
 
-  public TestPageItem(final @NonNull String title, final @Nullable String subtitle, final @NonNull String description, final @Nullable String iconUri) {
-    super(title, subtitle, description, iconUri);
+  public TestPageItem(final @NonNull String title, final @Nullable String subtitle,
+                      final @NonNull String description, final @Nullable String iconUri,
+                      final int defaultIconResId) {
+    super(title, subtitle, description, iconUri, defaultIconResId);
   }
 }

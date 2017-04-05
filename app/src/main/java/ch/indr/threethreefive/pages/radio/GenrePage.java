@@ -62,7 +62,8 @@ public class GenrePage extends StationListBasePage {
           station.getName(),
           station.makeSubtitle("LG"),
           station.makeDescription("LG"),
-          station.getLogoUri());
+          station.getLogoUri(),
+          R.drawable.ic_radio_grey600_36dp);
     }
   }
 }
