@@ -21,6 +21,7 @@ import com.example.android.uamp.playback.QueueManager;
 import ch.indr.threethreefive.libs.Environment;
 import ch.indr.threethreefive.libs.PageCommand;
 import ch.indr.threethreefive.libs.PageItemsBuilder;
+import ch.indr.threethreefive.libs.PageUris;
 import ch.indr.threethreefive.libs.pages.Page;
 
 public class QueuePage extends Page {
@@ -68,7 +69,8 @@ public class QueuePage extends Page {
         title = "Unnamed";
       }
       long queueItemId = each.getQueueId();
-      builder.addLink("/playlist/" + queueItemId, title.toString());
+      // TODO: Add subtitle and content description
+      builder.addLink(PageUris.playlistItem(queueItemId), title.toString());
     }
 
     return builder;

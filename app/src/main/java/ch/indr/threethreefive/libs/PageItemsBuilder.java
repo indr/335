@@ -46,25 +46,9 @@ public class PageItemsBuilder {
     return add(new ActionCommand(title, action));
   }
 
-  public PageItemsBuilder addLink(final @NonNull String uri, final int titleResourceId) {
-    return addLink(Uri.parse(uri), titleResourceId);
-  }
-
-  public PageItemsBuilder addLink(final @NonNull Uri uri, final int titleResourceId) {
-    return addLink(uri, resources.getString(titleResourceId));
-  }
-
-  public PageItemsBuilder addLink(final @NonNull String uri, final @NonNull String title) {
-    return addLink(Uri.parse(uri), title);
-  }
-
   public PageItemsBuilder addLink(final @NonNull Uri uri, final @NonNull String title) {
     items.add(new PageLink(uri, title));
     return this;
-  }
-
-  public PageItemsBuilder addLink(final @NonNull String uri, final @NonNull String title, final @Nullable String subtitle, final @NonNull String description) {
-    return addLink(Uri.parse(uri), title, subtitle, description);
   }
 
   public PageItemsBuilder addLink(final @NonNull Uri uri, final @NonNull String title, final @Nullable String subtitle, final @NonNull String description) {

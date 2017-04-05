@@ -35,10 +35,10 @@ public class IndexPage extends Page {
   private void addPageItems() {
     final PageItemsBuilder builder = pageItemsBuilder();
 
-    builder.addLink(PageUris.radioTrending(), R.string.trending);
-    builder.addLink(PageUris.radioGenres(), R.string.genres);
-    builder.addLink(PageUris.radioCountries(), R.string.countries);
-    builder.addLink(PageUris.radioLanguages(), R.string.languages);
+    builder.addLink(PageUris.radioTrending(), getString(R.string.trending));
+    builder.addLink(PageUris.radioGenres(), getString(R.string.genres));
+    builder.addLink(PageUris.radioCountries(), getString(R.string.countries));
+    builder.addLink(PageUris.radioLanguages(), getString(R.string.languages));
 
     setPageItems(builder);
   }
