@@ -10,6 +10,7 @@ package ch.indr.threethreefive.ui.adapters;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -31,7 +32,7 @@ import ch.indr.threethreefive.libs.BitmapCache;
 import ch.indr.threethreefive.libs.PageItem;
 import ch.indr.threethreefive.libs.Preferences;
 import ch.indr.threethreefive.libs.utils.ObjectUtils;
-import ch.indr.threethreefive.libs.utils.StringUtils;
+import ch.indr.threethreefive.libs.utils.UriUtils;
 import ch.indr.threethreefive.ui.utils.OnTouchClickListener;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
@@ -104,15 +105,15 @@ public class PageItemsAdapter extends ArrayAdapter<PageItem> implements SharedPr
     subscriptions.clear();
 
     if (pageItem != null) {
-      final String iconUri = pageItem.getIconUri();
+      final Uri iconUri = pageItem.getIconUri();
       final int defaultIconResId = pageItem.getDefaultIconResId();
-      if (defaultIconResId <= 0 && StringUtils.isEmpty(iconUri)) {
+      if (defaultIconResId <= 0 && UriUtils.isEmpty(iconUri)) {
         imageView.setVisibility(View.GONE);
       } else {
         imageView.setImageResource(defaultIconResId);
         imageView.setVisibility(View.VISIBLE);
 
-        if (StringUtils.isNotEmpty(iconUri)) {
+        if (UriUtils.isNotEmpty(iconUri)) {
           subscriptions.add(bitmapCache.getIconImage(iconUri)
               .take(1)
               .filter(ObjectUtils::isNotNull)

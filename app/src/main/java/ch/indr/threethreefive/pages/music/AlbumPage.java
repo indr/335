@@ -50,6 +50,7 @@ public class AlbumPage extends Page {
     }
 
     setTitle(album.getName());
+    setIconUri(album.getArtworkUri());
 
     final List<Song> songs = musicStore.getSongsByAlbumId(albumId);
     final List<MediaItem> mediaItems = make(songs);

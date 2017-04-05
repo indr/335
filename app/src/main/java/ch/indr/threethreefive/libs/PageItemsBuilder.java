@@ -59,7 +59,7 @@ public class PageItemsBuilder {
 
   public PageItemsBuilder addLink(final @NonNull Uri uri, final @NonNull String title,
                                   final @Nullable String subtitle, final @NonNull String description,
-                                  final @Nullable String iconUri, final int defaultIconResId) {
+                                  final @Nullable Uri iconUri, final int defaultIconResId) {
     items.add(new PageLink(uri, title, subtitle, description, iconUri, defaultIconResId));
     return this;
   }

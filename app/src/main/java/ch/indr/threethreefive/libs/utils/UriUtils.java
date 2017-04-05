@@ -61,4 +61,8 @@ public class UriUtils {
   public static boolean isStream(final @NonNull Uri uri) {
     return !isFile(uri);
   }
+
+  public static Uri tryParse(final @Nullable String uriString) {
+    return uriString == null ? null : Uri.parse(uriString);
+  }
 }

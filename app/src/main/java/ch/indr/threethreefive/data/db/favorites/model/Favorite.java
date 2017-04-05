@@ -17,14 +17,17 @@ public class Favorite {
   private final String subtitle;
   private final String description;
   private final Uri pageUri;
+  private final Uri iconUri;
 
   public Favorite(final long id, final @NonNull String title, final @Nullable String subtitle,
-                  final @NonNull String description, final @NonNull Uri pageUri) {
+                  final @NonNull String description, final @NonNull Uri pageUri,
+                  final @Nullable Uri iconUri) {
     this.id = id;
     this.title = title;
     this.subtitle = subtitle;
     this.description = description;
     this.pageUri = pageUri;
+    this.iconUri = iconUri;
   }
 
   public long getId() {
@@ -45,5 +48,9 @@ public class Favorite {
 
   @NonNull public Uri getPageUri() {
     return pageUri;
+  }
+
+  @Nullable public Uri getIconUri() {
+    return iconUri;
   }
 }

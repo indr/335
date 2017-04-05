@@ -36,8 +36,6 @@ import static ch.indr.threethreefive.libs.rx.transformers.Transfomers.takeWhen;
 public abstract class Page implements PageType {
 
   private Context context;
-
-  private Uri pageUri;
   private Bundle bundle;
 
   private Environment environment;
@@ -45,7 +43,11 @@ public abstract class Page implements PageType {
   // Page lifecycle state
   private State state = State.New;
 
+  private Uri pageUri;
   private final BehaviorSubject<String> pageTitle = BehaviorSubject.create();
+  private String subtitle;
+  private String description;
+  private Uri iconUri;
 
   // Set default value to `null`, which indicates the page is loading items
   private final BehaviorSubject<List<PageItem>> pageItems = BehaviorSubject.create((List<PageItem>) null);
@@ -68,7 +70,7 @@ public abstract class Page implements PageType {
   }
 
   protected PageLink getCurrentPageLink() {
-    return new PageLink(getPageUri(), getTitle());
+    return new PageLink(getPageUri(), getTitle(), getSubtitle(), getDescription(), getIconUri(), 0);
   }
 
   @Override public boolean getIsRootPage() {
@@ -144,6 +146,30 @@ public abstract class Page implements PageType {
 
   public final @Nullable String getTitle() {
     return pageTitle.getValue();
+  }
+
+  public final @Nullable String getSubtitle() {
+    return subtitle;
+  }
+
+  protected void setSubtitle(final @Nullable String subtitle) {
+    this.subtitle = subtitle;
+  }
+
+  public final @Nullable String getDescription() {
+    return description;
+  }
+
+  protected void setDescription(final @Nullable String description) {
+    this.description = description;
+  }
+
+  public final @Nullable Uri getIconUri() {
+    return iconUri;
+  }
+
+  protected void setIconUri(final @Nullable Uri iconUri) {
+    this.iconUri = iconUri;
   }
 
   public void onCreate(@NonNull Context context, @NonNull Uri uri, Bundle bundle) {

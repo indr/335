@@ -14,6 +14,7 @@ import android.support.annotation.NonNull;
 
 import java.util.List;
 
+import ch.indr.threethreefive.R;
 import ch.indr.threethreefive.data.db.favorites.FavoritesStore;
 import ch.indr.threethreefive.data.db.favorites.model.Favorite;
 import ch.indr.threethreefive.libs.Environment;
@@ -45,7 +46,12 @@ public class IndexPage extends Page {
     if (favorites.size() == 0) {
       builder.addText("No favorites");
     } else for (Favorite favorite : favorites) {
-      builder.addLink(favorite.getPageUri(), favorite.getTitle(), favorite.getSubtitle(), favorite.getDescription());
+      builder.addLink(favorite.getPageUri(),
+          favorite.getTitle(),
+          favorite.getSubtitle(),
+          favorite.getDescription(),
+          favorite.getIconUri(),
+          R.drawable.ic_default_art);
     }
 
     setPageItems(builder);

@@ -59,6 +59,6 @@ public class FavoritesStoreImplTest extends TtfRobolectricTestCase {
   }
 
   @NonNull private Favorite makeFavorite(final @NonNull String title) {
-    return new Favorite(0, title, "Subtitle", "Description", PageUris.favorites());
+    return new Favorite(0, title, "Subtitle", "Description", PageUris.favorites(), null);
   }
 }

@@ -19,6 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import ch.indr.threethreefive.data.db.favorites.model.Favorite;
+import ch.indr.threethreefive.libs.utils.UriUtils;
 
 public class FavoritesStoreImpl implements FavoritesStore {
   private final Context context;
@@ -36,6 +37,7 @@ public class FavoritesStoreImpl implements FavoritesStore {
     values.put(FavoritesContract.FavoritesEntry.COLUMN_NAME_SUBTITLE, favorite.getSubtitle());
     values.put(FavoritesContract.FavoritesEntry.COLUMN_NAME_DESCRIPTION, favorite.getDescription());
     values.put(FavoritesContract.FavoritesEntry.COLUMN_NAME_PAGE_URI, favorite.getPageUri().toString());
+    values.put(FavoritesContract.FavoritesEntry.COLUMN_NAME_ICON_URI, UriUtils.getString(favorite.getIconUri()));
 
     return db.insert(FavoritesContract.FavoritesEntry.TABLE_NAME, null, values);
   }
@@ -74,7 +76,8 @@ public class FavoritesStoreImpl implements FavoritesStore {
         FavoritesContract.FavoritesEntry.COLUMN_NAME_TITLE,
         FavoritesContract.FavoritesEntry.COLUMN_NAME_SUBTITLE,
         FavoritesContract.FavoritesEntry.COLUMN_NAME_DESCRIPTION,
-        FavoritesContract.FavoritesEntry.COLUMN_NAME_PAGE_URI
+        FavoritesContract.FavoritesEntry.COLUMN_NAME_PAGE_URI,
+        FavoritesContract.FavoritesEntry.COLUMN_NAME_ICON_URI
     };
 
     // How you want the results sorted in the resulting Cursor
@@ -90,7 +93,8 @@ public class FavoritesStoreImpl implements FavoritesStore {
               cursor.getString(cursor.getColumnIndexOrThrow(FavoritesContract.FavoritesEntry.COLUMN_NAME_TITLE)),
               cursor.getString(cursor.getColumnIndexOrThrow(FavoritesContract.FavoritesEntry.COLUMN_NAME_SUBTITLE)),
               cursor.getString(cursor.getColumnIndexOrThrow(FavoritesContract.FavoritesEntry.COLUMN_NAME_DESCRIPTION)),
-              Uri.parse(cursor.getString(cursor.getColumnIndexOrThrow(FavoritesContract.FavoritesEntry.COLUMN_NAME_PAGE_URI)))
+              UriUtils.tryParse(cursor.getString(cursor.getColumnIndexOrThrow(FavoritesContract.FavoritesEntry.COLUMN_NAME_PAGE_URI))),
+              UriUtils.tryParse(cursor.getString(cursor.getColumnIndexOrThrow(FavoritesContract.FavoritesEntry.COLUMN_NAME_ICON_URI)))
           ));
         } while (cursor.moveToNext());
       }

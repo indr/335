@@ -7,6 +7,11 @@
 
 package ch.indr.threethreefive.data.db.music.model;
 
+import android.net.Uri;
+import android.support.annotation.Nullable;
+
+import ch.indr.threethreefive.libs.utils.StringUtils;
+
 import static ch.indr.threethreefive.data.db.music.MusicStoreUtils.sanitize;
 
 public class Song {
@@ -19,10 +24,10 @@ public class Song {
   private final String albumId;
   private final String data;
   private final long duration;
-  private final String albumArtworkUri;
+  private final Uri albumArtworkUri;
 
   public Song(String id, String name, String artist, String artistId, String album, String albumId,
-              String data, long duration, String albumArtworkUri) {
+              String data, long duration, final @Nullable String albumArtworkUri) {
     this.id = id;
     this.name = sanitize(name);
     this.artist = sanitize(artist);
@@ -31,7 +36,7 @@ public class Song {
     this.albumId = albumId;
     this.data = data;
     this.duration = duration;
-    this.albumArtworkUri = albumArtworkUri;
+    this.albumArtworkUri = StringUtils.isEmpty(albumArtworkUri) ? null : Uri.parse(albumArtworkUri);
   }
 
   public String getId() {
@@ -66,7 +71,7 @@ public class Song {
     return duration;
   }
 
-  public String getAlbumArtworkUri() {
+  public @Nullable Uri getAlbumArtworkUri() {
     return albumArtworkUri;
   }
 }

@@ -7,6 +7,7 @@
 
 package ch.indr.threethreefive.libs;
 
+import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
@@ -33,20 +34,20 @@ public class PageItemTests extends TtfRobolectricTestCase {
 
   @Test
   public void createWithTitleSubTitleDescriptionAndIconUri() {
-    final TestPageItem pageItem = new TestPageItem("Title", "Subtitle", "Description", "IconUri", 99);
+    final TestPageItem pageItem = new TestPageItem("Title", "Subtitle", "Description", Uri.EMPTY, 99);
 
-    assertPageItem(pageItem, "Title", "Subtitle", "Description", "IconUri", 99);
+    assertPageItem(pageItem, "Title", "Subtitle", "Description", Uri.EMPTY, 99);
   }
 
   private void assertPageItem(TestPageItem pageItem, String pTitle, String pSubtitle, String pDescription,
-                              String pIconUri, int pDefaultIconResId) {
+                              Uri pIconUri, int pDefaultIconResId) {
     final TestSubscriber<String> title = new TestSubscriber<>();
     pageItem.title().subscribe(title);
     final TestSubscriber<String> subtitle = new TestSubscriber<>();
     pageItem.subtitle().subscribe(subtitle);
     final TestSubscriber<String> description = new TestSubscriber<>();
     pageItem.description().subscribe(description);
-    final TestSubscriber<String> iconUri = new TestSubscriber<>();
+    final TestSubscriber<Uri> iconUri = new TestSubscriber<>();
     pageItem.iconUri().subscribe(iconUri);
 
     assertEquals(pTitle, pageItem.getTitle());
@@ -74,7 +75,7 @@ class TestPageItem extends PageItem {
   }
 
   public TestPageItem(final @NonNull String title, final @Nullable String subtitle,
-                      final @NonNull String description, final @Nullable String iconUri,
+                      final @NonNull String description, final @Nullable Uri iconUri,
                       final int defaultIconResId) {
     super(title, subtitle, description, iconUri, defaultIconResId);
   }

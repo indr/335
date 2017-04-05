@@ -7,6 +7,7 @@
 
 package ch.indr.threethreefive.libs;
 
+import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
@@ -21,7 +22,7 @@ public abstract class PageItem {
   protected BehaviorSubject<String> title = BehaviorSubject.create();
   protected BehaviorSubject<String> subtitle = BehaviorSubject.create();
   protected BehaviorSubject<String> description = BehaviorSubject.create();
-  protected BehaviorSubject<String> iconUri = BehaviorSubject.create();
+  protected BehaviorSubject<Uri> iconUri = BehaviorSubject.create();
 
   protected PageItem(final @NonNull String title) {
     this(title, null, title);
@@ -33,7 +34,7 @@ public abstract class PageItem {
   }
 
   protected PageItem(final @NonNull String title, final @Nullable String subtitle,
-                     final @NonNull String description, final @Nullable String iconUri,
+                     final @NonNull String description, final @Nullable Uri iconUri,
                      final int defaultIconResId) {
     this.title.onNext(title);
     this.subtitle.onNext(StringUtils.isEmpty(subtitle) ? null : subtitle);
@@ -78,11 +79,11 @@ public abstract class PageItem {
     return description;
   }
 
-  public final @Nullable String getIconUri() {
+  public final @Nullable Uri getIconUri() {
     return iconUri.getValue();
   }
 
-  public final @NonNull Observable<String> iconUri() {
+  public final @NonNull Observable<Uri> iconUri() {
     return iconUri;
   }
 

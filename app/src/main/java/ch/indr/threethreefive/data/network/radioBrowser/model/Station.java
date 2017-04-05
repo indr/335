@@ -7,6 +7,7 @@
 
 package ch.indr.threethreefive.data.network.radioBrowser.model;
 
+import android.net.Uri;
 import android.support.annotation.Nullable;
 
 import com.google.api.client.util.Key;
@@ -111,8 +112,8 @@ public class Station {
     return homepage;
   }
 
-  public String getLogoUri() {
-    return logoUri;
+  public Uri getLogoUri() {
+    return StringUtils.isEmpty(logoUri) ? null : Uri.parse(logoUri);
   }
 
   public Collection<Genre> getGenres() {

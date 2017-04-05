@@ -7,6 +7,11 @@
 
 package ch.indr.threethreefive.data.db.music.model;
 
+import android.net.Uri;
+import android.support.annotation.Nullable;
+
+import ch.indr.threethreefive.libs.utils.StringUtils;
+
 import static ch.indr.threethreefive.data.db.music.MusicStoreUtils.sanitize;
 
 public class Album {
@@ -16,15 +21,16 @@ public class Album {
   private final String artist;
   private final String artistId;
   private final int numberOfTracks;
-  private final String artworkUri;
+  private final Uri artworkUri;
 
-  public Album(String id, String name, String artist, String artistId, int numberOfTracks, String artworkUri) {
+  public Album(String id, String name, String artist, String artistId, int numberOfTracks,
+               final @Nullable String artworkUri) {
     this.id = id;
     this.name = sanitize(name);
     this.artist = sanitize(artist);
     this.artistId = artistId;
     this.numberOfTracks = numberOfTracks;
-    this.artworkUri = artworkUri;
+    this.artworkUri = StringUtils.isEmpty(artworkUri) ? null : Uri.parse(artworkUri);
   }
 
   public String getId() {
@@ -47,7 +53,7 @@ public class Album {
     return numberOfTracks;
   }
 
-  public String getArtworkUri() {
+  public @Nullable Uri getArtworkUri() {
     return artworkUri;
   }
 }

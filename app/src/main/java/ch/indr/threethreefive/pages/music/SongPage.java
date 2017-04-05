@@ -48,6 +48,7 @@ public class SongPage extends Page {
     }
 
     setTitle(song.getName());
+    setIconUri(song.getAlbumArtworkUri());
 
     final MediaItem mediaItem = make(song);
 

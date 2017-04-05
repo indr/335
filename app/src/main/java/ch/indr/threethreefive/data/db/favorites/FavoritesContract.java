@@ -24,6 +24,7 @@ public class FavoritesContract {
     public static final String COLUMN_NAME_SUBTITLE = "subtitle";
     public static final String COLUMN_NAME_DESCRIPTION = "description";
     public static final String COLUMN_NAME_PAGE_URI = "page_uri";
+    public static final String COLUMN_NAME_ICON_URI = "icon_uri";
   }
 }
 

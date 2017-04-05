@@ -25,7 +25,6 @@ import ch.indr.threethreefive.libs.PageItemsBuilder;
 import ch.indr.threethreefive.libs.PageUris;
 import ch.indr.threethreefive.libs.pages.Page;
 import ch.indr.threethreefive.libs.utils.StringUtils;
-import ch.indr.threethreefive.libs.utils.UriUtils;
 
 public class QueuePage extends Page {
 
@@ -73,7 +72,7 @@ public class QueuePage extends Page {
       builder.addLink(PageUris.playlistItem(queueItem.getQueueId()),
           title, subtitle,
           StringUtils.join(new String[]{title, subtitle}, ", "),
-          UriUtils.getString(description.getIconUri()),
+          description.getIconUri(),
           R.drawable.ic_default_art);
     }
 

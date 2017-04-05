@@ -16,6 +16,7 @@ import java.util.List;
 import ch.indr.threethreefive.data.db.music.model.Song;
 import ch.indr.threethreefive.data.network.radioBrowser.model.Station;
 import ch.indr.threethreefive.libs.MediaItem;
+import ch.indr.threethreefive.libs.utils.UriUtils;
 
 import static android.support.v4.media.MediaMetadataCompat.Builder;
 import static android.support.v4.media.MediaMetadataCompat.METADATA_KEY_ALBUM;
@@ -53,7 +54,7 @@ public class MediaItemFactory {
     final MediaMetadataCompat metadata = new Builder()
         .putString(METADATA_KEY_ALBUM_ARTIST, song.getArtist())
         .putString(METADATA_KEY_ALBUM, song.getAlbum())
-        .putString(METADATA_KEY_ALBUM_ART_URI, song.getAlbumArtworkUri())
+        .putString(METADATA_KEY_ALBUM_ART_URI, UriUtils.getString(song.getAlbumArtworkUri()))
         .putString(METADATA_KEY_ALBUM_ID, song.getAlbumId())
         .putString(METADATA_KEY_ARTIST, song.getArtist())
         .putString(METADATA_KEY_ARTIST_ID, song.getArtistId())
@@ -74,7 +75,7 @@ public class MediaItemFactory {
     final String mediaUri = station.getStreamUri();
 
     final MediaMetadataCompat metadata = new Builder()
-        .putString(METADATA_KEY_ART_URI, station.getLogoUri())
+        .putString(METADATA_KEY_ART_URI, UriUtils.getString(station.getLogoUri()))
         .putString(METADATA_KEY_DISPLAY_SUBTITLE, station.getSubtitle())
         .putString(METADATA_KEY_DISPLAY_TITLE, station.getTitle())
         .putString(METADATA_KEY_MEDIA_ID, mediaUri)
