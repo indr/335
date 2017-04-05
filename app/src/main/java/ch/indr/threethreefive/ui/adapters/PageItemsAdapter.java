@@ -9,6 +9,7 @@ package ch.indr.threethreefive.ui.adapters;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
@@ -17,8 +18,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.HorizontalScrollView;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+
+import com.example.android.uamp.AlbumArtCache;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -28,9 +32,11 @@ import java.util.List;
 import ch.indr.threethreefive.R;
 import ch.indr.threethreefive.libs.PageItem;
 import ch.indr.threethreefive.libs.Preferences;
+import ch.indr.threethreefive.libs.utils.StringUtils;
 import ch.indr.threethreefive.ui.utils.OnTouchClickListener;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
+import timber.log.Timber;
 
 /**
  * https://github.com/codepath/android_guides/wiki/Using-an-ArrayAdapter-with-ListView#defining-the-adapter
@@ -65,11 +71,12 @@ public class PageItemsAdapter extends ArrayAdapter<PageItem> implements SharedPr
 
     // Check if an existing view is being reused, otherwise inflate the view
     if (convertView == null) {
-      convertView = LayoutInflater.from(getContext()).inflate(R.layout.list_item_2, parent, false);
+      convertView = LayoutInflater.from(getContext()).inflate(R.layout.list_item_2_image, parent, false);
       this.subscriptions.put(convertView, new ArrayList<>());
     }
 
     // Lookup views for data population and touch listening
+    ImageView imageView = (ImageView) convertView.findViewById(R.id.imageView);
     TextView textViewTitle = (TextView) convertView.findViewById(R.id.textViewTitle);
     TextView textViewSubtitle = (TextView) convertView.findViewById(R.id.textViewSubtitle);
     HorizontalScrollView scrollView = (HorizontalScrollView) convertView.findViewById(R.id.scrollView);
@@ -85,6 +92,7 @@ public class PageItemsAdapter extends ArrayAdapter<PageItem> implements SharedPr
 
     // Unsubscribe in case this view is reused
     subscriptions = this.subscriptions.get(convertView);
+    //noinspection Convert2streamapi
     for (Subscription each : subscriptions) {
       if (!each.isUnsubscribed()) {
         each.unsubscribe();
@@ -94,6 +102,22 @@ public class PageItemsAdapter extends ArrayAdapter<PageItem> implements SharedPr
 
     // Subscribe to page items observables
     if (pageItem != null) {
+      final String iconUri = pageItem.getIconUri();
+      Bitmap iconImage = null;
+      if (StringUtils.isNotEmpty(iconUri)) {
+        iconImage = AlbumArtCache.getInstance().getIconImage(iconUri);
+        AlbumArtCache.getInstance().fetch(iconUri, new AlbumArtCache.FetchListener() {
+          @Override public void onFetched(String artUrl, Bitmap bigImage, Bitmap iconImage) {
+            Timber.d("onFetched %s", artUrl);
+          }
+        });
+      }
+      if (iconImage == null) {
+        imageView.setVisibility(View.GONE);
+      } else {
+        imageView.setVisibility(View.VISIBLE);
+        imageView.setImageBitmap(iconImage);
+      }
       textViewTitle.setText(pageItem.getTitle());
       textViewSubtitle.setVisibility(pageItem.getSubtitle() == null ? View.GONE : View.VISIBLE);
       textViewSubtitle.setText(pageItem.getSubtitle());

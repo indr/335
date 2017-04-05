@@ -21,9 +21,6 @@ import android.os.AsyncTask;
 import android.util.LruCache;
 
 import ch.indr.threethreefive.libs.BitmapHelper;
-
-import java.io.IOException;
-
 import timber.log.Timber;
 
 /**
@@ -97,11 +94,13 @@ public final class AlbumArtCache {
         try {
           Bitmap bitmap = BitmapHelper.fetchAndRescaleBitmap(artUrl,
               MAX_ART_WIDTH, MAX_ART_HEIGHT);
+          if (bitmap == null) return null;
           Bitmap icon = BitmapHelper.scaleBitmap(bitmap,
               MAX_ART_WIDTH_ICON, MAX_ART_HEIGHT_ICON);
+          if (icon == null) return null;
           bitmaps = new Bitmap[]{bitmap, icon};
           mCache.put(artUrl, bitmaps);
-        } catch (IOException e) {
+        } catch (Exception e) {
           Timber.e(e, "Error fetching bitmap in background");
           return null;
         }
