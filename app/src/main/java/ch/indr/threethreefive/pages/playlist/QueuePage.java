@@ -18,11 +18,14 @@ import android.support.v4.media.session.MediaSessionCompat.QueueItem;
 import com.example.android.uamp.playback.Queue;
 import com.example.android.uamp.playback.QueueManager;
 
+import ch.indr.threethreefive.R;
 import ch.indr.threethreefive.libs.Environment;
 import ch.indr.threethreefive.libs.PageCommand;
 import ch.indr.threethreefive.libs.PageItemsBuilder;
 import ch.indr.threethreefive.libs.PageUris;
 import ch.indr.threethreefive.libs.pages.Page;
+import ch.indr.threethreefive.libs.utils.StringUtils;
+import ch.indr.threethreefive.libs.utils.UriUtils;
 
 public class QueuePage extends Page {
 
@@ -62,15 +65,16 @@ public class QueuePage extends Page {
     builder.add(new PlayQueue(queue.getQueueItem(0).getQueueId()));
     builder.add(new ClearQueue());
 
-    for (QueueItem each : queue.queueItems()) {
-      MediaDescriptionCompat description = each.getDescription();
-      CharSequence title = description.getTitle();
-      if (title == null) {
-        title = "Unnamed";
-      }
-      long queueItemId = each.getQueueId();
-      // TODO: Add subtitle, content description and thumbnail
-      builder.addLink(PageUris.playlistItem(queueItemId), title.toString());
+    for (QueueItem queueItem : queue.queueItems()) {
+      MediaDescriptionCompat description = queueItem.getDescription();
+      final String title = StringUtils.getString(description.getTitle(), "Unknown");
+      final String subtitle = StringUtils.getString(description.getSubtitle());
+
+      builder.addLink(PageUris.playlistItem(queueItem.getQueueId()),
+          title, subtitle,
+          StringUtils.join(new String[]{title, subtitle}, ", "),
+          UriUtils.getString(description.getIconUri()),
+          R.drawable.ic_default_art);
     }
 
     return builder;

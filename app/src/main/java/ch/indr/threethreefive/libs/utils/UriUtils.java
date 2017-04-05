@@ -17,6 +17,10 @@ public class UriUtils {
   private UriUtils() {
   }
 
+  public static String getString(final @Nullable Uri uri) {
+    return uri == null || isEmpty(uri) ? null : uri.toString();
+  }
+
   /**
    * Removes the last path segment or root "/".
    */

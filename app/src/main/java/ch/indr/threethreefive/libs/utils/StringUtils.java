@@ -10,6 +10,7 @@ package ch.indr.threethreefive.libs.utils;
 import android.support.annotation.Nullable;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 
@@ -38,6 +39,10 @@ public final class StringUtils {
 
   public static String getString(final CharSequence value) {
     return value == null ? null : value.toString();
+  }
+
+  public static String getString(final CharSequence value, final String defaultValue) {
+    return isEmpty(value) ? defaultValue : value.toString();
   }
 
   public static String join(final Iterable<?> iterable, final String separator) {
@@ -81,6 +86,10 @@ public final class StringUtils {
     return buf.toString();
   }
 
+  public static String join(String[] strings, String s) {
+    return join(CollectionUtils.reject(Arrays.asList(strings), StringUtils::isEmpty), s);
+  }
+
   public static @Nullable String[] split(@Nullable String str, char separatorChar) {
     return splitWorker(str, separatorChar, false);
   }
@@ -118,4 +127,5 @@ public final class StringUtils {
     }
     return list.toArray(new String[list.size()]);
   }
+
 }
