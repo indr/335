@@ -22,6 +22,7 @@ import static android.support.v4.media.MediaMetadataCompat.METADATA_KEY_ALBUM;
 import static android.support.v4.media.MediaMetadataCompat.METADATA_KEY_ALBUM_ARTIST;
 import static android.support.v4.media.MediaMetadataCompat.METADATA_KEY_ALBUM_ART_URI;
 import static android.support.v4.media.MediaMetadataCompat.METADATA_KEY_ARTIST;
+import static android.support.v4.media.MediaMetadataCompat.METADATA_KEY_ART_URI;
 import static android.support.v4.media.MediaMetadataCompat.METADATA_KEY_DISPLAY_SUBTITLE;
 import static android.support.v4.media.MediaMetadataCompat.METADATA_KEY_DISPLAY_TITLE;
 import static android.support.v4.media.MediaMetadataCompat.METADATA_KEY_DURATION;
@@ -37,7 +38,7 @@ import static ch.indr.threethreefive.libs.PageUris.radioStation;
 
 public class MediaItemFactory {
 
-  public static List<MediaItem> make(final @NonNull List<Song> songs) {
+  public static @NonNull List<MediaItem> make(final @NonNull List<Song> songs) {
     List<MediaItem> mediaItems = new ArrayList<>();
     for (Song song : songs) {
       mediaItems.add(make(song));
@@ -45,13 +46,14 @@ public class MediaItemFactory {
     return mediaItems;
   }
 
-  public static MediaItem make(final @NonNull Song song) {
+  public static @NonNull MediaItem make(final @NonNull Song song) {
     final String pageUri = musicSong(song.getId()).toString();
     final String mediaUri = song.getData();
 
     final MediaMetadataCompat metadata = new Builder()
         .putString(METADATA_KEY_ALBUM_ARTIST, song.getArtist())
         .putString(METADATA_KEY_ALBUM, song.getAlbum())
+        .putString(METADATA_KEY_ALBUM_ART_URI, song.getAlbumArt())
         .putString(METADATA_KEY_ALBUM_ID, song.getAlbumId())
         .putString(METADATA_KEY_ARTIST, song.getArtist())
         .putString(METADATA_KEY_ARTIST_ID, song.getArtistId())
@@ -62,17 +64,17 @@ public class MediaItemFactory {
         .putString(METADATA_KEY_MEDIA_URI, mediaUri)
         .putString(METADATA_KEY_SONG_ID, song.getId())
         .putString(METADATA_KEY_TITLE, song.getName())
-        .putString(METADATA_KEY_ALBUM_ART_URI, song.getAlbumArt())
         .build();
 
     return new MediaItem(metadata, pageUri);
   }
 
-  public static MediaItem make(final @NonNull Station station) {
+  public static @NonNull MediaItem make(final @NonNull Station station) {
     final String pageUri = radioStation(station.getId()).toString();
-    final String mediaUri = station.getUrl();
+    final String mediaUri = station.getStreamUri();
 
     final MediaMetadataCompat metadata = new Builder()
+        .putString(METADATA_KEY_ART_URI, station.getLogoUri())
         .putString(METADATA_KEY_DISPLAY_SUBTITLE, station.getSubtitle())
         .putString(METADATA_KEY_DISPLAY_TITLE, station.getTitle())
         .putString(METADATA_KEY_MEDIA_ID, mediaUri)

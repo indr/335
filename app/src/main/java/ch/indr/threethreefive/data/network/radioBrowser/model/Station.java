@@ -33,9 +33,14 @@ public class Station {
 
   @Key private String name;
 
-  @Key private String url;
+  @Key("url")
+  private String streamUri;
 
-  @Key private String homepage;
+  @Key("homepage")
+  private String homepage;
+
+  @Key("favicon")
+  protected String logoUri;
 
   @Key("tags")
   protected String _tags;
@@ -98,12 +103,16 @@ public class Station {
     return null;
   }
 
-  public String getUrl() {
-    return url;
+  public String getStreamUri() {
+    return streamUri;
   }
 
   public String getHomepage() {
     return homepage;
+  }
+
+  public String getLogoUri() {
+    return logoUri;
   }
 
   public Collection<Genre> getGenres() {
