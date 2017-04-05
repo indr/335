@@ -63,9 +63,24 @@ public class ArtistPage extends Page {
 
     final List<Album> albums = musicStore.findAlbumsByArtistId(artistId);
     for (Album album : albums) {
-      builder.addLink(PageUris.musicAlbum(album.getId()), album.getName());
+      builder.addLink(PageUris.musicAlbum(album.getId()),
+          album.getName(),
+          makeSubtitle(album),
+          makeDescription(album),
+          album.getArtworkUri(),
+          R.drawable.ic_default_art);
     }
 
     setPageItems(builder);
+  }
+
+  private String makeDescription(Album album) {
+    final int numberOfTracks = album.getNumberOfTracks();
+    return album.getName() + ", " + getResources().getQuantityString(R.plurals.music_tracks, numberOfTracks, numberOfTracks);
+  }
+
+  private String makeSubtitle(Album album) {
+    final int numberOfTracks = album.getNumberOfTracks();
+    return getResources().getQuantityString(R.plurals.music_tracks, numberOfTracks, numberOfTracks);
   }
 }

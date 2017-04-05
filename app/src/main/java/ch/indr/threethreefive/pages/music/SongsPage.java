@@ -53,7 +53,12 @@ public class SongsPage extends Page {
     builder.addToggleFavorite(getCurrentPageLink());
 
     for (Song song : songs) {
-      builder.addLink(musicSong(song.getId()), song.getName(), makeSubtitle(song), makeDescription(song));
+      builder.addLink(musicSong(song.getId()),
+          song.getName(),
+          makeSubtitle(song),
+          makeDescription(song),
+          song.getAlbumArtworkUri(),
+          R.drawable.ic_default_art);
     }
 
     setPageItems(builder);

@@ -19,9 +19,10 @@ public class Song {
   private final String albumId;
   private final String data;
   private final long duration;
-  private final String albumArt;
+  private final String albumArtworkUri;
 
-  public Song(String id, String name, String artist, String artistId, String album, String albumId, String data, long duration, String albumArt) {
+  public Song(String id, String name, String artist, String artistId, String album, String albumId,
+              String data, long duration, String albumArtworkUri) {
     this.id = id;
     this.name = sanitize(name);
     this.artist = sanitize(artist);
@@ -30,7 +31,7 @@ public class Song {
     this.albumId = albumId;
     this.data = data;
     this.duration = duration;
-    this.albumArt = albumArt;
+    this.albumArtworkUri = albumArtworkUri;
   }
 
   public String getId() {
@@ -65,7 +66,7 @@ public class Song {
     return duration;
   }
 
-  public String getAlbumArt() {
-    return albumArt;
+  public String getAlbumArtworkUri() {
+    return albumArtworkUri;
   }
 }

@@ -54,7 +54,11 @@ public class GenrePage extends Page {
 
     for (Song song : songs) {
       builder.addLink(musicSong(song.getId()),
-          song.getName(), makeSubtitle(song), makeDescription(song));
+          song.getName(),
+          makeSubtitle(song),
+          makeDescription(song),
+          song.getAlbumArtworkUri(),
+          R.drawable.ic_default_art);
     }
 
     setPageItems(builder);

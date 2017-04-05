@@ -83,7 +83,8 @@ public class MusicStore {
     Uri uri = Audio.Albums.EXTERNAL_CONTENT_URI;
     Cursor cursor = getContentResolver().query(uri,
         new String[]{"_id", "album", "artist", "artist_id",
-            Audio.AlbumColumns.NUMBER_OF_SONGS},
+            Audio.AlbumColumns.NUMBER_OF_SONGS,
+            Audio.AlbumColumns.ALBUM_ART},
         selection, null, "album");
 
     if (cursor != null && cursor.moveToFirst()) {
@@ -93,7 +94,8 @@ public class MusicStore {
             cursor.getString(1),
             cursor.getString(2),
             cursor.getString(3),
-            cursor.getInt(4)
+            cursor.getInt(4),
+            cursor.getString(5)
         ));
       }
       while (cursor.moveToNext());
@@ -128,7 +130,7 @@ public class MusicStore {
 
     if (cursor != null && cursor.moveToFirst()) {
       do {
-        final String albumArt = getAlbumArtByAlbumId(cursor.getString(5));
+        final String albumArtworkUri = getAlbumArtworkUriByAlbumId(cursor.getString(5));
         songs.add(new Song(
             cursor.getString(0),
             cursor.getString(1),
@@ -138,7 +140,7 @@ public class MusicStore {
             cursor.getString(5),
             cursor.getString(6),
             cursor.getLong(7),
-            albumArt
+            albumArtworkUri
         ));
       }
       while (cursor.moveToNext());
@@ -188,7 +190,7 @@ public class MusicStore {
 
     if (cursor != null && cursor.moveToFirst()) {
       do {
-        final String albumArt = getAlbumArtByAlbumId(cursor.getString(5));
+        final String albumArtworkUri = getAlbumArtworkUriByAlbumId(cursor.getString(5));
         songs.add(new Song(
             cursor.getString(0),
             cursor.getString(1),
@@ -198,7 +200,7 @@ public class MusicStore {
             cursor.getString(5),
             cursor.getString(6),
             cursor.getLong(7),
-            albumArt));
+            albumArtworkUri));
       }
       while (cursor.moveToNext());
       cursor.close();
@@ -206,7 +208,7 @@ public class MusicStore {
     return songs;
   }
 
-  @Nullable private String getAlbumArtByAlbumId(String albumId) {
+  @Nullable private String getAlbumArtworkUriByAlbumId(String albumId) {
     if (this.albumArts == null) {
       this.albumArts = new HashMap<>();
       Uri uri = Audio.Albums.EXTERNAL_CONTENT_URI;

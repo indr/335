@@ -16,13 +16,15 @@ public class Album {
   private final String artist;
   private final String artistId;
   private final int numberOfTracks;
+  private final String artworkUri;
 
-  public Album(String id, String name, String artist, String artistId, int numberOfTracks) {
+  public Album(String id, String name, String artist, String artistId, int numberOfTracks, String artworkUri) {
     this.id = id;
     this.name = sanitize(name);
     this.artist = sanitize(artist);
     this.artistId = artistId;
     this.numberOfTracks = numberOfTracks;
+    this.artworkUri = artworkUri;
   }
 
   public String getId() {
@@ -43,5 +45,9 @@ public class Album {
 
   public int getNumberOfTracks() {
     return numberOfTracks;
+  }
+
+  public String getArtworkUri() {
+    return artworkUri;
   }
 }

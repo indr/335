@@ -44,7 +44,12 @@ public class AlbumsPage extends Page {
 
     final PageItemsBuilder builder = pageItemsBuilder();
     for (Album album : albums) {
-      builder.addLink(musicAlbum(album.getId()), album.getName(), makeSubtitle(album), makeDescription(album));
+      builder.addLink(musicAlbum(album.getId()),
+          album.getName(),
+          makeSubtitle(album),
+          makeDescription(album),
+          album.getArtworkUri(),
+          R.drawable.ic_default_art);
     }
 
     setPageItems(builder);

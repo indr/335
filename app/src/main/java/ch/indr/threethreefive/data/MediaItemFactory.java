@@ -53,7 +53,7 @@ public class MediaItemFactory {
     final MediaMetadataCompat metadata = new Builder()
         .putString(METADATA_KEY_ALBUM_ARTIST, song.getArtist())
         .putString(METADATA_KEY_ALBUM, song.getAlbum())
-        .putString(METADATA_KEY_ALBUM_ART_URI, song.getAlbumArt())
+        .putString(METADATA_KEY_ALBUM_ART_URI, song.getAlbumArtworkUri())
         .putString(METADATA_KEY_ALBUM_ID, song.getAlbumId())
         .putString(METADATA_KEY_ARTIST, song.getArtist())
         .putString(METADATA_KEY_ARTIST_ID, song.getArtistId())

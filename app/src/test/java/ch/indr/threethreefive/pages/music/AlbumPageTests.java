@@ -27,7 +27,7 @@ public class AlbumPageTests extends TtfRobolectricTestCase {
 
   @Test
   public void onCreate_addsPageItems() {
-    final Album album = new Album(ALBUM_ID, "Name", "Artist", "artistId", 3);
+    final Album album = new Album(ALBUM_ID, "Name", "Artist", "artistId", 3, null);
     when(musicStore.getAlbumById(ALBUM_ID)).thenReturn(album);
 
     final AlbumPage page = createPage();
