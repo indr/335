@@ -108,7 +108,7 @@ public class PageItemsAdapter extends ArrayAdapter<PageItem> implements SharedPr
       if (StringUtils.isEmpty(iconUri)) {
         imageView.setVisibility(View.GONE);
       } else {
-        imageView.setImageResource(R.drawable.ic_default_art);
+        imageView.setImageResource(R.drawable.ic_radio_grey600_36dp);
         imageView.setVisibility(View.VISIBLE);
 
         subscriptions.add(bitmapCache.getIconImage(iconUri)
