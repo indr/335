@@ -14,6 +14,7 @@ import android.support.annotation.NonNull;
 
 import javax.inject.Inject;
 
+import ch.indr.threethreefive.commands.OpenWebsite;
 import ch.indr.threethreefive.libs.Build;
 import ch.indr.threethreefive.libs.Environment;
 import ch.indr.threethreefive.libs.PageCommand;
@@ -44,6 +45,10 @@ public class PreferencesPage extends Page {
 
     addReplayInterfaceInstructionsItem(builder);
     addSwitchUiItem(builder);
+
+    if (uiModeManager.getCurrentUiMode() == UiModeManager.UI_MODE_LIST) {
+      builder.add(new OpenWebsite(context, "http://www.indr.ch/335"));
+    }
 
     if (build.isDebug()) {
       builder.add(new ResetAppLaunchCounter());

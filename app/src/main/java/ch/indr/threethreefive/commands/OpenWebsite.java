@@ -13,9 +13,8 @@ public class OpenWebsite extends PageCommand {
   private final Context context;
   private String websiteUri;
 
-  public OpenWebsite(Context context, String websiteUri) {
-    super("Open Website");
-
+  public OpenWebsite(final @NonNull Context context, final @NonNull String websiteUri) {
+    super("Open website");
     this.context = context;
     this.websiteUri = websiteUri;
 
@@ -23,7 +22,7 @@ public class OpenWebsite extends PageCommand {
     if (url.endsWith("/")) {
       url = url.substring(0, url.lastIndexOf("/"));
     }
-    setTitle("Open Website " + url);
+    setTitle("Open website " + url);
   }
 
   @Override public void execute(@NonNull Environment environment) {
