@@ -1,6 +1,6 @@
 <resources>
-    <string name="app_name">335</string>
-    <string name="app_label">3-3-5</string>
+    <string name="app_name">3 3 5</string>
+    <string name="app_label">3 3 5</string>
 
     <string name="button_home_description">Home: Brings you back to the start</string>
     <string name="button_home_text">Home</string>
