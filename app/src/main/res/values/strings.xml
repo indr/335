@@ -106,12 +106,11 @@ Speech synthesizing is required for the button interface.\n\
     <string name="show_more_languages">Show more languages</string>
     <string name="show_all_langauges">Show all languages</string>
 
-    <string name="new_stations">New Stations</string>
     <string name="trending">Trending</string>
     <string name="no_stations_found">No stations found</string>
     <string name="no_stations_found_error">Error: No stations found</string>
     <string name="station_not_found_error">Error: Radio station %s not found</string>
-    <string name="show_top_stations">Show top Stations</string>
+    <string name="show_top_stations">Show top stations</string>
     <string name="show_more_stations">Show more stations</string>
     <string name="show_all_stations">Show all stations</string>
 
