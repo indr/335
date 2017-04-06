@@ -58,8 +58,11 @@ public class CountryGenresPage extends GenreListBasePage {
           subtitle,
           genre.getName() + ", " + subtitle);
     }
+  }
 
+  @Override protected void setPageItems(@NonNull PageItemsBuilder builder) {
     builder.addLink(PageUris.radioCountryStations(countryId), getString(R.string.show_all_stations));
+    super.setPageItems(builder);
   }
 
   @Override protected void populateLists(List<Genre> genres) {
