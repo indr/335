@@ -25,11 +25,13 @@ import ch.indr.threethreefive.libs.PageItemsBuilder;
 import ch.indr.threethreefive.libs.PageItemsExpander;
 import ch.indr.threethreefive.libs.PageUris;
 import ch.indr.threethreefive.libs.pages.SpiceBasePage;
+import ch.indr.threethreefive.libs.utils.CollectionUtils;
 import timber.log.Timber;
 
 public class CountriesPage extends SpiceBasePage implements RequestListener<Country[]> {
 
   private List<String> featuredCountries = Arrays.asList("Australia", "Canada", "New Zealand", "United Kingdom", "United States of America");
+  private static final int MIN_STATIONS_FOR_MORE_COUNTRIES = 5;
 
   private PageItemsExpander<Country> expander = new PageItemsExpander<>();
 
@@ -88,6 +90,8 @@ public class CountriesPage extends SpiceBasePage implements RequestListener<Coun
     Timber.d("populateLists countries %d, %s", response.length, this.toString());
 
     List<Country> allCountries = Arrays.asList(response);
+    List<Country> moreCountries = CollectionUtils.filter(allCountries, country ->
+        country.getStationCount() >= MIN_STATIONS_FOR_MORE_COUNTRIES);
     List<Country> topCountries = new ArrayList<>();
 
     for (Country country : allCountries) {
@@ -97,6 +101,7 @@ public class CountriesPage extends SpiceBasePage implements RequestListener<Coun
     }
 
     expander.add(topCountries, getString(R.string.show_top_countries));
+    expander.add(moreCountries, getString(R.string.show_more_countries));
     expander.add(allCountries, getString(R.string.show_all_countries));
   }
 }
