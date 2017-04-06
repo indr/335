@@ -69,7 +69,6 @@ public abstract class StationListBasePage extends SpiceBasePage implements Reque
     final PageItemsBuilder builder = pageItemsBuilder();
     expander.buildNext(builder, this::addPageItems, this::showNextItems);
 
-    resetFirstVisibleItem();
     setPageItems(builder);
   }
 

@@ -72,7 +72,6 @@ public class CountryGenrePage extends SpiceBasePage implements RequestListener<L
     builder.addToggleFavorite(getCurrentPageLink());
     expander.buildNext(builder, this::addPageItems, this::showNextItems);
 
-    resetFirstVisibleItem();
     setPageItems(builder);
   }
 
