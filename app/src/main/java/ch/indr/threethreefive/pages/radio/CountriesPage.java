@@ -17,7 +17,6 @@ import com.octo.android.robospice.request.listener.RequestListener;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Locale;
 
 import ch.indr.threethreefive.R;
 import ch.indr.threethreefive.data.network.radioBrowser.model.Country;
@@ -76,7 +75,8 @@ public class CountriesPage extends SpiceBasePage implements RequestListener<Coun
     }
 
     for (Country country : countries) {
-      final String subtitle = String.format(Locale.US, "%d radio stations", country.getStationCount());
+      final int stationCount = country.getStationCount();
+      final String subtitle = getResources().getQuantityString(R.plurals.radio_stations, stationCount, stationCount);
       builder.addLink(PageUris.radioCountryGenres(country.getValue()),
           country.getName(),
           subtitle,

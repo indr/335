@@ -45,13 +45,18 @@
     <string name="mainmenu_preferences_description">Preferences</string>
 
     <plurals name="music_albums">
-        <item quantity="one">%d album</item>
-        <item quantity="other">%d albums</item>
+        <item quantity="one">%,d album</item>
+        <item quantity="other">%,d albums</item>
     </plurals>
 
     <plurals name="music_tracks">
-        <item quantity="one">%d song</item>
-        <item quantity="other">%d songs</item>
+        <item quantity="one">%,d song</item>
+        <item quantity="other">%,d songs</item>
+    </plurals>
+
+    <plurals name="radio_stations">
+        <item quantity="one">%,d radio station</item>
+        <item quantity="other">%,d radio stations</item>
     </plurals>
 
     <string name="start_accessibility_warning"><![CDATA[

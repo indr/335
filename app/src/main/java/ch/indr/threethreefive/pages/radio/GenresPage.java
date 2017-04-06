@@ -16,7 +16,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-import java.util.Locale;
 
 import ch.indr.threethreefive.R;
 import ch.indr.threethreefive.data.network.radioBrowser.model.Genre;
@@ -60,7 +59,8 @@ public class GenresPage extends GenreListBasePage {
     }
 
     for (Genre genre : genres) {
-      final String subtitle = String.format(Locale.US, "%d radio stations", genre.getStationCount());
+      final int stationCount = genre.getStationCount();
+      final String subtitle = getResources().getQuantityString(R.plurals.radio_stations, stationCount, stationCount);
       builder.addLink(PageUris.radioGenre(genre.getId()),
           genre.getName(),
           subtitle,

@@ -14,8 +14,6 @@ import android.support.annotation.NonNull;
 
 import com.octo.android.robospice.request.listener.RequestListener;
 
-import java.util.Locale;
-
 import ch.indr.threethreefive.R;
 import ch.indr.threethreefive.data.network.radioBrowser.model.Language;
 import ch.indr.threethreefive.libs.Environment;
@@ -60,7 +58,8 @@ public class LanguagesPage extends SpiceBasePage implements RequestListener<Lang
     }
 
     for (Language language : languages) {
-      final String subtitle = String.format(Locale.US, "%d radio stations", language.getStationCount());
+      final int stationCount = language.getStationCount();
+      final String subtitle = getResources().getQuantityString(R.plurals.radio_stations, stationCount, stationCount);
       builder.addLink(PageUris.radioLanguage(language.getValue()),
           language.getName(),
           subtitle,
