@@ -116,7 +116,7 @@ public class ToastFragment extends BaseFragment<ToastFragmentViewModel> {
 
   private void setTextSize(final float textSize) {
     if (textView != null) {
-      textView.setTextSize(textSize * 0.75f);
+      textView.setTextSize(textSize * (14f / 18f));
     }
   }
 
