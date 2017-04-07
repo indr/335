@@ -37,9 +37,6 @@ import ch.indr.threethreefive.libs.PageLink;
 import ch.indr.threethreefive.libs.Preferences;
 import ch.indr.threethreefive.libs.preferences.FloatPreferenceType;
 import ch.indr.threethreefive.libs.qualifiers.RequiresActivityViewModel;
-import ch.indr.threethreefive.services.PlaybackAnnouncer;
-import ch.indr.threethreefive.services.Speaker;
-import ch.indr.threethreefive.services.ToastManager;
 import ch.indr.threethreefive.services.UiModeManager;
 import ch.indr.threethreefive.ui.IntentKey;
 import ch.indr.threethreefive.ui.adapters.PageItemsAdapter;
@@ -51,10 +48,7 @@ import static ch.indr.threethreefive.libs.rx.transformers.Transfomers.observeFor
 @RequiresActivityViewModel(ListGuideViewModel.class)
 public class ListGuideActivity extends BaseListActivity<ListGuideViewModel> implements AbsListView.OnScrollListener {
 
-  protected @Inject PlaybackAnnouncer playbackAnnouncer;
   protected @Inject Preferences preferences;
-  protected @Inject Speaker speaker;
-  protected @Inject ToastManager toastManager;
   protected @Inject UiModeManager uiModeManager;
 
   protected @Bind(R.id.layoutChangeFontSize) LinearLayout layoutChangeFontSize;
