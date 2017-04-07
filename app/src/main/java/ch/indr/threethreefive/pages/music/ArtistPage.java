@@ -50,7 +50,7 @@ public class ArtistPage extends Page {
       return;
     }
 
-    setTitle("Artist");
+    setTitle(artist.getName());
 
     final List<Song> songs = musicStore.getSongsByArtistId(artistId);
     final List<MediaItem> mediaItems = make(songs);
