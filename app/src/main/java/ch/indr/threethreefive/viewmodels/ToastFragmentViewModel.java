@@ -60,24 +60,20 @@ public class ToastFragmentViewModel extends FragmentViewModel<ToastFragment> {
           isShowing = toast;
         });
 
-    // When the current toast is hidden, we remove the saved instance
-    hideToast.filter(toast -> toast.equals(isShowing))
-        .subscribe(toast -> isShowing = null);
+    // Hide current toast when a new toast is incoming
+    pollQueue.filter(__ -> ObjectUtils.isNotNull(isShowing))
+        .compose(bindToLifecycle())
+        .map(__ -> isShowing)
+        .subscribe(hideToast);
 
-    // 1. Add incoming toasts to queue and trigger enqueue.
-    // toastManager.toast()
-    //    .compose(bindToLifecycle())
-    //    .map(toasts::add)
-    //    .subscribe(pollQueue);
-
-    // 2. Show toast immediately if no toast is already showing
+    // Show toast immediately if no toast is already showing
     pollQueue.filter(__ -> ObjectUtils.isNull(isShowing))
         .compose(bindToLifecycle())
         .map(__ -> toasts.poll())
         .filter(ObjectUtils::isNotNull)
         .subscribe(showToast);
 
-    // 3. Auto hide toast after given length
+    // Auto hide toast after given length
     showToast.mergeWith(autoHide)
         .debounce(TOAST_LENGTH, TimeUnit.MILLISECONDS)
         .filter(__ -> autoHideToast)
@@ -86,6 +82,7 @@ public class ToastFragmentViewModel extends FragmentViewModel<ToastFragment> {
 
     // 4. After hiding the current toast, we trigger pollQueue
     hideToast.delay(ANIMATION_LENGTH, TimeUnit.MILLISECONDS)
+        .doOnNext(__ -> isShowing = null)
         .subscribe(pollQueue);
   }
 
