@@ -33,7 +33,7 @@
             android:paddingRight="6dp"
             android:paddingStart="6dp"
             android:text="I am a scrolling and dismissable toast!"
-            android:textColor="@color/black"
+            android:textColor="@color/white"
             android:textSize="80sp"/>
 
     </HorizontalScrollView>
