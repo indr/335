@@ -62,8 +62,11 @@
     <string name="start_accessibility_warning"><![CDATA[
 You are using accessibility assistance services.\n\
 \n\
-3-3-5 is designed to provide a faster and smoother experience than these services can provide.
-Disable your touch exploration or spoken feedback services during the usage of 3-3-5.\n\
+3 3 5 is designed to provide a faster and smoother experience than these services can provide. Disable your touch exploration or spoken feedback services during the usage of 3 3 5.\n\
+\n\
+If you are using Googles TalkBack, you can temporarily suspend the service by pressing both the volume up and down button. Use the same button combination to resume TalkBack later or turn your display off and on using the power button on your device.\n\
+\n\
+Go to www.indr.ch/335 to learn more.\n\
 ]]></string>
 
     <string name="start_tts_error"><![CDATA[
@@ -71,6 +74,7 @@ Text-to-Speech could not be loaded.\n\
 \n\
 Speech synthesizing is required for the button interface.\n\
 \n\
+Go to www.indr.ch/335 to learn more and find instructions on how to install Text-to-Speech.\n\
 ]]></string>
 
     <string name="welcome_to_335">Welcome to 3 3 5</string>
