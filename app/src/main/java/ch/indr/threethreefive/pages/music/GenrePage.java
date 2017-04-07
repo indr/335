@@ -48,27 +48,19 @@ public class GenrePage extends Page {
     final List<MediaItem> mediaItems = make(songs);
 
     final PageItemsBuilder builder = pageItemsBuilder();
-    builder.add(new PlayMedias("Play all Songs", mediaItems));
-    builder.add(new AddToPlaylist("Add all Songs to Playlist", mediaItems));
+    builder.add(new PlayMedias(getString(R.string.play_all_songs), mediaItems));
+    builder.add(new AddToPlaylist(getString(R.string.add_all_songs_to_playlist), mediaItems));
     builder.addToggleFavorite(getCurrentPageLink());
 
     for (Song song : songs) {
       builder.addLink(musicSong(song.getId()),
           song.getName(),
-          makeSubtitle(song),
-          makeDescription(song),
+          song.getArtist(),
+          getString(R.string.speech_song_by_artist, song.getName(), song.getArtist()),
           song.getAlbumArtworkUri(),
           R.drawable.ic_default_art);
     }
 
     setPageItems(builder);
-  }
-
-  private String makeDescription(Song song) {
-    return song.getName() + " by " + song.getArtist();
-  }
-
-  private String makeSubtitle(Song song) {
-    return song.getArtist();
   }
 }

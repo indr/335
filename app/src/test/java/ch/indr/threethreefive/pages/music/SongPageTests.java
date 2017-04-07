@@ -33,7 +33,7 @@ public class SongPageTests extends TtfRobolectricTestCase {
     final SongPage page = createPage();
 
     final List<PageItem> pageItems = page.getPageItems();
-    assertEquals("Press to Play", pageItems.get(0).getTitle());
+    assertEquals("Press to play", pageItems.get(0).getTitle());
   }
 
   @Test

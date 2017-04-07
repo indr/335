@@ -129,4 +129,13 @@ Speech synthesizing is required for the button interface.\n\
     <string name="increase_font_size">Increase font size</string>
     <string name="decrease_font_size">Decrease font size</string>
 
+    <string name="play_all_songs">Play all songs</string>
+    <string name="play_all_albums">Play all albums</string>
+    <string name="add_to_playlist">Add to playlist</string>
+    <string name="add_all_songs_to_playlist">Add all songs to playlist</string>
+    <string name="add_all_albums_to_playlist">Add all albums to playlist</string>
+
+    <string name="songs">Songs</string>
+    <string name="speech_song_by_artist">%1$s by %2$s</string>
+
 </resources>

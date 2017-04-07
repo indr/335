@@ -54,8 +54,8 @@ public class SongPage extends Page {
 
     final PageItemsBuilder builder = pageItemsBuilder();
 
-    builder.add(new PlayMedia(mediaItem));
-    builder.add(new AddToPlaylist(mediaItem));
+    builder.add(new PlayMedia("Press to play", mediaItem));
+    builder.add(new AddToPlaylist(getString(R.string.add_to_playlist), mediaItem));
     builder.addToggleFavorite(getCurrentPageLink());
 
     builder.addLink(musicArtist(song.getArtistId()), "Artist: " + song.getArtist());

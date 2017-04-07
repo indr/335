@@ -33,7 +33,7 @@ public class AlbumPageTests extends TtfRobolectricTestCase {
     final AlbumPage page = createPage();
 
     final List<PageItem> pageItems = page.getPageItems();
-    assertEquals("Play all Songs", pageItems.get(0).getTitle());
+    assertEquals(getString(R.string.play_all_songs), pageItems.get(0).getTitle());
   }
 
   @Test

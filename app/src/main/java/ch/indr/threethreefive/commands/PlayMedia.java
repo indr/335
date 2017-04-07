@@ -13,10 +13,10 @@ import ch.indr.threethreefive.libs.PageCommand;
 
 public class PlayMedia extends PageCommand {
 
-  private MediaItem mediaItem;
+  private final MediaItem mediaItem;
 
-  public PlayMedia(final @NonNull MediaItem mediaItem) {
-    super("Press to Play");
+  public PlayMedia(final @NonNull String title, final @NonNull MediaItem mediaItem) {
+    super(title);
     this.mediaItem = mediaItem;
   }
 

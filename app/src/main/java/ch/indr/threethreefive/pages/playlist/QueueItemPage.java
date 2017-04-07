@@ -77,7 +77,7 @@ public class QueueItemPage extends Page {
       final Queue currentQueue = queueManager.getCurrentQueue();
       final MediaItem mediaItem = currentQueue != null ? currentQueue.getMediaItem(queueItem) : null;
 
-      playQueueItem = new PlayQueueItem(mediaItem);
+      playQueueItem = new PlayQueueItem("Press to play", mediaItem);
       builder.add(playQueueItem);
       removeQueueItem = new RemoveQueueItem(mediaItem);
       builder.add(removeQueueItem);
@@ -160,8 +160,8 @@ public class QueueItemPage extends Page {
 
   private class PlayQueueItem extends PlayMedia {
 
-    public PlayQueueItem(MediaItem mediaItem) {
-      super(mediaItem);
+    public PlayQueueItem(final @NonNull String title, final @NonNull MediaItem mediaItem) {
+      super(title, mediaItem);
     }
 
     @Override public void execute(@NonNull Environment environment) {
@@ -188,9 +188,8 @@ public class QueueItemPage extends Page {
     private final String mediaItemTitle;
 
     RemoveQueueItem(@NonNull MediaItem mediaItem) {
-      super(mediaItem);
+      super("Remove from Playlist", mediaItem);
 
-      setTitle("Remove from Playlist");
       setDescription("Remove from Playlist");
       this.mediaItemTitle = mediaItem.getTitle();
     }
