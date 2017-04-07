@@ -22,6 +22,7 @@ import com.example.android.uamp.playback.QueueManager;
 
 import java.util.List;
 
+import ch.indr.threethreefive.R;
 import ch.indr.threethreefive.commands.AddToPlaylist;
 import ch.indr.threethreefive.commands.PlayMedia;
 import ch.indr.threethreefive.libs.Environment;
@@ -77,16 +78,14 @@ public class QueueItemPage extends Page {
       final Queue currentQueue = queueManager.getCurrentQueue();
       final MediaItem mediaItem = currentQueue != null ? currentQueue.getMediaItem(queueItem) : null;
 
-      playQueueItem = new PlayQueueItem("Press to play", mediaItem);
+      playQueueItem = new PlayQueueItem(getString(R.string.play_playlist_item), mediaItem);
       builder.add(playQueueItem);
       removeQueueItem = new RemoveQueueItem(mediaItem);
       builder.add(removeQueueItem);
 
       addPageItems(builder, mediaItem != null ? mediaItem.getMediaMetadata() : null);
     } else {
-      setTitle("Playlist Item " + queueItemId);
-
-      builder.addText("Playlist item not found");
+      builder.addText(getString(R.string.error_playlist_item_not_found, queueItemId));
     }
 
     setPageItems(builder);

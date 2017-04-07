@@ -34,7 +34,7 @@ public class IndexPage extends Page {
   @Override public void onCreate(@NonNull Context context, @NonNull Uri uri, Bundle bundle) {
     super.onCreate(context, uri, bundle);
 
-    setTitle("Favorites");
+    setTitle(getString(R.string.title_favorites));
   }
 
   @Override public void onResume() {
@@ -44,7 +44,7 @@ public class IndexPage extends Page {
 
     List<Favorite> favorites = favoritesStore.findAll();
     if (favorites.size() == 0) {
-      builder.addText("No favorites");
+      builder.addText(getString(R.string.empty_favorites));
     } else for (Favorite favorite : favorites) {
       builder.addLink(favorite.getPageUri(),
           favorite.getTitle(),

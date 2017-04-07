@@ -137,5 +137,19 @@ Speech synthesizing is required for the button interface.\n\
 
     <string name="songs">Songs</string>
     <string name="speech_song_by_artist">%1$s by %2$s</string>
+    <string name="remove_from_favorites">Remove from favorites</string>
+    <string name="add_to_favorites">Add to favorites</string>
+    <string name="favorite_added">Favorite added</string>
+    <string name="favorite_removed">Favorite removed</string>
+    <string name="empty_playlist">Empty playlist</string>
+    <string name="play_playlist">Press to play playlist</string>
+    <string name="clear_playlist">Press to clear playlist</string>
+    <string name="not_available">Not available</string>
+    <string name="toast_playlist_cleared">Playlist cleared</string>
+    <string name="title_playlist">Playlist</string>
+    <string name="play_playlist_item">Press to play</string>
+    <string name="error_playlist_item_not_found">Error: Playlist item not found</string>
+    <string name="empty_favorites">No favorites</string>
+    <string name="title_favorites">Favorites</string>
 
 </resources>

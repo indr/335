@@ -75,7 +75,7 @@ public class PageItemsBuilder {
   }
 
   public PageItemsBuilder addToggleFavorite(PageLink pageLink) {
-    items.add(new ToggleFavorite(environment.favoritesStore(), pageLink));
+    items.add(new ToggleFavorite(resources, environment.favoritesStore(), pageLink));
     return this;
   }
 

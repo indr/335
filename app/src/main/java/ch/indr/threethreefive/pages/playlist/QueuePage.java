@@ -8,6 +8,7 @@
 package ch.indr.threethreefive.pages.playlist;
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -39,7 +40,7 @@ public class QueuePage extends Page {
   @Override public void onCreate(@NonNull Context context, @NonNull Uri uri, Bundle bundle) {
     super.onCreate(context, uri, bundle);
 
-    setTitle("Playlist");
+    setTitle(getString(R.string.title_playlist));
   }
 
   @Override public void onResume() {
@@ -57,16 +58,16 @@ public class QueuePage extends Page {
     final PageItemsBuilder builder = pageItemsBuilder();
 
     if (queue == null || queue.size() == 0) {
-      builder.addText("Empty Playlist");
+      builder.addText(getString(R.string.empty_playlist));
       return builder;
     }
 
-    builder.add(new PlayQueue(queue.getQueueItem(0).getQueueId()));
-    builder.add(new ClearQueue());
+    builder.add(new PlayQueue(getString(R.string.play_playlist), queue.getQueueItem(0).getQueueId()));
+    builder.add(new ClearQueue(getResources()));
 
     for (QueueItem queueItem : queue.queueItems()) {
       MediaDescriptionCompat description = queueItem.getDescription();
-      final String title = StringUtils.getString(description.getTitle(), "Unknown");
+      final String title = StringUtils.getString(description.getTitle(), getString(R.string.not_available));
       final String subtitle = StringUtils.getString(description.getSubtitle());
 
       builder.addLink(PageUris.playlistItem(queueItem.getQueueId()),
@@ -80,11 +81,10 @@ public class QueuePage extends Page {
   }
 
   private class PlayQueue extends PageCommand {
-
     private final long firstQueueItemId;
 
-    PlayQueue(long firstQueueItemId) {
-      super("Play Playlist");
+    PlayQueue(final @NonNull String title, long firstQueueItemId) {
+      super(title);
       this.firstQueueItemId = firstQueueItemId;
     }
 
@@ -98,14 +98,17 @@ public class QueuePage extends Page {
   }
 
   private class ClearQueue extends PageCommand {
+    private final Resources resources;
 
-    ClearQueue() {
-      super("Clear Playlist");
+    ClearQueue(final @NonNull Resources resources) {
+      super(resources.getString(R.string.clear_playlist));
+
+      this.resources = resources;
     }
 
     @Override public void execute(@NonNull Environment environment) {
       environment.queueManager().clearQueue();
-      environment.toastManager().toast("Playlist cleared");
+      environment.toastManager().toast(resources.getString(R.string.toast_playlist_cleared));
       environment.speaker().command().playlistCleared();
       QueuePage.this.reloadItems();
     }
