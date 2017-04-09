@@ -7,6 +7,7 @@
 
 package ch.indr.threethreefive.ui.fragments;
 
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -27,7 +28,7 @@ import ch.indr.threethreefive.R;
 import ch.indr.threethreefive.libs.BaseFragment;
 import ch.indr.threethreefive.libs.Preferences;
 import ch.indr.threethreefive.libs.qualifiers.RequiresFragmentViewModel;
-import ch.indr.threethreefive.ui.utils.OnTouchClickListener;
+import ch.indr.threethreefive.ui.utils.TouchGestureListener;
 import ch.indr.threethreefive.viewmodels.ToastFragmentViewModel;
 import timber.log.Timber;
 
@@ -59,8 +60,9 @@ public class ToastFragment extends BaseFragment<ToastFragmentViewModel> {
 
     frameLayout.setVisibility(View.GONE);
 
-    scrollViewTitle.setOnTouchListener(new TouchListener());
-    textView.setOnTouchListener(new TouchListener());
+    final TouchListener touchListener = new TouchListener(getActivity());
+    scrollViewTitle.setOnTouchListener(touchListener);
+    textView.setOnTouchListener(touchListener);
 
     viewModel.hideToast()
         .compose(bindToLifecycle())
@@ -120,17 +122,18 @@ public class ToastFragment extends BaseFragment<ToastFragmentViewModel> {
     }
   }
 
-  private class TouchListener extends OnTouchClickListener {
+  private class TouchListener extends TouchGestureListener {
+    TouchListener(Context context) {
+      super(context);
+    }
 
-    @Override public boolean onClick(View view) {
+    @Override public boolean onSingleTapUp(MotionEvent e) {
       viewModel.toastClicked();
-
-      return super.onClick(view);
+      return super.onSingleTapUp(e);
     }
 
     @Override public boolean onTouch(View view, MotionEvent motionEvent) {
       viewModel.toastTouched();
-
       return super.onTouch(view, motionEvent);
     }
   }

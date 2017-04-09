@@ -7,6 +7,7 @@
 
 package ch.indr.threethreefive.ui.fragments;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -46,7 +47,7 @@ import ch.indr.threethreefive.libs.qualifiers.RequiresFragmentViewModel;
 import ch.indr.threethreefive.libs.utils.PlaybackStateUtils.PlayPauseAction;
 import ch.indr.threethreefive.ui.IntentKey;
 import ch.indr.threethreefive.ui.activities.ListGuideActivity;
-import ch.indr.threethreefive.ui.utils.OnTouchClickListener;
+import ch.indr.threethreefive.ui.utils.TouchGestureListener;
 import ch.indr.threethreefive.viewmodels.ListPlaybackFragmentViewModel;
 import rx.Observable;
 import rx.subjects.BehaviorSubject;
@@ -213,8 +214,9 @@ public class ListPlaybackFragment extends BaseFragment<ListPlaybackFragmentViewM
         .compose(bindToLifecycle())
         .subscribe(autoScrollEnabled);
 
-    textViewTitle.setOnTouchListener(new TouchListener());
-    scrollViewTitle.setOnTouchListener(new TouchListener());
+    final TouchListener touchListener = new TouchListener(getActivity());
+    textViewTitle.setOnTouchListener(touchListener);
+    scrollViewTitle.setOnTouchListener(touchListener);
   }
 
   @Override public void onResume() {
@@ -341,19 +343,19 @@ public class ListPlaybackFragment extends BaseFragment<ListPlaybackFragmentViewM
     startActivity(intent);
   }
 
+  private class TouchListener extends TouchGestureListener {
+    TouchListener(Context context) {
+      super(context);
+    }
 
-  private class TouchListener extends OnTouchClickListener {
-
-    @Override public boolean onClick(View view) {
+    @Override public boolean onSingleTapUp(MotionEvent e) {
       transitionToNowPlaying();
-
-      return super.onClick(view);
+      return super.onSingleTapUp(e);
     }
 
     @Override public boolean onTouch(View view, MotionEvent motionEvent) {
       autoScrollEnabled.onNext(false);
       delayResumeAutoScroll.onNext(true);
-
       return super.onTouch(view, motionEvent);
     }
   }

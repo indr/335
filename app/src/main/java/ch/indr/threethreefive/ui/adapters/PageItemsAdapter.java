@@ -33,7 +33,7 @@ import ch.indr.threethreefive.libs.PageItem;
 import ch.indr.threethreefive.libs.Preferences;
 import ch.indr.threethreefive.libs.utils.ObjectUtils;
 import ch.indr.threethreefive.libs.utils.UriUtils;
-import ch.indr.threethreefive.ui.utils.OnTouchClickListener;
+import ch.indr.threethreefive.ui.utils.TouchGestureListener;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 
@@ -146,7 +146,7 @@ public class PageItemsAdapter extends ArrayAdapter<PageItem> implements SharedPr
 
     // Attach touch listeners to perform a list item click and visual indicator on focus, tap
     // If you want to puke, see: https://code.google.com/p/android/issues/detail?id=3414
-    final TouchListener touchListener = new TouchListener(parent, position, scrollView);
+    final TouchListener touchListener = new TouchListener(getContext(), parent, position, scrollView);
     textViewTitle.setOnTouchListener(touchListener);
     textViewSubtitle.setOnTouchListener(touchListener);
     scrollView.setOnTouchListener(touchListener);
@@ -166,13 +166,13 @@ public class PageItemsAdapter extends ArrayAdapter<PageItem> implements SharedPr
     }
   }
 
-  private class TouchListener extends OnTouchClickListener {
-
+  private class TouchListener extends TouchGestureListener {
     private final ViewGroup parent;
     private final int position;
-    private View itemView;
+    private final View itemView;
 
-    TouchListener(ViewGroup parent, int position, View itemView) {
+    TouchListener(Context context, ViewGroup parent, int position, View itemView) {
+      super(context);
       this.parent = parent;
       this.position = position;
       this.itemView = itemView;
@@ -187,18 +187,17 @@ public class PageItemsAdapter extends ArrayAdapter<PageItem> implements SharedPr
       } else if (action == MotionEvent.ACTION_CANCEL) {
         itemView.setBackgroundResource(0);
       }
-
       return super.onTouch(view, motionEvent);
     }
 
-
-    @Override public boolean onClick(View view) {
+    @Override public boolean onSingleTapUp(MotionEvent e) {
       if (!parent.getClass().equals(ListView.class)) {
-        return false;
+        return super.onSingleTapUp(e);
       }
+      // performItemClick() should be called with the rowId instead of the viewId.
       ListView listView = (ListView) parent;
-      listView.performItemClick(view, position, view.getId());
-      return true;
+      listView.performItemClick(itemView, position, itemView.getId());
+      return true; // Event consumed
     }
   }
 }
