@@ -10,11 +10,11 @@ Easy navigation using a simple content structure, 3 3 5 users can listen to over
 
 The application provides two high contrast interfaces:
 
-A simple list interface that comes with a freely adjustable font size to make it comfortable to use for vision challenged and users with poor or low eyesight. This interface is also optimized for screen readers such has Googles TalkBack.
+A simple list interface with an easily adjustable font size to make it comfortable for vision challenged or users with poor or low eyesight. This interface is also optimized for screen readers such has Google TalkBack.
 
-The second interface only consists of a simple buttons layout and can be used eyeless. Navigating through, exploring and enjoying content is made accessible through touch exploration and spoken feedback.
+The second interface consists of a simple buttons layout and can be used without vision. The button interface consists of three rows with 3, 3, and 5 buttons each row: 3 3 5. Navigating to, exploring and enjoying content is made accessible through touch exploration and spoken feedback.
 
-335 thanks for using three three five!
+335 thank you's for using and supporting three three five!
 
 ## Copyright
 
