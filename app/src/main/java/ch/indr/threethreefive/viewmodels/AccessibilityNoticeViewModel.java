@@ -15,6 +15,7 @@ import android.support.annotation.Nullable;
 import ch.indr.threethreefive.libs.ActivityViewModel;
 import ch.indr.threethreefive.libs.Environment;
 import ch.indr.threethreefive.libs.utils.StringUtils;
+import ch.indr.threethreefive.services.PlaybackAnswers;
 import ch.indr.threethreefive.ui.IntentKey;
 import ch.indr.threethreefive.ui.activities.AccessibilityNoticeActivity;
 import ch.indr.threethreefive.ui.activities.ButtonGuideActivity;
@@ -45,11 +46,17 @@ public class AccessibilityNoticeViewModel extends ActivityViewModel<Accessibilit
   @Override protected void onCreate(@NonNull Context context, @Nullable Bundle savedInstanceState) {
     super.onCreate(context, savedInstanceState);
 
-    intent().filter(i -> i.hasExtra(IntentKey.ACCESSIBILITY_NOTICE))
-        .map(i -> i.getIntExtra(IntentKey.ACCESSIBILITY_NOTICE, 0))
+    intent().filter(i -> i.hasExtra(IntentKey.ACCESSIBILITY_NOTICE_RESOURCE_ID))
+        .map(i -> i.getIntExtra(IntentKey.ACCESSIBILITY_NOTICE_RESOURCE_ID, 0))
         .filter(i -> i != 0)
         .compose(bindToLifecycle())
         .subscribe(resourceId);
+
+    intent().filter(i -> i.hasExtra(IntentKey.ACCESSIBILITY_NOTICE_REASON))
+        .map(i -> i.getStringExtra(IntentKey.ACCESSIBILITY_NOTICE_REASON))
+        .filter(StringUtils::isNotEmpty)
+        .compose(bindToLifecycle())
+        .subscribe(reason -> new PlaybackAnswers(context).reportAccessibilityNotice(reason));
 
     intent().filter(i -> i.hasExtra(IntentKey.NEXT_ACTIVITY))
         .map(i -> i.getStringExtra(IntentKey.NEXT_ACTIVITY))

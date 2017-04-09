@@ -64,7 +64,8 @@ public class StartActivity extends BaseActivity<StartViewModel> {
     Timber.d("showTextToSpeechError %d, %s", status, this.toString());
 
     Intent intent = new Intent(this, AccessibilityNoticeActivity.class);
-    intent.putExtra(IntentKey.ACCESSIBILITY_NOTICE, R.string.start_tts_error);
+    intent.putExtra(IntentKey.ACCESSIBILITY_NOTICE_REASON, "tts status " + status);
+    intent.putExtra(IntentKey.ACCESSIBILITY_NOTICE_RESOURCE_ID, R.string.start_tts_error);
     intent.putExtra(IntentKey.NEXT_ACTIVITY, ListGuideActivity.class.getSimpleName());
     this.startActivity(intent);
     finish();

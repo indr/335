@@ -35,6 +35,17 @@ public class PlaybackAnswers {
     this.context = context;
   }
 
+  public void reportAccessibilityNotice(String reason) {
+    if (StringUtils.isEmpty(reason)) {
+      return;
+    }
+
+    if (BuildConfig.ANSWERS) {
+      Answers.getInstance().logCustom(new CustomEvent("Accessibility Notice")
+          .putCustomAttribute("reason", reason));
+    }
+  }
+
   public void reportConnecting(MediaMetadataCompat mediaMetadata) {
     Timber.d("reportConnecting %s", this.toString());
     if (mediaMetadata == null) {

@@ -57,7 +57,8 @@ public class UiSelectionActivity extends AppCompatActivity implements View.OnLon
   public void buttonButtonViewOnClick() {
     if (isAccessibilityServicesEnabled()) {
       Intent intent = new Intent(this, AccessibilityNoticeActivity.class);
-      intent.putExtra(IntentKey.ACCESSIBILITY_NOTICE, R.string.start_accessibility_warning);
+      intent.putExtra(IntentKey.ACCESSIBILITY_NOTICE_REASON, "accessibility service");
+      intent.putExtra(IntentKey.ACCESSIBILITY_NOTICE_RESOURCE_ID, R.string.start_accessibility_warning);
       intent.putExtra(IntentKey.NEXT_ACTIVITY, ButtonGuideActivity.class.getSimpleName());
       this.startActivity(intent);
     } else {
