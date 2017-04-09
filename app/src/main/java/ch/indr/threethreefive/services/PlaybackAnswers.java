@@ -11,6 +11,8 @@ import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v4.media.MediaDescriptionCompat;
 import android.support.v4.media.MediaMetadataCompat;
+import android.support.v4.media.session.PlaybackStateCompat;
+import android.util.Pair;
 
 import com.crashlytics.android.answers.Answers;
 import com.crashlytics.android.answers.CustomEvent;
@@ -44,12 +46,12 @@ public class PlaybackAnswers {
       return;
     }
 
-    final MediaDescriptionCompat description = mediaMetadata.getDescription();
+    final MediaDescriptionCompat mediaDescription = mediaMetadata.getDescription();
 
     if (BuildConfig.ANSWERS) {
       Answers.getInstance().logCustom(new CustomEvent("Playback Connecting")
           .putCustomAttribute("radioId", radioId)
-          .putCustomAttribute("title", StringUtils.getString(description.getTitle())));
+          .putCustomAttribute("title", StringUtils.getString(mediaDescription.getTitle())));
     }
 
     final RobospiceManagerImpl robospiceManager = new RobospiceManagerImpl();
@@ -65,5 +67,27 @@ public class PlaybackAnswers {
         robospiceManager.shouldStop();
       }
     });
+  }
+
+  public void reportError(Pair<MediaMetadataCompat, PlaybackStateCompat> pair) {
+    Timber.d("reportError %s", this.toString());
+    if (pair == null || pair.first == null || pair.second == null) {
+      return;
+    }
+
+    final String radioId = pair.first.getString(MetadataKeys.METADATA_KEY_RADIO_ID);
+    if (StringUtils.isEmpty(radioId)) {
+      return;
+    }
+
+    final MediaDescriptionCompat mediaDescription = pair.first.getDescription();
+    final PlaybackStateCompat playbackState = pair.second;
+    if (BuildConfig.ANSWERS) {
+      Answers.getInstance().logCustom(new CustomEvent("Playback Error")
+          .putCustomAttribute("radioId", radioId)
+          .putCustomAttribute("title", StringUtils.getString(mediaDescription.getTitle()))
+          .putCustomAttribute("errorCode", playbackState.getErrorCode())
+          .putCustomAttribute("errorMessage", StringUtils.getString(playbackState.getErrorMessage())));
+    }
   }
 }

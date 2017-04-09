@@ -33,7 +33,6 @@ public class PlaybackClientImpl implements PlaybackClient {
 
   private final @NonNull Context context;
   private final @NonNull MediaBrowserCompat mediaBrowser;
-  private final PlaybackAnswers playbackAnswers;
   private @Nullable MediaControllerCompat mediaController;
 
   private final BehaviorSubject<Integer> playbackState = BehaviorSubject.create(PlaybackStateCompat.STATE_NONE);
@@ -48,9 +47,8 @@ public class PlaybackClientImpl implements PlaybackClient {
         mediaBrowserConnectionCallback, null);
     mediaBrowser.connect();
 
-    playbackAnswers = new PlaybackAnswers(context);
+    PlaybackAnswers playbackAnswers = new PlaybackAnswers(context);
 
-    // TODO: Unsubscribe on disconnect?
     Observable.combineLatest(mediaMetadata(), playbackState(), Pair::create)
         .filter(p -> p.second == PlaybackStateCompat.STATE_CONNECTING)
         .throttleWithTimeout(1000, TimeUnit.MILLISECONDS)
@@ -58,6 +56,12 @@ public class PlaybackClientImpl implements PlaybackClient {
         .map(p -> p.first)
         .filter(ObjectUtils::isNotNull)
         .subscribe(playbackAnswers::reportConnecting);
+
+    Observable.combineLatest(mediaMetadata(), playbackStateCompat(), Pair::create)
+        .filter(p -> ObjectUtils.isNotNull(p.second))
+        .filter(p -> p.second.getState() == PlaybackStateCompat.STATE_ERROR)
+        .distinctUntilChanged()
+        .subscribe(playbackAnswers::reportError);
   }
 
   @Nullable public MediaControllerCompat mediaController() {
