@@ -14,7 +14,6 @@ import android.speech.tts.TextToSpeech;
 import android.speech.tts.UtteranceProgressListener;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.util.Pair;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -45,6 +44,8 @@ public class SpeakerImpl implements Speaker {
   private PublishSubject<String> utteranceStart = PublishSubject.create();
   private PublishSubject<String> utteranceDone = PublishSubject.create();
   private PublishSubject<String> utteranceError = PublishSubject.create();
+
+  private Speech queue = null;
 
   public SpeakerImpl(Context context) {
     Timber.d("Speaker() %s", this.toString());
@@ -116,27 +117,39 @@ public class SpeakerImpl implements Speaker {
     return utteranceError;
   }
 
-  @Override public String sayUrgent(CharSequence speech) {
+  @Nullable @Override public String sayUrgent(CharSequence speech) {
     return say(speech, LEVEL_URGENT);
+  }
+
+  @Nullable @Override public String sayUrgent(CharSequence speech, float rate) {
+    return say(speech, LEVEL_URGENT, rate);
   }
 
   @Nullable @Override public String sayUrgent(int resourceId) {
     return say(resourceId, LEVEL_URGENT);
   }
 
-  @Override public String sayQueued(CharSequence speech) {
+  @Nullable @Override public String sayQueued(CharSequence speech) {
     return say(speech, LEVEL_QUEUED);
+  }
+
+  @Nullable @Override public String sayQueued(CharSequence speech, float rate) {
+    return say(speech, LEVEL_QUEUED, rate);
   }
 
   @Nullable @Override public String sayQueued(int resourceId) {
     return say(resourceId, LEVEL_QUEUED);
   }
 
-  @Override public String sayIdle(CharSequence speech) {
+  @Nullable @Override public String sayIdle(CharSequence speech) {
     return say(speech, LEVEL_IDLE);
   }
 
-  @Override public String say(CharSequence text, int level) {
+  @Nullable @Override public String say(CharSequence text, int level) {
+    return say(text, level, SPEECH_RATE_NORMAL);
+  }
+
+  @Nullable private String say(CharSequence text, int level, float rate) {
     Timber.d("say level %d, text %s, %s", level, text, this.toString());
 
     if (!started) {
@@ -146,9 +159,9 @@ public class SpeakerImpl implements Speaker {
 
     switch (level) {
       case LEVEL_URGENT:
-        return speak(text, FLUSH);
+        return speak(text, FLUSH, rate);
       case LEVEL_QUEUED:
-        return speak(text, ADD);
+        return speak(text, ADD, rate);
 //        if (isSpeaking(LEVEL_URGENT)) {
 //          enqueue(text, level);
 //        } else {
@@ -156,13 +169,13 @@ public class SpeakerImpl implements Speaker {
 //        }
       case LEVEL_IDLE:
         if (isIdle()) {
-          return speak(text, ADD);
+          return speak(text, ADD, rate);
         } else {
           Timber.d("Dropping level %d, text %s, %s", level, text, this.toString());
           return null;
         }
       default:
-        return speak(text, ADD);
+        return speak(text, ADD, rate);
     }
   }
 
@@ -170,17 +183,15 @@ public class SpeakerImpl implements Speaker {
     return say(resources.getString(resourceId), level);
   }
 
-  private Pair<CharSequence, Integer> queue = null;
-
   /**
    * Returns true if a text is being spoken with less or equal the specified level.
    */
   private boolean isSpeaking(int level) {
     Timber.d("isSpeaking level=%d, %s", level, this.toString());
-    Pair<CharSequence, Integer> queue = this.queue;
+    Speech queue = this.queue;
 
-    Timber.d(queue == null ? "queue == null" : "queue != null, queued level=" + queue.second);
-    return queue != null && queue.second <= level;
+    Timber.d(queue == null ? "queue == null" : "queue != null, queued level=" + queue.getLevel());
+    return queue != null && queue.getLevel() <= level;
   }
 
   /**
@@ -189,22 +200,22 @@ public class SpeakerImpl implements Speaker {
   private void enqueue(CharSequence text, int level) {
     Timber.d("enqueue level %d, text %s, %s", level, text, this.toString());
 
-    this.queue = Pair.create(text, level);
+    this.queue = new Speech(text, level, SPEECH_RATE_NORMAL);
   }
 
   /**
    * Removes and speaks the queued item.
    */
   private void dequeue() {
-    Pair<CharSequence, Integer> queue = this.queue;
+    Speech queue = this.queue;
     if (queue == null) {
       return;
     }
     this.queue = null;
 
-    Timber.d("dequeue level %d, text %s, %s", queue.second, queue.first, this.toString());
+    Timber.d("dequeue level %d, text %s, %s", queue.getLevel(), queue.getText(), this.toString());
 
-    speak(queue.first, ADD);
+    speak(queue.getText(), ADD, queue.getRate());
   }
 
   /**
@@ -217,15 +228,15 @@ public class SpeakerImpl implements Speaker {
   /**
    * Speaks the specified text. Queue mode is deprecated and should always be FLUSH.
    */
-  private String speak(CharSequence text, int queueMode) {
+  private String speak(CharSequence text, int queueMode, float rate) {
     if (text == null || text.length() == 0) return null;
-    return speak(text.toString(), queueMode);
+    return speak(text.toString(), queueMode, rate);
   }
 
   /**
    * Speaks the specified text. Queue mode is deprecated and should always be FLUSH.
    */
-  private String speak(String text, int queueMode) {
+  private String speak(String text, int queueMode, float rate) {
     if (text == null || text.isEmpty()) return null;
 
     if (!isInitialized) {
@@ -237,7 +248,9 @@ public class SpeakerImpl implements Speaker {
 
     final String utteranceId = getNextUtteranceId();
     final HashMap<String, String> params = getSpeakParams(utteranceId);
+    textToSpeech.setSpeechRate(rate);
     textToSpeech.speak(text, queueMode, params);
+
     return utteranceId;
   }
 
@@ -306,6 +319,38 @@ public class SpeakerImpl implements Speaker {
 
       dequeue();
       utteranceError.onNext(s);
+    }
+  }
+
+  private class Speech {
+    private final CharSequence text;
+    private int level;
+    private float rate;
+
+    public Speech(CharSequence text, int level, float rate) {
+      this.text = text;
+      this.level = level;
+      this.rate = rate;
+    }
+
+    public CharSequence getText() {
+      return text;
+    }
+
+    public int getLevel() {
+      return level;
+    }
+
+    public void setLevel(int level) {
+      this.level = level;
+    }
+
+    public float getRate() {
+      return rate;
+    }
+
+    public void setRate(float rate) {
+      this.rate = rate;
     }
   }
 }

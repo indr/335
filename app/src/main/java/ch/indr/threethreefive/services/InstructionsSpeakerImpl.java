@@ -13,7 +13,6 @@ import android.support.annotation.NonNull;
 import ch.indr.threethreefive.R;
 
 public class InstructionsSpeakerImpl implements InstructionsSpeaker {
-
   private final Speaker speaker;
   private final Resources resources;
 
@@ -46,15 +45,15 @@ public class InstructionsSpeakerImpl implements InstructionsSpeaker {
     final String[] parts = text.split("\n");
 
     if (urgent) {
-      speaker.sayUrgent(parts[0]);
+      speaker.sayUrgent(parts[0], Speaker.SPEECH_RATE_SLOW);
     } else {
-      speaker.sayQueued(parts[0]);
+      speaker.sayQueued(parts[0], Speaker.SPEECH_RATE_SLOW);
     }
     for (int i = 1; i < parts.length; i++) {
       String part = parts[i];
-      speaker.sayQueued(" — ");
-      speaker.sayQueued(" — ");
-      speaker.sayQueued(part);
+      speaker.sayQueued(" — ", Speaker.SPEECH_RATE_SLOW);
+      speaker.sayQueued(" — ", Speaker.SPEECH_RATE_SLOW);
+      speaker.sayQueued(part, Speaker.SPEECH_RATE_SLOW);
     }
   }
 }
