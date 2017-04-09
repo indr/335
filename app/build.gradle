@@ -17,8 +17,8 @@ android {
         minSdkVersion 16
         //noinspection OldTargetApi
         targetSdkVersion 22
-        versionCode 7
-        versionName "0.2.3." + (System.getenv("BITRISE_BUILD_NUMBER") ?: "0")
+        versionCode 8
+        versionName "0.2.4." + (System.getenv("BITRISE_BUILD_NUMBER") ?: "0")
         setProperty("archivesBaseName", "threethreefive-$versionName")
 
         // Enable Multidex to support over 65K methods
