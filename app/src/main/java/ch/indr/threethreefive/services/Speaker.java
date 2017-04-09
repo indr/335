@@ -17,8 +17,8 @@ public interface Speaker {
   int LEVEL_QUEUED = 2;
   int LEVEL_IDLE = 3;
 
-  float SPEECH_RATE_NORMAL = 0.8f;
-  float SPEECH_RATE_SLOW = 0.65f;
+  float SPEECH_RATE_NORMAL = 1.0f;
+  float SPEECH_RATE_SLOW = 0.8f;
 
   void start();
 
