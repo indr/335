@@ -58,8 +58,10 @@ public class ToggleFavorite extends PageCommand {
   }
 
   private void updateTitle(final boolean isFavorite) {
-    setTitle(isFavorite
+    final String title = isFavorite
         ? resources.getString(R.string.remove_from_favorites)
-        : resources.getString(R.string.add_to_favorites));
+        : resources.getString(R.string.add_to_favorites);
+    setTitle(title);
+    setDescription(title);
   }
 }

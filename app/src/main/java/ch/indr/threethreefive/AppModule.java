@@ -113,13 +113,13 @@ public class AppModule {
 
   @Provides
   @Singleton
-  FavoritesStore provideFavoritesStore() {
-    return new FavoritesStoreImpl(application);
+  @NonNull FavoritesStore provideFavoritesStore(final @ApplicationContext @NonNull Context context) {
+    return new FavoritesStoreImpl(context);
   }
 
   @Provides
   @Singleton
-  MusicStore provideMusicStore(final @ApplicationContext @NonNull Context context) {
+  @NonNull MusicStore provideMusicStore(final @ApplicationContext @NonNull Context context) {
     return new MusicStore(context);
   }
 

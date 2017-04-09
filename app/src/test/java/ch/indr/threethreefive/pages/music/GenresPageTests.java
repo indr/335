@@ -16,12 +16,21 @@ import java.util.List;
 
 import ch.indr.threethreefive.R;
 import ch.indr.threethreefive.TtfRobolectricTestCase;
+import ch.indr.threethreefive.data.db.music.MusicStore;
 import ch.indr.threethreefive.libs.PageItem;
 import ch.indr.threethreefive.libs.PageUris;
 
 import static org.mockito.Mockito.when;
 
 public class GenresPageTests extends TtfRobolectricTestCase {
+
+  private MusicStore musicStore;
+
+  @Override public void setUp() throws Exception {
+    super.setUp();
+
+    this.musicStore = appModule().provideMusicStore(application());
+  }
 
   @Test
   public void onCreate_whenNoGenresFound_addsNoGenresFound() {
