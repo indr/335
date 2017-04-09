@@ -16,8 +16,12 @@ import ch.indr.threethreefive.data.db.music.MusicStore;
 import ch.indr.threethreefive.data.network.ApiClient;
 import ch.indr.threethreefive.libs.net.RobospiceManager;
 import ch.indr.threethreefive.libs.qualifiers.ApplicationContext;
+import ch.indr.threethreefive.services.CommandSpeaker;
+import ch.indr.threethreefive.services.InstructionsSpeaker;
+import ch.indr.threethreefive.services.Speaker;
 
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 public class TestAppModule extends AppModule {
 
@@ -25,6 +29,7 @@ public class TestAppModule extends AppModule {
   private FavoritesStore favoritesStore;
   private MusicStore musicStore;
   private RobospiceManager robospiceManager;
+  private Speaker speaker;
 
   public TestAppModule(@NonNull Application application) {
     super(application);
@@ -48,5 +53,14 @@ public class TestAppModule extends AppModule {
   @NonNull @Override public RobospiceManager provideRobospiceManager() {
     if (robospiceManager == null) robospiceManager = mock(RobospiceManager.class);
     return robospiceManager;
+  }
+
+  @NonNull @Override Speaker provideSpeaker(@ApplicationContext @NonNull Context context) {
+    if (speaker == null) {
+      speaker = mock(Speaker.class);
+      when(speaker.instructions()).thenReturn(mock(InstructionsSpeaker.class));
+      when(speaker.command()).thenReturn(mock(CommandSpeaker.class));
+    }
+    return speaker;
   }
 }
