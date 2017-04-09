@@ -15,10 +15,14 @@ import android.speech.tts.UtteranceProgressListener;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
+import com.crashlytics.android.answers.Answers;
+import com.crashlytics.android.answers.CustomEvent;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Locale;
 
+import ch.indr.threethreefive.BuildConfig;
 import rx.Observable;
 import rx.subjects.BehaviorSubject;
 import rx.subjects.PublishSubject;
@@ -47,11 +51,17 @@ public class SpeakerImpl implements Speaker {
 
   private Speech queue = null;
 
-  public SpeakerImpl(Context context) {
-    Timber.d("Speaker() %s", this.toString());
+  public SpeakerImpl(final @NonNull Context context) {
+    Timber.d("SpeakerImpl() %s", this.toString());
 
     this.resources = context.getResources();
     this.textToSpeech = new TextToSpeech(context, new TtsInitListener());
+
+    if (BuildConfig.ANSWERS) {
+      final CustomEvent customEvent = new CustomEvent("Text-to-Speech")
+          .putCustomAttribute("Default engine", textToSpeech.getDefaultEngine());
+      Answers.getInstance().logCustom(customEvent);
+    }
 
     textToSpeech.setOnUtteranceProgressListener(new TtsUtteranceListener());
   }
