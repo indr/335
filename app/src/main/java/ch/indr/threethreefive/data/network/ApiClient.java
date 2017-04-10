@@ -15,6 +15,7 @@ import com.octo.android.robospice.request.listener.RequestListener;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import ch.indr.threethreefive.data.network.radioBrowser.CountriesRequest;
 import ch.indr.threethreefive.data.network.radioBrowser.LanguagesRequest;
@@ -84,7 +85,7 @@ public class ApiClient {
 
   public void getStationsByCountryAndGenre(final @NonNull String countryId, final @NonNull Genre genre,
                                            final @NonNull RequestListener<List<Station>> listener) {
-    final List<Tag> tags = genre.getTags();
+    final Set<Tag> tags = genre.getTags();
     if (tags.size() == 0) {
       Timber.w("Genre %s contains no tags, %s", genre.toString(), this.toString());
       listener.onRequestSuccess(new ArrayList<>());
@@ -107,7 +108,7 @@ public class ApiClient {
   }
 
   public void getStationsByGenre(Genre genre, RequestListener<List<Station>> listener) {
-    final List<Tag> tags = genre.getTags();
+    final Set<Tag> tags = genre.getTags();
     if (tags.size() == 0) {
       Timber.w("Genre %s contains no tags, %s", genre.toString(), this.toString());
       listener.onRequestSuccess(new ArrayList<>());
@@ -123,6 +124,7 @@ public class ApiClient {
     final StationsSearchRequest request = new StationsSearchRequest()
         .expiresIn(DurationInMillis.ONE_HOUR)
         .order("clicktrend", ORDER_DESC)
+
         .limit(limit);
     robospiceManager.execute(request, Transformers.ArrayToList(listener));
   }

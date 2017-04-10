@@ -67,6 +67,7 @@ public class GenresBuilder {
       return new Genre(genreId, 0);
     }
 
+    tagIds.add(genreId);
     return new Genre(genreId, tagIds);
   }
 }

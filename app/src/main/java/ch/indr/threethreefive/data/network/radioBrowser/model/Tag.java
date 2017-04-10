@@ -39,9 +39,9 @@ public class Tag {
   public Tag() {
   }
 
-  public Tag(final @NonNull String name, final int stationCount) {
-    this._id = name;
-    this._name = name;
+  public Tag(final @NonNull String id, final int stationCount) {
+    this._id = id;
+    this._name = id;
     this.stationCount = stationCount;
   }
 
@@ -57,7 +57,6 @@ public class Tag {
   }
 
   public String getName() {
-    // TODO: Get translated tag name
     if (name == null) name = WordUtils.capitalize(_name);
     return name;
   }
