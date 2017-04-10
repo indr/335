@@ -18,7 +18,6 @@ import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-import java.util.Locale;
 
 import javax.inject.Inject;
 
@@ -76,18 +75,20 @@ public class StationPage extends SpiceBasePage implements RequestListener<Statio
     final PageItemsBuilder builder = pageItemsBuilder();
 
     MediaItem mediaItem = MediaItemFactory.make(station);
-    builder.add(new PlayMedia("Press to play", mediaItem));
+    builder.add(new PlayMedia(getString(R.string.press_to_play), mediaItem));
     builder.add(new AddToPlaylist(getString(R.string.add_to_playlist), mediaItem));
     builder.addToggleFavorite(getCurrentPageLink());
 
     // Country
-    if (station.getCountry() != null) {
-      builder.addLink(PageUris.radioCountry(station.getCountry()), "Country: " + station.getCountry());
+    if (StringUtils.isNotEmpty(station.getCountry())) {
+      builder.addLink(PageUris.radioCountry(station.getCountry()),
+          getString(R.string.station_country, station.getCountry()));
     }
 
     // Language
-    if (station.getLanguage() != null) {
-      builder.addLink(PageUris.radioLanguage(station.getLanguage()), "Language: " + station.getLanguage());
+    if (StringUtils.isNotEmpty(station.getLanguage())) {
+      builder.addLink(PageUris.radioLanguage(station.getLanguage()),
+          getString(R.string.station_language, station.getLanguage()));
     }
 
     // Genres
@@ -97,20 +98,22 @@ public class StationPage extends SpiceBasePage implements RequestListener<Statio
       for (Genre genre : station.getGenres()) {
         genresAsString.add(genre.getName());
       }
-      builder.addLink(PageUris.radioStationGenres(station.getId()), "Genres: " + StringUtils.join(genresAsString, ", "));
+      builder.addLink(PageUris.radioStationGenres(station.getId()),
+          getString(R.string.station_genres, StringUtils.join(genresAsString, ", ")));
     }
 
     // Votes
-    builder.addText(String.format(Locale.US, "Votes: %d (+%d/-%d)",
-        station.getSummedVotes(), station.getPositiveVotes(), station.getNegativeVotes()));
+    builder.addText(getString(R.string.station_votes, station.getSummedVotes(),
+        station.getPositiveVotes(), station.getNegativeVotes()));
 
     // Click count and trend
-    builder.addText(String.format(Locale.US, "Clicks: %d (%+d)", station.getClickCount(), station.getClickTrend()));
+    builder.addText(getString(R.string.station_clicks, station.getClickCount(), station.getClickTrend()));
 
     // Updated
     if (station.getLastChangeTime() != null) {
       DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.MEDIUM, DateFormat.SHORT);
-      builder.addText("Updated: " + dateFormat.format(station.getLastChangeTime()));
+      builder.addText(getString(R.string.station_updated, dateFormat.format(station.getLastChangeTime())));
+      ;
     }
 
     // Link to Website

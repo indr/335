@@ -155,5 +155,12 @@ Go to www.indr.ch/335 to learn more and find instructions on how to install Text
     <string name="error_playlist_item_not_found">Error: Playlist item not found</string>
     <string name="empty_favorites">No favorites</string>
     <string name="title_favorites">Favorites</string>
+    <string name="press_to_play">Press to play</string>
+    <string name="station_votes">Votes: %1$d (%2$+d/-%3$d)</string>
+    <string name="station_genres">Genres: %s</string>
+    <string name="station_language">Language: %s</string>
+    <string name="station_country">Country: %s</string>
+    <string name="station_updated">Updated: %s</string>
+    <string name="station_clicks">Clicks: %1$d (%2$+d)</string>
 
 </resources>
