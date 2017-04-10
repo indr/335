@@ -10,6 +10,7 @@ package ch.indr.threethreefive.services;
 import android.content.Context;
 import android.content.res.Resources;
 import android.media.AudioManager;
+import android.provider.Settings;
 import android.speech.tts.TextToSpeech;
 import android.speech.tts.UtteranceProgressListener;
 import android.support.annotation.NonNull;
@@ -51,15 +52,31 @@ public class SpeakerImpl implements Speaker {
 
   private Speech queue = null;
 
+  private float baseSpeechRate = 1.0f;
+
   public SpeakerImpl(final @NonNull Context context) {
     Timber.d("SpeakerImpl() %s", this.toString());
 
     this.resources = context.getResources();
     this.textToSpeech = new TextToSpeech(context, new TtsInitListener());
 
+
+    final float defaultSpeechRate = Settings.Secure.getInt(context.getContentResolver(), Settings.Secure.TTS_DEFAULT_RATE, 100) / 100f;
+    Timber.d("Default tts speech rate %f, %s", defaultSpeechRate, this.toString());
+    // Set base speech rate to a minimum of 0.6f
+    this.baseSpeechRate = Math.max(0.6f, defaultSpeechRate < 0.2f ? baseSpeechRate : defaultSpeechRate);
+
+    Timber.d("Default tts engine %s, %s", textToSpeech.getDefaultEngine(), this.toString());
+    // Make Google TTS 10% slower
+    if ("com.google.android.tts".equals(textToSpeech.getDefaultEngine())) {
+      this.baseSpeechRate *= 0.9f;
+    }
+
     if (BuildConfig.ANSWERS) {
       final CustomEvent customEvent = new CustomEvent("Text-to-Speech")
-          .putCustomAttribute("Default engine", textToSpeech.getDefaultEngine());
+          .putCustomAttribute("Default engine", textToSpeech.getDefaultEngine())
+          .putCustomAttribute("Default speech rate", defaultSpeechRate)
+          .putCustomAttribute("Base speech rate", baseSpeechRate);
       Answers.getInstance().logCustom(customEvent);
     }
 
@@ -254,11 +271,12 @@ public class SpeakerImpl implements Speaker {
       return null;
     }
 
-    Timber.d("speak %s, %s, %s", queueMode == FLUSH ? "flushed" : "queued", text, this.toString());
+    final float speechRate = baseSpeechRate * rate;
+    Timber.d("speak %s, %s, %f, %s", queueMode == FLUSH ? "flushed" : "queued", text, speechRate, this.toString());
 
     final String utteranceId = getNextUtteranceId();
     final HashMap<String, String> params = getSpeakParams(utteranceId);
-    textToSpeech.setSpeechRate(rate);
+    textToSpeech.setSpeechRate(speechRate);
     textToSpeech.speak(text, queueMode, params);
 
     return utteranceId;
@@ -268,7 +286,7 @@ public class SpeakerImpl implements Speaker {
     final HashMap<String, String> params = new HashMap<>();
     params.put(KEY_PARAM_STREAM, String.valueOf(AudioManager.STREAM_MUSIC));
     params.put(KEY_PARAM_UTTERANCE_ID, utteranceId);
-    params.put(KEY_PARAM_VOLUME, String.valueOf(0.9));
+    params.put(KEY_PARAM_VOLUME, String.valueOf(1.0f));
     return params;
   }
 
