@@ -106,6 +106,10 @@ public class ActivityViewModel<ViewType extends ActivityLifecycleType> {
     return intent;
   }
 
+  protected @NonNull Observable<ActivityEvent> activityEvent() {
+    return view.switchMap(v -> v.lifecycle());
+  }
+
   /**
    * By composing this transformer with an observable you guarantee that every observable in your view model
    * will be properly completed when the view model completes.

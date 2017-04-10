@@ -9,7 +9,6 @@ package ch.indr.threethreefive.ui.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 
@@ -20,12 +19,16 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import ch.indr.threethreefive.R;
 import ch.indr.threethreefive.ThreeThreeFiveApp;
+import ch.indr.threethreefive.libs.BaseActivity;
+import ch.indr.threethreefive.libs.qualifiers.RequiresActivityViewModel;
 import ch.indr.threethreefive.services.AccessibilityServices;
 import ch.indr.threethreefive.services.Speaker;
 import ch.indr.threethreefive.services.UiModeManager;
 import ch.indr.threethreefive.ui.IntentKey;
+import ch.indr.threethreefive.viewmodels.UiSelectionViewModel;
 
-public class UiSelectionActivity extends AppCompatActivity implements View.OnLongClickListener {
+@RequiresActivityViewModel(UiSelectionViewModel.class)
+public class UiSelectionActivity extends BaseActivity<UiSelectionViewModel> implements View.OnLongClickListener {
 
   protected @Inject Speaker speaker;
   protected @Inject UiModeManager uiModeManager;
@@ -44,12 +47,6 @@ public class UiSelectionActivity extends AppCompatActivity implements View.OnLon
 
     buttonButtonView.setOnLongClickListener(this);
     buttonListView.setOnLongClickListener(this);
-  }
-
-  @Override protected void onStart() {
-    super.onStart();
-
-    speaker.sayUrgent(R.string.speech_ui_selection);
   }
 
   @OnClick(R.id.buttonButtonView)

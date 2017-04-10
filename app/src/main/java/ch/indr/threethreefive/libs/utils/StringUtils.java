@@ -128,4 +128,9 @@ public final class StringUtils {
     return list.toArray(new String[list.size()]);
   }
 
+  public static boolean equals(String s1, String s2) {
+    if ((s1 == null) && (s2 == null)) return true;
+    if ((s1 == null) || (s2 == null)) return false;
+    return s1.equals(s2);
+  }
 }
