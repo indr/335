@@ -18,7 +18,6 @@ import javax.inject.Inject;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import ch.indr.threethreefive.BuildConfig;
 import ch.indr.threethreefive.R;
 import ch.indr.threethreefive.ThreeThreeFiveApp;
 import ch.indr.threethreefive.services.AccessibilityServices;
@@ -69,7 +68,6 @@ public class UiSelectionActivity extends AppCompatActivity implements View.OnLon
 
   private boolean isAccessibilityServicesEnabled() {
     final AccessibilityServices accessibilityServices = AccessibilityServices.newInstance(this);
-    if (BuildConfig.DEBUG) return true;
     return accessibilityServices.isSpokenFeedbackEnabled() || accessibilityServices.isTouchExplorationEnabled();
   }
 
