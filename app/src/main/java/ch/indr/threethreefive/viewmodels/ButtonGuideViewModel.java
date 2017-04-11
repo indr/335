@@ -78,14 +78,16 @@ public class ButtonGuideViewModel extends PageActivityViewModel<ButtonGuideActiv
         .compose(bindToLifecycle())
         .subscribe(showPage);
 
-    // Speak page item description title if already on home page
+    // Select first item if already on home page
     pageItem
         .filter(ObjectUtils::isNotNull)
         .switchMap(PageItem::description)
         .compose(takeWhen(page.map(Page::getPageUri).compose(takeWhen(goHome))
             .filter(uri -> UriUtils.isEmpty(uri) || PageLink.HomePage.getUri().equals(uri))))
+        .withLatestFrom(page, (__, p) -> p)
+        .filter(ObjectUtils::isNotNull)
         .compose(bindToLifecycle())
-        .subscribe(this::speakTitle);
+        .subscribe(Page::selectFirstPageItem);
 
     // Activity title
     pageTitle

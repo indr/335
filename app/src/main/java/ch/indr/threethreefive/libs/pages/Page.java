@@ -115,6 +115,10 @@ public abstract class Page implements PageType {
     return pageCommand;
   }
 
+  public void selectFirstPageItem() {
+    pageItemIdx.onNext(0);
+  }
+
   public void selectNextPageItem() {
     selectNextPageItem.onNext(null);
   }
