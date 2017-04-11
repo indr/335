@@ -19,6 +19,7 @@ import com.example.android.uamp.playback.QueueManager;
 
 import javax.inject.Inject;
 
+import ch.indr.threethreefive.BuildConfig;
 import ch.indr.threethreefive.R;
 import ch.indr.threethreefive.commands.OpenWebsite;
 import ch.indr.threethreefive.libs.Environment;
@@ -83,7 +84,7 @@ public class HomePage extends Page {
         .addLink(PageUris.favorites(), getString(R.string.mainmenu_favorites_title), getString(R.string.mainmenu_favorites_subtitle), getString(R.string.mainmenu_favorites_description))
         .addLink(PageUris.preferences(), getString(R.string.mainmenu_preferences_title), getString(R.string.mainmenu_preferences_subtitle), getString(R.string.mainmenu_preferences_description));
 
-    if (isListView()) {
+    if (BuildConfig.FEATURE_DONATE_TO && isListView()) {
       builder.add(new OpenWebsite(getContext(), Uri.parse(getString(R.string.mainmenu_donate_to_uri)),
           getString(R.string.mainmenu_donate_to_title), getString(R.string.mainmenu_donate_to_subtitle), getString(R.string.mainmenu_donate_to_description)));
     }
