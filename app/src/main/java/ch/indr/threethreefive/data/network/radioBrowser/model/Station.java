@@ -62,6 +62,8 @@ public class Station {
 
   @Key private String lastchangetime;
 
+  private boolean broken = false;
+
   @Key("clickcount")
   private int clickCount;
 
@@ -106,6 +108,10 @@ public class Station {
 
   public String getStreamUri() {
     return streamUri;
+  }
+
+  public void setStreamUri(final @Nullable String streamUri) {
+    this.streamUri = streamUri;
   }
 
   public String getHomepage() {
@@ -258,6 +264,14 @@ public class Station {
 
   public String makeDescription(String props) {
     return this.getName() + ", " + makeSubtitle(props);
+  }
+
+  public boolean isBroken() {
+    return broken;
+  }
+
+  public void setBroken(boolean broken) {
+    this.broken = broken;
   }
 
   public static class NameComparator implements Comparator<Station> {

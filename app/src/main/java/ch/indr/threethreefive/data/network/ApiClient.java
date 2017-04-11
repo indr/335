@@ -11,6 +11,7 @@ import android.content.Context;
 import android.support.annotation.NonNull;
 
 import com.octo.android.robospice.persistence.DurationInMillis;
+import com.octo.android.robospice.persistence.exception.SpiceException;
 import com.octo.android.robospice.request.listener.RequestListener;
 
 import java.util.ArrayList;
@@ -37,6 +38,7 @@ import ch.indr.threethreefive.data.network.radioBrowser.transformers.TagsToGenre
 import ch.indr.threethreefive.data.network.radioBrowser.transformers.Transformers;
 import ch.indr.threethreefive.data.network.radioBrowser.transformers.UnionTransformer;
 import ch.indr.threethreefive.libs.net.RobospiceManager;
+import ch.indr.threethreefive.libs.utils.StringUtils;
 import timber.log.Timber;
 
 import static ch.indr.threethreefive.data.network.radioBrowser.RadioBrowserInfoRequest.ORDER_ASC;
@@ -75,8 +77,40 @@ public class ApiClient {
     robospiceManager.execute(new LanguagesRequest(), listener);
   }
 
-  public void getStation(String stationId, RequestListener<Station[]> listener) {
-    robospiceManager.execute(new StationRequest(stationId), listener);
+  public void getStation(String stationId, boolean playable, RequestListener<Station> listener) {
+    robospiceManager.execute(new StationRequest(stationId), new RequestListener<Station[]>() {
+      @Override public void onRequestFailure(SpiceException spiceException) {
+        listener.onRequestFailure(spiceException);
+      }
+
+      @Override public void onRequestSuccess(Station[] stations) {
+        if (stations == null || stations.length == 0) {
+          listener.onRequestSuccess(null);
+          return;
+        }
+
+        final Station station = stations[0];
+        if (!playable) {
+          listener.onRequestSuccess(station);
+          return;
+        }
+
+        getPlayableStationUrl(station.getId(), new RequestListener<PlayableStationUrl>() {
+          @Override public void onRequestFailure(SpiceException spiceException) {
+            listener.onRequestFailure(spiceException);
+          }
+
+          @Override public void onRequestSuccess(PlayableStationUrl playableStationUrl) {
+            if (playableStationUrl == null || StringUtils.isEmpty(playableStationUrl.getUrl())) {
+              station.setBroken(true);
+            } else {
+              station.setStreamUri(playableStationUrl.getUrl());
+            }
+            listener.onRequestSuccess(station);
+          }
+        });
+      }
+    });
   }
 
   public void getStationsByCountry(String country, RequestListener<List<Station>> listener) {
@@ -129,7 +163,7 @@ public class ApiClient {
     robospiceManager.execute(request, Transformers.ArrayToList(listener));
   }
 
-  public void countStationClick(final @NonNull String stationId, RequestListener<PlayableStationUrl> listener) {
+  private void getPlayableStationUrl(final @NonNull String stationId, RequestListener<PlayableStationUrl> listener) {
     final PlayableStationUrlRequest request = new PlayableStationUrlRequest(stationId);
     robospiceManager.execute(request, listener);
   }

@@ -36,7 +36,7 @@ import ch.indr.threethreefive.libs.pages.SpiceBasePage;
 import ch.indr.threethreefive.libs.utils.StringUtils;
 import ch.indr.threethreefive.services.UiModeManager;
 
-public class StationPage extends SpiceBasePage implements RequestListener<Station[]> {
+public class StationPage extends SpiceBasePage implements RequestListener<Station> {
 
   private String stationId;
 
@@ -56,16 +56,15 @@ public class StationPage extends SpiceBasePage implements RequestListener<Statio
   @Override public void onStart() {
     super.onStart();
 
-    apiClient.getStation(stationId, this);
+    apiClient.getStation(stationId, true, this);
   }
 
-  @Override public void onRequestSuccess(Station[] stations) {
-    if (stations == null || stations.length != 1) {
+  @Override public void onRequestSuccess(Station station) {
+    if (station == null) {
       getString(R.string.station_not_found_error, this.stationId);
       return;
     }
 
-    Station station = stations[0];
     setTitle(station.getName());
     setIconUri(station.getLogoUri());
     addPageItems(station);
@@ -75,8 +74,14 @@ public class StationPage extends SpiceBasePage implements RequestListener<Statio
     final PageItemsBuilder builder = pageItemsBuilder();
 
     MediaItem mediaItem = MediaItemFactory.make(station);
-    builder.add(new PlayMedia(getString(R.string.press_to_play), mediaItem));
-    builder.add(new AddToPlaylist(getString(R.string.add_to_playlist), mediaItem));
+    if (station.isBroken()) {
+      builder.addText(getString(R.string.item_station_is_broken_title),
+          getString(R.string.item_station_is_broken_subtitle),
+          getString(R.string.item_station_is_broken_description));
+    } else {
+      builder.add(new PlayMedia(getString(R.string.press_to_play), mediaItem));
+      builder.add(new AddToPlaylist(getString(R.string.add_to_playlist), mediaItem));
+    }
     builder.addToggleFavorite(getCurrentPageLink());
 
     // Country

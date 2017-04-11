@@ -164,4 +164,8 @@ Go to www.indr.ch/335 to learn more and find instructions on how to install Text
     <string name="station_updated">Updated: %s</string>
     <string name="station_clicks">Clicks: %1$d (%2$+d)</string>
 
+    <string name="item_station_is_broken_title">Broken station</string>
+    <string name="item_station_is_broken_subtitle">Please try again later</string>
+    <string name="item_station_is_broken_description">Station is broken, please try again later</string>
+
 </resources>

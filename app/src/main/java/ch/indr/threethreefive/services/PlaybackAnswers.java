@@ -16,23 +16,15 @@ import android.util.Pair;
 
 import com.crashlytics.android.answers.Answers;
 import com.crashlytics.android.answers.CustomEvent;
-import com.octo.android.robospice.persistence.exception.SpiceException;
-import com.octo.android.robospice.request.listener.RequestListener;
 
 import ch.indr.threethreefive.BuildConfig;
-import ch.indr.threethreefive.data.network.ApiClient;
-import ch.indr.threethreefive.data.network.radioBrowser.model.PlayableStationUrl;
 import ch.indr.threethreefive.libs.MetadataKeys;
-import ch.indr.threethreefive.libs.net.RobospiceManagerImpl;
 import ch.indr.threethreefive.libs.utils.StringUtils;
 import timber.log.Timber;
 
 public class PlaybackAnswers {
 
-  private final Context context;
-
   public PlaybackAnswers(final @NonNull Context context) {
-    this.context = context;
   }
 
   public void reportAccessibilityNotice(String reason) {
@@ -64,20 +56,6 @@ public class PlaybackAnswers {
           .putCustomAttribute("radioId", radioId)
           .putCustomAttribute("title", StringUtils.getString(mediaDescription.getTitle())));
     }
-
-    final RobospiceManagerImpl robospiceManager = new RobospiceManagerImpl();
-    robospiceManager.start(context);
-    new ApiClient(robospiceManager).countStationClick(radioId, new RequestListener<PlayableStationUrl>() {
-      @Override public void onRequestFailure(SpiceException spiceException) {
-        Timber.e(spiceException, "onRequestFailure %s", this.toString());
-        robospiceManager.shouldStop();
-      }
-
-      @Override public void onRequestSuccess(PlayableStationUrl playableStationUrl) {
-        Timber.d("onRequestSuccess %s, %s", playableStationUrl.toString(), this.toString());
-        robospiceManager.shouldStop();
-      }
-    });
   }
 
   public void reportError(Pair<MediaMetadataCompat, PlaybackStateCompat> pair) {

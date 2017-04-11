@@ -24,7 +24,7 @@ import ch.indr.threethreefive.libs.PageItemsBuilder;
 import ch.indr.threethreefive.libs.PageUris;
 import ch.indr.threethreefive.libs.pages.SpiceBasePage;
 
-public class StationGenresPage extends SpiceBasePage implements RequestListener<Station[]> {
+public class StationGenresPage extends SpiceBasePage implements RequestListener<Station> {
 
   private String stationId;
 
@@ -44,16 +44,16 @@ public class StationGenresPage extends SpiceBasePage implements RequestListener<
   @Override public void onStart() {
     super.onStart();
 
-    apiClient.getStation(stationId, this);
+    apiClient.getStation(stationId, false, this);
   }
 
-  @Override public void onRequestSuccess(Station[] stations) {
-    if (stations == null || stations.length != 1) {
+  @Override public void onRequestSuccess(Station station) {
+    if (station == null) {
       handle(getString(R.string.station_not_found_error, this.stationId));
       return;
     }
 
-    final Collection<Genre> genres = stations[0].getGenres();
+    final Collection<Genre> genres = station.getGenres();
     final PageItemsBuilder builder = pageItemsBuilder();
     addPageItems(builder, genres);
     setPageItems(builder);
