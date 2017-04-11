@@ -14,11 +14,13 @@ import android.support.annotation.NonNull;
 import ch.indr.threethreefive.data.db.favorites.FavoritesStore;
 import ch.indr.threethreefive.data.db.music.MusicStore;
 import ch.indr.threethreefive.data.network.ApiClient;
+import ch.indr.threethreefive.libs.Preferences;
 import ch.indr.threethreefive.libs.net.RobospiceManager;
 import ch.indr.threethreefive.libs.qualifiers.ApplicationContext;
 import ch.indr.threethreefive.services.CommandSpeaker;
 import ch.indr.threethreefive.services.InstructionsSpeaker;
 import ch.indr.threethreefive.services.Speaker;
+import ch.indr.threethreefive.services.UiModeManager;
 
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -30,6 +32,7 @@ public class TestAppModule extends AppModule {
   private MusicStore musicStore;
   private RobospiceManager robospiceManager;
   private Speaker speaker;
+  private UiModeManager uiModeManager;
 
   public TestAppModule(@NonNull Application application) {
     super(application);
@@ -55,12 +58,17 @@ public class TestAppModule extends AppModule {
     return robospiceManager;
   }
 
-  @NonNull @Override Speaker provideSpeaker(@ApplicationContext @NonNull Context context) {
+  @NonNull @Override public Speaker provideSpeaker(@ApplicationContext @NonNull Context context) {
     if (speaker == null) {
       speaker = mock(Speaker.class);
       when(speaker.instructions()).thenReturn(mock(InstructionsSpeaker.class));
       when(speaker.command()).thenReturn(mock(CommandSpeaker.class));
     }
     return speaker;
+  }
+
+  @NonNull @Override public UiModeManager provideUiModeManager(@ApplicationContext @NonNull Context context, Preferences preferences) {
+    if (uiModeManager == null) uiModeManager = mock(UiModeManager.class);
+    return uiModeManager;
   }
 }

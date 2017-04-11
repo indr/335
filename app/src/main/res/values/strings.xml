@@ -1,4 +1,5 @@
-<resources>
+<!--suppress CheckTagEmptyBody -->
+<resources xmlns:tools="http://schemas.android.com/tools">
     <string name="app_name">3 3 5</string>
     <string name="app_label">3 3 5</string>
 
@@ -27,22 +28,22 @@
     <string name="mainmenu_music_title">Music</string>
     <string name="mainmenu_music_subtitle">On your device</string>
     <string name="mainmenu_music_description">Music on your device</string>
-
     <string name="mainmenu_radio_title">Radio</string>
     <string name="mainmenu_radio_subtitle"></string>
     <string name="mainmenu_radio_description">Radio</string>
-
     <string name="mainmenu_playlist_title">Playlist</string>
     <string name="mainmenu_playlist_subtitle"></string>
     <string name="mainmenu_playlist_description">Playlist</string>
-
     <string name="mainmenu_favorites_title">Favorites</string>
     <string name="mainmenu_favorites_subtitle"></string>
     <string name="mainmenu_favorites_description">Favorites</string>
-
     <string name="mainmenu_preferences_title">Preferences</string>
     <string name="mainmenu_preferences_subtitle"></string>
     <string name="mainmenu_preferences_description">Preferences</string>
+    <string name="mainmenu_donate_to_title">Donate to 335</string>
+    <string name="mainmenu_donate_to_subtitle"></string>
+    <string name="mainmenu_donate_to_description" tools:ignore="Typos">Donate to three three five</string>
+    <string name="mainmenu_donate_to_uri">https://www.patreon.com/indr</string>
 
     <plurals name="music_albums">
         <item quantity="one">%,d album</item>

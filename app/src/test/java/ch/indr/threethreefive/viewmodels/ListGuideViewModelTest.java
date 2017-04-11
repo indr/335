@@ -20,10 +20,22 @@ import ch.indr.threethreefive.R;
 import ch.indr.threethreefive.TtfRobolectricTestCase;
 import ch.indr.threethreefive.libs.PageItem;
 import ch.indr.threethreefive.libs.PageLink;
+import ch.indr.threethreefive.libs.Preferences;
+import ch.indr.threethreefive.services.UiModeManager;
 import ch.indr.threethreefive.ui.IntentKey;
 import rx.observers.TestSubscriber;
 
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
+
 public class ListGuideViewModelTest extends TtfRobolectricTestCase {
+
+  @Override public void setUp() throws Exception {
+    super.setUp();
+
+    UiModeManager uiModeManager = appModule().provideUiModeManager(context(), mock(Preferences.class));
+    when(uiModeManager.getCurrentUiMode()).thenReturn(UiModeManager.UI_MODE_LIST);
+  }
 
   @Test
   public void canGoUp_afterCreation_isFalse() throws Exception {
@@ -35,18 +47,7 @@ public class ListGuideViewModelTest extends TtfRobolectricTestCase {
   }
 
   @Test
-  public void showPage_whenPageItemClick_returnsNextValue() throws Exception {
-    final ListGuideViewModel vm = createVm(makeIntent());
-    final TestSubscriber<PageLink> showPage = new TestSubscriber<>();
-    vm.showPage().subscribe(showPage);
-
-    vm.pageItemClick(new PageLink(Uri.parse("/page/link"), "Page Link"));
-
-    showPage.assertValueCount(1);
-  }
-
-  @Test
-  public void pageTitel_equalsMusic() throws Exception {
+  public void pageTitel_afterCreation_equals335() throws Exception {
     final ListGuideViewModel vm = createVm(makeIntent());
     final TestSubscriber<String> pageTitle = new TestSubscriber<>();
     vm.outputs.pageTitle().subscribe(pageTitle);
@@ -55,12 +56,23 @@ public class ListGuideViewModelTest extends TtfRobolectricTestCase {
   }
 
   @Test
-  public void pageItems_returnsOneValue() throws Exception {
+  public void pageItems_afterCreation_returnsOneValue() throws Exception {
     final ListGuideViewModel vm = createVm(makeIntent());
     final TestSubscriber<List<PageItem>> pageItems = new TestSubscriber<List<PageItem>>();
     vm.outputs.pageItems().subscribe(pageItems);
 
     pageItems.assertValueCount(1);
+  }
+
+  @Test
+  public void showPage_whenPageItemClick_returnsNextValue() throws Exception {
+    final ListGuideViewModel vm = createVm(makeIntent());
+    final TestSubscriber<PageLink> showPage = new TestSubscriber<>();
+    vm.showPage().subscribe(showPage);
+
+    vm.pageItemClick(new PageLink(Uri.parse("/page/link"), "Page Link"));
+
+    showPage.assertValueCount(1);
   }
 
   @NonNull private Intent makeIntent() {

@@ -20,6 +20,7 @@ import com.example.android.uamp.playback.QueueManager;
 import javax.inject.Inject;
 
 import ch.indr.threethreefive.R;
+import ch.indr.threethreefive.commands.OpenWebsite;
 import ch.indr.threethreefive.libs.Environment;
 import ch.indr.threethreefive.libs.PageItemsBuilder;
 import ch.indr.threethreefive.libs.PageLink;
@@ -47,10 +48,12 @@ public class HomePage extends Page {
 
     component().inject(this);
 
-    setTitle(getContext().getString(R.string.app_name));
+    setTitle(getString(R.string.app_name));
     setParentPageLink(null);
 
-    if (!isButtonView()) {
+    // In buttons view page items are being added on resume so
+    // the NowPlayingPageItem is added or removed
+    if (isListView()) {
       addPageItems();
     }
   }
@@ -58,7 +61,8 @@ public class HomePage extends Page {
   @Override public void onResume() {
     super.onResume();
 
-    if (isButtonView()) {
+    // In list view page items are being added on create
+    if (isButtonsView()) {
       addPageItems();
     }
   }
@@ -67,7 +71,7 @@ public class HomePage extends Page {
     PageItemsBuilder builder = pageItemsBuilder();
 
     // Now playing only in button ui mode, and only if playback is paused or playing
-    if (isButtonView() && isPausedOrPlaying()) {
+    if (isButtonsView() && isPausedOrPlaying()) {
       builder.add(new NowPlayingItem(playbackClient));
     }
 
@@ -79,11 +83,20 @@ public class HomePage extends Page {
         .addLink(PageUris.favorites(), getString(R.string.mainmenu_favorites_title), getString(R.string.mainmenu_favorites_subtitle), getString(R.string.mainmenu_favorites_description))
         .addLink(PageUris.preferences(), getString(R.string.mainmenu_preferences_title), getString(R.string.mainmenu_preferences_subtitle), getString(R.string.mainmenu_preferences_description));
 
+    if (isListView()) {
+      builder.add(new OpenWebsite(getContext(), Uri.parse(getString(R.string.mainmenu_donate_to_uri)),
+          getString(R.string.mainmenu_donate_to_title), getString(R.string.mainmenu_donate_to_subtitle), getString(R.string.mainmenu_donate_to_description)));
+    }
+
     setPageItems(builder);
   }
 
-  private boolean isButtonView() {
+  private boolean isButtonsView() {
     return uiModeManager.getCurrentUiMode() == UiModeManager.UI_MODE_BUTTONS;
+  }
+
+  private boolean isListView() {
+    return uiModeManager.getCurrentUiMode() == UiModeManager.UI_MODE_LIST;
   }
 
   private boolean isPausedOrPlaying() {
