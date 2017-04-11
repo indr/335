@@ -50,6 +50,8 @@ public class CountryGenresPage extends GenreListBasePage {
       return;
     }
 
+    builder.addToggleFavorite(getCurrentPageLink());
+
     for (Genre genre : genres) {
       final int stationCount = genre.getStationCount();
       final String subtitle = getResources().getQuantityString(R.plurals.radio_stations, stationCount, stationCount);
