@@ -23,6 +23,7 @@ import java.util.Stack;
 import ch.indr.threethreefive.BuildConfig;
 import ch.indr.threethreefive.libs.ActivityLifecycleType;
 import ch.indr.threethreefive.libs.ActivityViewModel;
+import ch.indr.threethreefive.libs.Description;
 import ch.indr.threethreefive.libs.Environment;
 import ch.indr.threethreefive.libs.PageCommand;
 import ch.indr.threethreefive.libs.PageItem;
@@ -68,7 +69,8 @@ public abstract class PageActivityViewModel<ViewType extends ActivityLifecycleTy
         .compose(bindToLifecycle())
         .subscribe(pageItems);
 
-    page.switchMap(Page::pageTitle)
+    page.switchMap(Page::description)
+        .map(Description::getTitle)
         .compose(bindToLifecycle())
         .subscribe(pageTitle);
 

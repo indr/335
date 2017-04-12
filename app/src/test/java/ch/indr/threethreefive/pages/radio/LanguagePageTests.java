@@ -19,7 +19,6 @@ import ch.indr.threethreefive.Fake;
 import ch.indr.threethreefive.R;
 import ch.indr.threethreefive.TtfRobolectricTestCase;
 import ch.indr.threethreefive.libs.PageItem;
-import rx.observers.TestSubscriber;
 
 public class LanguagePageTests extends TtfRobolectricTestCase {
 
@@ -34,14 +33,12 @@ public class LanguagePageTests extends TtfRobolectricTestCase {
   }
 
   @Test
-  public void onCreate_withIdInBundle_setsPageTitle() {
+  public void onCreate_withIdInBundle_setsTitle() {
     final Bundle bundle = new Bundle();
     bundle.putString("id", "Fantasian");
     final LanguagePage page = createPage(bundle);
-    final TestSubscriber<String> title = new TestSubscriber<>();
-    page.pageTitle().subscribe(title);
 
-    title.assertValue("Fantasian");
+    assertEquals("Fantasian", page.getTitle());
   }
 
   @Test

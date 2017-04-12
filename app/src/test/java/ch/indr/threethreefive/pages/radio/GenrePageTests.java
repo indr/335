@@ -21,7 +21,6 @@ import ch.indr.threethreefive.data.network.ApiClient;
 import ch.indr.threethreefive.data.network.radioBrowser.model.GenresBuilder;
 import ch.indr.threethreefive.libs.PageItem;
 import ch.indr.threethreefive.libs.PageUris;
-import rx.observers.TestSubscriber;
 
 import static org.mockito.Mockito.verify;
 
@@ -48,12 +47,10 @@ public class GenrePageTests extends TtfRobolectricTestCase {
   }
 
   @Test
-  public void onCreate_setsPageTitle() {
+  public void onCreate_setsTitle() {
     final GenrePage page = createPage();
-    final TestSubscriber<String> title = new TestSubscriber<>();
-    page.pageTitle().subscribe(title);
 
-    title.assertValue("Classic Rock");
+    assertEquals("Classic Rock", page.getTitle());
   }
 
   @Test

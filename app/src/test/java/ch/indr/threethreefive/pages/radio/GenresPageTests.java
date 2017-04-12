@@ -16,7 +16,6 @@ import org.junit.Test;
 import ch.indr.threethreefive.R;
 import ch.indr.threethreefive.TtfRobolectricTestCase;
 import ch.indr.threethreefive.data.network.ApiClient;
-import rx.observers.TestSubscriber;
 
 import static org.mockito.Mockito.verify;
 
@@ -31,12 +30,10 @@ public class GenresPageTests extends TtfRobolectricTestCase {
   }
 
   @Test
-  public void onCreate_setsPageTitle() {
+  public void onCreate_setsTitle() {
     final GenresPage page = createPage();
-    final TestSubscriber<String> title = new TestSubscriber<>();
-    page.pageTitle().subscribe(title);
 
-    title.assertValue(getString(R.string.genres));
+    assertEquals(getString(R.string.genres), page.getTitle());
   }
 
   @Test

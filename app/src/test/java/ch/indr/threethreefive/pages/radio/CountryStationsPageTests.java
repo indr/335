@@ -20,7 +20,6 @@ import ch.indr.threethreefive.R;
 import ch.indr.threethreefive.TtfRobolectricTestCase;
 import ch.indr.threethreefive.data.network.ApiClient;
 import ch.indr.threethreefive.libs.PageItem;
-import rx.observers.TestSubscriber;
 
 import static org.mockito.Mockito.verify;
 
@@ -45,14 +44,12 @@ public class CountryStationsPageTests extends TtfRobolectricTestCase {
   }
 
   @Test
-  public void onCreate_withCountryIdInBundle_setsPageTitle() {
+  public void onCreate_withCountryIdInBundle_setsTitle() {
     final Bundle bundle = new Bundle();
     bundle.putString("countryId", "Dreamland");
     final CountryStationsPage page = createPage(bundle);
-    final TestSubscriber<String> title = new TestSubscriber<>();
-    page.pageTitle().subscribe(title);
 
-    title.assertValue("Dreamland");
+    assertEquals("Dreamland", page.getTitle());
   }
 
   @Test

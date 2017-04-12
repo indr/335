@@ -21,10 +21,12 @@ import java.util.List;
 import ch.indr.threethreefive.AppComponent;
 import ch.indr.threethreefive.ThreeThreeFiveApp;
 import ch.indr.threethreefive.commands.ToggleFavorite;
+import ch.indr.threethreefive.libs.Description;
 import ch.indr.threethreefive.libs.Environment;
 import ch.indr.threethreefive.libs.PageItem;
 import ch.indr.threethreefive.libs.PageItemsBuilder;
 import ch.indr.threethreefive.libs.PageLink;
+import ch.indr.threethreefive.libs.utils.StringUtils;
 import rx.Observable;
 import rx.subjects.BehaviorSubject;
 import rx.subjects.PublishSubject;
@@ -43,9 +45,9 @@ public abstract class Page implements PageType {
   private State state = State.New;
 
   private Uri pageUri;
-  private final BehaviorSubject<String> pageTitle = BehaviorSubject.create();
-  private String subtitle;
-  private String contentDescription;
+
+  private final BehaviorSubject<Description> description = BehaviorSubject.create(Description.EMPTY);
+
   private Uri iconUri;
 
   // Set default value to `null`, which indicates the page is loading items
@@ -70,7 +72,7 @@ public abstract class Page implements PageType {
   }
 
   protected PageLink getCurrentPageLink() {
-    return new PageLink(getPageUri(), getTitle(), getSubtitle(), getContentDescription(), getIconUri(), 0);
+    return new PageLink(getPageUri(), getDescription(), getIconUri(), 0);
   }
 
   @Override public boolean getIsRootPage() {
@@ -88,15 +90,6 @@ public abstract class Page implements PageType {
 
   @Nullable public List<PageItem> getPageItems() {
     return pageItems.getValue();
-  }
-
-  @Deprecated
-  protected Environment environment() {
-    return environment;
-  }
-
-  @Override public Observable<String> pageTitle() {
-    return pageTitle;
   }
 
   @Override public Observable<List<PageItem>> pageItems() {
@@ -127,17 +120,21 @@ public abstract class Page implements PageType {
     parentPageLink.onNext(link);
   }
 
+  public Observable<Description> description() {
+    return description;
+  }
+
+  @NonNull Description getDescription() {
+    return description.getValue();
+  }
+
   public void setTitle(final @Nullable CharSequence title) {
-    if (title != null) {
-      setTitle(title.toString());
-    } else {
-      setTitle("");
-    }
+    setTitle(StringUtils.getString(title, ""));
   }
 
   protected void setTitle(final @NonNull String title) {
     Timber.d("setTitle %s, %s", title, this.toString());
-    pageTitle.onNext(title);
+    description.onNext(description.getValue().setTitle(title));
   }
 
   protected void setTitle(final int resourceId) {
@@ -145,23 +142,23 @@ public abstract class Page implements PageType {
   }
 
   public final @Nullable String getTitle() {
-    return pageTitle.getValue();
+    return getDescription().getTitle();
   }
 
   public final @Nullable String getSubtitle() {
-    return subtitle;
+    return getDescription().getSubtitle();
   }
 
   protected void setSubtitle(final @Nullable String subtitle) {
-    this.subtitle = subtitle;
+    description.onNext(description.getValue().setSubtitle(subtitle));
   }
 
   public final @Nullable String getContentDescription() {
-    return contentDescription;
+    return getDescription().getContentDescription();
   }
 
   protected void setContentDescription(final @Nullable String contentDescription) {
-    this.contentDescription = contentDescription;
+    description.onNext(description.getValue().setContentDescription(contentDescription));
   }
 
   public final @Nullable Uri getIconUri() {

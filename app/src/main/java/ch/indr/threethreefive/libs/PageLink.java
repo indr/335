@@ -38,6 +38,13 @@ public class PageLink extends PageItem {
     setUri(uri);
   }
 
+  public PageLink(final @NonNull Uri uri, final @NonNull Description description,
+                  final @Nullable Uri iconUri, final int defaultIconResId) {
+    super(description.getTitle(), description.getSubtitle(), description.getContentDescription(),
+        iconUri, defaultIconResId);
+    setUri(uri);
+  }
+
   public @NonNull Uri getUri() {
     return uri.getValue();
   }

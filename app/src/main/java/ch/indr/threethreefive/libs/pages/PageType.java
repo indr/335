@@ -12,6 +12,7 @@ import android.support.annotation.Nullable;
 
 import java.util.List;
 
+import ch.indr.threethreefive.libs.Description;
 import ch.indr.threethreefive.libs.PageItem;
 import ch.indr.threethreefive.libs.PageLink;
 import rx.Observable;
@@ -23,7 +24,7 @@ public interface PageType {
 
   @Nullable Uri getParentPageUri();
 
-  Observable<String> pageTitle();
+  Observable<Description> description();
 
   Observable<List<PageItem>> pageItems();
 
