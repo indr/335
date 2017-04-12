@@ -13,10 +13,10 @@ import android.support.annotation.Nullable;
 public class TextItem extends PageItem {
 
   public TextItem(final @NonNull String title) {
-    super(title);
+    super(new Description(title));
   }
 
-  public TextItem(final @NonNull String title, final @Nullable String subtitle, final @NonNull String description) {
-    super(title, subtitle, description);
+  public TextItem(final @NonNull String title, final @Nullable String subtitle, final @NonNull String contentDescription) {
+    super(new Description(title, subtitle, contentDescription));
   }
 }

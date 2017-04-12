@@ -11,72 +11,61 @@ import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
-import ch.indr.threethreefive.libs.utils.StringUtils;
 import rx.Observable;
 import rx.subjects.BehaviorSubject;
 
 public abstract class PageItem {
-
+  private final BehaviorSubject<Description> description = BehaviorSubject.create(Description.EMPTY);
+  private final BehaviorSubject<Uri> iconUri = BehaviorSubject.create();
   private final int defaultIconResId;
 
-  protected BehaviorSubject<String> title = BehaviorSubject.create();
-  protected BehaviorSubject<String> subtitle = BehaviorSubject.create();
-  protected BehaviorSubject<String> contentDescription = BehaviorSubject.create();
-  protected BehaviorSubject<Uri> iconUri = BehaviorSubject.create();
-
-  protected PageItem(final @NonNull String title) {
-    this(title, null, title);
+  protected PageItem() {
+    this(Description.EMPTY);
   }
 
-  protected PageItem(final @NonNull String title, final @Nullable String subtitle,
-                     final @NonNull String contentDescription) {
-    this(title, subtitle, contentDescription, null, 0);
+  protected PageItem(final @NonNull Description description) {
+    this.description.onNext(description);
+    this.iconUri.onNext(null);
+    this.defaultIconResId = 0;
   }
 
-  protected PageItem(final @NonNull String title, final @Nullable String subtitle,
-                     final @NonNull String contentDescription, final @Nullable Uri iconUri,
+  protected PageItem(final @NonNull Description description, final @Nullable Uri iconUri,
                      final int defaultIconResId) {
-    this.title.onNext(title);
-    this.subtitle.onNext(StringUtils.isEmpty(subtitle) ? null : subtitle);
-    this.contentDescription.onNext(contentDescription);
+    this.description.onNext(description);
     this.iconUri.onNext(iconUri);
     this.defaultIconResId = defaultIconResId;
   }
 
   public final @NonNull String getTitle() {
-    return title.getValue();
+    return description.getValue().getTitle();
   }
 
   protected void setTitle(final @NonNull String title) {
-    this.title.onNext(title);
-  }
-
-  public final @NonNull Observable<String> title() {
-    return title;
+    description.onNext(description.getValue().setTitle(title));
   }
 
   public final @Nullable String getSubtitle() {
-    return subtitle.getValue();
+    return description.getValue().getSubtitle();
   }
 
   protected void setSubtitle(final @Nullable String subtitle) {
-    this.subtitle.onNext(StringUtils.isEmpty(subtitle) ? null : subtitle);
-  }
-
-  public final @NonNull Observable<String> subtitle() {
-    return subtitle;
+    description.onNext(description.getValue().setSubtitle(subtitle));
   }
 
   public final @Nullable String getContentDescription() {
-    return contentDescription.getValue();
+    return description.getValue().getContentDescription();
   }
 
   protected void setContentDescription(final @Nullable String contentDescription) {
-    this.contentDescription.onNext(contentDescription);
+    description.onNext(description.getValue().setContentDescription(contentDescription));
   }
 
-  public final @NonNull Observable<String> description() {
-    return contentDescription;
+  @NonNull public final Observable<Description> description() {
+    return description;
+  }
+
+  @NonNull public final Description getDescription() {
+    return description.getValue();
   }
 
   public final @Nullable Uri getIconUri() {
@@ -89,5 +78,13 @@ public abstract class PageItem {
 
   public final int getDefaultIconResId() {
     return this.defaultIconResId;
+  }
+
+  @Override public @NonNull String toString() {
+    return "PageItem{" +
+        "description=" + getDescription() +
+        ", iconUri=" + getIconUri() + '\'' +
+        ", defaultIconResId=" + getDefaultIconResId() + '\'' +
+        '}';
   }
 }

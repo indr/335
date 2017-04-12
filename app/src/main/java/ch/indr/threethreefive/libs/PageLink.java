@@ -15,34 +15,20 @@ import rx.Observable;
 import rx.subjects.BehaviorSubject;
 
 public class PageLink extends PageItem {
-  public static final PageLink HomePage = new PageLink(PageUris.home(), "Home");
-  public static final PageLink NowPlaying = new PageLink(PageUris.nowPlaying(), "Now Playing");
+  public static final PageLink HomePage = new PageLink(PageUris.home(), new Description("Home"));
+  public static final PageLink NowPlaying = new PageLink(PageUris.nowPlaying(), new Description("Now Playing"));
 
   private BehaviorSubject<Uri> uri = BehaviorSubject.create();
 
-  public PageLink(@NonNull Uri uri, final @NonNull String title) {
-    super(title);
-    setUri(uri);
-  }
-
-  public PageLink(final @NonNull Uri uri, final @NonNull String title, final @Nullable String subtitle,
-                  final @NonNull String description) {
-    super(title, subtitle, description);
-    setUri(uri);
-  }
-
-  public PageLink(final @NonNull Uri uri, final @NonNull String title, final @Nullable String subtitle,
-                  final @NonNull String description, final @Nullable Uri iconUri,
-                  final int defaultIconResId) {
-    super(title, subtitle, description, iconUri, defaultIconResId);
-    setUri(uri);
+  public PageLink(@NonNull Uri uri, final @NonNull Description description) {
+    super(description);
+    this.uri.onNext(uri);
   }
 
   public PageLink(final @NonNull Uri uri, final @NonNull Description description,
                   final @Nullable Uri iconUri, final int defaultIconResId) {
-    super(description.getTitle(), description.getSubtitle(), description.getContentDescription(),
-        iconUri, defaultIconResId);
-    setUri(uri);
+    super(description, iconUri, defaultIconResId);
+    this.uri.onNext(uri);
   }
 
   public @NonNull Uri getUri() {
@@ -58,6 +44,11 @@ public class PageLink extends PageItem {
   }
 
   @Override public @NonNull String toString() {
-    return "PageLink [title=" + title.getValue() + ", uri=" + uri.getValue() + "]";
+    return "PageLink{" +
+        "uri='" + uri.getValue() + '\'' +
+        ", description=" + getDescription() +
+        ", iconUri=" + getIconUri() + '\'' +
+        ", defaultIconResId=" + getDefaultIconResId() + '\'' +
+        '}';
   }
 }

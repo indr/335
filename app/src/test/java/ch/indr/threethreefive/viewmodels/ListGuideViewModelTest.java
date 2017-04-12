@@ -18,6 +18,7 @@ import java.util.List;
 
 import ch.indr.threethreefive.R;
 import ch.indr.threethreefive.TtfRobolectricTestCase;
+import ch.indr.threethreefive.libs.Description;
 import ch.indr.threethreefive.libs.PageItem;
 import ch.indr.threethreefive.libs.PageLink;
 import ch.indr.threethreefive.libs.Preferences;
@@ -70,7 +71,7 @@ public class ListGuideViewModelTest extends TtfRobolectricTestCase {
     final TestSubscriber<PageLink> showPage = new TestSubscriber<>();
     vm.showPage().subscribe(showPage);
 
-    vm.pageItemClick(new PageLink(Uri.parse("/page/link"), "Page Link"));
+    vm.pageItemClick(new PageLink(Uri.parse("/page/link"), new Description("Page Link")));
 
     showPage.assertValueCount(1);
   }

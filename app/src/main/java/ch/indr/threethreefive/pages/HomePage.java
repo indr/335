@@ -22,6 +22,7 @@ import javax.inject.Inject;
 import ch.indr.threethreefive.BuildConfig;
 import ch.indr.threethreefive.R;
 import ch.indr.threethreefive.commands.OpenWebsite;
+import ch.indr.threethreefive.libs.Description;
 import ch.indr.threethreefive.libs.Environment;
 import ch.indr.threethreefive.libs.PageItemsBuilder;
 import ch.indr.threethreefive.libs.PageLink;
@@ -113,7 +114,7 @@ public class HomePage extends Page {
   public class NowPlayingItem extends PageLink {
 
     public NowPlayingItem(@NonNull PlaybackClient playbackClient) {
-      super(PageUris.nowPlaying(), "Now Playing");
+      super(PageUris.nowPlaying(), new Description("Now Playing"));
 
       playbackClient.playbackState()
           .distinctUntilChanged()

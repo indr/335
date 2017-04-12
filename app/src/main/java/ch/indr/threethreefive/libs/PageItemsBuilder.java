@@ -47,20 +47,20 @@ public class PageItemsBuilder {
   }
 
   public PageItemsBuilder addLink(final @NonNull Uri uri, final @NonNull String title) {
-    items.add(new PageLink(uri, title));
+    items.add(new PageLink(uri, new Description(title)));
     return this;
   }
 
   public PageItemsBuilder addLink(final @NonNull Uri uri, final @NonNull String title,
                                   final @Nullable String subtitle, final @NonNull String description) {
-    items.add(new PageLink(uri, title, subtitle, description));
+    items.add(new PageLink(uri, new Description(title, subtitle, description)));
     return this;
   }
 
   public PageItemsBuilder addLink(final @NonNull Uri uri, final @NonNull String title,
                                   final @Nullable String subtitle, final @NonNull String description,
                                   final @Nullable Uri iconUri, final int defaultIconResId) {
-    items.add(new PageLink(uri, title, subtitle, description, iconUri, defaultIconResId));
+    items.add(new PageLink(uri, new Description(title, subtitle, description), iconUri, defaultIconResId));
     return this;
   }
 

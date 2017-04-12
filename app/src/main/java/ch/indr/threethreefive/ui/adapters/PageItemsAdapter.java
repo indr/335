@@ -29,6 +29,7 @@ import java.util.List;
 
 import ch.indr.threethreefive.R;
 import ch.indr.threethreefive.libs.BitmapCache;
+import ch.indr.threethreefive.libs.Description;
 import ch.indr.threethreefive.libs.PageItem;
 import ch.indr.threethreefive.libs.Preferences;
 import ch.indr.threethreefive.libs.utils.ObjectUtils;
@@ -127,12 +128,14 @@ public class PageItemsAdapter extends ArrayAdapter<PageItem> implements SharedPr
       convertView.setContentDescription(pageItem.getContentDescription());
 
       // Subscribe to page items observables
-      subscriptions.add(pageItem.title()
+      subscriptions.add(pageItem.description()
           .skip(1)
+          .map(Description::getTitle)
           .observeOn(AndroidSchedulers.mainThread())
           .subscribe(textViewTitle::setText));
-      subscriptions.add(pageItem.subtitle()
+      subscriptions.add(pageItem.description()
           .skip(1)
+          .map(Description::getSubtitle)
           .observeOn(AndroidSchedulers.mainThread())
           .subscribe(text -> {
             textViewSubtitle.setVisibility(text == null ? View.GONE : View.VISIBLE);
@@ -140,6 +143,7 @@ public class PageItemsAdapter extends ArrayAdapter<PageItem> implements SharedPr
           }));
       subscriptions.add(pageItem.description()
           .skip(1)
+          .map(Description::getContentDescription)
           .observeOn(AndroidSchedulers.mainThread())
           .subscribe(convertView::setContentDescription));
     }

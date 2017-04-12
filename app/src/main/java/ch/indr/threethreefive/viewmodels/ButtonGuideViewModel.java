@@ -13,6 +13,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.view.View;
 
+import ch.indr.threethreefive.libs.Description;
 import ch.indr.threethreefive.libs.Environment;
 import ch.indr.threethreefive.libs.PageItem;
 import ch.indr.threethreefive.libs.PageLink;
@@ -95,7 +96,7 @@ public class ButtonGuideViewModel extends PageActivityViewModel<ButtonGuideActiv
         .map(t -> "Loading " + t)
         .compose(bindToLifecycle())
         .doOnNext(this::speakTitle)
-        .mergeWith(pageItem.filter(ObjectUtils::isNotNull).switchMap(PageItem::title))
+        .mergeWith(pageItem.filter(ObjectUtils::isNotNull).switchMap(PageItem::description).map(Description::getTitle))
         .compose(bindToLifecycle())
         .subscribe(activityTitle);
 
@@ -103,6 +104,7 @@ public class ButtonGuideViewModel extends PageActivityViewModel<ButtonGuideActiv
     pageItem
         .filter(ObjectUtils::isNotNull)
         .switchMap(pageItem -> pageItem.description().first())
+        .map(Description::getContentDescription)
         .compose(bindToLifecycle())
         .subscribe(this::speakTitle);
   }

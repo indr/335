@@ -41,11 +41,7 @@ public class PageItemTests extends TtfRobolectricTestCase {
 
   private void assertPageItem(TestPageItem pageItem, String pTitle, String pSubtitle, String pDescription,
                               Uri pIconUri, int pDefaultIconResId) {
-    final TestSubscriber<String> title = new TestSubscriber<>();
-    pageItem.title().subscribe(title);
-    final TestSubscriber<String> subtitle = new TestSubscriber<>();
-    pageItem.subtitle().subscribe(subtitle);
-    final TestSubscriber<String> description = new TestSubscriber<>();
+    final TestSubscriber<Description> description = new TestSubscriber<>();
     pageItem.description().subscribe(description);
     final TestSubscriber<Uri> iconUri = new TestSubscriber<>();
     pageItem.iconUri().subscribe(iconUri);
@@ -53,12 +49,11 @@ public class PageItemTests extends TtfRobolectricTestCase {
     assertEquals(pTitle, pageItem.getTitle());
     assertEquals(pSubtitle, pageItem.getSubtitle());
     assertEquals(pDescription, pageItem.getContentDescription());
+    assertEquals(new Description(pTitle, pSubtitle, pDescription), pageItem.getDescription());
     assertEquals(pIconUri, pageItem.getIconUri());
     assertEquals(pDefaultIconResId, pageItem.getDefaultIconResId());
 
-    title.assertValue(pTitle);
-    subtitle.assertValue(pSubtitle);
-    description.assertValue(pDescription);
+    description.assertValue(new Description(pTitle, pSubtitle, pDescription));
     iconUri.assertValue(pIconUri);
   }
 }
@@ -66,17 +61,17 @@ public class PageItemTests extends TtfRobolectricTestCase {
 class TestPageItem extends PageItem {
 
   protected TestPageItem(final @NonNull String title) {
-    super(title);
+    super(new Description(title));
   }
 
   protected TestPageItem(final @NonNull String title, final @Nullable String subtitle,
-                         final @NonNull String description) {
-    super(title, subtitle, description);
+                         final @NonNull String contentDescription) {
+    super(new Description(title, subtitle, contentDescription));
   }
 
   public TestPageItem(final @NonNull String title, final @Nullable String subtitle,
                       final @NonNull String description, final @Nullable Uri iconUri,
                       final int defaultIconResId) {
-    super(title, subtitle, description, iconUri, defaultIconResId);
+    super(new Description(title, subtitle, description), iconUri, defaultIconResId);
   }
 }
