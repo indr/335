@@ -39,17 +39,7 @@
 
     <style name="ButtonPrimary" parent="Widget.AppCompat.Button">
         <item name="colorButtonNormal">@color/buttonPrimary</item>
-        <item name="color">@color/white</item>
-    </style>
-
-    <style name="ButtonPrimaryLight" parent="Widget.AppCompat.Button">
-        <item name="colorButtonNormal">@color/buttonPrimaryLight</item>
-        <item name="color">@color/white</item>
-    </style>
-
-    <style name="ButtonPrimaryDark" parent="Widget.AppCompat.Button">
-        <item name="colorButtonNormal">@color/buttonPrimaryDark</item>
-        <item name="android:textColor">@color/white</item>
+        <item name="android:textColor">@color/black</item>
     </style>
 
     <style name="ButtonSecondary1" parent="Widget.AppCompat.Button">
@@ -57,25 +47,8 @@
         <item name="android:textColor">@color/white</item>
     </style>
 
-    <style name="ButtonSecondary1Light" parent="Widget.AppCompat.Button">
-        <item name="colorButtonNormal">@color/buttonSecondary1Light</item>
-        <item name="android:textColor">@color/white</item>
-    </style>
-
-    <style name="ButtonSecondary1Dark" parent="Widget.AppCompat.Button">
-        <item name="colorButtonNormal">@color/buttonSecondary1Dark</item>
-        <item name="android:textColor">@color/white</item>
-    </style>
-
     <style name="ButtonSecondary2" parent="Widget.AppCompat.Button">
         <item name="colorButtonNormal">@color/buttonSecondary2</item>
-    </style>
-
-    <style name="ButtonSecondary2Light" parent="Widget.AppCompat.Button">
-        <item name="colorButtonNormal">@color/buttonSecondary2Light</item>
-    </style>
-
-    <style name="ButtonSecondary2Dark" parent="Widget.AppCompat.Button">
-        <item name="colorButtonNormal">@color/buttonSecondary2Dark</item>
+        <item name="android:textColor">@color/black</item>
     </style>
 </resources>

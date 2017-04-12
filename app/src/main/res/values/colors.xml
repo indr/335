@@ -1,26 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!--
-    <color name="colorPrimary">#125688</color>
-    <color name="colorPrimaryDark">#125688</color>
-    <color name="colorAccent">#c8e8ff</color>
-    -->
 
-    <color name="colorPrimary">@color/buttonSecondary1</color>
-    <color name="colorPrimaryDark">@color/buttonSecondary1Dark</color>
-    <color name="colorAccent">@color/buttonSecondary1Light</color>
+    <color name="colorPrimary">@color/indigo_800</color>
+    <color name="colorPrimaryDark">@color/indigo_900</color>
+    <color name="colorAccent">@color/indigo_800</color>
 
-    <color name="buttonPrimaryLight">@color/yellow_300</color>
     <color name="buttonPrimary">@color/yellow_400</color>
-    <color name="buttonPrimaryDark">@color/yellow_500</color>
-
-    <color name="buttonSecondary1Light">@color/indigo_700</color>
     <color name="buttonSecondary1">@color/indigo_800</color>
-    <color name="buttonSecondary1Dark">@color/indigo_900</color>
-
-    <color name="buttonSecondary2Light">@color/white</color>
     <color name="buttonSecondary2">@color/white</color>
-    <color name="buttonSecondary2Dark">@color/white</color>
 
     <color name="yellow_300">#FFF176</color>
     <color name="yellow_400">#FFEE58</color>
@@ -32,4 +19,5 @@
 
     <color name="black">#000000</color>
     <color name="white">#FFFFFF</color>
+
 </resources>

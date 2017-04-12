@@ -41,6 +41,6 @@
         android:layout_alignParentBottom="true"
         android:minHeight="120dp"
         android:text="@string/continue_"
-        android:theme="@style/ButtonSecondary1Light"/>
+        android:theme="@style/ButtonSecondary1"/>
 
 </RelativeLayout>
