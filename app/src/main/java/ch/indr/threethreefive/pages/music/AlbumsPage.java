@@ -47,7 +47,7 @@ public class AlbumsPage extends Page {
       builder.addLink(musicAlbum(album.getId()),
           album.getName(),
           makeSubtitle(album),
-          makeDescription(album),
+          makeContentDescription(album),
           album.getArtworkUri(),
           R.drawable.ic_default_art);
     }
@@ -55,7 +55,7 @@ public class AlbumsPage extends Page {
     setPageItems(builder);
   }
 
-  private String makeDescription(Album album) {
+  private String makeContentDescription(Album album) {
     final int numberOfTracks = album.getNumberOfTracks();
     return album.getName() + " by " + album.getArtist() + ", "
         + getResources().getQuantityString(R.plurals.music_tracks, numberOfTracks, numberOfTracks);

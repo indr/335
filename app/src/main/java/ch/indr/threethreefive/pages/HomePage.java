@@ -138,7 +138,7 @@ public class HomePage extends Page {
       }
 
       setTitle(title);
-      setDescription(title);
+      setContentDescription(title);
       setUri(uri);
     }
   }

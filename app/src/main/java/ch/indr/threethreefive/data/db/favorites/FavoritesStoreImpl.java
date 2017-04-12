@@ -35,7 +35,7 @@ public class FavoritesStoreImpl implements FavoritesStore {
     ContentValues values = new ContentValues();
     values.put(FavoritesContract.FavoritesEntry.COLUMN_NAME_TITLE, favorite.getTitle());
     values.put(FavoritesContract.FavoritesEntry.COLUMN_NAME_SUBTITLE, favorite.getSubtitle());
-    values.put(FavoritesContract.FavoritesEntry.COLUMN_NAME_DESCRIPTION, favorite.getDescription());
+    values.put(FavoritesContract.FavoritesEntry.COLUMN_NAME_DESCRIPTION, favorite.getContentDescription());
     values.put(FavoritesContract.FavoritesEntry.COLUMN_NAME_PAGE_URI, favorite.getPageUri().toString());
     values.put(FavoritesContract.FavoritesEntry.COLUMN_NAME_ICON_URI, UriUtils.getString(favorite.getIconUri()));
 

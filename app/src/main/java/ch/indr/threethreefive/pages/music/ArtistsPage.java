@@ -43,19 +43,21 @@ public class ArtistsPage extends Page {
 
     final PageItemsBuilder builder = pageItemsBuilder();
     for (Artist artist : artists) {
-      builder.addLink(PageUris.musicArtist(artist.getId()), artist.getName(), makeSubtitle(artist), makeDescription(artist));
+      builder.addLink(PageUris.musicArtist(artist.getId()),
+          artist.getName(),
+          makeSubtitle(artist),
+          makeContentDescription(artist));
     }
 
     setPageItems(builder);
   }
 
-  private String makeDescription(Artist artist) {
+  private String makeContentDescription(Artist artist) {
     return artist.getName() + ", " + makeSubtitle(artist);
   }
 
   private String makeSubtitle(Artist artist) {
     return getResources().getQuantityString(R.plurals.music_albums, artist.getNumberOfAlbums(), artist.getNumberOfAlbums()) +
-        ", " +
-        getResources().getQuantityString(R.plurals.music_tracks, artist.getNumberOfTracks(), artist.getNumberOfTracks());
+        ", " + getResources().getQuantityString(R.plurals.music_tracks, artist.getNumberOfTracks(), artist.getNumberOfTracks());
   }
 }

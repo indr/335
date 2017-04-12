@@ -262,7 +262,7 @@ public class Station {
     return StringUtils.join(result, ", ");
   }
 
-  public String makeDescription(String props) {
+  public String makeContentDescription(String props) {
     return this.getName() + ", " + makeSubtitle(props);
   }
 

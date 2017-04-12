@@ -21,7 +21,7 @@ public abstract class PageItem {
 
   protected BehaviorSubject<String> title = BehaviorSubject.create();
   protected BehaviorSubject<String> subtitle = BehaviorSubject.create();
-  protected BehaviorSubject<String> description = BehaviorSubject.create();
+  protected BehaviorSubject<String> contentDescription = BehaviorSubject.create();
   protected BehaviorSubject<Uri> iconUri = BehaviorSubject.create();
 
   protected PageItem(final @NonNull String title) {
@@ -29,16 +29,16 @@ public abstract class PageItem {
   }
 
   protected PageItem(final @NonNull String title, final @Nullable String subtitle,
-                     final @NonNull String description) {
-    this(title, subtitle, description, null, 0);
+                     final @NonNull String contentDescription) {
+    this(title, subtitle, contentDescription, null, 0);
   }
 
   protected PageItem(final @NonNull String title, final @Nullable String subtitle,
-                     final @NonNull String description, final @Nullable Uri iconUri,
+                     final @NonNull String contentDescription, final @Nullable Uri iconUri,
                      final int defaultIconResId) {
     this.title.onNext(title);
     this.subtitle.onNext(StringUtils.isEmpty(subtitle) ? null : subtitle);
-    this.description.onNext(description);
+    this.contentDescription.onNext(contentDescription);
     this.iconUri.onNext(iconUri);
     this.defaultIconResId = defaultIconResId;
   }
@@ -67,16 +67,16 @@ public abstract class PageItem {
     return subtitle;
   }
 
-  public final @Nullable String getDescription() {
-    return description.getValue();
+  public final @Nullable String getContentDescription() {
+    return contentDescription.getValue();
   }
 
-  protected void setDescription(final @Nullable String description) {
-    this.description.onNext(description);
+  protected void setContentDescription(final @Nullable String contentDescription) {
+    this.contentDescription.onNext(contentDescription);
   }
 
   public final @NonNull Observable<String> description() {
-    return description;
+    return contentDescription;
   }
 
   public final @Nullable Uri getIconUri() {

@@ -80,7 +80,7 @@ public class LanguagePage extends SpiceBasePage implements RequestListener<List<
       builder.addLink(PageUris.radioStation(station.getId()),
           station.getName(),
           station.makeSubtitle("CG"),
-          station.makeDescription("CG"),
+          station.makeContentDescription("CG"),
           station.getLogoUri(),
           R.drawable.ic_radio_grey600_36dp);
     }

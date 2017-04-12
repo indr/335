@@ -26,7 +26,7 @@ public class ToggleFavorite extends PageCommand {
   public ToggleFavorite(final @NonNull Resources resources, final @NonNull FavoritesStore favoritesStore, final @NonNull PageLink pageLink) {
     this.resources = resources;
     this.favorite = new Favorite(0, pageLink.getTitle(), pageLink.getSubtitle(),
-        pageLink.getDescription(), pageLink.getUri(), pageLink.getIconUri());
+        pageLink.getContentDescription(), pageLink.getUri(), pageLink.getIconUri());
 
     updateTitle(favoritesStore.isFavorite(pageLink.getUri()));
   }
@@ -62,6 +62,6 @@ public class ToggleFavorite extends PageCommand {
         ? resources.getString(R.string.remove_from_favorites)
         : resources.getString(R.string.add_to_favorites);
     setTitle(title);
-    setDescription(title);
+    setContentDescription(title);
   }
 }

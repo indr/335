@@ -24,7 +24,7 @@ public class OpenWebsite extends PageCommand {
     }
     setTitle("Open website " + niceUrl);
     setSubtitle(null);
-    setDescription("Open website " + niceUrl);
+    setContentDescription("Open website " + niceUrl);
   }
 
   public OpenWebsite(final @NonNull Context context, final @NonNull Uri websiteUri,
@@ -35,7 +35,7 @@ public class OpenWebsite extends PageCommand {
 
     setTitle(title);
     setSubtitle(subtitle);
-    setDescription(description);
+    setContentDescription(description);
   }
 
   @Override public void execute(@NonNull Environment environment) {

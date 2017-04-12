@@ -124,7 +124,7 @@ public class PageItemsAdapter extends ArrayAdapter<PageItem> implements SharedPr
       textViewTitle.setText(pageItem.getTitle());
       textViewSubtitle.setVisibility(pageItem.getSubtitle() == null ? View.GONE : View.VISIBLE);
       textViewSubtitle.setText(pageItem.getSubtitle());
-      convertView.setContentDescription(pageItem.getDescription());
+      convertView.setContentDescription(pageItem.getContentDescription());
 
       // Subscribe to page items observables
       subscriptions.add(pageItem.title()

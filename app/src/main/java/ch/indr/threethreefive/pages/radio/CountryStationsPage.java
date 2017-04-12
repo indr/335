@@ -55,7 +55,7 @@ public class CountryStationsPage extends StationListBasePage {
       builder.addLink(PageUris.radioStation(station.getId()),
           station.getName(),
           station.makeSubtitle("LG"),
-          station.makeDescription("LG"),
+          station.makeContentDescription("LG"),
           station.getLogoUri(),
           R.drawable.ic_radio_grey600_36dp);
     }

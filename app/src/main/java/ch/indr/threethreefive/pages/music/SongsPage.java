@@ -56,7 +56,7 @@ public class SongsPage extends Page {
       builder.addLink(musicSong(song.getId()),
           song.getName(),
           makeSubtitle(song),
-          makeDescription(song),
+          makeContentDescription(song),
           song.getAlbumArtworkUri(),
           R.drawable.ic_default_art);
     }
@@ -64,7 +64,7 @@ public class SongsPage extends Page {
     setPageItems(builder);
   }
 
-  private String makeDescription(Song song) {
+  private String makeContentDescription(Song song) {
     return song.getName() + " by " + song.getArtist();
   }
 

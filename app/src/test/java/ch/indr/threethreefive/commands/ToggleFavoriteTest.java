@@ -35,7 +35,7 @@ public class ToggleFavoriteTest extends TtfRobolectricTestCase {
 
     assertEquals(getString(R.string.remove_from_favorites), toggleFavorite.getTitle());
     assertNull(toggleFavorite.getSubtitle());
-    assertEquals(getString(R.string.remove_from_favorites), toggleFavorite.getDescription());
+    assertEquals(getString(R.string.remove_from_favorites), toggleFavorite.getContentDescription());
   }
 
   @Test
@@ -47,6 +47,6 @@ public class ToggleFavoriteTest extends TtfRobolectricTestCase {
 
     assertEquals(getString(R.string.add_to_favorites), toggleFavorite.getTitle());
     assertNull(toggleFavorite.getSubtitle());
-    assertEquals(getString(R.string.add_to_favorites), toggleFavorite.getDescription());
+    assertEquals(getString(R.string.add_to_favorites), toggleFavorite.getContentDescription());
   }
 }

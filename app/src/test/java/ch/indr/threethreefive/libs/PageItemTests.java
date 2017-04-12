@@ -52,7 +52,7 @@ public class PageItemTests extends TtfRobolectricTestCase {
 
     assertEquals(pTitle, pageItem.getTitle());
     assertEquals(pSubtitle, pageItem.getSubtitle());
-    assertEquals(pDescription, pageItem.getDescription());
+    assertEquals(pDescription, pageItem.getContentDescription());
     assertEquals(pIconUri, pageItem.getIconUri());
     assertEquals(pDefaultIconResId, pageItem.getDefaultIconResId());
 

@@ -45,7 +45,7 @@ public abstract class Page implements PageType {
   private Uri pageUri;
   private final BehaviorSubject<String> pageTitle = BehaviorSubject.create();
   private String subtitle;
-  private String description;
+  private String contentDescription;
   private Uri iconUri;
 
   // Set default value to `null`, which indicates the page is loading items
@@ -70,7 +70,7 @@ public abstract class Page implements PageType {
   }
 
   protected PageLink getCurrentPageLink() {
-    return new PageLink(getPageUri(), getTitle(), getSubtitle(), getDescription(), getIconUri(), 0);
+    return new PageLink(getPageUri(), getTitle(), getSubtitle(), getContentDescription(), getIconUri(), 0);
   }
 
   @Override public boolean getIsRootPage() {
@@ -156,12 +156,12 @@ public abstract class Page implements PageType {
     this.subtitle = subtitle;
   }
 
-  public final @Nullable String getDescription() {
-    return description;
+  public final @Nullable String getContentDescription() {
+    return contentDescription;
   }
 
-  protected void setDescription(final @Nullable String description) {
-    this.description = description;
+  protected void setContentDescription(final @Nullable String contentDescription) {
+    this.contentDescription = contentDescription;
   }
 
   public final @Nullable Uri getIconUri() {

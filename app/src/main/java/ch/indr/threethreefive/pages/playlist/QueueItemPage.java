@@ -189,7 +189,7 @@ public class QueueItemPage extends Page {
     RemoveQueueItem(@NonNull MediaItem mediaItem) {
       super("Remove from Playlist", mediaItem);
 
-      setDescription("Remove from Playlist");
+      setContentDescription("Remove from Playlist");
       this.mediaItemTitle = mediaItem.getTitle();
     }
 
@@ -224,7 +224,7 @@ public class QueueItemPage extends Page {
     public void updateName() {
       final String text = QueueItemPage.this.queueItemId > -1 ? "Remove from Playlist" : "Add to Playlist";
       setTitle(text);
-      setDescription(text);
+      setContentDescription(text);
     }
   }
 }

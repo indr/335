@@ -17,17 +17,17 @@ public class Favorite {
   private long id;
   private final String title;
   private final String subtitle;
-  private final String description;
+  private final String contentDescription;
   private final Uri pageUri;
   private final Uri iconUri;
 
   public Favorite(final long id, final @NonNull String title, final @Nullable String subtitle,
-                  final @Nullable String description, final @NonNull Uri pageUri,
+                  final @Nullable String contentDescription, final @NonNull Uri pageUri,
                   final @Nullable Uri iconUri) {
     this.id = id;
     this.title = title;
     this.subtitle = subtitle;
-    this.description = StringUtils.isEmpty(description) ? title : description;
+    this.contentDescription = StringUtils.isEmpty(contentDescription) ? title : contentDescription;
     this.pageUri = pageUri;
     this.iconUri = iconUri;
   }
@@ -44,8 +44,8 @@ public class Favorite {
     return subtitle;
   }
 
-  @NonNull public String getDescription() {
-    return description;
+  @NonNull public String getContentDescription() {
+    return contentDescription;
   }
 
   @NonNull public Uri getPageUri() {

@@ -49,7 +49,7 @@ public class IndexPage extends Page {
       builder.addLink(favorite.getPageUri(),
           favorite.getTitle(),
           favorite.getSubtitle(),
-          favorite.getDescription(),
+          favorite.getContentDescription(),
           favorite.getIconUri(),
           R.drawable.ic_default_art);
     }

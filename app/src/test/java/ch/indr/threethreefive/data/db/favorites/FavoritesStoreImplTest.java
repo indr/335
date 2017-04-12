@@ -37,7 +37,7 @@ public class FavoritesStoreImplTest extends TtfRobolectricTestCase {
 
     assertEquals(id, actual.getId());
     assertEquals(expected.getTitle(), actual.getTitle());
-    assertEquals(expected.getDescription(), actual.getDescription());
+    assertEquals(expected.getContentDescription(), actual.getContentDescription());
     assertEquals(expected.getPageUri(), actual.getPageUri());
     assertEquals(expected.getSubtitle(), actual.getSubtitle());
   }
