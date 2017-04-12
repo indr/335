@@ -82,7 +82,6 @@ public class ButtonGuideViewModel extends PageActivityViewModel<ButtonGuideActiv
     // Select first item if already on home page
     pageItem
         .filter(ObjectUtils::isNotNull)
-        .switchMap(PageItem::description)
         .compose(takeWhen(page.map(Page::getPageUri).compose(takeWhen(goHome))
             .filter(uri -> UriUtils.isEmpty(uri) || PageLink.HomePage.getUri().equals(uri))))
         .withLatestFrom(page, (__, p) -> p)
