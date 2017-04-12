@@ -14,27 +14,38 @@ import android.support.annotation.Nullable;
 
 import ch.indr.threethreefive.ui.IntentKey;
 
-public class PageRequest {
-
-  public static PageRequest HomePage = new PageRequest(Uri.parse("/"), "Home");
-
-  private final Uri uri;
+public class Transition {
+  private final Uri pageUri;
   private final String title;
+  private boolean replace = false;
 
-  private PageRequest(@NonNull Uri uri, final @Nullable String title) {
-    this.uri = uri;
-    this.title = title;
+  public Transition(final @NonNull Uri pageUri) {
+    this(pageUri, null);
   }
 
-  public @NonNull Uri getUri() {
-    return uri;
+  public Transition(final @NonNull Uri pageUri, final @Nullable String title) {
+    this(pageUri, title, false);
+  }
+
+  public Transition(final @NonNull Uri pageUri, final @Nullable String title, final boolean replace) {
+    this.pageUri = pageUri;
+    this.title = title;
+    this.replace = replace;
+  }
+
+  public @NonNull Uri getPageUri() {
+    return pageUri;
   }
 
   public @Nullable String getTitle() {
     return title;
   }
 
-  public static @Nullable PageRequest fromIntent(Intent intent) {
+  public boolean getReplace() {
+    return replace;
+  }
+
+  public static @Nullable Transition fromIntent(Intent intent) {
     if (!intent.hasExtra(IntentKey.PAGE_URI)) {
       return null;
     }
@@ -46,6 +57,6 @@ public class PageRequest {
       title = intent.getStringExtra(IntentKey.PAGE_TITLE);
     }
 
-    return new PageRequest(uri, title);
+    return new Transition(uri, title);
   }
 }

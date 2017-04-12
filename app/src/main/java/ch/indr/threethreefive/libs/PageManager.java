@@ -19,21 +19,17 @@ import java.util.Stack;
 
 import ch.indr.threethreefive.ThreeThreeFiveApp;
 import ch.indr.threethreefive.libs.pages.Page;
-import ch.indr.threethreefive.libs.pages.PageResolver;
 import ch.indr.threethreefive.libs.pages.PageMeta;
-import ch.indr.threethreefive.libs.pages.PageRequest;
+import ch.indr.threethreefive.libs.pages.Transition;
+import ch.indr.threethreefive.libs.pages.PageResolver;
 import ch.indr.threethreefive.pages.RootPageResolver;
 import ch.indr.threethreefive.pages.errors.NotFound;
 import timber.log.Timber;
 
 public class PageManager {
 
-  public static Page fetch(final @NonNull Context context, final @NonNull PageRequest pageRequest) {
-    return fetch(context, pageRequest.getUri(), pageRequest.getTitle());
-  }
-
-  public static Page fetch(final @NonNull Context context, final @NonNull Uri pageUri) {
-    return fetch(context, pageUri, null);
+  public static Page fetch(final @NonNull Context context, final @NonNull Transition transition) {
+    return fetch(context, transition.getPageUri(), transition.getTitle());
   }
 
   private static Page fetch(final @NonNull Context context, final @NonNull Uri pageUri, final @Nullable String pageTitle) {

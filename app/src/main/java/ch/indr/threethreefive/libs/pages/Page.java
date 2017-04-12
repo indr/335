@@ -22,7 +22,6 @@ import ch.indr.threethreefive.AppComponent;
 import ch.indr.threethreefive.ThreeThreeFiveApp;
 import ch.indr.threethreefive.commands.ToggleFavorite;
 import ch.indr.threethreefive.libs.Environment;
-import ch.indr.threethreefive.libs.PageCommand;
 import ch.indr.threethreefive.libs.PageItem;
 import ch.indr.threethreefive.libs.PageItemsBuilder;
 import ch.indr.threethreefive.libs.PageLink;
@@ -62,7 +61,8 @@ public abstract class Page implements PageType {
 
   private final PublishSubject<Object> selectPreviousPageItem = PublishSubject.create();
 
-  private final PublishSubject<PageCommand> pageCommand = PublishSubject.create();
+  protected final PublishSubject<Transition> transitionTo = PublishSubject.create();
+
   private Pair<Integer, Integer> firstVisibleItem;
 
   public Page(Environment environment) {
@@ -109,10 +109,6 @@ public abstract class Page implements PageType {
 
   @Override public Observable<PageLink> parentPageLink() {
     return parentPageLink;
-  }
-
-  @Override public Observable<PageCommand> pageCommand() {
-    return pageCommand;
   }
 
   public void selectFirstPageItem() {
@@ -174,6 +170,10 @@ public abstract class Page implements PageType {
 
   protected void setIconUri(final @Nullable Uri iconUri) {
     this.iconUri = iconUri;
+  }
+
+  public Observable<Transition> transitionTo() {
+    return transitionTo;
   }
 
   public void onCreate(@NonNull Context context, @NonNull Uri uri, Bundle bundle) {

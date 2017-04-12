@@ -12,13 +12,11 @@ import android.support.annotation.Nullable;
 
 import java.util.List;
 
-import ch.indr.threethreefive.libs.PageCommand;
 import ch.indr.threethreefive.libs.PageItem;
 import ch.indr.threethreefive.libs.PageLink;
 import rx.Observable;
 
 public interface PageType {
-
   boolean getIsRootPage();
 
   @Nullable Uri getPageUri();
@@ -33,5 +31,5 @@ public interface PageType {
 
   Observable<PageLink> parentPageLink();
 
-  Observable<PageCommand> pageCommand();
+  Observable<Transition> transitionTo();
 }

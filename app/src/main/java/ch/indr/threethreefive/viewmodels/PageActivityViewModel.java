@@ -12,6 +12,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.util.Pair;
 
 import com.crashlytics.android.answers.Answers;
 import com.crashlytics.android.answers.ContentViewEvent;
@@ -28,7 +29,7 @@ import ch.indr.threethreefive.libs.PageItem;
 import ch.indr.threethreefive.libs.PageLink;
 import ch.indr.threethreefive.libs.PageManager;
 import ch.indr.threethreefive.libs.pages.Page;
-import ch.indr.threethreefive.libs.pages.PageRequest;
+import ch.indr.threethreefive.libs.pages.Transition;
 import ch.indr.threethreefive.libs.utils.ObjectUtils;
 import rx.Observable;
 import rx.subjects.BehaviorSubject;
@@ -55,12 +56,12 @@ public abstract class PageActivityViewModel<ViewType extends ActivityLifecycleTy
   @Override protected void onCreate(@NonNull Context context, @Nullable Bundle savedInstanceState) {
     super.onCreate(context, savedInstanceState);
 
-    intent().map(PageRequest::fromIntent)
+    intent().map(Transition::fromIntent)
         .filter(ObjectUtils::isNotNull)
-        .startWith(PageRequest.HomePage)
-        .map(pageRequest -> PageManager.fetch(context, pageRequest))
-        .compose(bindToLifecycle())
+        .startWith(new Transition(PageLink.HomePage.getUri(), null))
         .doOnNext(this::reportPageView)
+        .map(transition -> Pair.create(transition, PageManager.fetch(context, transition)))
+        .compose(bindToLifecycle())
         .subscribe(this::transitionTo);
 
     page.switchMap(Page::pageItems)
@@ -75,12 +76,18 @@ public abstract class PageActivityViewModel<ViewType extends ActivityLifecycleTy
         .map(ObjectUtils::isNotNull)
         .compose(bindToLifecycle())
         .subscribe(canGoUp);
+
+    page.switchMap(Page::transitionTo)
+        .doOnNext(this::reportPageView)
+        .map(transition -> Pair.create(transition, PageManager.fetch(context, transition)))
+        .compose(bindToLifecycle())
+        .subscribe(this::transitionTo);
   }
 
-  private void reportPageView(Page page) {
+  private void reportPageView(Transition page) {
     try {
       final Uri pageUri = page.getPageUri();
-      final String contentId = pageUri == null ? "" : pageUri.toString().replace("//ch.indr.threethreefive", "");
+      final String contentId = pageUri.toString().replace("//ch.indr.threethreefive", "");
       Timber.d("reportPageView content id %s, %s", contentId, this.toString());
 
       if (BuildConfig.ANSWERS) {
@@ -118,14 +125,26 @@ public abstract class PageActivityViewModel<ViewType extends ActivityLifecycleTy
     PageManager.destroy(pageStack);
   }
 
-  private void transitionTo(@NonNull Page newPage) {
+
+  private void transitionTo(final @NonNull Pair<Transition, Page> pageTransition) {
+    Transition transition = pageTransition.first;
+    Page newPage = pageTransition.second;
     Timber.d("transitionTo new %s, %s", newPage.toString(), this.toString());
     Page oldPage = this.page.getValue();
+
+    Timber.d("onBeforeTransition %s", this.toString());
+    onBeforeTransition(transition);
     transitionTo(oldPage, newPage);
+    Timber.d("onAfterTransition %s", this.toString());
+    onAfterTransition();
 
     if (newPage.getIsRootPage()) {
       Timber.d("New page is a root page, clearing stack");
       PageManager.destroy(pageStack);
+    } else if (transition.getReplace()) {
+      Timber.d("Removing page from stack in order to replace %s, %s", oldPage.toString(), this.toString());
+      pageStack.remove(oldPage);
+      PageManager.destroy(oldPage);
     }
 
     Timber.d("Adding page to stack %s, %s", newPage.toString(), this.toString());
@@ -140,6 +159,12 @@ public abstract class PageActivityViewModel<ViewType extends ActivityLifecycleTy
     if (oldPage != null) {
       PageManager.pause(oldPage);
     }
+  }
+
+  protected void onBeforeTransition(final @NonNull Transition transition) {
+  }
+
+  protected void onAfterTransition() {
   }
 
   protected void executePageItem(@NonNull PageItem pageItem) {

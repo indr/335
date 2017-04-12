@@ -20,6 +20,7 @@ import ch.indr.threethreefive.data.network.radioBrowser.model.Genre;
 import ch.indr.threethreefive.libs.Environment;
 import ch.indr.threethreefive.libs.PageItemsBuilder;
 import ch.indr.threethreefive.libs.PageUris;
+import ch.indr.threethreefive.libs.pages.Transition;
 import ch.indr.threethreefive.libs.utils.CollectionUtils;
 
 public class CountryGenresPage extends GenreListBasePage {
@@ -47,6 +48,7 @@ public class CountryGenresPage extends GenreListBasePage {
   @Override protected void addPageItems(PageItemsBuilder builder, List<Genre> genres) {
     if (genres.size() == 0) {
       builder.addText(getString(R.string.no_genres_found));
+      transitionTo.onNext(new Transition(PageUris.radioCountryStations(countryId), getTitle(), true));
       return;
     }
 
