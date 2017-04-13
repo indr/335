@@ -9,6 +9,7 @@ package ch.indr.threethreefive.data.db.favorites;
 
 import android.net.Uri;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 
 import java.util.List;
 
@@ -21,5 +22,5 @@ public interface FavoritesStore {
 
   void remove(final @NonNull Uri pageUri);
 
-  boolean isFavorite(final @NonNull Uri pageUri);
+  boolean isFavorite(final @Nullable Uri pageUri);
 }

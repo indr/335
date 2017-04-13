@@ -21,6 +21,7 @@ import java.util.List;
 import ch.indr.threethreefive.AppComponent;
 import ch.indr.threethreefive.ThreeThreeFiveApp;
 import ch.indr.threethreefive.commands.ToggleFavorite;
+import ch.indr.threethreefive.data.db.favorites.FavoritesStore;
 import ch.indr.threethreefive.libs.Description;
 import ch.indr.threethreefive.libs.Environment;
 import ch.indr.threethreefive.libs.PageItem;
@@ -63,7 +64,7 @@ public abstract class Page implements PageType {
 
   private final PublishSubject<Object> selectPreviousPageItem = PublishSubject.create();
 
-  protected final PublishSubject<Transition> transitionTo = PublishSubject.create();
+  private final PublishSubject<Transition> transitionTo = PublishSubject.create();
 
   private Pair<Integer, Integer> firstVisibleItem;
 
@@ -177,6 +178,17 @@ public abstract class Page implements PageType {
     this.iconUri = iconUri;
   }
 
+  public boolean transitionTo(final @NonNull Transition transition) {
+    // If the transition intends to replace the current page, there won't be a way
+    // for the user the remove the favorite.
+    if (transition.getReplace() && environment.favoritesStore().isFavorite(getPageUri())) {
+      return false;
+    }
+
+    transitionTo.onNext(transition);
+    return true;
+  }
+
   public Observable<Transition> transitionTo() {
     return transitionTo;
   }
@@ -258,6 +270,7 @@ public abstract class Page implements PageType {
     return context;
   }
 
+  // TODO: Remove and add getQuantityString
   protected Resources getResources() {
     return context.getResources();
   }
@@ -276,15 +289,6 @@ public abstract class Page implements PageType {
 
   protected @NonNull AppComponent component() {
     return application().component();
-  }
-
-  protected void handle(Exception e) {
-    handle(e.getMessage());
-    e.printStackTrace();
-  }
-
-  protected void handle(String message) {
-    setError(message);
   }
 
   protected String getUriParam(@NonNull String key) {
@@ -319,10 +323,27 @@ public abstract class Page implements PageType {
     }
   }
 
-  private void setError(final String message) {
-    final List<PageItem> items = pageItemsBuilder()
-        .addText(message)
-        .build();
+  protected void handle(final @NonNull Exception ex) {
+    Timber.e(ex, ex.getMessage());
+    setError(ex.getMessage());
+    ex.printStackTrace();
+  }
+
+  protected void handle(final @NonNull String message) {
+    Timber.e(message);
+    setError(message);
+  }
+
+  private void setError(final @NonNull String message) {
+    final PageItemsBuilder builder = pageItemsBuilder();
+
+    final FavoritesStore favoritesStore = environment.favoritesStore();
+    if (favoritesStore.isFavorite(getPageUri())) {
+      builder.addRemoveFavorite(getCurrentPageLink());
+    }
+
+    builder.addText(message);
+    final List<PageItem> items = builder.build();
 
     setPageItems(items);
   }

@@ -82,6 +82,10 @@ public class PageItemsBuilder {
     return this;
   }
 
+  public PageItemsBuilder addRemoveFavorite(PageLink pageLink) {
+    return addToggleFavorite(pageLink);
+  }
+
   public List<PageItem> build() {
     return items;
   }

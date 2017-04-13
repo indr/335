@@ -46,7 +46,8 @@ public class FavoritesStoreImpl implements FavoritesStore {
     return read(null, null);
   }
 
-  public boolean isFavorite(final @NonNull Uri pageUri) {
+  public boolean isFavorite(final @Nullable Uri pageUri) {
+    if (pageUri == null) return false;
     return findByPageUri(pageUri.toString()).size() > 0;
   }
 
