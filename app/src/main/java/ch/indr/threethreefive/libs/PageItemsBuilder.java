@@ -18,6 +18,7 @@ import java.util.List;
 
 import ch.indr.threethreefive.commands.ActionCommand;
 import ch.indr.threethreefive.commands.ToggleFavorite;
+import ch.indr.threethreefive.libs.utils.StringUtils;
 import rx.functions.Action0;
 import rx.functions.Action1;
 
@@ -52,15 +53,17 @@ public class PageItemsBuilder {
   }
 
   public PageItemsBuilder addLink(final @NonNull Uri uri, final @NonNull String title,
-                                  final @Nullable String subtitle, final @NonNull String description) {
-    items.add(new PageLink(uri, new Description(title, subtitle, description)));
+                                  final @Nullable String subtitle, final @NonNull String contentDescription) {
+    final Description description = new Description(title, StringUtils.isEmpty(subtitle) ? null : subtitle, contentDescription);
+    items.add(new PageLink(uri, description));
     return this;
   }
 
   public PageItemsBuilder addLink(final @NonNull Uri uri, final @NonNull String title,
-                                  final @Nullable String subtitle, final @NonNull String description,
+                                  final @Nullable String subtitle, final @NonNull String contentDescription,
                                   final @Nullable Uri iconUri, final int defaultIconResId) {
-    items.add(new PageLink(uri, new Description(title, subtitle, description), iconUri, defaultIconResId));
+    final Description description = new Description(title, StringUtils.isEmpty(subtitle) ? null : subtitle, contentDescription);
+    items.add(new PageLink(uri, description, iconUri, defaultIconResId));
     return this;
   }
 

@@ -8,6 +8,7 @@ import android.support.annotation.Nullable;
 
 import ch.indr.threethreefive.libs.Environment;
 import ch.indr.threethreefive.libs.PageCommand;
+import ch.indr.threethreefive.libs.utils.StringUtils;
 
 public class OpenWebsite extends PageCommand {
 
@@ -29,13 +30,13 @@ public class OpenWebsite extends PageCommand {
 
   public OpenWebsite(final @NonNull Context context, final @NonNull Uri websiteUri,
                      final @NonNull String title, final @Nullable String subtitle,
-                     final @NonNull String description) {
+                     final @NonNull String contentDescription) {
     this.context = context;
     this.websiteUri = websiteUri;
 
     setTitle(title);
-    setSubtitle(subtitle);
-    setContentDescription(description);
+    setSubtitle(StringUtils.isEmpty(subtitle) ? null : subtitle);
+    setContentDescription(contentDescription);
   }
 
   @Override public void execute(@NonNull Environment environment) {
