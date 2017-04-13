@@ -34,7 +34,7 @@ public class GenresPageTests extends TtfRobolectricTestCase {
 
   @Test
   public void onCreate_whenNoGenresFound_addsNoGenresFound() {
-    when(musicStore.queryGenres()).thenReturn(new ArrayList<>());
+    when(musicStore.queryGenres(null)).thenReturn(new ArrayList<>());
 
     final GenresPage page = createPage();
 

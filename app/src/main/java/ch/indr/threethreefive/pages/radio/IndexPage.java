@@ -36,9 +36,9 @@ public class IndexPage extends Page {
     final PageItemsBuilder builder = pageItemsBuilder();
 
     builder.addLink(PageUris.radioTrending(), getString(R.string.radio_trending_title));
-    builder.addLink(PageUris.radioGenres(), getString(R.string.genres));
-    builder.addLink(PageUris.radioCountries(), getString(R.string.countries));
-    builder.addLink(PageUris.radioLanguages(), getString(R.string.languages));
+    builder.addLink(PageUris.radioGenres(), getString(R.string.radio_genres_title));
+    builder.addLink(PageUris.radioCountries(), getString(R.string.radio_countries_title));
+    builder.addLink(PageUris.radioLanguages(), getString(R.string.radio_languages_title));
 
     setPageItems(builder);
   }

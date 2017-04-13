@@ -78,6 +78,8 @@ Speech synthesizing is required for the button interface.\n\
 Go to www.indr.ch/335 to learn more and find instructions on how to install Text-to-Speech.\n\
 ]]></string>
 
+    <string name="unknown">Unknown</string>
+
     <string name="welcome_to_335">Welcome to 3 3 5</string>
 
     <!-- uamp.xml -->
@@ -88,32 +90,28 @@ Go to www.indr.ch/335 to learn more and find instructions on how to install Text
     <string name="label_previous">Previous</string>
     <string name="label_next">Next</string>
 
-
-    <string name="country">Country</string>
-    <string name="countries">Countries</string>
+    <string name="radio_countries_title">Countries</string>
     <string name="no_countries_found">No countries found</string>
     <string name="no_countries_found_error">Error: No countries found</string>
     <string name="show_top_countries">Show top countries</string>
     <string name="show_more_countries">Show more countries</string>
     <string name="show_all_countries">Show all countries</string>
 
-    <string name="genre">Genre</string>
-    <string name="genres">Genres</string>
+    <string name="radio_genres_title">Genres</string>
     <string name="no_genres_found">No genres found</string>
     <string name="no_genres_found_error">Error: No genres found</string>
     <string name="show_top_genres">Show top genres</string>
     <string name="show_more_genres">Show more genres</string>
     <string name="show_all_genres">Show all genres</string>
+    <string name="genre_not_found_error">Error: Genre %s not found</string>
 
-    <string name="language">Language</string>
-    <string name="languages">Languages</string>
+    <string name="radio_languages_title">Languages</string>
     <string name="no_langauges_found">No languages found</string>
     <string name="no_languages_found_error">Error: No languages found</string>
     <string name="show_top_languages">Show top languages</string>
     <string name="show_more_languages">Show more languages</string>
     <string name="show_all_langauges">Show all languages</string>
 
-    <string name="radio_trending_title">Trending</string>
     <string name="no_stations_found">No stations found</string>
     <string name="no_stations_found_error">Error: No stations found</string>
     <string name="station_not_found_error">Error: Radio station %s not found</string>
@@ -165,19 +163,11 @@ Go to www.indr.ch/335 to learn more and find instructions on how to install Text
     <string name="item_station_is_broken_title">Broken station</string>
     <string name="item_station_is_broken_subtitle">Please try again later</string>
     <string name="item_station_is_broken_description">Station is broken, please try again later</string>
-    <string name="unknown">Unknown</string>
-    <string name="music_artist_subtitle">Artist</string>
+
     <string name="music_artists">Artists</string>
     <string name="music_albums">Albums</string>
     <string name="music_genres">Genres</string>
     <string name="music_songs">Songs</string>
-    <string name="music_genre_subtitle">Music genre</string>
-    <string name="genre_not_found_error">Error: Genre %s not found</string>
-    <string name="radio_country_genre_subtitle">Radio stations from %s</string>
-    <string name="radio_country_genres_subtitle">Genres %s</string>
-    <string name="radio_country_stations_subtitle">Radio stations %s</string>
-    <string name="radio_genre_subtitle">Radio genre</string>
-    <string name="radio_genres_title">Genres</string>
-    <string name="radio_language_subtitle">Radio stations</string>
 
+    <string name="radio_trending_title">Trending</string>
 </resources>

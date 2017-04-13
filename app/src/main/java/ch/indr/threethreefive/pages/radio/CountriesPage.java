@@ -43,7 +43,7 @@ public class CountriesPage extends SpiceBasePage implements RequestListener<Coun
     super.onCreate(context, uri, bundle);
     component().inject(this);
 
-    setDescription(getString(R.string.countries));
+    setDescription(getString(R.string.radio_countries_title));
   }
 
   @Override public void onStart() {

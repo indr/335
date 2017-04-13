@@ -33,7 +33,7 @@ public class GenresPageTests extends TtfRobolectricTestCase {
   public void onCreate_setsTitle() {
     final GenresPage page = createPage();
 
-    assertEquals(getString(R.string.genres), page.getTitle());
+    assertEquals(getString(R.string.radio_genres_title), page.getTitle());
   }
 
   @Test
