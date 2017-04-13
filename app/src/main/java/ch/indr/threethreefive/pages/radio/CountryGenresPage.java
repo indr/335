@@ -38,7 +38,7 @@ public class CountryGenresPage extends GenreListBasePage {
 
     this.countryId = getUriParam("countryId");
 
-    setDescription(CountryNames.getName(countryId));
+    setDescription(CountryNames.getName(countryId), getString(R.string.radio_genres));
   }
 
   @Override public void onStart() {

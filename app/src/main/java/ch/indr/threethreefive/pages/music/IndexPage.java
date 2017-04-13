@@ -31,10 +31,10 @@ public class IndexPage extends Page {
 
     final PageItemsBuilder builder = pageItemsBuilder();
 
-    builder.addLink(PageUris.musicArtists(), getString(R.string.music_artists));
-    builder.addLink(PageUris.musicAlbums(), getString(R.string.music_albums));
-    builder.addLink(PageUris.musicGenres(), getString(R.string.music_genres));
-    builder.addLink(PageUris.musicSongs(), getString(R.string.music_songs));
+    builder.addLink(PageUris.musicArtists(), getString(R.string.artists));
+    builder.addLink(PageUris.musicAlbums(), getString(R.string.albums));
+    builder.addLink(PageUris.musicGenres(), getString(R.string.genres));
+    builder.addLink(PageUris.musicSongs(), getString(R.string.songs));
 
     setPageItems(builder);
   }

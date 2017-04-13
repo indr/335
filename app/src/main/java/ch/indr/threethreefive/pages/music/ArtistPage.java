@@ -48,7 +48,7 @@ public class ArtistPage extends Page {
       handle(getString(R.string.artist_not_found_error, artistId));
       return;
     }
-    setDescription(artist.getName());
+    setDescription(artist.getName(), getString(R.string.music_artist));
 
     final List<Song> songs = musicStore.getSongsByArtistId(artistId);
     if (songs.size() == 0) {

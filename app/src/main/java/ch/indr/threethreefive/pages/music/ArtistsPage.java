@@ -31,7 +31,7 @@ public class ArtistsPage extends Page {
   @Override public void onCreate(@NonNull Context context, @NonNull Uri uri, Bundle bundle) {
     super.onCreate(context, uri, bundle);
 
-    setDescription(getString(R.string.music_artists));
+    setDescription(getString(R.string.artists));
 
     final MusicStore musicStore = new MusicStore(getContext());
 

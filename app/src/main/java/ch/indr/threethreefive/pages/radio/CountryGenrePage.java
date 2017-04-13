@@ -18,6 +18,7 @@ import java.util.Collections;
 import java.util.List;
 
 import ch.indr.threethreefive.R;
+import ch.indr.threethreefive.data.network.radioBrowser.model.CountryNames;
 import ch.indr.threethreefive.data.network.radioBrowser.model.Genre;
 import ch.indr.threethreefive.data.network.radioBrowser.model.GenresBuilder;
 import ch.indr.threethreefive.data.network.radioBrowser.model.Station;
@@ -48,7 +49,7 @@ public class CountryGenrePage extends SpiceBasePage implements RequestListener<L
     final String genreId = getUriParam("genreId");
     this.genre = GenresBuilder.getGenre(genreId);
 
-    setDescription(genre.getName());
+    setDescription(genre.getName(), getString(R.string.radio_genre_of, CountryNames.getName(countryId)));
   }
 
   @Override public void onStart() {

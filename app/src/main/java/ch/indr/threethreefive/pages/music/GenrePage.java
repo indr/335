@@ -47,7 +47,7 @@ public class GenrePage extends Page {
       handle(getString(R.string.genre_not_found_error, genreId));
       return;
     }
-    setDescription(genre.getName());
+    setDescription(genre.getName(), getString(R.string.music_genre));
 
     final List<Song> songs = musicStore.getSongsByGenreId(genreId);
     if (songs.size() == 0) {

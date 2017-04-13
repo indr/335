@@ -49,7 +49,7 @@ public class AlbumPage extends Page {
       return;
     }
 
-    setDescription(album.getName());
+    setDescription(album.getName(), getString(R.string.music_album_by, album.getArtist()));
     setIconUri(album.getArtworkUri());
 
     final List<Song> songs = musicStore.getSongsByAlbumId(albumId);

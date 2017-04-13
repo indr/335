@@ -138,7 +138,6 @@ Go to www.indr.ch/335 to learn more and find instructions on how to install Text
     <string name="add_all_songs_to_playlist">Add all songs to playlist</string>
     <string name="add_all_albums_to_playlist">Add all albums to playlist</string>
 
-    <string name="songs">Songs</string>
     <string name="speech_song_by_artist">%1$s by %2$s</string>
     <string name="remove_from_favorites">Remove from favorites</string>
     <string name="add_to_favorites">Add to favorites</string>
@@ -164,10 +163,20 @@ Go to www.indr.ch/335 to learn more and find instructions on how to install Text
     <string name="item_station_is_broken_subtitle">Please try again later</string>
     <string name="item_station_is_broken_description">Station is broken, please try again later</string>
 
-    <string name="music_artists">Artists</string>
-    <string name="music_albums">Albums</string>
-    <string name="music_genres">Genres</string>
-    <string name="music_songs">Songs</string>
+    <string name="artists">Artists</string>
+    <string name="albums">Albums</string>
+    <string name="genres">Genres</string>
+    <string name="songs">Songs</string>
 
     <string name="radio_trending_title">Trending</string>
+    <string name="music_album_by">Music album by %s</string>
+    <string name="music_genre">Music genre</string>
+    <string name="music_artist">Music artist</string>
+    <string name="music_song_from_by">Music song from %1$s by %2$s</string>
+    <string name="radio_genre">Radio genre</string>
+    <string name="radio_genre_of">Radio genre of %s</string>
+    <string name="radio_language">Radio language</string>
+    <string name="radio_station">Radio station</string>
+    <string name="radio_stations">Radio stations</string>
+    <string name="radio_genres">Radio genres</string>
 </resources>

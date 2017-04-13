@@ -32,7 +32,7 @@ public class GenresPage extends Page {
   @Override public void onCreate(@NonNull Context context, @NonNull Uri uri, Bundle bundle) {
     super.onCreate(context, uri, bundle);
 
-    setDescription(getString(R.string.music_genres));
+    setDescription(getString(R.string.genres));
 
     final MusicStore musicStore = new MusicStore(getContext());
 

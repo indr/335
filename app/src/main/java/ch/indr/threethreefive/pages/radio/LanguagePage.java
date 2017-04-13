@@ -43,7 +43,7 @@ public class LanguagePage extends SpiceBasePage implements RequestListener<List<
 
     this.languageId = getUriParam("id");
 
-    setDescription(languageId);
+    setDescription(languageId, getString(R.string.radio_language));
   }
 
   @Override public void onStart() {

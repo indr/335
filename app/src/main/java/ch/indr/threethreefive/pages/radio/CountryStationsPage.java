@@ -35,7 +35,7 @@ public class CountryStationsPage extends StationListBasePage {
 
     this.countryId = getUriParam("countryId");
 
-    setDescription(CountryNames.getName(countryId));
+    setDescription(CountryNames.getName(countryId), getString(R.string.radio_stations));
   }
 
   @Override public void onStart() {
