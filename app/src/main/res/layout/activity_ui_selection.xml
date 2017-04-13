@@ -6,39 +6,37 @@
   ~ the LICENSE file that was distributed with this source code.
   -->
 
-<RelativeLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/background_material_dark"
+    android:background="@color/background_dark"
+    android:orientation="horizontal"
     android:paddingBottom="4dp"
     android:paddingLeft="4dp"
     android:paddingRight="4dp"
     android:paddingTop="4dp"
     tools:context="ch.indr.threethreefive.ui.activities.UiSelectionActivity">
 
-    <LinearLayout
-        android:layout_width="match_parent"
+    <Button
+        android:id="@+id/buttonListView"
+        android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:orientation="horizontal">
+        android:layout_weight="1"
+        android:contentDescription="@string/button_launch_list_interface_description"
+        android:text="@string/button_launch_list_interface_text"
+        android:theme="@style/ButtonSecondary2"
+        tools:ignore="ButtonStyle"/>
 
-        <Button
-            android:id="@+id/buttonListView"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:contentDescription="Start List Interface"
-            android:text="List"
-            android:theme="@style/ButtonSecondary2"/>
+    <Button
+        android:id="@+id/buttonButtonView"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:contentDescription="@string/button_launch_buttons_interface_description"
+        android:text="@string/button_launch_buttons_interface_text"
+        android:theme="@style/ButtonPrimary"
+        tools:ignore="ButtonStyle"/>
 
-        <Button
-            android:id="@+id/buttonButtonView"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:contentDescription="Start Button Interface"
-            android:text="Buttons"
-            android:theme="@style/ButtonPrimary"/>
-    </LinearLayout>
-</RelativeLayout>
+</LinearLayout>

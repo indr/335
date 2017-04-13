@@ -3,6 +3,11 @@
     <string name="app_name">3 3 5</string>
     <string name="app_label">3 3 5</string>
 
+    <string name="button_launch_list_interface_description">Launch list interface</string>
+    <string name="button_launch_list_interface_text">List</string>
+    <string name="button_launch_buttons_interface_description">Launch buttons interface</string>
+    <string name="button_launch_buttons_interface_text">Buttons</string>
+
     <string name="button_home_description">Home: Brings you back to the start</string>
     <string name="button_home_text">Home</string>
     <string name="button_up_description">Back: Go back to previous location</string>

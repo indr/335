@@ -11,6 +11,7 @@ import android.net.Uri;
 import android.os.Bundle;
 
 import java.util.List;
+import java.util.Locale;
 
 import ch.indr.threethreefive.libs.pages.PageResolver;
 import ch.indr.threethreefive.libs.pages.PageMeta;
@@ -39,7 +40,7 @@ public class RootPageResolver extends PageResolver {
     Timber.d("Resolving %s, %s", uri.toString(), this.toString());
 
     String firstPathSegment = getFirstPathSegment(uri);
-    switch (firstPathSegment.toLowerCase()) {
+    switch (firstPathSegment.toLowerCase(Locale.US)) {
       case "":
         return new PageMeta(HomePage.class, uri, new Bundle());
       case "music":

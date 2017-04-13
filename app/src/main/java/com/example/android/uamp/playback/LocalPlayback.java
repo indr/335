@@ -92,12 +92,12 @@ public class LocalPlayback implements PlaybackType, AudioManager.OnAudioFocusCha
     }
   };
 
-  public LocalPlayback(@NonNull Context context) {
+  public LocalPlayback(final @NonNull Context context) {
     this.mContext = context;
     this.mAudioManager = (AudioManager) context.getSystemService(Context.AUDIO_SERVICE);
     // Create the Wifi lock (this does not acquire the lock, this just creates it)
-    this.mWifiLock = ((WifiManager) context.getSystemService(Context.WIFI_SERVICE))
-        .createWifiLock(WifiManager.WIFI_MODE_FULL, "uAmp_lock");
+    this.mWifiLock = ((WifiManager) context.getApplicationContext().getSystemService(Context.WIFI_SERVICE))
+        .createWifiLock(WifiManager.WIFI_MODE_FULL, "ThreeThreeFive/LocalPlayback");
     this.mState = PlaybackStateCompat.STATE_NONE;
   }
 

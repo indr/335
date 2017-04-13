@@ -8,6 +8,7 @@
 
 <FrameLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/frameLayoutToast"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -22,7 +23,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="6dp"
-        android:scrollbars="none">
+        android:scrollbars="none"
+        tools:ignore="UselessParent">
 
         <TextView
             android:id="@+id/textViewTitle"
@@ -32,9 +34,11 @@
             android:paddingLeft="6dp"
             android:paddingRight="6dp"
             android:paddingStart="6dp"
-            android:text="I am a scrolling and dismissable toast!"
+            android:text="I am a scrolling and dismissible toast!"
             android:textColor="@color/white"
-            android:textSize="80sp"/>
+            android:textSize="80sp"
+            tools:ignore="HardcodedText"/>
 
     </HorizontalScrollView>
+
 </FrameLayout>

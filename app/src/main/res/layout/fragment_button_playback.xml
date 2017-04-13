@@ -6,65 +6,60 @@
   ~ the LICENSE file that was distributed with this source code.
   -->
 
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal">
 
-    <LinearLayout
-        android:layout_width="match_parent"
+    <ImageButton
+        android:id="@+id/buttonSkipToPrevious"
+        android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:orientation="horizontal">
+        android:layout_weight="1"
+        android:contentDescription="@string/button_skipToPrevious_description"
+        android:scaleType="centerInside"
+        android:src="@drawable/ic_skip_previous_black_48dp"
+        android:theme="@style/ButtonPrimary"/>
 
-        <ImageButton
-            android:id="@+id/buttonSkipToPrevious"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:contentDescription="@string/button_skipToPrevious_description"
-            android:scaleType="centerInside"
-            android:src="@drawable/ic_skip_previous_black_48dp"
-            android:theme="@style/ButtonPrimary"/>
+    <ImageButton
+        android:id="@+id/buttonRewind"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:contentDescription="@string/button_rewind_description"
+        android:scaleType="centerInside"
+        android:src="@drawable/ic_fast_rewind_black_48dp"
+        android:theme="@style/ButtonSecondary2"/>
 
-        <ImageButton
-            android:id="@+id/buttonRewind"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:contentDescription="@string/button_rewind_description"
-            android:scaleType="centerInside"
-            android:src="@drawable/ic_fast_rewind_black_48dp"
-            android:theme="@style/ButtonSecondary2"/>
+    <ImageButton
+        android:id="@+id/buttonPlayPause"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:contentDescription="@string/button_playPause_description"
+        android:scaleType="centerInside"
+        android:src="@drawable/ic_play_arrow_white_48dp"
+        android:theme="@style/ButtonSecondary1"/>
 
-        <ImageButton
-            android:id="@+id/buttonPlayPause"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:contentDescription="@string/button_playPause_description"
-            android:scaleType="centerInside"
-            android:src="@drawable/ic_play_arrow_white_48dp"
-            android:theme="@style/ButtonSecondary1"/>
+    <ImageButton
+        android:id="@+id/buttonFastForward"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:contentDescription="@string/button_fastForward_description"
+        android:scaleType="centerInside"
+        android:src="@drawable/ic_fast_forward_black_48dp"
+        android:theme="@style/ButtonSecondary2"/>
 
-        <ImageButton
-            android:id="@+id/buttonFastForward"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:contentDescription="@string/button_fastForward_description"
-            android:scaleType="centerInside"
-            android:src="@drawable/ic_fast_forward_black_48dp"
-            android:theme="@style/ButtonSecondary2"/>
+    <ImageButton
+        android:id="@+id/buttonSkipToNext"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:contentDescription="@string/button_skipToNext_description"
+        android:scaleType="centerInside"
+        android:src="@drawable/ic_skip_next_black_48dp"
+        android:theme="@style/ButtonPrimary"/>
 
-        <ImageButton
-            android:id="@+id/buttonSkipToNext"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:contentDescription="@string/button_skipToNext_description"
-            android:scaleType="centerInside"
-            android:src="@drawable/ic_skip_next_black_48dp"
-            android:theme="@style/ButtonPrimary"
-            />
-    </LinearLayout>
-
-</RelativeLayout>
+</LinearLayout>

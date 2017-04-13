@@ -12,6 +12,7 @@ import android.support.annotation.NonNull;
 import com.google.api.client.util.Key;
 
 import java.util.Comparator;
+import java.util.Locale;
 
 import ch.indr.threethreefive.libs.utils.WordUtils;
 
@@ -29,11 +30,11 @@ public class Tag {
   private int stationCount;
 
   public static Tag fromName(final @NonNull String name) {
-    return new Tag(name.toLowerCase(), name, 0);
+    return new Tag(name.toLowerCase(Locale.US), name, 0);
   }
 
   public static Tag fromName(final @NonNull String name, final int stationCount) {
-    return new Tag(name.toLowerCase(), name, stationCount);
+    return new Tag(name.toLowerCase(Locale.US), name, stationCount);
   }
 
   public Tag() {
@@ -52,7 +53,7 @@ public class Tag {
   }
 
   public String getId() {
-    if (id == null) id = _id.toLowerCase();
+    if (id == null) id = _id.toLowerCase(Locale.US);
     return id;
   }
 

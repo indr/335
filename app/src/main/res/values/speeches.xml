@@ -21,9 +21,9 @@
     <string name="speech_playback_state_paused">Playback paused</string>
     <string name="speech_playback_state_stopped">Playback stopped</string>
 
-    <string name="speech_welcome_short">Welcome to three three five.</string>
+    <string name="speech_welcome_short">Welcome to 3 3 5.</string>
     <string name="speech_welcome_long"><![CDATA[
-Welcome to three three five. Easy\n\
+Welcome to 3 3 5. Easy\n\
 free\n\
 navigation\n\
 to thousands of online radio stations,\n\
@@ -32,11 +32,11 @@ as well as media on your device.\n\
 
     <string name="speech_accessibility_services_detected"><![CDATA[
 Welcome\n\
-to the three three five button interface navigation screen.\n\
+to the 3 3 5 button interface navigation screen.\n\
 \n\
 We have detected you are using touch exploration or spoken feedback accessibility assistance.\n\
 \n\
-The three three five button interface navigation screen is designed to be fast and easy and not
+The 3 3 5 button interface navigation screen is designed to be fast and easy and not
 used with accessibility assistance services.\n\
 \n\
 Press and hold both volume keys and the same time to disable or enable your assistance services.\n\
@@ -55,15 +55,15 @@ text interface.\n\
 
     <string name="speech_interface_instructions"><![CDATA[
 Welcome\n\
-to the three three five button interface navigation screen.\n\
+to the 3 3 5 button interface navigation screen.\n\
 \n\
-PLEASE LISTEN FOR BUTTON DESCRIPTIONs.\n\
+PLEASE LISTEN FOR BUTTON DESCRIPTIONS.\n\
 \n\
 This screen has 3 rows of buttons.\n\
 \n\
 The top  TWO rowS HAVE 3 navigation buttons.\n\
 the 3rd row has 5.\n\
-THREE THREE  FIVE \n\
+3 3 5 \n\
 \n\
 \n\
 Starting from left to right.\n\
@@ -119,7 +119,7 @@ SkipS. forward to next track.\n\
 All media files are organized in hierarchical folder structure.\n\
 \n\
 \n\
-Please feel free to click around to familiarize yourself with three three five navigation,\n\
+Please feel free to click around to familiarize yourself with 3 3 5 navigation,\n\
 \n\
 remember,\n\
 you can always click on top right to hear your present location.\n\
@@ -135,14 +135,14 @@ YOU CAN HEAR THESE INSTRUCTIONS AGAIN ANYTIME IN THE PREFERENCES SECTION.\n\
     <string name="speech_interface_instructions_end_with_home_screen"><![CDATA[
 You are now on the home screen on "Music on Your Device".\n\
 \n\
-Thank you and enjoy three three five.
+Thank you and enjoy 3 3 5.
 ]]></string>
 
     <string name="speech_interface_instructions_end_with_preference_screen"><![CDATA[
 You are now on the preference screen on "Replay Interface Instructions".\n\
 \n\
 Thank you\n\
-we hope you enjoy three three five.
+we hope you enjoy 3 3 5.
 ]]></string>
 
 </resources>

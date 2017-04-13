@@ -12,6 +12,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
 import java.util.List;
+import java.util.Locale;
 
 public class UriUtils {
   private UriUtils() {
@@ -55,7 +56,7 @@ public class UriUtils {
 
   public static boolean isFile(final @NonNull Uri uri) {
     String scheme = uri.getScheme();
-    return scheme == null || "file".equals(scheme.toLowerCase());
+    return scheme == null || "file".equals(scheme.toLowerCase(Locale.US));
   }
 
   public static boolean isStream(final @NonNull Uri uri) {
