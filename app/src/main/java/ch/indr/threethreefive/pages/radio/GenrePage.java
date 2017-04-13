@@ -50,12 +50,12 @@ public class GenrePage extends StationListBasePage {
   }
 
   @Override protected void addPageItems(PageItemsBuilder builder, List<Station> stations) {
+    builder.addToggleFavorite(getCurrentPageLink());
+
     if (stations.size() == 0) {
       builder.addText(getString(R.string.no_stations_found));
       return;
     }
-
-    builder.addToggleFavorite(getCurrentPageLink());
 
     for (Station station : stations) {
       builder.addLink(PageUris.radioStation(station.getId()),

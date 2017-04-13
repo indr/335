@@ -53,6 +53,10 @@ public class AlbumPage extends Page {
     setIconUri(album.getArtworkUri());
 
     final List<Song> songs = musicStore.getSongsByAlbumId(albumId);
+    if (songs.size() == 0) {
+      handle(getString(R.string.no_songs_found));
+      return;
+    }
     final List<MediaItem> mediaItems = make(songs);
 
     final PageItemsBuilder builder = pageItemsBuilder();
