@@ -27,7 +27,7 @@ public class NotFound extends Page {
   @Override public void onCreate(@NonNull Context context, @NonNull Uri uri, Bundle bundle) {
     super.onCreate(context, uri, bundle);
 
-    setTitle("Not Found");
+    setDescription("Not Found");
     final List<PageItem> pageItems = pageItemsBuilder().addText("Page not found: " + uri.toString()).build();
     setPageItems(pageItems);
   }

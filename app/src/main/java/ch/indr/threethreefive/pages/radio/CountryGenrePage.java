@@ -48,7 +48,7 @@ public class CountryGenrePage extends SpiceBasePage implements RequestListener<L
     final String genreId = getUriParam("genreId");
     this.genre = GenresBuilder.getGenre(genreId);
 
-    setTitle(genre.getName());
+    setDescription(genre.getName());
   }
 
   @Override public void onStart() {

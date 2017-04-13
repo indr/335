@@ -40,7 +40,7 @@ public class GenrePage extends StationListBasePage {
     final String genreId = getUriParam("id");
     this.genre = GenresBuilder.getGenre(genreId);
 
-    setTitle(this.genre.getName());
+    setDescription(this.genre.getName());
   }
 
   @Override public void onStart() {

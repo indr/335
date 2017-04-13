@@ -27,7 +27,7 @@ public class IndexPage extends Page {
   @Override public void onCreate(@NonNull Context context, @NonNull Uri uri, Bundle bundle) {
     super.onCreate(context, uri, bundle);
 
-    setTitle("Radio");
+    setDescription(getString(R.string.mainmenu_radio_title));
 
     addPageItems();
   }
@@ -35,7 +35,7 @@ public class IndexPage extends Page {
   private void addPageItems() {
     final PageItemsBuilder builder = pageItemsBuilder();
 
-    builder.addLink(PageUris.radioTrending(), getString(R.string.trending));
+    builder.addLink(PageUris.radioTrending(), getString(R.string.radio_trending_title));
     builder.addLink(PageUris.radioGenres(), getString(R.string.genres));
     builder.addLink(PageUris.radioCountries(), getString(R.string.countries));
     builder.addLink(PageUris.radioLanguages(), getString(R.string.languages));

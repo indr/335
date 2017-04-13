@@ -50,7 +50,7 @@ public class HomePage extends Page {
 
     component().inject(this);
 
-    setTitle(getString(R.string.app_name));
+    setDescription(getString(R.string.app_name));
     setParentPageLink(null);
 
     // In buttons view page items are being added on resume so

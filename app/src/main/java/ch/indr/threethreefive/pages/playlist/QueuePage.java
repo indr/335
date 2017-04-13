@@ -40,7 +40,7 @@ public class QueuePage extends Page {
   @Override public void onCreate(@NonNull Context context, @NonNull Uri uri, Bundle bundle) {
     super.onCreate(context, uri, bundle);
 
-    setTitle(getString(R.string.title_playlist));
+    setDescription(getString(R.string.mainmenu_playlist_title));
   }
 
   @Override public void onResume() {

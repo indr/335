@@ -38,7 +38,7 @@ public class StationGenresPage extends SpiceBasePage implements RequestListener<
 
     this.stationId = bundle.getString("id");
 
-    setTitle(getString(R.string.genres));
+    setDescription(getString(R.string.genres));
   }
 
   @Override public void onStart() {

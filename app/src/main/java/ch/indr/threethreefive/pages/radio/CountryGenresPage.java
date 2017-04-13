@@ -16,6 +16,7 @@ import java.util.Collections;
 import java.util.List;
 
 import ch.indr.threethreefive.R;
+import ch.indr.threethreefive.data.network.radioBrowser.model.CountryNames;
 import ch.indr.threethreefive.data.network.radioBrowser.model.Genre;
 import ch.indr.threethreefive.libs.Environment;
 import ch.indr.threethreefive.libs.PageItemsBuilder;
@@ -36,7 +37,8 @@ public class CountryGenresPage extends GenreListBasePage {
     component().inject(this);
 
     this.countryId = getUriParam("countryId");
-    setTitle(countryId);
+
+    setDescription(CountryNames.getName(countryId));
   }
 
   @Override public void onStart() {

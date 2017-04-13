@@ -43,7 +43,7 @@ public class GenresPage extends GenreListBasePage {
     this.excludedFromTopGenres = Arrays.asList(context.getResources().getStringArray(R.array.excluded_from_top_genres));
     this.excludedFromMoreGenres = Arrays.asList(context.getResources().getStringArray(R.array.excluded_from_more_genres));
 
-    setTitle(getString(R.string.genres));
+    setDescription(getString(R.string.radio_genres_title));
   }
 
   @Override public void onStart() {

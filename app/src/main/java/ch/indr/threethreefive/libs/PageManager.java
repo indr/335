@@ -48,7 +48,7 @@ public class PageManager {
       final Constructor constructor = pageMeta.getClazz().getConstructor(Environment.class);
       page = (Page) constructor.newInstance(environment);
       Timber.i("Setting title %s", pageTitle);
-      page.setTitle(pageTitle);
+      page.setDescription(pageTitle);
       page.onCreate(context, pageMeta.getUri(), pageMeta.getBundle());
       page.onStart();
 

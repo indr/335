@@ -46,8 +46,7 @@ public class SongPage extends Page {
       handle(getString(R.string.song_not_found_error, songId));
       return;
     }
-
-    setTitle(song.getName());
+    setDescription(song.getName());
     setIconUri(song.getAlbumArtworkUri());
 
     final MediaItem mediaItem = make(song);

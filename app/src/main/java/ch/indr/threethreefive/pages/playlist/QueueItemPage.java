@@ -73,7 +73,9 @@ public class QueueItemPage extends Page {
 
     QueueItem queueItem = getQueueItem();
     if (queueItem != null) {
-      setTitle(queueItem.getDescription().getTitle());
+      final MediaDescriptionCompat description = queueItem.getDescription();
+      setDescription(StringUtils.getString(description.getTitle(), getString(R.string.unknown)),
+          StringUtils.getString(description.getSubtitle()));
 
       final Queue currentQueue = queueManager.getCurrentQueue();
       final MediaItem mediaItem = currentQueue != null ? currentQueue.getMediaItem(queueItem) : null;

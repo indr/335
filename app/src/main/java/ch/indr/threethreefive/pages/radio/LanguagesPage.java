@@ -41,7 +41,7 @@ public class LanguagesPage extends SpiceBasePage implements RequestListener<Lang
     super.onCreate(context, uri, bundle);
     component().inject(this);
 
-    setTitle(getString(R.string.languages));
+    setDescription(getString(R.string.languages));
   }
 
   @Override public void onStart() {

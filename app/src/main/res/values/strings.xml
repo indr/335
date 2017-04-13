@@ -113,7 +113,7 @@ Go to www.indr.ch/335 to learn more and find instructions on how to install Text
     <string name="show_more_languages">Show more languages</string>
     <string name="show_all_langauges">Show all languages</string>
 
-    <string name="trending">Trending</string>
+    <string name="radio_trending_title">Trending</string>
     <string name="no_stations_found">No stations found</string>
     <string name="no_stations_found_error">Error: No stations found</string>
     <string name="station_not_found_error">Error: Radio station %s not found</string>
@@ -151,11 +151,9 @@ Go to www.indr.ch/335 to learn more and find instructions on how to install Text
     <string name="clear_playlist">Press to clear playlist</string>
     <string name="not_available">Not available</string>
     <string name="toast_playlist_cleared">Playlist cleared</string>
-    <string name="title_playlist">Playlist</string>
     <string name="play_playlist_item">Press to play</string>
     <string name="error_playlist_item_not_found">Error: Playlist item not found</string>
     <string name="empty_favorites">No favorites</string>
-    <string name="title_favorites">Favorites</string>
     <string name="press_to_play">Press to play</string>
     <string name="station_votes">Votes: %1$d (%2$+d/-%3$d)</string>
     <string name="station_genres">Genres: %s</string>
@@ -167,5 +165,19 @@ Go to www.indr.ch/335 to learn more and find instructions on how to install Text
     <string name="item_station_is_broken_title">Broken station</string>
     <string name="item_station_is_broken_subtitle">Please try again later</string>
     <string name="item_station_is_broken_description">Station is broken, please try again later</string>
+    <string name="unknown">Unknown</string>
+    <string name="music_artist_subtitle">Artist</string>
+    <string name="music_artists">Artists</string>
+    <string name="music_albums">Albums</string>
+    <string name="music_genres">Genres</string>
+    <string name="music_songs">Songs</string>
+    <string name="music_genre_subtitle">Music genre</string>
+    <string name="genre_not_found_error">Error: Genre %s not found</string>
+    <string name="radio_country_genre_subtitle">Radio stations from %s</string>
+    <string name="radio_country_genres_subtitle">Genres %s</string>
+    <string name="radio_country_stations_subtitle">Radio stations %s</string>
+    <string name="radio_genre_subtitle">Radio genre</string>
+    <string name="radio_genres_title">Genres</string>
+    <string name="radio_language_subtitle">Radio stations</string>
 
 </resources>

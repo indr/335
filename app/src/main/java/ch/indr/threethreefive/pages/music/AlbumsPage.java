@@ -32,7 +32,7 @@ public class AlbumsPage extends Page {
   @Override public void onCreate(@NonNull Context context, @NonNull Uri uri, Bundle bundle) {
     super.onCreate(context, uri, bundle);
 
-    setTitle("Albums");
+    setDescription(getString(R.string.music_albums));
 
     final MusicStore musicStore = new MusicStore(getContext());
 

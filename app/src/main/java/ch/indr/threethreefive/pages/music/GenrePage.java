@@ -18,6 +18,7 @@ import ch.indr.threethreefive.R;
 import ch.indr.threethreefive.commands.AddToPlaylist;
 import ch.indr.threethreefive.commands.PlayMedias;
 import ch.indr.threethreefive.data.db.music.MusicStore;
+import ch.indr.threethreefive.data.db.music.model.Genre;
 import ch.indr.threethreefive.data.db.music.model.Song;
 import ch.indr.threethreefive.libs.Environment;
 import ch.indr.threethreefive.libs.MediaItem;
@@ -28,17 +29,25 @@ import static ch.indr.threethreefive.data.MediaItemFactory.make;
 import static ch.indr.threethreefive.libs.PageUris.musicSong;
 
 public class GenrePage extends Page {
+  private final MusicStore musicStore;
 
   public GenrePage(Environment environment) {
     super(environment);
+
+    this.musicStore = environment.musicStore();
   }
 
   @Override public void onCreate(@NonNull Context context, @NonNull Uri uri, Bundle bundle) {
     super.onCreate(context, uri, bundle);
 
     final long genreId = Long.parseLong(uri.getLastPathSegment());
-    final MusicStore musicStore = new MusicStore(getContext());
 
+    final Genre genre = musicStore.getGenreById(genreId);
+    if (genre == null) {
+      handle(getString(R.string.genre_not_found_error, genreId));
+      return;
+    }
+    setDescription(genre.getName());
 
     final List<Song> songs = musicStore.getSongsByGenreId(genreId);
     if (songs.size() == 0) {

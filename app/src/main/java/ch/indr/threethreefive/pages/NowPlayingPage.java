@@ -46,7 +46,7 @@ public class NowPlayingPage extends Page {
   @Override public void onCreate(@NonNull Context context, @NonNull Uri uri, Bundle bundle) {
     super.onCreate(context, uri, bundle);
 
-    setTitle("Now Playing");
+    setDescription("Now Playing");
     setParentPageLink(PageLink.HomePage);
 
     playbackClient.mediaMetadata()

@@ -15,6 +15,7 @@ import android.support.annotation.NonNull;
 import java.util.List;
 
 import ch.indr.threethreefive.R;
+import ch.indr.threethreefive.data.network.radioBrowser.model.CountryNames;
 import ch.indr.threethreefive.data.network.radioBrowser.model.Station;
 import ch.indr.threethreefive.libs.Environment;
 import ch.indr.threethreefive.libs.PageItemsBuilder;
@@ -34,7 +35,7 @@ public class CountryStationsPage extends StationListBasePage {
 
     this.countryId = getUriParam("countryId");
 
-    setTitle(countryId);
+    setDescription(CountryNames.getName(countryId));
   }
 
   @Override public void onStart() {

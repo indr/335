@@ -14,6 +14,7 @@ import android.support.annotation.NonNull;
 
 import javax.inject.Inject;
 
+import ch.indr.threethreefive.R;
 import ch.indr.threethreefive.commands.OpenWebsite;
 import ch.indr.threethreefive.libs.Build;
 import ch.indr.threethreefive.libs.Environment;
@@ -39,7 +40,7 @@ public class PreferencesPage extends Page {
 
     component().inject(this);
 
-    setTitle("Preferences");
+    setDescription(getString(R.string.mainmenu_preferences_title));
 
     final PageItemsBuilder builder = pageItemsBuilder();
 

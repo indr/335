@@ -128,17 +128,25 @@ public abstract class Page implements PageType {
     return description.getValue();
   }
 
-  public void setTitle(final @Nullable CharSequence title) {
-    setTitle(StringUtils.getString(title, ""));
+  public void setDescription(final @Nullable CharSequence title) {
+    setDescription(StringUtils.getString(title, ""));
   }
 
-  protected void setTitle(final @NonNull String title) {
-    Timber.d("setTitle %s, %s", title, this.toString());
-    description.onNext(description.getValue().setTitle(title));
+  public void setDescription(final @NonNull String title) {
+    setDescription(new Description(title));
   }
 
-  protected void setTitle(final int resourceId) {
-    this.setTitle(this.getContext().getResources().getString(resourceId));
+  public void setDescription(final @NonNull String title, final @Nullable String subtitle) {
+    setDescription(new Description(title, subtitle));
+  }
+
+  public void setDescription(final @NonNull String title, final @Nullable String subtitle,
+                             final @Nullable String contentDescription) {
+    setDescription(new Description(title, subtitle, contentDescription));
+  }
+
+  public void setDescription(final @NonNull Description description) {
+    this.description.onNext(description);
   }
 
   public final @Nullable String getTitle() {

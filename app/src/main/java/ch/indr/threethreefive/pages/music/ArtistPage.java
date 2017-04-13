@@ -30,7 +30,6 @@ import ch.indr.threethreefive.libs.pages.Page;
 import static ch.indr.threethreefive.data.MediaItemFactory.make;
 
 public class ArtistPage extends Page {
-
   private final MusicStore musicStore;
 
   public ArtistPage(Environment environment) {
@@ -49,14 +48,16 @@ public class ArtistPage extends Page {
       handle(getString(R.string.artist_not_found_error, artistId));
       return;
     }
-
-    setTitle(artist.getName());
+    setDescription(artist.getName());
 
     final List<Song> songs = musicStore.getSongsByArtistId(artistId);
+    if (songs.size() == 0) {
+      handle(getString(R.string.no_songs_found));
+      return;
+    }
     final List<MediaItem> mediaItems = make(songs);
 
     final PageItemsBuilder builder = pageItemsBuilder();
-
     builder.add(new PlayMedias(getString(R.string.play_all_albums), mediaItems));
     builder.add(new AddToPlaylist(getString(R.string.add_all_albums_to_playlist), mediaItems));
     builder.addToggleFavorite(getCurrentPageLink());

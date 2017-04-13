@@ -65,8 +65,9 @@ public class StationPage extends SpiceBasePage implements RequestListener<Statio
       return;
     }
 
-    setTitle(station.getName());
+    setDescription(station.getName());
     setIconUri(station.getLogoUri());
+
     addPageItems(station);
   }
 

@@ -34,7 +34,7 @@ public class IndexPage extends Page {
   @Override public void onCreate(@NonNull Context context, @NonNull Uri uri, Bundle bundle) {
     super.onCreate(context, uri, bundle);
 
-    setTitle(getString(R.string.title_favorites));
+    setDescription(getString(R.string.mainmenu_favorites_title));
   }
 
   @Override public void onResume() {

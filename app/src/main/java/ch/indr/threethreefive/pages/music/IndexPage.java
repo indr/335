@@ -27,14 +27,14 @@ public class IndexPage extends Page {
   @Override public void onCreate(@NonNull Context context, @NonNull Uri uri, Bundle bundle) {
     super.onCreate(context, uri, bundle);
 
-    setTitle(context.getResources().getString(R.string.mainmenu_music_title));
+    setDescription(getString(R.string.mainmenu_music_title));
 
     final PageItemsBuilder builder = pageItemsBuilder();
 
-    builder.addLink(PageUris.musicArtists(), "Artists");
-    builder.addLink(PageUris.musicAlbums(), "Albums");
-    builder.addLink(PageUris.musicGenres(), "Genres");
-    builder.addLink(PageUris.musicSongs(), "Songs");
+    builder.addLink(PageUris.musicArtists(), getString(R.string.music_artists));
+    builder.addLink(PageUris.musicAlbums(), getString(R.string.music_albums));
+    builder.addLink(PageUris.musicGenres(), getString(R.string.music_genres));
+    builder.addLink(PageUris.musicSongs(), getString(R.string.music_songs));
 
     setPageItems(builder);
   }

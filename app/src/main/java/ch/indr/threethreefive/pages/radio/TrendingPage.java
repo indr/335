@@ -32,7 +32,7 @@ public class TrendingPage extends StationListBasePage {
     super.onCreate(context, uri, bundle);
     component().inject(this);
 
-    setTitle(getString(R.string.trending));
+    setDescription(getString(R.string.radio_trending_title));
   }
 
   @Override public void onStart() {
@@ -50,8 +50,6 @@ public class TrendingPage extends StationListBasePage {
       builder.addText(getString(R.string.no_stations_found));
       return;
     }
-
-    builder.addToggleFavorite(getCurrentPageLink());
 
     for (Station station : stations) {
       builder.addLink(PageUris.radioStation(station.getId()),
