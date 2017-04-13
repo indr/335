@@ -22,6 +22,7 @@ import ch.indr.threethreefive.libs.utils.ObjectUtils;
 import ch.indr.threethreefive.services.ToastManager;
 import ch.indr.threethreefive.ui.fragments.ToastFragment;
 import rx.Observable;
+import rx.android.schedulers.AndroidSchedulers;
 import rx.subjects.PublishSubject;
 
 import static ch.indr.threethreefive.services.ToastManager.Toast;
@@ -54,7 +55,9 @@ public class ToastFragmentViewModel extends FragmentViewModel<ToastFragment> {
     super.onCreate(context, savedInstanceState);
 
     // When a toast is shown, we save its instance
-    showToast.compose(bindToLifecycle())
+    showToast
+        .observeOn(AndroidSchedulers.mainThread())
+        .compose(bindToLifecycle())
         .subscribe(toast -> {
           autoHideToast = true;
           isShowing = toast;
@@ -62,12 +65,14 @@ public class ToastFragmentViewModel extends FragmentViewModel<ToastFragment> {
 
     // Hide current toast when a new toast is incoming
     pollQueue.filter(__ -> ObjectUtils.isNotNull(isShowing))
+        .observeOn(AndroidSchedulers.mainThread())
         .compose(bindToLifecycle())
         .map(__ -> isShowing)
         .subscribe(hideToast);
 
     // Show toast immediately if no toast is already showing
     pollQueue.filter(__ -> ObjectUtils.isNull(isShowing))
+        .observeOn(AndroidSchedulers.mainThread())
         .compose(bindToLifecycle())
         .map(__ -> toasts.poll())
         .filter(ObjectUtils::isNotNull)
@@ -75,14 +80,18 @@ public class ToastFragmentViewModel extends FragmentViewModel<ToastFragment> {
 
     // Auto hide toast after given length
     showToast.mergeWith(autoHide)
+        .observeOn(AndroidSchedulers.mainThread())
         .debounce(TOAST_LENGTH, TimeUnit.MILLISECONDS)
         .filter(__ -> autoHideToast)
         .filter(toast -> toast.equals(isShowing))
+        .compose(bindToLifecycle())
         .subscribe(hideToast);
 
     // 4. After hiding the current toast, we trigger pollQueue
     hideToast.delay(ANIMATION_LENGTH, TimeUnit.MILLISECONDS)
+        .observeOn(AndroidSchedulers.mainThread())
         .doOnNext(__ -> isShowing = null)
+        .compose(bindToLifecycle())
         .subscribe(pollQueue);
   }
 
