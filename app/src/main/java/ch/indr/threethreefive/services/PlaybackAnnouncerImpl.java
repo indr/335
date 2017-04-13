@@ -13,6 +13,7 @@ import android.support.v4.media.session.PlaybackStateCompat;
 import java.util.concurrent.TimeUnit;
 
 import ch.indr.threethreefive.R;
+import ch.indr.threethreefive.libs.Transition;
 import rx.Observable;
 import timber.log.Timber;
 
@@ -35,8 +36,8 @@ public class PlaybackAnnouncerImpl implements PlaybackAnnouncer {
   public PlaybackAnnouncerImpl(final @NonNull PlaybackClient playbackClient, final @NonNull Speaker speaker) {
     this.speaker = speaker;
 
-    Observable<StateTransition> transition = playbackClient.playbackState()
-        .scan(StateTransition.create(0, 0), (previous, to) -> StateTransition.create(previous.to, to))
+    Observable<Transition<Integer>> transition = playbackClient.playbackState()
+        .scan(Transition.<Integer>create(), Transition::next)
         .doOnNext(st -> Timber.d("playback state transition %s, %s", st.toString(), this.toString()))
         .throttleWithTimeout(DEBOUNCE_TIMEOUT, TimeUnit.MILLISECONDS)
         .distinctUntilChanged()
@@ -44,28 +45,28 @@ public class PlaybackAnnouncerImpl implements PlaybackAnnouncer {
         .share();
 
     transition
-        .filter(p -> p.to == STATE_BUFFERING)
+        .filter(p -> p.getTo() == STATE_BUFFERING)
         .subscribe(__ -> speak(R.string.speech_playback_state_buffering));
 
     transition
-        .filter(p -> p.to == STATE_CONNECTING)
+        .filter(p -> p.getTo() == STATE_CONNECTING)
         .subscribe(__ -> speak(R.string.speech_playback_state_connecting));
 
     transition
-        .filter(p -> p.to == STATE_ERROR)
+        .filter(p -> p.getTo() == STATE_ERROR)
         .subscribe(__ -> speak(R.string.speech_playback_state_error));
 
     transition
-        .filter(p -> p.to == STATE_PAUSED)
+        .filter(p -> p.getTo() == STATE_PAUSED)
         .subscribe(__ -> speak(R.string.speech_playback_state_paused));
 
     transition
-        .filter(p -> p.to == STATE_PLAYING && p.from != STATE_PLAYING)
-        .filter(p -> p.from != STATE_REWINDING && p.from != STATE_FAST_FORWARDING)
+        .filter(p -> p.getTo() == STATE_PLAYING && p.getFrom() != STATE_PLAYING)
+        .filter(p -> p.getFrom() != STATE_REWINDING && p.getFrom() != STATE_FAST_FORWARDING)
         .subscribe(__ -> speak(R.string.speech_playback_state_playing));
 
     transition
-        .filter(p -> p.to == PlaybackStateCompat.STATE_STOPPED)
+        .filter(p -> p.getTo() == PlaybackStateCompat.STATE_STOPPED)
         .subscribe(__ -> speak(R.string.speech_playback_state_stopped));
 
 
@@ -102,24 +103,5 @@ public class PlaybackAnnouncerImpl implements PlaybackAnnouncer {
 
   private @NonNull <T> Observable.Transformer<T, T> bindToStatus() {
     return source -> source.filter(__ -> started);
-  }
-
-  private static class StateTransition {
-
-    StateTransition(int from, int to) {
-      this.from = from;
-      this.to = to;
-    }
-
-    public static StateTransition create(int from, int to) {
-      return new StateTransition(from, to);
-    }
-
-    public int from;
-    public int to;
-
-    @Override public String toString() {
-      return "StateTransition [from=" + from + ", to=" + to + "]";
-    }
   }
 }

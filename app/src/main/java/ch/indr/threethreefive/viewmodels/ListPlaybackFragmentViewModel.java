@@ -18,11 +18,16 @@ import android.util.Pair;
 import android.view.View;
 
 import ch.indr.threethreefive.libs.Environment;
+import ch.indr.threethreefive.libs.PlaybackStateTransition;
 import ch.indr.threethreefive.libs.utils.MediaDescriptionUtils;
+import ch.indr.threethreefive.libs.utils.PairUtils;
 import ch.indr.threethreefive.libs.utils.PlaybackStateUtils;
 import ch.indr.threethreefive.ui.fragments.ListPlaybackFragment;
 import rx.Observable;
 import rx.subjects.BehaviorSubject;
+
+import static android.support.v4.media.session.PlaybackStateCompat.STATE_CONNECTING;
+import static android.support.v4.media.session.PlaybackStateCompat.STATE_ERROR;
 
 public class ListPlaybackFragmentViewModel extends BasePlaybackFragmentViewModel<ListPlaybackFragment> {
 
@@ -58,7 +63,9 @@ public class ListPlaybackFragmentViewModel extends BasePlaybackFragmentViewModel
         .distinctUntilChanged()
         .map(MediaDescriptionUtils::fullTitle);
 
-    Observable.combineLatest(playbackState(), trackFullTitle, Pair::create)
+    playbackStateTransition()
+        .withLatestFrom(trackFullTitle, Pair::create)
+        .filter(PairUtils::isNotNull)
         .map(this::makeStatusText)
         .distinctUntilChanged()
         .compose(bindToLifecycle())
@@ -84,14 +91,17 @@ public class ListPlaybackFragmentViewModel extends BasePlaybackFragmentViewModel
         .subscribe(playbackStateCompat);
   }
 
-  private String makeStatusText(Pair<Integer, String> statusAndTitle) {
-    String title = statusAndTitle.second;
-    switch (statusAndTitle.first) {
-      case PlaybackStateCompat.STATE_CONNECTING:
-        return "Loading: " + title;
-      case PlaybackStateCompat.STATE_ERROR:
-        return "Error: " + title;
+  private String makeStatusText(final @NonNull Pair<PlaybackStateTransition, String> pair) {
+    PlaybackStateTransition transition = pair.first;
+    String title = pair.second;
+    if (transition.is(STATE_CONNECTING, STATE_ERROR))
+      return "This station is not responding. Please try again later.";
+    if (transition.isTo(STATE_CONNECTING))
+      return "Connecting to " + title;
+    if (transition.isTo(STATE_ERROR)) {
+      return "Error playing " + title;
     }
+
     return title;
   }
 

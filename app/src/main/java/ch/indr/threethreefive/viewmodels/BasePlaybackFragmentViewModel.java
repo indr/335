@@ -15,6 +15,8 @@ import android.view.View;
 import ch.indr.threethreefive.libs.Environment;
 import ch.indr.threethreefive.libs.FragmentLifecycleType;
 import ch.indr.threethreefive.libs.FragmentViewModel;
+import ch.indr.threethreefive.libs.PlaybackStateTransition;
+import ch.indr.threethreefive.libs.utils.ObjectUtils;
 import ch.indr.threethreefive.services.PlaybackClient;
 import rx.Observable;
 import rx.subjects.BehaviorSubject;
@@ -33,6 +35,7 @@ public class BasePlaybackFragmentViewModel<ViewType extends FragmentLifecycleTyp
 
   // OUTPUTS
   protected final BehaviorSubject<Integer> playbackState = BehaviorSubject.create(PlaybackStateCompat.STATE_NONE);
+  private final BehaviorSubject<PlaybackStateTransition> playbackStateTransition = BehaviorSubject.create();
 
   public BasePlaybackFragmentViewModel(@NonNull Environment environment) {
     super(environment);
@@ -42,6 +45,12 @@ public class BasePlaybackFragmentViewModel<ViewType extends FragmentLifecycleTyp
     playbackClient.playbackState()
         .compose(bindToLifecycle())
         .subscribe(playbackState);
+
+    playbackClient.playbackStateCompat()
+        .filter(ObjectUtils::isNotNull)
+        .scan(new PlaybackStateTransition(), PlaybackStateTransition::next)
+        .compose(bindToLifecycle())
+        .subscribe(playbackStateTransition);
 
     playbackState
         .compose(takeWhen(playPause))
@@ -79,5 +88,9 @@ public class BasePlaybackFragmentViewModel<ViewType extends FragmentLifecycleTyp
   // OUTPUTS
   public Observable<Integer> playbackState() {
     return playbackState;
+  }
+
+  public Observable<PlaybackStateTransition> playbackStateTransition() {
+    return playbackStateTransition;
   }
 }
