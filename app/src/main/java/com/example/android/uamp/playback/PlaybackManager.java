@@ -15,9 +15,8 @@ import android.support.annotation.Nullable;
 import android.support.v4.media.session.MediaSessionCompat;
 import android.support.v4.media.session.PlaybackStateCompat;
 
-import ch.indr.threethreefive.libs.MediaIdHelper;
-
 import ch.indr.threethreefive.R;
+import ch.indr.threethreefive.libs.MediaIdHelper;
 import timber.log.Timber;
 
 /**
@@ -59,11 +58,18 @@ public class PlaybackManager implements PlaybackType.Callback {
    * Handle a request to play music
    */
   public void handlePlayRequest() {
+    handlePlayRequest(PlaybackStateCompat.STATE_STOPPED);
+  }
+
+  /**
+   * Handle a request to play music with desired state between the end of last media and new playback
+   */
+  public void handlePlayRequest(int state) {
     Timber.d("handlePlayRequest: mState=" + mPlayback.getState());
     MediaSessionCompat.QueueItem currentMusic = mQueueManager.getCurrentQueueItem();
     if (currentMusic != null) {
       mServiceCallback.onPlaybackStart();
-      mPlayback.play(currentMusic);
+      mPlayback.play(currentMusic, state);
     } else {
       handleStopRequest(null);
       mPlayback.setState(PlaybackStateCompat.STATE_NONE);
@@ -194,7 +200,7 @@ public class PlaybackManager implements PlaybackType.Callback {
     // and start the next.
 
     if (mQueueManager.skipQueuePosition(1, AUTO_REPEAT)) {
-      handlePlayRequest();
+      handlePlayRequest(PlaybackStateCompat.STATE_SKIPPING_TO_QUEUE_ITEM);
       mQueueManager.updateMetadata();
     } else {
       // If skipping was not possible, we stop and release the resources:
@@ -253,7 +259,7 @@ public class PlaybackManager implements PlaybackType.Callback {
     public void onSkipToNext() {
       Timber.d("onSkipToNext %s", this.toString());
       if (mQueueManager.skipQueuePosition(1)) {
-        handlePlayRequest();
+        handlePlayRequest(PlaybackStateCompat.STATE_SKIPPING_TO_NEXT);
       } else {
         handleStopRequest("Cannot skip");
         notifyOptionNotAvailable(R.string.speech_can_not_skip_to_next);
@@ -268,7 +274,7 @@ public class PlaybackManager implements PlaybackType.Callback {
       if (mPlayback.canSeek() && mPlayback.getCurrentStreamPosition() >= 2000) {
         mPlayback.seekTo(0);
       } else if (mQueueManager.skipQueuePosition(-1)) {
-        handlePlayRequest();
+        handlePlayRequest(PlaybackStateCompat.STATE_SKIPPING_TO_PREVIOUS);
       } else {
         handleStopRequest("Cannot skip");
         notifyOptionNotAvailable(R.string.speech_can_not_skip_to_previous);

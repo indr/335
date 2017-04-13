@@ -154,6 +154,11 @@ public class LocalPlayback implements PlaybackType, AudioManager.OnAudioFocusCha
 
   @Override
   public void play(@NonNull QueueItem item) {
+    play(item, PlaybackStateCompat.STATE_STOPPED);
+  }
+
+  @Override
+  public void play(@NonNull QueueItem item, int state) {
     mPlayOnFocusGain = true;
     tryToGetAudioFocus();
     registerAudioNoisyReceiver();
@@ -177,7 +182,7 @@ public class LocalPlayback implements PlaybackType, AudioManager.OnAudioFocusCha
       Timber.d("Resuming playback from state %d", mState);
       configMediaPlayerState();
     } else {
-      mState = PlaybackStateCompat.STATE_STOPPED;
+      mState = state;
       relaxResources(false); // release everything except MediaPlayer
 
       Uri source = item.getDescription().getMediaUri();
@@ -248,7 +253,7 @@ public class LocalPlayback implements PlaybackType, AudioManager.OnAudioFocusCha
 
   @Override
   public void seekTo(int position) {
-    seekTo(position, PlaybackStateCompat.STATE_BUFFERING);
+    seekTo(position, PlaybackStateCompat.STATE_REWINDING);
   }
 
   @Override
@@ -404,6 +409,8 @@ public class LocalPlayback implements PlaybackType, AudioManager.OnAudioFocusCha
     if (mState == PlaybackStateCompat.STATE_BUFFERING) {
       registerAudioNoisyReceiver();
       mMediaPlayer.start();
+      mState = PlaybackStateCompat.STATE_PLAYING;
+    } else if (mState == PlaybackStateCompat.STATE_FAST_FORWARDING || mState == PlaybackStateCompat.STATE_REWINDING) {
       mState = PlaybackStateCompat.STATE_PLAYING;
     }
     if (playbackCallback != null) {

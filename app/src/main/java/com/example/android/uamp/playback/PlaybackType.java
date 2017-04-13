@@ -85,6 +85,12 @@ public interface PlaybackType {
   void play(QueueItem item);
 
   /**
+   * @param item  to play
+   * @param state intermediate playback state (eg. STOPPED, SKIPPING)
+   */
+  void play(QueueItem item, int state);
+
+  /**
    * Pause the current playing item
    */
   void pause();

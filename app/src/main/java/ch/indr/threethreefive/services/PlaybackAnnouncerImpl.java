@@ -24,6 +24,8 @@ import static android.support.v4.media.session.PlaybackStateCompat.STATE_FAST_FO
 import static android.support.v4.media.session.PlaybackStateCompat.STATE_PAUSED;
 import static android.support.v4.media.session.PlaybackStateCompat.STATE_PLAYING;
 import static android.support.v4.media.session.PlaybackStateCompat.STATE_REWINDING;
+import static android.support.v4.media.session.PlaybackStateCompat.STATE_SKIPPING_TO_NEXT;
+import static android.support.v4.media.session.PlaybackStateCompat.STATE_SKIPPING_TO_PREVIOUS;
 
 public class PlaybackAnnouncerImpl implements PlaybackAnnouncer {
 
@@ -38,7 +40,6 @@ public class PlaybackAnnouncerImpl implements PlaybackAnnouncer {
 
     Observable<Transition<Integer>> transition = playbackClient.playbackState()
         .scan(Transition.<Integer>create(), Transition::next)
-        .doOnNext(st -> Timber.d("playback state transition %s, %s", st.toString(), this.toString()))
         .throttleWithTimeout(DEBOUNCE_TIMEOUT, TimeUnit.MILLISECONDS)
         .distinctUntilChanged()
         .compose(bindToStatus())
@@ -63,7 +64,8 @@ public class PlaybackAnnouncerImpl implements PlaybackAnnouncer {
     transition
         .filter(p -> p.getTo() == STATE_PLAYING && p.getFrom() != STATE_PLAYING)
         .filter(p -> p.getFrom() != STATE_REWINDING && p.getFrom() != STATE_FAST_FORWARDING)
-        .subscribe(__ -> speak(R.string.speech_playback_state_playing));
+        .filter(p -> p.getFrom() != STATE_SKIPPING_TO_PREVIOUS && p.getFrom() != STATE_SKIPPING_TO_NEXT)
+        .subscribe(t -> speak(R.string.speech_playback_state_playing));
 
     transition
         .filter(p -> p.getTo() == PlaybackStateCompat.STATE_STOPPED)
