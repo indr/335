@@ -21,6 +21,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import ch.indr.threethreefive.BuildConfig;
 import ch.indr.threethreefive.R;
 import ch.indr.threethreefive.commands.AddToPlaylist;
 import ch.indr.threethreefive.commands.OpenWebsite;
@@ -108,18 +109,20 @@ public class StationPage extends SpiceBasePage implements RequestListener<Statio
           getString(R.string.station_genres, StringUtils.join(genresAsString, ", ")));
     }
 
-    // Votes
-    builder.addText(getString(R.string.station_votes, station.getSummedVotes(),
-        station.getPositiveVotes(), station.getNegativeVotes()));
+    if (BuildConfig.DEBUG) {
+      // Votes
+      builder.addText(getString(R.string.station_votes, station.getSummedVotes(),
+          station.getPositiveVotes(), station.getNegativeVotes()));
 
-    // Click count and trend
-    builder.addText(getString(R.string.station_clicks, station.getClickCount(), station.getClickTrend()));
+      // Click count and trend
+      builder.addText(getString(R.string.station_clicks, station.getClickCount(), station.getClickTrend()));
 
-    // Updated
-    if (station.getLastChangeTime() != null) {
-      DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.MEDIUM, DateFormat.SHORT);
-      builder.addText(getString(R.string.station_updated, dateFormat.format(station.getLastChangeTime())));
-      ;
+      // Updated
+      if (station.getLastChangeTime() != null) {
+        DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.MEDIUM, DateFormat.SHORT);
+        builder.addText(getString(R.string.station_updated, dateFormat.format(station.getLastChangeTime())));
+        ;
+      }
     }
 
     // Link to Website
