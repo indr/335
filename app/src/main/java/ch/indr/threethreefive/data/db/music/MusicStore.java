@@ -36,14 +36,14 @@ public class MusicStore {
   }
 
   @Nullable public Artist getArtistById(String artistId) {
-    ArrayList<Artist> artists = queryArtists("_id=" + artistId);
+    List<Artist> artists = queryArtists("_id=" + artistId);
     if (artists.size() < 1) return null;
 
     return artists.get(0);
   }
 
-  @NonNull public ArrayList<Artist> queryArtists(String selection) {
-    ArrayList<Artist> result = new ArrayList<>();
+  @NonNull public List<Artist> queryArtists(final @Nullable String selection) {
+    List<Artist> result = new ArrayList<>();
     Uri uri = Audio.Artists.EXTERNAL_CONTENT_URI;
     Cursor cursor = getContentResolver().query(uri,
         new String[]{"_id", "artist",
@@ -66,19 +66,19 @@ public class MusicStore {
     return result;
   }
 
-  @NonNull public ArrayList<Album> findAlbumsByArtistId(String artistId) {
+  @NonNull public List<Album> findAlbumsByArtistId(String artistId) {
     return queryAlbums("artist_id=" + artistId);
   }
 
   @Nullable public Album getAlbumById(String albumId) {
-    ArrayList<Album> albums = queryAlbums("_id=" + albumId);
+    List<Album> albums = queryAlbums("_id=" + albumId);
     if (albums.size() < 1) return null;
 
     return albums.get(0);
   }
 
-  @NonNull public ArrayList<Album> queryAlbums(String selection) {
-    ArrayList<Album> albums = new ArrayList<>();
+  @NonNull public List<Album> queryAlbums(final @Nullable String selection) {
+    List<Album> albums = new ArrayList<>();
 
     Uri uri = Audio.Albums.EXTERNAL_CONTENT_URI;
     Cursor cursor = getContentResolver().query(uri,
@@ -105,23 +105,23 @@ public class MusicStore {
   }
 
   @Nullable public Song getSongById(String songId) {
-    ArrayList<Song> songs = querySongs("_id=" + songId, null);
+    List<Song> songs = querySongs("_id=" + songId, null);
     if (songs.size() < 1) return null;
 
     return songs.get(0);
   }
 
-  @NonNull public ArrayList<Song> getSongsByAlbumId(String albumId) {
+  @NonNull public List<Song> getSongsByAlbumId(String albumId) {
     return querySongs("album_id=" + albumId, null);
   }
 
-  @NonNull public ArrayList<Song> getSongsByArtistId(String artistId) {
+  @NonNull public List<Song> getSongsByArtistId(String artistId) {
     return querySongs("artist_id=" + artistId, "album, track, title");
   }
 
-  @NonNull public ArrayList<Song> querySongs(String selection, String sortOrder) {
+  @NonNull public List<Song> querySongs(final @Nullable String selection, @Nullable String sortOrder) {
     sortOrder = sortOrder != null ? sortOrder : "track, title";
-    ArrayList<Song> songs = new ArrayList<>();
+    List<Song> songs = new ArrayList<>();
 
     Uri uri = Media.EXTERNAL_CONTENT_URI;
     Cursor cursor = getContentResolver().query(uri,
@@ -149,13 +149,19 @@ public class MusicStore {
     return songs;
   }
 
-  @NonNull public List<Genre> queryGenres() {
+  @Nullable public Genre getGenreById(long genreId) {
+    List<Genre> genres = queryGenres("_id=" + genreId);
+    if (genres.size() < 1) return null;
+    return genres.get(0);
+  }
+
+  @NonNull public List<Genre> queryGenres(final @Nullable String selection) {
     List<Genre> genres = new ArrayList<>();
 
     Uri uri = Audio.Genres.EXTERNAL_CONTENT_URI;
     Cursor cursor = getContentResolver().query(uri,
         new String[]{"_id, name"},
-        null, null, "name");
+        selection, null, "name");
 
     if (cursor != null && cursor.moveToFirst()) {
       do {
@@ -172,7 +178,7 @@ public class MusicStore {
   }
 
   @NonNull public List<Song> getSongsByGenreId(long genreId) {
-    ArrayList<Song> songs = new ArrayList<>();
+    List<Song> songs = new ArrayList<>();
 
     Uri uri = Audio.Genres.Members.getContentUri("external", genreId);
     Cursor cursor = getContentResolver().query(uri,
@@ -234,4 +240,5 @@ public class MusicStore {
   private ContentResolver getContentResolver() {
     return this.context.getContentResolver();
   }
+
 }
