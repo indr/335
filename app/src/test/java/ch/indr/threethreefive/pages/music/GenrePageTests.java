@@ -17,6 +17,7 @@ import java.util.List;
 import ch.indr.threethreefive.R;
 import ch.indr.threethreefive.TtfRobolectricTestCase;
 import ch.indr.threethreefive.data.db.music.MusicStore;
+import ch.indr.threethreefive.data.db.music.model.Genre;
 import ch.indr.threethreefive.libs.PageItem;
 import ch.indr.threethreefive.libs.PageUris;
 
@@ -24,7 +25,7 @@ import static org.mockito.Mockito.when;
 
 public class GenrePageTests extends TtfRobolectricTestCase {
 
-  private static final String GENRE_ID = "1";
+  private static final long GENRE_ID = 1;
 
   private MusicStore musicStore;
 
@@ -36,6 +37,7 @@ public class GenrePageTests extends TtfRobolectricTestCase {
 
   @Test
   public void onCreate_whenNoSongsFound_addsNoSongsFound() {
+    when(musicStore.getGenreById(GENRE_ID)).thenReturn(new Genre(GENRE_ID, "Genre"));
     when(musicStore.querySongs(null, null)).thenReturn(new ArrayList<>());
 
     final GenrePage page = createPage();
@@ -47,7 +49,7 @@ public class GenrePageTests extends TtfRobolectricTestCase {
 
   private GenrePage createPage() {
     final GenrePage page = new GenrePage(environment());
-    page.onCreate(context(), PageUris.musicGenre(GENRE_ID), new Bundle());
+    page.onCreate(context(), PageUris.musicGenre(String.valueOf(GENRE_ID)), new Bundle());
     return page;
   }
 }

@@ -73,7 +73,7 @@ public class TrendingPageTests extends TtfRobolectricTestCase {
     page.onRequestSuccess(Fake.stations(15));
 
     final List<PageItem> pageItems = page.getPageItems();
-    assertEquals(1 + 15, pageItems.size());
+    assertEquals(15, pageItems.size());
   }
 
   @Test
@@ -83,7 +83,7 @@ public class TrendingPageTests extends TtfRobolectricTestCase {
     page.onRequestSuccess(Fake.stations(50));
 
     final List<PageItem> pageItems = page.getPageItems();
-    assertEquals(1 + 50, pageItems.size());
+    assertEquals(50, pageItems.size());
   }
 
   @Test
@@ -93,7 +93,7 @@ public class TrendingPageTests extends TtfRobolectricTestCase {
     page.onRequestSuccess(Fake.stations(51));
 
     final List<PageItem> pageItems = page.getPageItems();
-    assertEquals(1 + 51, pageItems.size());
+    assertEquals(51, pageItems.size());
   }
 
   @NonNull private TrendingPage createPage() {
