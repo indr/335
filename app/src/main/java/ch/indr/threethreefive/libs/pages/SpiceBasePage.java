@@ -40,7 +40,7 @@ public abstract class SpiceBasePage extends Page {
       throw new RuntimeException("RobospiceManager has not been injected. Did you call component.inject(this) in your subclass of SpiceBasePage?");
     }
     apiClient.setRobospiceManager(robospiceManager);
-    robospiceManager.start(getContext());
+    robospiceManager.start(context());
   }
 
   @Override public void onStop() {

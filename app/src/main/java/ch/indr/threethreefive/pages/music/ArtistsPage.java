@@ -33,7 +33,7 @@ public class ArtistsPage extends Page {
 
     setDescription(getString(R.string.artists));
 
-    final MusicStore musicStore = new MusicStore(getContext());
+    final MusicStore musicStore = new MusicStore(context());
 
     final List<Artist> artists = musicStore.queryArtists(null);
     if (artists.size() == 0) {
@@ -57,7 +57,7 @@ public class ArtistsPage extends Page {
   }
 
   private String makeSubtitle(Artist artist) {
-    return getResources().getQuantityString(R.plurals.music_albums, artist.getNumberOfAlbums(), artist.getNumberOfAlbums()) +
-        ", " + getResources().getQuantityString(R.plurals.music_tracks, artist.getNumberOfTracks(), artist.getNumberOfTracks());
+    return resources().getQuantityString(R.plurals.music_albums, artist.getNumberOfAlbums(), artist.getNumberOfAlbums()) +
+        ", " + resources().getQuantityString(R.plurals.music_tracks, artist.getNumberOfTracks(), artist.getNumberOfTracks());
   }
 }

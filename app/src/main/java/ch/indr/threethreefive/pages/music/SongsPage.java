@@ -38,7 +38,7 @@ public class SongsPage extends Page {
 
     setDescription(getString(R.string.songs));
 
-    final MusicStore musicStore = new MusicStore(getContext());
+    final MusicStore musicStore = new MusicStore(context());
 
     final List<Song> songs = musicStore.querySongs(null, "title");
     if (songs.size() == 0) {

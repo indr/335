@@ -78,7 +78,7 @@ public class CountriesPage extends SpiceBasePage implements RequestListener<Coun
 
     for (Country country : countries) {
       final int stationCount = country.getStationCount();
-      final String subtitle = getResources().getQuantityString(R.plurals.radio_stations, stationCount, stationCount);
+      final String subtitle = resources().getQuantityString(R.plurals.radio_stations, stationCount, stationCount);
       builder.addLink(PageUris.radioCountryGenres(country.getValue()),
           country.getName(),
           subtitle,

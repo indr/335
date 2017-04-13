@@ -34,7 +34,7 @@ public class GenresPage extends Page {
 
     setDescription(getString(R.string.genres));
 
-    final MusicStore musicStore = new MusicStore(getContext());
+    final MusicStore musicStore = new MusicStore(context());
 
     final List<Genre> genres = musicStore.queryGenres(null);
     if (genres.size() == 0) {

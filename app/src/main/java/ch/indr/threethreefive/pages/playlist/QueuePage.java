@@ -63,7 +63,7 @@ public class QueuePage extends Page {
     }
 
     builder.add(new PlayQueue(getString(R.string.play_playlist), queue.getQueueItem(0).getQueueId()));
-    builder.add(new ClearQueue(getResources()));
+    builder.add(new ClearQueue(resources()));
 
     for (QueueItem queueItem : queue.queueItems()) {
       MediaDescriptionCompat description = queueItem.getDescription();

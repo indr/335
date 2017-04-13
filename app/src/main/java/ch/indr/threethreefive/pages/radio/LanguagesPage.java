@@ -76,7 +76,7 @@ public class LanguagesPage extends SpiceBasePage implements RequestListener<Lang
 
     for (Language language : languages) {
       final int stationCount = language.getStationCount();
-      final String subtitle = getResources().getQuantityString(R.plurals.radio_stations, stationCount, stationCount);
+      final String subtitle = resources().getQuantityString(R.plurals.radio_stations, stationCount, stationCount);
       builder.addLink(PageUris.radioLanguage(language.getValue()),
           language.getName(),
           subtitle,

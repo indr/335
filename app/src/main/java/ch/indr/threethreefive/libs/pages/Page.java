@@ -14,6 +14,7 @@ import android.os.Bundle;
 import android.support.annotation.CallSuper;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.annotation.StringRes;
 import android.util.Pair;
 
 import java.util.List;
@@ -80,7 +81,7 @@ public abstract class Page implements PageType {
     return getParentPageUri() == null;
   }
 
-  @Override public Uri getPageUri() {
+  @Override @NonNull public Uri getPageUri() {
     return pageUri;
   }
 
@@ -178,7 +179,7 @@ public abstract class Page implements PageType {
     this.iconUri = iconUri;
   }
 
-  public boolean transitionTo(final @NonNull Transition transition) {
+  protected boolean transitionTo(final @NonNull Transition transition) {
     // If the transition intends to replace the current page, there won't be a way
     // for the user the remove the favorite.
     if (transition.getReplace() && environment.favoritesStore().isFavorite(getPageUri())) {
@@ -266,29 +267,28 @@ public abstract class Page implements PageType {
     setState(State.Destroyed);
   }
 
-  protected Context getContext() {
-    return context;
-  }
-
-  // TODO: Remove and add getQuantityString
-  protected Resources getResources() {
-    return context.getResources();
-  }
-
-  protected String getString(int resId) {
-    return context.getString(resId);
-  }
-
-  protected String getString(int resId, Object... formatArgs) {
-    return context.getString(resId, formatArgs);
-  }
-
   protected @NonNull ThreeThreeFiveApp application() {
     return (ThreeThreeFiveApp) context.getApplicationContext();
   }
 
   protected @NonNull AppComponent component() {
     return application().component();
+  }
+
+  protected Context context() {
+    return context;
+  }
+
+  protected Resources resources() {
+    return context.getResources();
+  }
+
+  protected String getString(@StringRes int id) {
+    return resources().getString(id);
+  }
+
+  protected String getString(@StringRes int id, Object... formatArgs) {
+    return resources().getString(id, formatArgs);
   }
 
   protected String getUriParam(@NonNull String key) {
@@ -298,7 +298,7 @@ public abstract class Page implements PageType {
   }
 
   protected PageItemsBuilder pageItemsBuilder() {
-    return new PageItemsBuilder(this.getContext(), this.environment);
+    return new PageItemsBuilder(this.context(), this.environment);
   }
 
   protected void setPageItems(final @NonNull PageItemsBuilder builder) {
@@ -365,7 +365,7 @@ public abstract class Page implements PageType {
     this.firstVisibleItem = firstVisibleItem;
   }
 
-  public void resetFirstVisibleItem() {
+  protected void resetFirstVisibleItem() {
     this.firstVisibleItem = null;
   }
 

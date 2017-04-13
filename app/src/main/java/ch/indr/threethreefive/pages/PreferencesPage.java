@@ -61,7 +61,7 @@ public class PreferencesPage extends Page {
   }
 
   private void addAccessibilityServiceStatusInfos(PageItemsBuilder builder) {
-    final AccessibilityServices accessibilityServices = AccessibilityServices.newInstance(getContext());
+    final AccessibilityServices accessibilityServices = AccessibilityServices.newInstance(context());
 
     builder.addText("Accessibility.isEnabled: " + accessibilityServices.isEnabled());
     builder.addText("Accessibility.isSpokenFeedbackEnabled: " + accessibilityServices.isSpokenFeedbackEnabled());
@@ -92,11 +92,11 @@ public class PreferencesPage extends Page {
   }
 
   private void startUiModeList(Environment environment) {
-    uiModeManager.launchListUi(getContext());
+    uiModeManager.launchListUi(context());
   }
 
   private void startUiModeButtons(Environment environment) {
-    uiModeManager.launchButtonsUi(getContext());
+    uiModeManager.launchButtonsUi(context());
   }
 
   private class ResetAppLaunchCounter extends PageCommand {

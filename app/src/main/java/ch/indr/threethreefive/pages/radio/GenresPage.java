@@ -60,7 +60,7 @@ public class GenresPage extends GenreListBasePage {
 
     for (Genre genre : genres) {
       final int stationCount = genre.getStationCount();
-      final String subtitle = getResources().getQuantityString(R.plurals.radio_stations, stationCount, stationCount);
+      final String subtitle = resources().getQuantityString(R.plurals.radio_stations, stationCount, stationCount);
       builder.addLink(PageUris.radioGenre(genre.getId()),
           genre.getName(),
           subtitle,

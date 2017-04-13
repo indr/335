@@ -86,7 +86,7 @@ public class HomePage extends Page {
         .addLink(PageUris.preferences(), getString(R.string.mainmenu_preferences_title), getString(R.string.mainmenu_preferences_subtitle), getString(R.string.mainmenu_preferences_description));
 
     if (BuildConfig.FEATURE_DONATE_TO && isListView()) {
-      builder.add(new OpenWebsite(getContext(), Uri.parse(getString(R.string.mainmenu_donate_to_uri)),
+      builder.add(new OpenWebsite(context(), Uri.parse(getString(R.string.mainmenu_donate_to_uri)),
           getString(R.string.mainmenu_donate_to_title), getString(R.string.mainmenu_donate_to_subtitle), getString(R.string.mainmenu_donate_to_description)));
     }
 

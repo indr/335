@@ -79,7 +79,7 @@ public class GenrePageTests extends TtfRobolectricTestCase {
     page.onRequestSuccess(Fake.stations(0));
 
     final List<PageItem> pageItems = page.getPageItems();
-    assertEquals(getString(R.string.no_stations_found), pageItems.get(0).getTitle());
+    assertEquals(getString(R.string.no_stations_found), pageItems.get(1).getTitle());
   }
 
   @Test

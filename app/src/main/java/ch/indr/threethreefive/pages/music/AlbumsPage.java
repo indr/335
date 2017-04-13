@@ -34,7 +34,7 @@ public class AlbumsPage extends Page {
 
     setDescription(getString(R.string.albums));
 
-    final MusicStore musicStore = new MusicStore(getContext());
+    final MusicStore musicStore = new MusicStore(context());
 
     final List<Album> albums = musicStore.queryAlbums(null);
     if (albums.size() == 0) {
@@ -58,12 +58,12 @@ public class AlbumsPage extends Page {
   private String makeContentDescription(Album album) {
     final int numberOfTracks = album.getNumberOfTracks();
     return album.getName() + " by " + album.getArtist() + ", "
-        + getResources().getQuantityString(R.plurals.music_tracks, numberOfTracks, numberOfTracks);
+        + resources().getQuantityString(R.plurals.music_tracks, numberOfTracks, numberOfTracks);
   }
 
   private String makeSubtitle(Album album) {
     final int numberOfTracks = album.getNumberOfTracks();
     return album.getArtist() + ", "
-        + getResources().getQuantityString(R.plurals.music_tracks, numberOfTracks, numberOfTracks);
+        + resources().getQuantityString(R.plurals.music_tracks, numberOfTracks, numberOfTracks);
   }
 }

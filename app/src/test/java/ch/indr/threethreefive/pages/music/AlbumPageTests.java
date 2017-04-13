@@ -13,6 +13,7 @@ import org.junit.Test;
 
 import java.util.List;
 
+import ch.indr.threethreefive.Fake;
 import ch.indr.threethreefive.R;
 import ch.indr.threethreefive.TtfRobolectricTestCase;
 import ch.indr.threethreefive.data.db.music.MusicStore;
@@ -38,6 +39,7 @@ public class AlbumPageTests extends TtfRobolectricTestCase {
   public void onCreate_addsPageItems() {
     final Album album = new Album(ALBUM_ID, "Name", "Artist", "artistId", 3, null);
     when(musicStore.getAlbumById(ALBUM_ID)).thenReturn(album);
+    when(musicStore.getSongsByAlbumId(ALBUM_ID)).thenReturn(Fake.songs(1));
 
     final AlbumPage page = createPage();
 

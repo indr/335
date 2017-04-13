@@ -77,11 +77,11 @@ public class ArtistPage extends Page {
 
   private String makeContentDescription(Album album) {
     final int numberOfTracks = album.getNumberOfTracks();
-    return album.getName() + ", " + getResources().getQuantityString(R.plurals.music_tracks, numberOfTracks, numberOfTracks);
+    return album.getName() + ", " + resources().getQuantityString(R.plurals.music_tracks, numberOfTracks, numberOfTracks);
   }
 
   private String makeSubtitle(Album album) {
     final int numberOfTracks = album.getNumberOfTracks();
-    return getResources().getQuantityString(R.plurals.music_tracks, numberOfTracks, numberOfTracks);
+    return resources().getQuantityString(R.plurals.music_tracks, numberOfTracks, numberOfTracks);
   }
 }

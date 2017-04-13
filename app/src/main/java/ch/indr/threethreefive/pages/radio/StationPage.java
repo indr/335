@@ -127,7 +127,7 @@ public class StationPage extends SpiceBasePage implements RequestListener<Statio
 
     // Link to Website
     if (!isButtonView() && station.getHomepage() != null) {
-      builder.add(new OpenWebsite(getContext(), station.getHomepage()));
+      builder.add(new OpenWebsite(context(), station.getHomepage()));
     }
 
     setPageItems(builder);
