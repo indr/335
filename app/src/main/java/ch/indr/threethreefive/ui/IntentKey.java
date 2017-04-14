@@ -18,6 +18,8 @@ public final class IntentKey {
 
   public static final String PAGE_URI = "ch.indr.threethreefive.intent_page_uri";
 
+  public static final String PAGE_REPLACE = "ch.indr.threethreefive.intent_page_replace";
+
   private IntentKey() {
   }
 }

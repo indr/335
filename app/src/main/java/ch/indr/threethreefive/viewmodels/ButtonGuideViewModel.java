@@ -18,7 +18,7 @@ import ch.indr.threethreefive.libs.Environment;
 import ch.indr.threethreefive.libs.PageItem;
 import ch.indr.threethreefive.libs.PageLink;
 import ch.indr.threethreefive.libs.pages.Page;
-import ch.indr.threethreefive.libs.pages.Transition;
+import ch.indr.threethreefive.libs.pages.PageTransition;
 import ch.indr.threethreefive.libs.preferences.IntPreferenceType;
 import ch.indr.threethreefive.libs.utils.ObjectUtils;
 import ch.indr.threethreefive.libs.utils.UriUtils;
@@ -109,10 +109,10 @@ public class ButtonGuideViewModel extends PageActivityViewModel<ButtonGuideActiv
         .subscribe(this::speakTitle);
   }
 
-  @Override protected void onBeforeTransition(@NonNull Transition transition) {
+  @Override protected void onBeforeTransition(@NonNull PageTransition pageTransition) {
     // This is indented to prevent double title speech like "Loa Loading Nepal"
     // when a transition is made because of an empty dataset.
-    this.ignoreNextTitle = transition.getReplace();
+    this.ignoreNextTitle = pageTransition.getReplace();
   }
 
   private void speakInstructions(final @NonNull Context context) {

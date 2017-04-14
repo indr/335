@@ -65,7 +65,7 @@ public abstract class Page implements PageType {
 
   private final PublishSubject<Object> selectPreviousPageItem = PublishSubject.create();
 
-  private final PublishSubject<Transition> transitionTo = PublishSubject.create();
+  private final PublishSubject<PageTransition> transitionTo = PublishSubject.create();
 
   private Pair<Integer, Integer> firstVisibleItem;
 
@@ -179,18 +179,18 @@ public abstract class Page implements PageType {
     this.iconUri = iconUri;
   }
 
-  protected boolean transitionTo(final @NonNull Transition transition) {
+  protected boolean transitionTo(final @NonNull PageTransition pageTransition) {
     // If the transition intends to replace the current page, there won't be a way
     // for the user the remove the favorite.
-    if (transition.getReplace() && environment.favoritesStore().isFavorite(getPageUri())) {
+    if (pageTransition.getReplace() && environment.favoritesStore().isFavorite(getPageUri())) {
       return false;
     }
 
-    transitionTo.onNext(transition);
+    transitionTo.onNext(pageTransition);
     return true;
   }
 
-  public Observable<Transition> transitionTo() {
+  public Observable<PageTransition> transitionTo() {
     return transitionTo;
   }
 

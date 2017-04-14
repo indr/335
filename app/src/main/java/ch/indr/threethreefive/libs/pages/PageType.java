@@ -32,5 +32,5 @@ public interface PageType {
 
   Observable<PageLink> parentPageLink();
 
-  Observable<Transition> transitionTo();
+  Observable<PageTransition> transitionTo();
 }

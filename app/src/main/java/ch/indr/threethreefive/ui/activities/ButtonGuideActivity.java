@@ -140,9 +140,8 @@ public class ButtonGuideActivity extends BaseActivity<ButtonGuideViewModel> {
     Intent intent = new Intent(this, this.getClass());
     intent.putExtra(IntentKey.PAGE_TITLE, pageLink.getTitle());
     intent.putExtra(IntentKey.PAGE_URI, pageLink.getUri().toString());
+    intent.putExtra(IntentKey.PAGE_REPLACE, pageLink.getReplace());
 
-    // Send intent to ViewModel, instead of starting a new activity
-    // startActivityWithTransition(intent, R.anim.fade_in, R.anim.fade_out);
     viewModel.intent(intent);
   }
 

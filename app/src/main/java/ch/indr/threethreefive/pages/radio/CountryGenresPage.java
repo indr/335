@@ -21,7 +21,7 @@ import ch.indr.threethreefive.data.network.radioBrowser.model.Genre;
 import ch.indr.threethreefive.libs.Environment;
 import ch.indr.threethreefive.libs.PageItemsBuilder;
 import ch.indr.threethreefive.libs.PageUris;
-import ch.indr.threethreefive.libs.pages.Transition;
+import ch.indr.threethreefive.libs.pages.PageTransition;
 import ch.indr.threethreefive.libs.utils.CollectionUtils;
 
 public class CountryGenresPage extends GenreListBasePage {
@@ -52,7 +52,7 @@ public class CountryGenresPage extends GenreListBasePage {
 
     if (genres.size() == 0) {
       builder.addText(getString(R.string.no_genres_found));
-      transitionTo(new Transition(PageUris.radioCountryStations(countryId), getTitle(), true));
+      transitionTo(new PageTransition(PageUris.radioCountryStations(countryId), getTitle(), true));
       return;
     }
 
@@ -67,7 +67,7 @@ public class CountryGenresPage extends GenreListBasePage {
   }
 
   @Override protected void setPageItems(@NonNull PageItemsBuilder builder) {
-    builder.addLink(PageUris.radioCountryStations(countryId), getString(R.string.show_all_stations));
+    builder.addLink(PageUris.radioCountryStations(countryId), getString(R.string.show_all_stations), true);
     super.setPageItems(builder);
   }
 

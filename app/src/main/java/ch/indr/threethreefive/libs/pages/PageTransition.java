@@ -14,20 +14,20 @@ import android.support.annotation.Nullable;
 
 import ch.indr.threethreefive.ui.IntentKey;
 
-public class Transition {
+public class PageTransition {
   private final Uri pageUri;
   private final String title;
   private boolean replace = false;
 
-  public Transition(final @NonNull Uri pageUri) {
+  public PageTransition(final @NonNull Uri pageUri) {
     this(pageUri, null);
   }
 
-  public Transition(final @NonNull Uri pageUri, final @Nullable String title) {
+  public PageTransition(final @NonNull Uri pageUri, final @Nullable String title) {
     this(pageUri, title, false);
   }
 
-  public Transition(final @NonNull Uri pageUri, final @Nullable String title, final boolean replace) {
+  public PageTransition(final @NonNull Uri pageUri, final @Nullable String title, final boolean replace) {
     this.pageUri = pageUri;
     this.title = title;
     this.replace = replace;
@@ -45,18 +45,15 @@ public class Transition {
     return replace;
   }
 
-  public static @Nullable Transition fromIntent(Intent intent) {
+  public static @Nullable PageTransition fromIntent(Intent intent) {
     if (!intent.hasExtra(IntentKey.PAGE_URI)) {
       return null;
     }
 
     Uri uri = Uri.parse(intent.getStringExtra(IntentKey.PAGE_URI));
-    String title = null;
+    String title = intent.getStringExtra(IntentKey.PAGE_TITLE);
+    boolean replace = intent.getBooleanExtra(IntentKey.PAGE_REPLACE, false);
 
-    if (intent.hasExtra(IntentKey.PAGE_TITLE)) {
-      title = intent.getStringExtra(IntentKey.PAGE_TITLE);
-    }
-
-    return new Transition(uri, title);
+    return new PageTransition(uri, title, replace);
   }
 }

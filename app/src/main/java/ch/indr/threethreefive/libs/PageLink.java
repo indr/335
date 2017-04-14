@@ -19,10 +19,17 @@ public class PageLink extends PageItem {
   public static final PageLink NowPlaying = new PageLink(PageUris.nowPlaying(), new Description("Now Playing"));
 
   private BehaviorSubject<Uri> uri = BehaviorSubject.create();
+  private boolean replace;
 
   public PageLink(@NonNull Uri uri, final @NonNull Description description) {
     super(description);
     this.uri.onNext(uri);
+  }
+
+  public PageLink(@NonNull Uri uri, final @NonNull Description description, final boolean replace) {
+    super(description);
+    this.uri.onNext(uri);
+    this.replace = replace;
   }
 
   public PageLink(final @NonNull Uri uri, final @NonNull Description description,
@@ -41,6 +48,10 @@ public class PageLink extends PageItem {
 
   public @NonNull Observable<Uri> uri() {
     return this.uri;
+  }
+
+  public boolean getReplace() {
+    return replace;
   }
 
   @Override public @NonNull String toString() {

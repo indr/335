@@ -18,8 +18,8 @@ import java.util.List;
 import ch.indr.threethreefive.libs.Environment;
 import ch.indr.threethreefive.libs.PageItem;
 import ch.indr.threethreefive.libs.PageLink;
-import ch.indr.threethreefive.libs.utils.ObjectUtils;
 import ch.indr.threethreefive.libs.pages.Page;
+import ch.indr.threethreefive.libs.utils.ObjectUtils;
 import ch.indr.threethreefive.services.Speaker;
 import ch.indr.threethreefive.ui.activities.ListGuideActivity;
 import ch.indr.threethreefive.viewmodels.inputs.ListGuideViewModelInputs;
@@ -79,7 +79,6 @@ public class ListGuideViewModel extends PageActivityViewModel<ListGuideActivity>
 
   // OUTPUTS
   @Override public Observable<Boolean> canGoUp() {
-    // TODO: Refactor to isHomePage?
     return canGoUp;
   }
 

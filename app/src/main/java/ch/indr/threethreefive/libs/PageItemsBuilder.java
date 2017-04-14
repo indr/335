@@ -52,6 +52,11 @@ public class PageItemsBuilder {
     return this;
   }
 
+  public PageItemsBuilder addLink(final @NonNull Uri uri, final @NonNull String title, final boolean replace) {
+    items.add(new PageLink(uri, new Description(title), replace));
+    return this;
+  }
+
   public PageItemsBuilder addLink(final @NonNull Uri uri, final @NonNull String title,
                                   final @Nullable String subtitle, final @NonNull String contentDescription) {
     final Description description = new Description(title, StringUtils.isEmpty(subtitle) ? null : subtitle, contentDescription);
