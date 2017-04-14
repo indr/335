@@ -8,6 +8,7 @@
 package ch.indr.threethreefive.libs;
 
 import android.graphics.Bitmap;
+import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.media.MediaDescriptionCompat;
@@ -35,6 +36,18 @@ public class MediaItem {
     this.subtitle = metadata.getString(MediaMetadataCompat.METADATA_KEY_DISPLAY_SUBTITLE);
     this.pageUri = pageUri;
     this.mediaUri = metadata.getString(MediaMetadataCompat.METADATA_KEY_MEDIA_URI);
+  }
+
+  public static MediaItem make(final @NonNull String mediaUri, final @NonNull Uri pageUri,
+                               final @NonNull String title, final @Nullable String subtitle) {
+    final MediaMetadataCompat metadata = new MediaMetadataCompat.Builder()
+        .putString(MediaMetadataCompat.METADATA_KEY_TITLE, title)
+        .putString(MediaMetadataCompat.METADATA_KEY_DISPLAY_TITLE, title)
+        .putString(MediaMetadataCompat.METADATA_KEY_DISPLAY_SUBTITLE, subtitle)
+        .putString(MediaMetadataCompat.METADATA_KEY_MEDIA_URI, mediaUri)
+        .build();
+
+    return new MediaItem(metadata, pageUri.toString());
   }
 
   @Nullable public String getTitle() {
