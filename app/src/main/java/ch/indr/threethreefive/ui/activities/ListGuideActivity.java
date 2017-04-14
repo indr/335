@@ -207,22 +207,11 @@ public class ListGuideActivity extends BaseListActivity<ListGuideViewModel> impl
     }
   }
 
-  @Override
-  @Nullable protected Pair<Integer, Integer> exitTransition() {
-    if (isTaskRoot()) {
-      return super.exitTransition();
-    } else {
-      return Pair.create(R.anim.slide_in_left, R.anim.slide_out_right);
-    }
-  }
-
-  @Override
-  protected int getListViewId() {
+  @Override protected int getListViewId() {
     return R.id.list;
   }
 
-  @Override
-  protected void onListItemClick(ListView listView, View view, int position, long id) {
+  @Override protected void onListItemClick(ListView listView, View view, int position, long id) {
     Timber.i("Position click %d", position);
     PageItem pageItem = (PageItem) getListAdapter().getItem(position);
     Timber.i("PageItem clicked %s", pageItem.toString());

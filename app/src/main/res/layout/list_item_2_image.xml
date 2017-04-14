@@ -35,7 +35,7 @@
             android:layout_marginRight="?android:attr/listPreferredItemPaddingRight"
             android:scaleType="centerInside"
             tools:ignore="ContentDescription"
-            tools:src="@mipmap/_zetchilli_pl"/>
+            tools:src="@mipmap/ic_launcher"/>
 
         <LinearLayout
             android:layout_width="wrap_content"
