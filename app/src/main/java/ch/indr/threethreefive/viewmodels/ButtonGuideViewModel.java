@@ -13,6 +13,10 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.view.View;
 
+import com.trello.rxlifecycle.ActivityEvent;
+
+import java.util.concurrent.TimeUnit;
+
 import ch.indr.threethreefive.libs.Description;
 import ch.indr.threethreefive.libs.Environment;
 import ch.indr.threethreefive.libs.PageItem;
@@ -107,6 +111,14 @@ public class ButtonGuideViewModel extends PageActivityViewModel<ButtonGuideActiv
         .map(Description::getContentDescription)
         .compose(bindToLifecycle())
         .subscribe(this::speakTitle);
+
+    // Notify user that the application is no longer on screen
+    activityEvent()
+        .doOnNext(ae -> Timber.d("activity event " + ae.name()))
+        .filter(ae -> ae == ActivityEvent.PAUSE || ae == ActivityEvent.RESUME)
+        .throttleWithTimeout(100, TimeUnit.MILLISECONDS)
+        .filter(ae -> ae != ActivityEvent.RESUME)
+        .subscribe(__ -> speaker.command().applicationClosed());
   }
 
   @Override protected void onBeforeTransition(@NonNull PageTransition pageTransition) {

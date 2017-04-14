@@ -8,8 +8,7 @@
 package ch.indr.threethreefive.services;
 
 public interface CommandSpeaker {
-
-  void closeApp();
+  void applicationClosed();
 
   void favoriteAdded();
 

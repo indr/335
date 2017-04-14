@@ -92,10 +92,7 @@ public class ButtonGuideActivity extends BaseActivity<ButtonGuideViewModel> {
     viewModel.goBack()
         .compose(bindToLifecycle())
         .compose(observeForUI())
-        .subscribe(__ -> {
-          speaker.command().closeApp();
-          super.back();
-        });
+        .subscribe(__ -> super.back());
   }
 
   private void initActionBar() {

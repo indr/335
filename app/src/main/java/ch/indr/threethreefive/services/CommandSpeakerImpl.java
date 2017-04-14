@@ -21,8 +21,8 @@ public class CommandSpeakerImpl implements CommandSpeaker {
     speaker.sayUrgent(text);
   }
 
-  @Override public void closeApp() {
-    speaker.sayUrgent("Closing application");
+  @Override public void applicationClosed() {
+    speaker.sayUrgent("3 3 5 closed");
   }
 
   @Override public void favoriteAdded() {
