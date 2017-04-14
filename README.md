@@ -16,6 +16,15 @@ The second interface consists of a simple buttons layout and can be used without
 
 335 thank you's for using and supporting three three five!
 
+
+## Development / Building
+
+- `git clone https://github.com/indr/335.git threethreefive`
+- `cd threethreefive`
+- `./gradlew build`
+- Find your debug apk in `app/build/outputs/apk/`
+
+
 ## Copyright
 
 Copyright (c) 2017 Reto Inderbitzin
