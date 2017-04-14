@@ -17,7 +17,7 @@ android {
         minSdkVersion 16
         //noinspection OldTargetApi
         targetSdkVersion 22
-        versionCode 13
+        versionCode 14
         versionName "0.3.0." + (System.getenv("BITRISE_BUILD_NUMBER") ?: "0")
         setProperty("archivesBaseName", "threethreefive-$versionName")
 
