@@ -25,6 +25,6 @@ The second interface consists of a simple buttons layout and can be used without
 - Find your debug apk in `app/build/outputs/apk/`
 
 
-## Copyright
+## Copyright and License
 
-Copyright (c) 2017 Reto Inderbitzin
+Copyright (C) 2017 Reto Inderbitzin, [AGPL-3.0 License](LICENSE)
