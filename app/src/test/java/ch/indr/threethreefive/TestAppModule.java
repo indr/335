@@ -16,6 +16,7 @@ import ch.indr.threethreefive.data.db.music.MusicStore;
 import ch.indr.threethreefive.data.network.ApiClient;
 import ch.indr.threethreefive.libs.Preferences;
 import ch.indr.threethreefive.libs.net.RobospiceManager;
+import ch.indr.threethreefive.libs.preferences.IntPreferenceType;
 import ch.indr.threethreefive.libs.qualifiers.ApplicationContext;
 import ch.indr.threethreefive.services.CommandSpeaker;
 import ch.indr.threethreefive.services.InstructionsSpeaker;
@@ -30,6 +31,7 @@ public class TestAppModule extends AppModule {
   private ApiClient apiClient;
   private FavoritesStore favoritesStore;
   private MusicStore musicStore;
+  private Preferences preferences;
   private RobospiceManager robospiceManager;
   private Speaker speaker;
   private UiModeManager uiModeManager;
@@ -51,6 +53,15 @@ public class TestAppModule extends AppModule {
   @NonNull @Override public MusicStore provideMusicStore(@ApplicationContext @NonNull Context context) {
     if (musicStore == null) musicStore = mock(MusicStore.class);
     return musicStore;
+  }
+
+  @NonNull @Override Preferences providesPreferences(@ApplicationContext @NonNull Context context) {
+    if (preferences == null) {
+      preferences = mock(Preferences.class);
+      when(preferences.uiMode()).thenReturn(mock(IntPreferenceType.class));
+      when(preferences.uiModeButtonsLaunchCounter()).thenReturn(mock(IntPreferenceType.class));
+    }
+    return preferences;
   }
 
   @NonNull @Override public RobospiceManager provideRobospiceManager() {

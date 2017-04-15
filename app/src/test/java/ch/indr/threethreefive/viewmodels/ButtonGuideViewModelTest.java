@@ -15,21 +15,16 @@ import org.junit.Test;
 
 import ch.indr.threethreefive.TtfRobolectricTestCase;
 import ch.indr.threethreefive.libs.PageItem;
-import ch.indr.threethreefive.libs.Preferences;
-import ch.indr.threethreefive.services.UiModeManager;
 import ch.indr.threethreefive.ui.IntentKey;
 import rx.observers.TestSubscriber;
 
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import static ch.indr.threethreefive.services.UiModeManager.UI_MODE_BUTTONS;
 
 public class ButtonGuideViewModelTest extends TtfRobolectricTestCase {
 
   @Override public void setUp() throws Exception {
     super.setUp();
-
-    UiModeManager uiModeManager = appModule().provideUiModeManager(context(), mock(Preferences.class));
-    when(uiModeManager.getCurrentUiMode()).thenReturn(UiModeManager.UI_MODE_BUTTONS);
+    setMode(UI_MODE_BUTTONS);
   }
 
   @Test
@@ -38,7 +33,7 @@ public class ButtonGuideViewModelTest extends TtfRobolectricTestCase {
     final TestSubscriber<String> activityTitle = new TestSubscriber<>();
     vm.outputs.activityTitle().subscribe(activityTitle);
 
-    activityTitle.assertValues("Music");
+    activityTitle.assertValues("Loading 3 3 5");
   }
 
   @Test

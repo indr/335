@@ -20,7 +20,14 @@ import ch.indr.threethreefive.R;
 import ch.indr.threethreefive.TtfRobolectricTestCase;
 import ch.indr.threethreefive.libs.PageItem;
 
+import static ch.indr.threethreefive.services.UiModeManager.UI_MODE_BUTTONS;
+
 public class LanguagePageTests extends TtfRobolectricTestCase {
+
+  @Override public void setUp() throws Exception {
+    super.setUp();
+    setMode(UI_MODE_BUTTONS);
+  }
 
   @Test(expected = IllegalArgumentException.class)
   public void onCreate_withoutIdInBundle_throws() {
@@ -48,7 +55,7 @@ public class LanguagePageTests extends TtfRobolectricTestCase {
     page.onRequestSuccess(null);
 
     final List<PageItem> pageItems = page.getPageItems();
-    assertEquals(getString(R.string.no_stations_found_error), pageItems.get(0).getTitle());
+    assertEquals(getString(R.string.no_stations_found_error), pageItems.get(1).getTitle());
   }
 
   @Test

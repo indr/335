@@ -24,6 +24,7 @@ import ch.indr.threethreefive.data.network.radioBrowser.model.GenresBuilder;
 import ch.indr.threethreefive.libs.PageItem;
 import ch.indr.threethreefive.libs.PageUris;
 
+import static ch.indr.threethreefive.services.UiModeManager.UI_MODE_BUTTONS;
 import static org.mockito.Mockito.verify;
 
 public class CountryGenrePageTests extends TtfRobolectricTestCase {
@@ -35,7 +36,7 @@ public class CountryGenrePageTests extends TtfRobolectricTestCase {
 
   @Override public void setUp() throws Exception {
     super.setUp();
-
+    setMode(UI_MODE_BUTTONS);
     this.apiClient = appModule().apiClient(context());
   }
 
@@ -86,7 +87,7 @@ public class CountryGenrePageTests extends TtfRobolectricTestCase {
     page.onRequestFailure(new SpiceException("Test spice exception message"));
 
     final List<PageItem> pageItems = page.getPageItems();
-    assertEquals("Test spice exception message", pageItems.get(0).getTitle());
+    assertEquals("Test spice exception message", pageItems.get(1).getTitle());
   }
 
   @Test
@@ -96,7 +97,7 @@ public class CountryGenrePageTests extends TtfRobolectricTestCase {
     page.onRequestSuccess(null);
 
     final List<PageItem> pageItems = page.getPageItems();
-    assertEquals(getString(R.string.no_stations_found_error), pageItems.get(0).getTitle());
+    assertEquals(getString(R.string.no_stations_found_error), pageItems.get(1).getTitle());
   }
 
   @Test

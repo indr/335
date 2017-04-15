@@ -21,10 +21,14 @@ import org.robolectric.annotation.Config;
 import org.robolectric.shadows.multidex.ShadowMultiDex;
 
 import ch.indr.threethreefive.libs.Environment;
+import ch.indr.threethreefive.libs.Preferences;
+import ch.indr.threethreefive.services.UiModeManager;
 import rx.Scheduler;
 import rx.android.plugins.RxAndroidPlugins;
 import rx.android.plugins.RxAndroidSchedulersHook;
 import rx.schedulers.Schedulers;
+
+import static org.mockito.Mockito.when;
 
 @RunWith(TtfRobolectricGradleTestRunner.class)
 @Config(constants = BuildConfig.class,
@@ -75,11 +79,19 @@ public abstract class TtfRobolectricTestCase extends TestCase {
     return environment;
   }
 
+  protected @NonNull Preferences preferences() {
+    return appModule().providesPreferences(application());
+  }
+
   protected @Nullable String getString(final int resourceId) {
     return context().getString(resourceId);
   }
 
   protected @Nullable String getString(final int resourceId, Object... formatArgs) {
     return context().getString(resourceId, formatArgs);
+  }
+
+  protected void setMode(int mode) {
+    when(environment().preferences().uiMode().get()).thenReturn(mode);
   }
 }

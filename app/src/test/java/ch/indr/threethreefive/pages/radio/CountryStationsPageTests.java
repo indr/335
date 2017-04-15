@@ -21,6 +21,7 @@ import ch.indr.threethreefive.TtfRobolectricTestCase;
 import ch.indr.threethreefive.data.network.ApiClient;
 import ch.indr.threethreefive.libs.PageItem;
 
+import static ch.indr.threethreefive.services.UiModeManager.UI_MODE_BUTTONS;
 import static org.mockito.Mockito.verify;
 
 public class CountryStationsPageTests extends TtfRobolectricTestCase {
@@ -29,7 +30,7 @@ public class CountryStationsPageTests extends TtfRobolectricTestCase {
 
   @Override public void setUp() throws Exception {
     super.setUp();
-
+    setMode(UI_MODE_BUTTONS);
     this.apiClient = appModule().apiClient(context());
   }
 
@@ -68,7 +69,7 @@ public class CountryStationsPageTests extends TtfRobolectricTestCase {
     page.onRequestSuccess(null);
 
     final List<PageItem> pageItems = page.getPageItems();
-    assertEquals(getString(R.string.no_stations_found_error), pageItems.get(0).getTitle());
+    assertEquals(getString(R.string.no_stations_found_error), pageItems.get(1).getTitle());
   }
 
   @Test
