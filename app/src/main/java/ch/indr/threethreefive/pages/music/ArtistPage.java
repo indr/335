@@ -61,7 +61,6 @@ public class ArtistPage extends Page {
     final PageItemsBuilder builder = pageItemsBuilder();
     builder.add(new PlayMedias(getString(R.string.play_all_albums), mediaItems));
     builder.add(new AddToPlaylist(getString(R.string.add_all_albums_to_playlist), mediaItems));
-    builder.addToggleFavorite(getCurrentPageLink());
 
     final List<Album> albums = musicStore.findAlbumsByArtistId(artistId);
     for (Album album : albums) {

@@ -71,7 +71,6 @@ public class CountryGenrePage extends SpiceBasePage implements RequestListener<L
 
   private void showNextItems() {
     final PageItemsBuilder builder = pageItemsBuilder();
-    builder.addToggleFavorite(getCurrentPageLink());
     expander.buildNext(builder, this::addPageItems, this::showNextItems);
 
     setPageItems(builder);

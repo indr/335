@@ -29,7 +29,6 @@ import ch.indr.threethreefive.libs.Environment;
 import ch.indr.threethreefive.libs.PageItem;
 import ch.indr.threethreefive.libs.PageItemsBuilder;
 import ch.indr.threethreefive.libs.PageLink;
-import ch.indr.threethreefive.libs.utils.CollectionUtils;
 import ch.indr.threethreefive.libs.utils.StringUtils;
 import rx.Observable;
 import rx.subjects.BehaviorSubject;
@@ -78,7 +77,7 @@ public abstract class Page implements PageType {
     this.environment = environment;
   }
 
-  protected PageLink getCurrentPageLink() {
+  public PageLink getPageLink() {
     return new PageLink(getPageUri(), getDescription(), getIconUri(), 0);
   }
 
@@ -303,7 +302,7 @@ public abstract class Page implements PageType {
   }
 
   protected PageItemsBuilder pageItemsBuilder() {
-    return new PageItemsBuilder(this.context(), this.environment);
+    return new PageItemsBuilder(this.context(), this.environment, this);
   }
 
   protected void setPageItems(final @NonNull PageItemsBuilder builder) {
@@ -340,16 +339,9 @@ public abstract class Page implements PageType {
   }
 
   private void setError(final @NonNull String message) {
-    final PageItemsBuilder builder = pageItemsBuilder();
-
-    final FavoritesStore favoritesStore = environment.favoritesStore();
-    if (favoritesStore.isFavorite(getPageUri())) {
-      builder.addRemoveFavorite(getCurrentPageLink());
-    }
-
-    builder.addText(message);
-    final List<PageItem> items = builder.build();
-
+    final List<PageItem> items = pageItemsBuilder()
+        .addText(message)
+        .build();
     setPageItems(items);
   }
 
@@ -374,7 +366,7 @@ public abstract class Page implements PageType {
     this.firstVisibleItem = null;
   }
 
-  public Observable<Boolean> isFavorable() {
+  public BehaviorSubject<Boolean> isFavorable() {
     return isFavorable;
   }
 

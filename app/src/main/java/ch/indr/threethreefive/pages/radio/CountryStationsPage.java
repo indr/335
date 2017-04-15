@@ -46,8 +46,6 @@ public class CountryStationsPage extends StationListBasePage {
   }
 
   protected void addPageItems(PageItemsBuilder builder, List<Station> stations) {
-    builder.addToggleFavorite(getCurrentPageLink());
-
     if (stations.size() == 0) {
       builder.addText(getString(R.string.no_stations_found));
       return;

@@ -18,20 +18,25 @@ import java.util.List;
 
 import ch.indr.threethreefive.commands.ActionCommand;
 import ch.indr.threethreefive.commands.ToggleFavorite;
+import ch.indr.threethreefive.libs.pages.Page;
 import ch.indr.threethreefive.libs.utils.StringUtils;
+import ch.indr.threethreefive.services.UiModeManager;
 import rx.functions.Action0;
 import rx.functions.Action1;
 
 public class PageItemsBuilder {
-
   private final Resources resources;
   private final Environment environment;
+  private final Page page;
+  private final int uiMode;
 
   private final List<PageItem> items = new ArrayList<>();
 
-  public PageItemsBuilder(@NonNull Context context, @NonNull Environment environment) {
+  public PageItemsBuilder(@NonNull Context context, @NonNull Environment environment, @NonNull Page page) {
     this.resources = context.getResources();
     this.environment = environment;
+    this.page = page;
+    this.uiMode = environment.preferences().uiMode().get();
   }
 
   public PageItemsBuilder add(final @NonNull PageItem item) {
@@ -82,16 +87,10 @@ public class PageItemsBuilder {
     return this;
   }
 
-  public PageItemsBuilder addToggleFavorite(PageLink pageLink) {
-    items.add(new ToggleFavorite(resources, environment.favoritesStore(), pageLink));
-    return this;
-  }
-
-  public PageItemsBuilder addRemoveFavorite(PageLink pageLink) {
-    return addToggleFavorite(pageLink);
-  }
-
   public List<PageItem> build() {
+    if (uiMode == UiModeManager.UI_MODE_BUTTONS && page.isFavorable().getValue()) {
+      items.add(0, new ToggleFavorite(resources, environment.favoritesStore(), page.getPageLink()));
+    }
     return items;
   }
 }

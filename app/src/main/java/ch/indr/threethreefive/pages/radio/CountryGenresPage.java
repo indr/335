@@ -49,8 +49,6 @@ public class CountryGenresPage extends GenreListBasePage {
   }
 
   @Override protected void addPageItems(PageItemsBuilder builder, List<Genre> genres) {
-    builder.addToggleFavorite(getCurrentPageLink());
-
     if (genres.size() == 0) {
       builder.addText(getString(R.string.no_genres_found));
       transitionTo(new PageTransition(PageUris.radioCountryStations(countryId), getTitle(), true));

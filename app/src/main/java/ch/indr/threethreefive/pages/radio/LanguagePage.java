@@ -65,7 +65,6 @@ public class LanguagePage extends SpiceBasePage implements RequestListener<List<
 
   private void showNextItems() {
     final PageItemsBuilder builder = pageItemsBuilder();
-    builder.addToggleFavorite(getCurrentPageLink());
     expander.buildNext(builder, this::addPageItems, this::showNextItems);
 
     setPageItems(builder.build());

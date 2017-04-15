@@ -85,7 +85,6 @@ public class StationPage extends SpiceBasePage implements RequestListener<Statio
       builder.add(new PlayMedia(getString(R.string.press_to_play), mediaItem));
       builder.add(new AddToPlaylist(getString(R.string.add_to_playlist), mediaItem));
     }
-    builder.addToggleFavorite(getCurrentPageLink());
 
     // Country
     if (StringUtils.isNotEmpty(station.getCountry())) {

@@ -63,7 +63,6 @@ public class AlbumPage extends Page {
 
     builder.add(new PlayMedias(getString(R.string.play_all_songs), mediaItems));
     builder.add(new AddToPlaylist(getString(R.string.add_all_songs_to_playlist), mediaItems));
-    builder.addToggleFavorite(getCurrentPageLink());
 
     for (Song song : songs) {
       builder.addLink(musicSong(song.getId()), song.getName());
