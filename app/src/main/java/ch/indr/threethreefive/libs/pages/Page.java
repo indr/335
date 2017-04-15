@@ -28,6 +28,7 @@ import ch.indr.threethreefive.libs.Environment;
 import ch.indr.threethreefive.libs.PageItem;
 import ch.indr.threethreefive.libs.PageItemsBuilder;
 import ch.indr.threethreefive.libs.PageLink;
+import ch.indr.threethreefive.libs.utils.CollectionUtils;
 import ch.indr.threethreefive.libs.utils.StringUtils;
 import rx.Observable;
 import rx.subjects.BehaviorSubject;
@@ -51,6 +52,9 @@ public abstract class Page implements PageType {
   private final BehaviorSubject<Description> description = BehaviorSubject.create(Description.EMPTY);
 
   private Uri iconUri;
+
+  private BehaviorSubject<Boolean> isFavorable = BehaviorSubject.create();
+  private BehaviorSubject<Boolean> isFavorite = BehaviorSubject.create();
 
   // Set default value to `null`, which indicates the page is loading items
   private final BehaviorSubject<List<PageItem>> pageItems = BehaviorSubject.create((List<PageItem>) null);
@@ -306,6 +310,8 @@ public abstract class Page implements PageType {
   }
 
   protected void setPageItems(final @NonNull List<PageItem> items) {
+    setFavorite(items);
+
     boolean setPageItemIdx = pageItem.getValue() == null;
     pageItems.onNext(items);
 
@@ -321,6 +327,29 @@ public abstract class Page implements PageType {
       }
       pageItemIdx.onNext(newItemIdx);
     }
+  }
+
+  /**
+   * Looks for a ToggleFavorite item and sets isFavorite based on its value.
+   */
+  private void setFavorite(List<PageItem> items) {
+    if (items == null) {
+      setFavorable(false);
+      setFavorite(false);
+      return;
+    }
+
+    final List<PageItem> filtered = CollectionUtils.filter(items, item -> item.getClass().isAssignableFrom(ToggleFavorite.class));
+    if (filtered.size() <= 0) {
+      setFavorable(false);
+      setFavorite(false);
+      return;
+    }
+
+    final ToggleFavorite toggleFavorite = (ToggleFavorite) filtered.get(0);
+    final boolean favorite = toggleFavorite.isFavorite();
+    setFavorable(true);
+    setFavorite(favorite);
   }
 
   protected void handle(final @NonNull Exception ex) {
@@ -367,6 +396,22 @@ public abstract class Page implements PageType {
 
   protected void resetFirstVisibleItem() {
     this.firstVisibleItem = null;
+  }
+
+  public Observable<Boolean> isFavorable() {
+    return isFavorable;
+  }
+
+  public void setFavorable(boolean favorable) {
+    isFavorable.onNext(favorable);
+  }
+
+  public Observable<Boolean> isFavorite() {
+    return isFavorite;
+  }
+
+  public void setFavorite(boolean favorite) {
+    isFavorite.onNext(favorite);
   }
 
   public enum State {

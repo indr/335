@@ -37,6 +37,8 @@ public class ListGuideViewModel extends PageActivityViewModel<ListGuideActivity>
 
   // OUTPUTS
   private final BehaviorSubject<Boolean> isHomePage = BehaviorSubject.create();
+  private final BehaviorSubject<Boolean> isFavorable = BehaviorSubject.create();
+  private final BehaviorSubject<Boolean> isFavorite = BehaviorSubject.create();
 
   public ListGuideViewModel(@NonNull Environment environment) {
     super(environment);
@@ -49,8 +51,7 @@ public class ListGuideViewModel extends PageActivityViewModel<ListGuideActivity>
 
     speaker.stop();
 
-    pageItemClick
-        .filter(pi -> pi != null)
+    pageItemClick.filter(pi -> pi != null)
         .compose(bindToLifecycle())
         .subscribe(this::executePageItem);
 
@@ -58,6 +59,14 @@ public class ListGuideViewModel extends PageActivityViewModel<ListGuideActivity>
         .map(ObjectUtils::isNull)
         .compose(bindToLifecycle())
         .subscribe(isHomePage);
+
+    page.switchMap(Page::isFavorable)
+        .compose(bindToLifecycle())
+        .subscribe(isFavorable);
+
+    page.switchMap(Page::isFavorite)
+        .compose(bindToLifecycle())
+        .subscribe(isFavorite);
   }
 
   public final ListGuideViewModelInputs inputs = this;
@@ -104,5 +113,13 @@ public class ListGuideViewModel extends PageActivityViewModel<ListGuideActivity>
       return null;
     }
     return page.getFirstVisibleItem();
+  }
+
+  @Override public Observable<Boolean> isFavorable() {
+    return isFavorable;
+  }
+
+  @Override public Observable<Boolean> isFavorite() {
+    return isFavorite;
   }
 }

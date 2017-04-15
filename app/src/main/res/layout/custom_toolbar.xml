@@ -41,9 +41,10 @@
         tools:ignore="PrivateResource"/>
 
     <HorizontalScrollView
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
+        android:layout_weight="1"
         android:scrollbars="none">
 
         <TextView
@@ -56,5 +57,19 @@
             android:text="@string/app_name"/>
 
     </HorizontalScrollView>
+
+    <ImageButton
+        android:id="@+id/toolbarButtonFavorite"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="end|center_vertical"
+        android:layout_marginLeft="?android:attr/listPreferredItemPaddingLeft"
+        android:layout_marginStart="?android:attr/listPreferredItemPaddingStart"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:paddingBottom="6dp"
+        android:paddingTop="6dp"
+        android:scaleType="fitCenter"
+        android:src="@drawable/ic_favorite_border_white_48dp"
+        />
 
 </LinearLayout>

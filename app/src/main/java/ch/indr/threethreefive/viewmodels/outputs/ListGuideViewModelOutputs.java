@@ -32,5 +32,9 @@ public interface ListGuideViewModelOutputs {
    * Pair of position and Y.
    */
   @Nullable Pair<Integer, Integer> getFirstVisibleItem();
+
+  Observable<Boolean> isFavorable();
+
+  Observable<Boolean> isFavorite();
 }
 

@@ -21,6 +21,7 @@ public class ToggleFavorite extends PageCommand {
 
   private final Resources resources;
 
+  private boolean isFavorite;
   private Favorite favorite;
 
   public ToggleFavorite(final @NonNull Resources resources, final @NonNull FavoritesStore favoritesStore, final @NonNull PageLink pageLink) {
@@ -28,7 +29,8 @@ public class ToggleFavorite extends PageCommand {
     this.favorite = new Favorite(0, pageLink.getTitle(), pageLink.getSubtitle(),
         pageLink.getContentDescription(), pageLink.getUri(), pageLink.getIconUri());
 
-    updateTitle(favoritesStore.isFavorite(pageLink.getUri()));
+    setFavorite(favoritesStore.isFavorite(pageLink.getUri()));
+    updateTitle();
   }
 
   @Override public void execute(@NonNull Environment environment) {
@@ -41,9 +43,18 @@ public class ToggleFavorite extends PageCommand {
     }
   }
 
+  public boolean isFavorite() {
+    return isFavorite;
+  }
+
+  private void setFavorite(boolean favorite) {
+    this.isFavorite = favorite;
+  }
+
   private void addFavorite(@NonNull Environment environment, FavoritesStore favoritesStore) {
     favoritesStore.add(this.favorite);
-    updateTitle(true);
+    setFavorite(true);
+    updateTitle();
 
     environment.toastManager().toast(resources.getString(R.string.favorite_added));
     environment.speaker().command().favoriteAdded();
@@ -51,13 +62,14 @@ public class ToggleFavorite extends PageCommand {
 
   private void removeFavorite(@NonNull Environment environment, FavoritesStore favoritesStore) {
     favoritesStore.remove(favorite.getPageUri());
-    updateTitle(false);
+    setFavorite(false);
+    updateTitle();
 
     environment.toastManager().toast(resources.getString(R.string.favorite_removed));
     environment.speaker().command().favoriteRemoved();
   }
 
-  private void updateTitle(final boolean isFavorite) {
+  private void updateTitle() {
     final String title = isFavorite
         ? resources.getString(R.string.remove_from_favorites)
         : resources.getString(R.string.add_to_favorites);

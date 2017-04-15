@@ -41,6 +41,7 @@ import ch.indr.threethreefive.services.UiModeManager;
 import ch.indr.threethreefive.ui.IntentKey;
 import ch.indr.threethreefive.ui.adapters.PageItemsAdapter;
 import ch.indr.threethreefive.viewmodels.ListGuideViewModel;
+import rx.Observable;
 import timber.log.Timber;
 
 import static ch.indr.threethreefive.libs.rx.transformers.Transfomers.observeForUI;
@@ -56,6 +57,7 @@ public class ListGuideActivity extends BaseListActivity<ListGuideViewModel> impl
   protected @Bind(R.id.progressBarHolder) FrameLayout progressBarHolder;
   protected @Bind(R.id.toolbarButtonUp) ImageButton toolbarButtonUp;
   protected @Bind(R.id.toolbarTitle) TextView toolbarTitle;
+  protected @Bind(R.id.toolbarButtonFavorite) ImageButton toolbarButtonFavorite;
 
   private PageItemsAdapter pageItemsAdapter;
 
@@ -100,6 +102,11 @@ public class ListGuideActivity extends BaseListActivity<ListGuideViewModel> impl
         .compose(observeForUI())
         .subscribe(__ -> super.back());
 
+    Observable.combineLatest(viewModel.isFavorable(), viewModel.isFavorite(), Pair::create)
+        .compose(bindToLifecycle())
+        .compose(observeForUI())
+        .subscribe(this::updateFavorite);
+
     preferences.registerOnSharedPreferenceChangeListener(sharedPreferenceChangeListener);
   }
 
@@ -130,6 +137,22 @@ public class ListGuideActivity extends BaseListActivity<ListGuideViewModel> impl
     intent.putExtra(IntentKey.PAGE_REPLACE, pageLink.getReplace());
 
     viewModel.intent(intent);
+  }
+
+  private void updateFavorite(Pair<Boolean, Boolean> isFavorableAndIsFavorite) {
+    Timber.d("updateFavorite %s, %s", isFavorableAndIsFavorite.first, isFavorableAndIsFavorite.second, this.toString());
+
+    if (toolbarButtonFavorite == null) return;
+
+    toolbarButtonFavorite.setVisibility(isFavorableAndIsFavorite.first ? View.VISIBLE : View.GONE);
+
+    if (isFavorableAndIsFavorite.second) {
+      toolbarButtonFavorite.setImageResource(R.drawable.ic_favorite_white_48dp);
+      toolbarButtonFavorite.setColorFilter(getResources().getColor(R.color.yellow_400));
+    } else {
+      toolbarButtonFavorite.setImageResource(R.drawable.ic_favorite_border_white_48dp);
+      toolbarButtonFavorite.setColorFilter(null);
+    }
   }
 
   /**
