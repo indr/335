@@ -149,9 +149,11 @@ public class ListGuideActivity extends BaseListActivity<ListGuideViewModel> impl
     if (isFavorableAndIsFavorite.second) {
       toolbarButtonFavorite.setImageResource(R.drawable.ic_favorite_white_48dp);
       toolbarButtonFavorite.setColorFilter(getResources().getColor(R.color.yellow_400));
+      toolbarButtonFavorite.setContentDescription(getString(R.string.remove_from_favorites));
     } else {
       toolbarButtonFavorite.setImageResource(R.drawable.ic_favorite_border_white_48dp);
       toolbarButtonFavorite.setColorFilter(null);
+      toolbarButtonFavorite.setContentDescription(getString(R.string.add_to_favorites));
     }
   }
 

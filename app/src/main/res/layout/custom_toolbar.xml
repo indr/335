@@ -66,10 +66,10 @@
         android:layout_marginLeft="?android:attr/listPreferredItemPaddingLeft"
         android:layout_marginStart="?android:attr/listPreferredItemPaddingStart"
         android:background="?attr/selectableItemBackgroundBorderless"
+        android:contentDescription="@string/add_to_favorites"
         android:paddingBottom="6dp"
         android:paddingTop="6dp"
         android:scaleType="fitCenter"
-        android:src="@drawable/ic_favorite_border_white_48dp"
-        />
+        android:src="@drawable/ic_favorite_border_white_48dp"/>
 
 </LinearLayout>
