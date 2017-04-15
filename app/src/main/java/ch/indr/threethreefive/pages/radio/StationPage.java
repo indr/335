@@ -50,6 +50,7 @@ public class StationPage extends SpiceBasePage implements RequestListener<Statio
   @Override public void onCreate(@NonNull Context context, @NonNull Uri uri, Bundle bundle) {
     super.onCreate(context, uri, bundle);
     component().inject(this);
+    setFavorable(true);
 
     this.stationId = bundle.getString("id");
   }

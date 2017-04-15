@@ -40,6 +40,7 @@ public class AlbumPage extends Page {
 
   @Override public void onCreate(@NonNull Context context, @NonNull Uri uri, Bundle bundle) {
     super.onCreate(context, uri, bundle);
+    setFavorable(true);
 
     final String albumId = uri.getLastPathSegment();
 
@@ -48,7 +49,6 @@ public class AlbumPage extends Page {
       handle(getString(R.string.album_not_found_error, albumId));
       return;
     }
-
     setDescription(album.getName(), getString(R.string.music_album_by, album.getArtist()));
     setIconUri(album.getArtworkUri());
 

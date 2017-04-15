@@ -404,6 +404,9 @@ public abstract class Page implements PageType {
 
   public void setFavorable(boolean favorable) {
     isFavorable.onNext(favorable);
+    if (favorable) {
+      setFavorite(environment.favoritesStore().isFavorite(getPageUri()));
+    }
   }
 
   public Observable<Boolean> isFavorite() {

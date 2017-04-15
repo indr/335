@@ -32,6 +32,7 @@ public class CountryStationsPage extends StationListBasePage {
   @Override public void onCreate(@NonNull Context context, @NonNull Uri uri, Bundle bundle) {
     super.onCreate(context, uri, bundle);
     component().inject(this);
+    setFavorable(true);
 
     this.countryId = getUriParam("countryId");
 

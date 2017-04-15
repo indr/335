@@ -36,6 +36,7 @@ public class GenrePage extends StationListBasePage {
   @Override public void onCreate(@NonNull Context context, @NonNull Uri uri, Bundle bundle) {
     super.onCreate(context, uri, bundle);
     component().inject(this);
+    setFavorable(true);
 
     final String genreId = getUriParam("id");
     this.genre = GenresBuilder.getGenre(genreId);

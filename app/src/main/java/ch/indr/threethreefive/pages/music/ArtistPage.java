@@ -40,6 +40,7 @@ public class ArtistPage extends Page {
 
   @Override public void onCreate(@NonNull Context context, @NonNull Uri uri, Bundle bundle) {
     super.onCreate(context, uri, bundle);
+    setFavorable(true);
 
     final String artistId = uri.getLastPathSegment();
 

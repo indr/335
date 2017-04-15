@@ -40,6 +40,7 @@ public class LanguagePage extends SpiceBasePage implements RequestListener<List<
   @Override public void onCreate(@NonNull Context context, @NonNull Uri uri, Bundle bundle) {
     super.onCreate(context, uri, bundle);
     component().inject(this);
+    setFavorable(true);
 
     this.languageId = getUriParam("id");
 
