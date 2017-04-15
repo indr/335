@@ -12,12 +12,13 @@ import android.util.Pair;
 import ch.indr.threethreefive.libs.PageItem;
 
 public interface ListGuideViewModelInputs {
-
   void back();
 
-  void pageItemClick(PageItem pageItem);
-
   void up();
+
+  void toggleFavorite();
+
+  void pageItemClick(PageItem pageItem);
 
   void setFirstVisibleItem(Pair<Integer, Integer> positionAndY);
 }

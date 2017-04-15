@@ -23,6 +23,7 @@ import ch.indr.threethreefive.AppComponent;
 import ch.indr.threethreefive.ThreeThreeFiveApp;
 import ch.indr.threethreefive.commands.ToggleFavorite;
 import ch.indr.threethreefive.data.db.favorites.FavoritesStore;
+import ch.indr.threethreefive.data.db.favorites.model.Favorite;
 import ch.indr.threethreefive.libs.Description;
 import ch.indr.threethreefive.libs.Environment;
 import ch.indr.threethreefive.libs.PageItem;
@@ -53,8 +54,8 @@ public abstract class Page implements PageType {
 
   private Uri iconUri;
 
-  private BehaviorSubject<Boolean> isFavorable = BehaviorSubject.create();
-  private BehaviorSubject<Boolean> isFavorite = BehaviorSubject.create();
+  private BehaviorSubject<Boolean> isFavorable = BehaviorSubject.create(false);
+  private BehaviorSubject<Boolean> isFavorite = BehaviorSubject.create(false);
 
   // Set default value to `null`, which indicates the page is loading items
   private final BehaviorSubject<List<PageItem>> pageItems = BehaviorSubject.create((List<PageItem>) null);
@@ -310,8 +311,6 @@ public abstract class Page implements PageType {
   }
 
   protected void setPageItems(final @NonNull List<PageItem> items) {
-    setFavorite(items);
-
     boolean setPageItemIdx = pageItem.getValue() == null;
     pageItems.onNext(items);
 
@@ -327,29 +326,6 @@ public abstract class Page implements PageType {
       }
       pageItemIdx.onNext(newItemIdx);
     }
-  }
-
-  /**
-   * Looks for a ToggleFavorite item and sets isFavorite based on its value.
-   */
-  private void setFavorite(List<PageItem> items) {
-    if (items == null) {
-      setFavorable(false);
-      setFavorite(false);
-      return;
-    }
-
-    final List<PageItem> filtered = CollectionUtils.filter(items, item -> item.getClass().isAssignableFrom(ToggleFavorite.class));
-    if (filtered.size() <= 0) {
-      setFavorable(false);
-      setFavorite(false);
-      return;
-    }
-
-    final ToggleFavorite toggleFavorite = (ToggleFavorite) filtered.get(0);
-    final boolean favorite = toggleFavorite.isFavorite();
-    setFavorable(true);
-    setFavorite(favorite);
   }
 
   protected void handle(final @NonNull Exception ex) {
@@ -415,6 +391,17 @@ public abstract class Page implements PageType {
 
   public void setFavorite(boolean favorite) {
     isFavorite.onNext(favorite);
+  }
+
+  public void toggleFavorite() {
+    final FavoritesStore favoritesStore = environment.favoritesStore();
+    if (favoritesStore.isFavorite(getPageUri())) {
+      favoritesStore.remove(getPageUri());
+      isFavorite.onNext(false);
+    } else {
+      favoritesStore.add(new Favorite(getDescription(), getPageUri(), getIconUri()));
+      isFavorite.onNext(true);
+    }
   }
 
   public enum State {

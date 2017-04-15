@@ -74,15 +74,19 @@ public class ListGuideViewModel extends PageActivityViewModel<ListGuideActivity>
   public final ListGuideViewModelOutputs outputs = this;
 
   // INPUTS
+  @Override public void toggleFavorite() {
+    final Page page = this.page.getValue();
+    if (page == null) return;
+    page.toggleFavorite();
+  }
+
   @Override public void pageItemClick(PageItem pageItem) {
     pageItemClick.onNext(pageItem);
   }
 
   @Override public void setFirstVisibleItem(Pair<Integer, Integer> value) {
     final Page page = this.page.getValue();
-    if (page == null) {
-      return;
-    }
+    if (page == null) return;
     page.setFirstVisibleItem(value);
   }
 

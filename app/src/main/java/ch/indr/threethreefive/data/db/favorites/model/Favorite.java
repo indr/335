@@ -11,6 +11,7 @@ import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
+import ch.indr.threethreefive.libs.Description;
 import ch.indr.threethreefive.libs.utils.StringUtils;
 
 public class Favorite {
@@ -28,6 +29,16 @@ public class Favorite {
     this.title = title;
     this.subtitle = subtitle;
     this.contentDescription = StringUtils.isEmpty(contentDescription) ? title : contentDescription;
+    this.pageUri = pageUri;
+    this.iconUri = iconUri;
+  }
+
+  public Favorite(final @NonNull Description description, final @NonNull Uri pageUri,
+                  final @Nullable Uri iconUri) {
+    this.id = 0;
+    this.title = description.getTitle();
+    this.subtitle = description.getSubtitle();
+    this.contentDescription = description.getContentDescription();
     this.pageUri = pageUri;
     this.iconUri = iconUri;
   }

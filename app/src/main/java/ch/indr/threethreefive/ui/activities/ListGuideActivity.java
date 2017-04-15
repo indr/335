@@ -268,6 +268,11 @@ public class ListGuideActivity extends BaseListActivity<ListGuideViewModel> impl
     viewModel.inputs.up();
   }
 
+  @OnClick(R.id.toolbarButtonFavorite)
+  public void setToolbarButtonFavoriteOnClick() {
+    viewModel.inputs.toggleFavorite();
+  }
+
   private SharedPreferences.OnSharedPreferenceChangeListener sharedPreferenceChangeListener = new SharedPreferences.OnSharedPreferenceChangeListener() {
     @Override public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
       setTextSize(preferences.textSize().get());
