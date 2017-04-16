@@ -73,10 +73,9 @@
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
-        android:layout_below="@+id/toolbar"
+        android:layout_centerVertical="true"
         android:layout_margin="8dp"
-        android:orientation="vertical"
-        android:paddingTop="16dp">
+        android:orientation="vertical">
 
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/buttonDecFontSize"
