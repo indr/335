@@ -60,7 +60,6 @@ public abstract class PageActivityViewModel<ViewType extends ActivityLifecycleTy
     intent().map(PageTransition::fromIntent)
         .filter(ObjectUtils::isNotNull)
         .startWith(new PageTransition(PageLink.HomePage.getUri(), null))
-        .doOnNext(this::reportPageView)
         .map(transition -> Pair.create(transition, PageManager.fetch(context, transition)))
         .compose(bindToLifecycle())
         .subscribe(this::transitionTo);
@@ -80,13 +79,13 @@ public abstract class PageActivityViewModel<ViewType extends ActivityLifecycleTy
         .subscribe(canGoUp);
 
     page.switchMap(Page::transitionTo)
-        .doOnNext(this::reportPageView)
         .map(transition -> Pair.create(transition, PageManager.fetch(context, transition)))
         .compose(bindToLifecycle())
         .subscribe(this::transitionTo);
   }
 
-  private void reportPageView(PageTransition page) {
+  private void reportPageView(final @Nullable Page page) {
+    if (page == null) return;
     try {
       final Uri pageUri = page.getPageUri();
       final String contentId = pageUri.toString().replace("//ch.indr.threethreefive", "");
@@ -128,14 +127,16 @@ public abstract class PageActivityViewModel<ViewType extends ActivityLifecycleTy
   }
 
   private void transitionTo(final @NonNull Pair<PageTransition, Page> transition) {
-    PageTransition pageTransition = transition.first;
-    Page newPage = transition.second;
-    Timber.d("transitionTo new %s, %s", newPage.toString(), this.toString());
-    Page oldPage = this.page.getValue();
+    final PageTransition pageTransition = transition.first;
+    final Page newPage = transition.second;
+    final Page oldPage = this.page.getValue();
 
-    Timber.d("onBeforeTransition %s", this.toString());
-    onBeforeTransition(pageTransition);
+    beforeTransition(pageTransition, newPage);
     transitionTo(oldPage, newPage);
+    afterTransition(pageTransition, newPage, oldPage);
+  }
+
+  private void afterTransition(PageTransition pageTransition, Page newPage, Page oldPage) {
     Timber.d("onAfterTransition %s", this.toString());
     onAfterTransition();
 
@@ -150,6 +151,14 @@ public abstract class PageActivityViewModel<ViewType extends ActivityLifecycleTy
 
     Timber.d("Adding page to stack %s, %s", newPage.toString(), this.toString());
     pageStack.add(newPage);
+  }
+
+  private void beforeTransition(PageTransition pageTransition, Page newPage) {
+    Timber.d("transitionTo new %s, %s", newPage.toString(), this.toString());
+    reportPageView(newPage);
+
+    Timber.d("onBeforeTransition %s", this.toString());
+    onBeforeTransition(pageTransition);
   }
 
   private void transitionTo(@Nullable Page oldPage, @NonNull Page newPage) {
