@@ -14,7 +14,7 @@ import android.widget.Button;
 
 import javax.inject.Inject;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import ch.indr.threethreefive.R;
@@ -33,8 +33,8 @@ public class UiSelectionActivity extends BaseActivity<UiSelectionViewModel> impl
   protected @Inject Speaker speaker;
   protected @Inject UiModeManager uiModeManager;
 
-  protected @Bind(R.id.buttonButtonView) Button buttonButtonView;
-  protected @Bind(R.id.buttonListView) Button buttonListView;
+  protected @BindView(R.id.buttonButtonView) Button buttonButtonView;
+  protected @BindView(R.id.buttonListView) Button buttonListView;
 
   @Override protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);

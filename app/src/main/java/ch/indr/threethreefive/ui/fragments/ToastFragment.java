@@ -22,7 +22,7 @@ import android.widget.FrameLayout;
 import android.widget.HorizontalScrollView;
 import android.widget.TextView;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import ch.indr.threethreefive.R;
 import ch.indr.threethreefive.libs.BaseFragment;
@@ -38,9 +38,9 @@ import static ch.indr.threethreefive.services.ToastManager.Toast;
 @RequiresFragmentViewModel(ToastFragmentViewModel.class)
 public class ToastFragment extends BaseFragment<ToastFragmentViewModel> {
 
-  protected @Bind(R.id.frameLayoutToast) FrameLayout frameLayout;
-  protected @Bind(R.id.scrollViewTitle) HorizontalScrollView scrollViewTitle;
-  protected @Bind(R.id.textViewTitle) TextView textView;
+  protected @BindView(R.id.frameLayoutToast) FrameLayout frameLayout;
+  protected @BindView(R.id.scrollViewTitle) HorizontalScrollView scrollViewTitle;
+  protected @BindView(R.id.textViewTitle) TextView textView;
 
   private Preferences preferences;
 

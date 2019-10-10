@@ -19,7 +19,7 @@ import com.trello.rxlifecycle.ActivityEvent;
 
 import javax.inject.Inject;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import ch.indr.threethreefive.R;
@@ -45,8 +45,8 @@ public class ButtonGuideActivity extends BaseActivity<ButtonGuideViewModel> {
   protected @Inject ToastManager toastManager;
   protected @Inject PlaybackClient playbackClient;
 
-  protected @Bind(R.id.buttonEnter) Button buttonEnter;
-  protected @Bind(R.id.progressBarHolder) FrameLayout progressBarHolder;
+  protected @BindView(R.id.buttonEnter) Button buttonEnter;
+  protected @BindView(R.id.progressBarHolder) FrameLayout progressBarHolder;
 
   @Override protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);

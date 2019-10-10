@@ -27,7 +27,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import ch.indr.threethreefive.R;
@@ -52,12 +52,12 @@ public class ListGuideActivity extends BaseListActivity<ListGuideViewModel> impl
   protected @Inject Preferences preferences;
   protected @Inject UiModeManager uiModeManager;
 
-  protected @Bind(R.id.layoutChangeFontSize) LinearLayout layoutChangeFontSize;
-  protected @Bind(R.id.list) ListView listView;
-  protected @Bind(R.id.progressBarHolder) FrameLayout progressBarHolder;
-  protected @Bind(R.id.toolbarButtonUp) ImageButton toolbarButtonUp;
-  protected @Bind(R.id.toolbarTitle) TextView toolbarTitle;
-  protected @Bind(R.id.toolbarButtonFavorite) ImageButton toolbarButtonFavorite;
+  protected @BindView(R.id.layoutChangeFontSize) LinearLayout layoutChangeFontSize;
+  protected @BindView(R.id.list) ListView listView;
+  protected @BindView(R.id.progressBarHolder) FrameLayout progressBarHolder;
+  protected @BindView(R.id.toolbarButtonUp) ImageButton toolbarButtonUp;
+  protected @BindView(R.id.toolbarTitle) TextView toolbarTitle;
+  protected @BindView(R.id.toolbarButtonFavorite) ImageButton toolbarButtonFavorite;
 
   private PageItemsAdapter pageItemsAdapter;
 

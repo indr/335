@@ -14,7 +14,7 @@ import android.widget.TextView;
 
 import javax.inject.Inject;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import ch.indr.threethreefive.R;
@@ -30,7 +30,7 @@ public class AccessibilityNoticeActivity extends BaseActivity<AccessibilityNotic
 
   protected @Inject UiModeManager uiModeManager;
 
-  protected @Bind(R.id.textView1) TextView textView;
+  protected @BindView(R.id.textView1) TextView textView;
 
   @Override protected void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);

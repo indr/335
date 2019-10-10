@@ -13,7 +13,7 @@ import android.widget.TextView;
 
 import javax.inject.Inject;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import ch.indr.threethreefive.R;
 import ch.indr.threethreefive.ThreeThreeFiveApp;
@@ -31,7 +31,7 @@ public class StartActivity extends BaseActivity<StartViewModel> {
 
   protected @Inject UiModeManager uiModeManager;
 
-  protected @Bind(R.id.textViewStatus) TextView textViewStatus;
+  protected @BindView(R.id.textViewStatus) TextView textViewStatus;
 
   @Override protected void onCreate(Bundle savedInstanceState) {
     // Make sure this is before calling super.onCreate

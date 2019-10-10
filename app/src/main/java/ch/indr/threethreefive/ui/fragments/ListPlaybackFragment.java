@@ -36,7 +36,7 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import ch.indr.threethreefive.R;
@@ -62,15 +62,15 @@ public class ListPlaybackFragment extends BaseFragment<ListPlaybackFragmentViewM
   private static final long PROGRESS_UPDATE_INTERNAL = 1000;
   private static final long PROGRESS_UPDATE_INITIAL_INTERVAL = 100;
 
-  protected @Bind(R.id.buttonPlayPause) ImageButton buttonPlayPause;
-  protected @Bind(R.id.layoutSeekControl) RelativeLayout layoutSeekControl;
-  protected @Bind(R.id.playbackControls) LinearLayout playbackControls;
-  protected @Bind(R.id.seekBar) SeekBar seekBar;
-  protected @Bind(R.id.scrollViewTitle) HorizontalScrollView scrollViewTitle;
-  protected @Bind(R.id.textViewTitle) TextView textViewTitle;
-  protected @Bind(R.id.textViewPlaceholder) @Nullable TextView textViewDummy;
-  protected @Bind(R.id.textViewSeekStart) TextView textViewSeekStart;
-  protected @Bind(R.id.textViewSeekEnd) TextView textViewSeekEnd;
+  protected @BindView(R.id.buttonPlayPause) ImageButton buttonPlayPause;
+  protected @BindView(R.id.layoutSeekControl) RelativeLayout layoutSeekControl;
+  protected @BindView(R.id.playbackControls) LinearLayout playbackControls;
+  protected @BindView(R.id.seekBar) SeekBar seekBar;
+  protected @BindView(R.id.scrollViewTitle) HorizontalScrollView scrollViewTitle;
+  protected @BindView(R.id.textViewTitle) TextView textViewTitle;
+  protected @BindView(R.id.textViewPlaceholder) @Nullable TextView textViewDummy;
+  protected @BindView(R.id.textViewSeekStart) TextView textViewSeekStart;
+  protected @BindView(R.id.textViewSeekEnd) TextView textViewSeekEnd;
 
   private Preferences preferences;
 

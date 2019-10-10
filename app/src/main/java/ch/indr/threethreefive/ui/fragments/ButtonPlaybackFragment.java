@@ -17,7 +17,7 @@ import android.widget.ImageButton;
 
 import javax.inject.Inject;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import ch.indr.threethreefive.R;
@@ -36,7 +36,7 @@ public class ButtonPlaybackFragment extends BaseFragment<ButtonPlaybackFragmentV
   protected @Inject PlaybackAnnouncer playbackAnnouncer;
   protected @Inject Speaker speaker;
 
-  protected @Bind(R.id.buttonPlayPause) ImageButton buttonPlayPause;
+  protected @BindView(R.id.buttonPlayPause) ImageButton buttonPlayPause;
 
   @Nullable @Override public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
     super.onCreateView(inflater, container, savedInstanceState);
