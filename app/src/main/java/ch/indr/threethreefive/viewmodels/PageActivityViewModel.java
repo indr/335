@@ -14,13 +14,9 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.Pair;
 
-import com.crashlytics.android.answers.Answers;
-import com.crashlytics.android.answers.ContentViewEvent;
-
 import java.util.List;
 import java.util.Stack;
 
-import ch.indr.threethreefive.BuildConfig;
 import ch.indr.threethreefive.libs.ActivityLifecycleType;
 import ch.indr.threethreefive.libs.ActivityViewModel;
 import ch.indr.threethreefive.libs.Description;
@@ -91,12 +87,12 @@ public abstract class PageActivityViewModel<ViewType extends ActivityLifecycleTy
       final String contentId = pageUri.toString().replace("//ch.indr.threethreefive", "");
       Timber.d("reportPageView content id %s, %s", contentId, this.toString());
 
-      if (BuildConfig.ANSWERS) {
-        Answers.getInstance().logContentView(new ContentViewEvent()
-            .putContentId(contentId)
-            .putContentName(page.getTitle())
-            .putContentType(page.getClass().getName().replace("ch.indr.threethreefive.", "")));
-      }
+//      if (BuildConfig.ANSWERS) {
+//        Answers.getInstance().logContentView(new ContentViewEvent()
+//            .putContentId(contentId)
+//            .putContentName(page.getTitle())
+//            .putContentType(page.getClass().getName().replace("ch.indr.threethreefive.", "")));
+//      }
     } catch (Exception ex) {
       Timber.e(ex, "Error logging content view event");
     }

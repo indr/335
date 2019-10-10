@@ -16,14 +16,10 @@ import android.speech.tts.UtteranceProgressListener;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
-import com.crashlytics.android.answers.Answers;
-import com.crashlytics.android.answers.CustomEvent;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Locale;
 
-import ch.indr.threethreefive.BuildConfig;
 import rx.Observable;
 import rx.subjects.BehaviorSubject;
 import rx.subjects.PublishSubject;
@@ -72,13 +68,13 @@ public class SpeakerImpl implements Speaker {
       this.baseSpeechRate *= 0.9f;
     }
 
-    if (BuildConfig.ANSWERS) {
-      final CustomEvent customEvent = new CustomEvent("Text-to-Speech")
-          .putCustomAttribute("Default engine", textToSpeech.getDefaultEngine())
-          .putCustomAttribute("Default speech rate", defaultSpeechRate)
-          .putCustomAttribute("Base speech rate", baseSpeechRate);
-      Answers.getInstance().logCustom(customEvent);
-    }
+//    if (BuildConfig.ANSWERS) {
+//      final CustomEvent customEvent = new CustomEvent("Text-to-Speech")
+//          .putCustomAttribute("Default engine", textToSpeech.getDefaultEngine())
+//          .putCustomAttribute("Default speech rate", defaultSpeechRate)
+//          .putCustomAttribute("Base speech rate", baseSpeechRate);
+//      Answers.getInstance().logCustom(customEvent);
+//    }
 
     textToSpeech.setOnUtteranceProgressListener(new TtsUtteranceListener());
   }

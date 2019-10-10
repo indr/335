@@ -14,10 +14,6 @@ import android.support.v4.media.MediaMetadataCompat;
 import android.support.v4.media.session.PlaybackStateCompat;
 import android.util.Pair;
 
-import com.crashlytics.android.answers.Answers;
-import com.crashlytics.android.answers.CustomEvent;
-
-import ch.indr.threethreefive.BuildConfig;
 import ch.indr.threethreefive.libs.MetadataKeys;
 import ch.indr.threethreefive.libs.utils.StringUtils;
 import timber.log.Timber;
@@ -32,10 +28,10 @@ public class PlaybackAnswers {
       return;
     }
 
-    if (BuildConfig.ANSWERS) {
-      Answers.getInstance().logCustom(new CustomEvent("Accessibility Notice")
-          .putCustomAttribute("reason", reason));
-    }
+//    if (BuildConfig.ANSWERS) {
+//      Answers.getInstance().logCustom(new CustomEvent("Accessibility Notice")
+//          .putCustomAttribute("reason", reason));
+//    }
   }
 
   public void reportConnecting(MediaMetadataCompat mediaMetadata) {
@@ -51,11 +47,11 @@ public class PlaybackAnswers {
 
     final MediaDescriptionCompat mediaDescription = mediaMetadata.getDescription();
 
-    if (BuildConfig.ANSWERS) {
-      Answers.getInstance().logCustom(new CustomEvent("Playback Connecting")
-          .putCustomAttribute("radioId", radioId)
-          .putCustomAttribute("title", StringUtils.getString(mediaDescription.getTitle())));
-    }
+//    if (BuildConfig.ANSWERS) {
+//      Answers.getInstance().logCustom(new CustomEvent("Playback Connecting")
+//          .putCustomAttribute("radioId", radioId)
+//          .putCustomAttribute("title", StringUtils.getString(mediaDescription.getTitle())));
+//    }
   }
 
   public void reportError(Pair<MediaMetadataCompat, PlaybackStateCompat> pair) {
@@ -71,12 +67,12 @@ public class PlaybackAnswers {
 
     final MediaDescriptionCompat mediaDescription = pair.first.getDescription();
     final PlaybackStateCompat playbackState = pair.second;
-    if (BuildConfig.ANSWERS) {
-      Answers.getInstance().logCustom(new CustomEvent("Playback Error")
-          .putCustomAttribute("radioId", radioId)
-          .putCustomAttribute("title", StringUtils.getString(mediaDescription.getTitle()))
-          .putCustomAttribute("errorCode", playbackState.getErrorCode())
-          .putCustomAttribute("errorMessage", StringUtils.getString(playbackState.getErrorMessage())));
-    }
+//    if (BuildConfig.ANSWERS) {
+//      Answers.getInstance().logCustom(new CustomEvent("Playback Error")
+//          .putCustomAttribute("radioId", radioId)
+//          .putCustomAttribute("title", StringUtils.getString(mediaDescription.getTitle()))
+//          .putCustomAttribute("errorCode", playbackState.getErrorCode())
+//          .putCustomAttribute("errorMessage", StringUtils.getString(playbackState.getErrorMessage())));
+//    }
   }
 }

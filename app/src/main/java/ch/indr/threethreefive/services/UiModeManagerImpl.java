@@ -11,10 +11,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 
-import com.crashlytics.android.answers.Answers;
-import com.crashlytics.android.answers.CustomEvent;
-
-import ch.indr.threethreefive.BuildConfig;
 import ch.indr.threethreefive.libs.Preferences;
 import ch.indr.threethreefive.ui.activities.ButtonGuideActivity;
 import ch.indr.threethreefive.ui.activities.ListGuideActivity;
@@ -39,18 +35,18 @@ public class UiModeManagerImpl implements UiModeManager {
     setCurrentUiMode(UI_MODE_BUTTONS);
     startActivity(context, ButtonGuideActivity.class);
 
-    if (BuildConfig.ANSWERS) {
-      Answers.getInstance().logCustom(new CustomEvent("Buttons Interface Launched"));
-    }
+//    if (BuildConfig.ANSWERS) {
+//      Answers.getInstance().logCustom(new CustomEvent("Buttons Interface Launched"));
+//    }
   }
 
   @Override public void launchListUi(@NonNull Context context) {
     setCurrentUiMode(UI_MODE_LIST);
     startActivity(context, ListGuideActivity.class);
 
-    if (BuildConfig.ANSWERS) {
-      Answers.getInstance().logCustom(new CustomEvent("List Interface Launched"));
-    }
+//    if (BuildConfig.ANSWERS) {
+//      Answers.getInstance().logCustom(new CustomEvent("List Interface Launched"));
+//    }
   }
 
   private android.app.UiModeManager getUiModeManager() {

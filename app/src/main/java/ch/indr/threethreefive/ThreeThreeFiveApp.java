@@ -13,9 +13,7 @@ import android.support.multidex.MultiDex;
 import android.support.multidex.MultiDexApplication;
 
 import com.androidnetworking.AndroidNetworking;
-import com.crashlytics.android.Crashlytics;
 
-import io.fabric.sdk.android.Fabric;
 import timber.log.Timber;
 
 public class ThreeThreeFiveApp extends MultiDexApplication {
@@ -25,10 +23,6 @@ public class ThreeThreeFiveApp extends MultiDexApplication {
   @CallSuper
   @Override public void onCreate() {
     super.onCreate();
-
-    if (!BuildConfig.DEBUG && !isInUnitTests()) {
-      Fabric.with(this, new Crashlytics());
-    }
 
     MultiDex.install(this);
 
