@@ -42,6 +42,11 @@ android {
         abortOnError false
         lintConfig rootProject.file('gradle/lint.xml')
     }
+    testOptions {
+        unitTests {
+            includeAndroidResources true
+        }
+    }
 }
 
 configurations {
@@ -90,7 +95,7 @@ dependencies {
     // Testing
     testCompile 'junit:junit:4.12'
     testCompile "org.mockito:mockito-core:2.7.17"
-    testCompile 'org.robolectric:robolectric:3.1.4'
+    testCompile 'org.robolectric:robolectric:4.3'
     testCompile 'org.robolectric:shadows-multidex:3.0'
 }
 

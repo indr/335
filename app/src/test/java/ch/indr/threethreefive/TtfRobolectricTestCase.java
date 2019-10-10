@@ -22,7 +22,6 @@ import org.robolectric.shadows.multidex.ShadowMultiDex;
 
 import ch.indr.threethreefive.libs.Environment;
 import ch.indr.threethreefive.libs.Preferences;
-import ch.indr.threethreefive.services.UiModeManager;
 import rx.Scheduler;
 import rx.android.plugins.RxAndroidPlugins;
 import rx.android.plugins.RxAndroidSchedulersHook;
@@ -31,9 +30,7 @@ import rx.schedulers.Schedulers;
 import static org.mockito.Mockito.when;
 
 @RunWith(TtfRobolectricGradleTestRunner.class)
-@Config(constants = BuildConfig.class,
-    shadows = ShadowMultiDex.class,
-    sdk = TtfRobolectricGradleTestRunner.DEFAULT_SDK)
+@Config(shadows = ShadowMultiDex.class, sdk = TtfRobolectricGradleTestRunner.DEFAULT_SDK)
 public abstract class TtfRobolectricTestCase extends TestCase {
 
   private TestTtfApplication application;
