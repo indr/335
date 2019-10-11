@@ -1,6 +1,6 @@
 # Three Three Five
 
-[![Build Status](https://www.bitrise.io/app/a945485aeea5f81d.svg?token=NYSoaGwRcmz_vsAl5d6aMw)](https://www.bitrise.io/app/a945485aeea5f81d)
+[![Build Status](https://app.bitrise.io/app/a945485aeea5f81d/status.svg?token=NYSoaGwRcmz_vsAl5d6aMw&branch=master)](https://app.bitrise.io/app/a945485aeea5f81d)
 
 3 3 5 is a free media navigator designed for blind and visually impaired.
 
