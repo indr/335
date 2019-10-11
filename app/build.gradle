@@ -6,13 +6,13 @@ repositories {
 android {
     // Picking your compileSdkVersion, minSdkVersion, targetSdkVersion
     // https://medium.com/google-developers/picking-your-compilesdkversion-minsdkversion-targetsdkversion-a098a0341ebd
-    compileSdkVersion 25
-    buildToolsVersion '25.0.0'
+    compileSdkVersion 26
+    buildToolsVersion '26.0.3'
     defaultConfig {
         applicationId "ch.indr.threethreefive"
         minSdkVersion 16
         //noinspection OldTargetApi
-        targetSdkVersion 22
+        targetSdkVersion 26
         versionCode Integer.parseInt(System.getenv("BITRISE_BUILD_NUMBER") ?: "1")
         versionName "0.5.0." + (System.getenv("BITRISE_BUILD_NUMBER") ?: "0")
         setProperty("archivesBaseName", "threethreefive-$versionName")
