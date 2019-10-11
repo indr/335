@@ -14,7 +14,7 @@ android {
         //noinspection OldTargetApi
         targetSdkVersion 26
         versionCode Integer.parseInt(System.getenv("BITRISE_BUILD_NUMBER") ?: "1")
-        versionName "0.5.0." + (System.getenv("BITRISE_BUILD_NUMBER") ?: "0")
+        versionName "0.4.1." + (System.getenv("BITRISE_BUILD_NUMBER") ?: "0")
         setProperty("archivesBaseName", "threethreefive-$versionName")
 
         // Enable Multidex to support over 65K methods
